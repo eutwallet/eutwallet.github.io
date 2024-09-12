@@ -42,15 +42,17 @@ scanButton.addEventListener('click', () => {
       try {
         const data = JSON.parse(decodedText);
 
+        // Stop de QR-scanner direct na een succesvolle scan
+        html5QrCode.stop().then(() => {
+          readerDiv.style.display = 'none'; // Verberg de QR-scanner
+        }).catch(err => {
+          console.error("Failed to stop scanning: ", err);
+        });
+
         // If the QR-code is from a verifier, ask to share specific card
         if (data.verifier) {
           const requestedCard = data.requestedCard;
           const requester = data.requester;
-
-          // Stop the QR scanner when the question screen is shown
-          html5QrCode.stop().then(() => {
-            readerDiv.style.display = 'none'; // Verberg de QR-scanner
-          });
 
           // Toon vraag in full screen
           questionScreen.style.display = 'block';
