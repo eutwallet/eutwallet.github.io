@@ -58,6 +58,7 @@ main {
 .scan-section {
   text-align: center;
   margin-bottom: 20px;
+  position: relative; /* Zorgt ervoor dat de reader zich positioneert ten opzichte van deze sectie */
 }
 
 .scan-btn {
@@ -70,7 +71,14 @@ main {
   cursor: pointer;
   width: 100%;
   max-width: 300px;
-  margin: 0 auto 20px auto; /* Zorgt ervoor dat de knop in het midden staat met witruimte */
+  margin: 0 auto 20px auto;
+}
+
+#reader {
+  display: none;
+  width: 100%; /* Maak de reader breedte 100% van de container */
+  max-width: 300px;
+  margin: 20px auto;
 }
 
 .wallet-grid {
@@ -78,7 +86,6 @@ main {
   flex-direction: column; /* Veranderd naar 1 kaart per rij */
   gap: 15px;
   padding: 10px;
-  overflow-y: auto;
 }
 
 .card {
@@ -120,10 +127,4 @@ main {
 
 #details h3 {
   margin-top: 60px;
-}
-
-#reader {
-  display: none;
-  width: 300px;
-  margin: auto;
 }
