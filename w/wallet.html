@@ -8,19 +8,35 @@
 </head>
 <body>
 
-  <div class="header">
-    <h2>Wallet</h2>
-  </div>
+  <header>
+    <nav class="top-nav">
+      <button class="menu-button">☰ Menu</button>
+      <button class="help-button">?</button>
+    </nav>
+  </header>
 
-  <div class="wallet-grid" id="wallet-grid">
-    <!-- Cards will be dynamically added here -->
-  </div>
+  <main>
+    <section class="scan-section">
+      <div class="scan-button">
+        <div class="qr-placeholder">
+          <p>QR</p>
+        </div>
+        <p class="scan-text">Scan QR-code</p>
+      </div>
+    </section>
 
-  <div id="reader"></div> <!-- QR Code Scanner element -->
+    <section class="card-summary">
+      <div class="summary-text">
+        <p>Afgelopen week</p>
+        <p>2 kaarten toegevoegd, Gedeeld met Gemeente</p>
+      </div>
+      <button class="view-summary">→</button>
+    </section>
 
-  <div class="footer">
-    <button class="scan-btn" id="scan-button">Scan QR Code</button>
-  </div>
+    <section class="wallet-grid" id="wallet-grid">
+      <!-- Dynamische kaartjes zullen hier worden toegevoegd -->
+    </section>
+  </main>
 
   <!-- Details view for individual cards -->
   <div id="details">
@@ -35,6 +51,8 @@
     <button class="yes-btn" id="yes-button">Ja</button>
     <button class="no-btn" id="no-button">Nee</button>
   </div>
+
+  <div id="reader"></div> <!-- QR Code Scanner element -->
 
   <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
   <script src="wallet.js"></script>
