@@ -74,6 +74,20 @@ main {
   margin: 0 auto 20px auto;
 }
 
+.close-scan-btn {
+  background-color: #f44336;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 25px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+  max-width: 300px;
+  margin: 20px auto 0 auto;
+  display: none; /* Verberg de sluit-knop standaard */
+}
+
 #reader {
   display: none;
   width: 100%; /* Maak de reader breedte 100% van de container */
