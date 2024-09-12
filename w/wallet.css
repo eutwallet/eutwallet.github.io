@@ -1,203 +1,180 @@
 /* Algemene stijlen */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
 }
 
 body {
-  background-color: #F9F9F9;
-  color: #333;
+    background-color: #FFFFFF; /* Achtergrond geheel wit */
+    padding: 10px;
+    color: #333;
 }
 
 header {
-  background-color: #fff;
-  padding: 10px;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 100;
-}
-
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
 }
 
 .menu-button {
-  background: none;
-  border: none;
-  font-size: 18px;
-  color: #003366;
-  cursor: pointer;
+    color: #5D3EBC; /* Donkerpaars voor menu-knop */
+    font-size: 18px;
+    border: none;
+    background-color: transparent;
 }
 
 .help-button {
-  background: none;
-  border: none;
-  font-size: 18px;
-  color: #003366;
-  cursor: pointer;
-  margin-left: auto;
-  position: absolute;
-  right: 20px;
-  top: 20px;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  border: 2px solid #E0E7FF;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    background-color: transparent;
+    border-radius: 50%;
+    font-size: 18px;
+    color: #5D3EBC; /* Donkerpaars voor vraagteken-knop */
+    border: 2px solid #E0E7FF;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 10px; /* Correctie van uitlijning met menu-knop */
+    right: 10px; /* Uitlijning rechts */
 }
 
 main {
-  padding-top: 60px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  max-width: 400px;
-  margin: 0 auto;
-  height: calc(100vh - 60px);
-  overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 400px;
+    margin: 0 auto;
 }
 
 .scan-section {
-  text-align: center;
-  margin-bottom: 20px;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
-.scan-btn {
-  background-color: #5651EB;
-  color: white;
-  padding: 20px;
-  border: none;
-  border-radius: 20px;
-  font-size: 16px;
-  cursor: pointer;
-  width: 120px;
-  height: 120px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  border: 1px solid #D3D3D3;
-  margin: 0 auto;
+.scan-button {
+    background-color: #5651EB; /* Kleur QR-knop */
+    border-radius: 20px;
+    padding: 20px;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Lichte schaduw rechtsonder */
+    border: 1px solid #D3D3D3; /* Lichtgrijze rand om QR-knop */
+    margin: 0 auto;
+    position: relative;
 }
 
-.close-scan-btn {
-  background-color: #f44336;
-  color: white;
-  padding: 10px;
-  border: none;
-  border-radius: 25px;
-  font-size: 16px;
-  cursor: pointer;
-  width: 100%;
-  max-width: 300px;
-  margin: 20px auto 0 auto;
-  display: none;
+.qr-placeholder {
+    font-size: 24px;
+    color: white;
+    background-color: transparent;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
 }
 
-#reader {
-  display: none;
-  width: 100%;
-  max-width: 300px;
-  margin: 20px auto;
+.scan-text {
+    position: absolute;
+    bottom: -25px;
+    font-size: 14px;
+    color: #5651EB;
 }
 
-.wallet-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  padding: 10px;
+.card-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 .card {
-  background-color: #E0F7FA;
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  position: relative;
-  font-size: 14px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+    background-color: #E0F7FA;
+    padding: 20px;
+    border-radius: 15px; /* Hoeken afronden van kaartjes */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Lichte schaduw */
+    position: relative;
+    font-size: 14px;
+    height: 180px; /* Kaartjes hoger maken */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: #152A62; /* Tekstkleur aanpassen naar #152A62 */
 }
 
 .card h3 {
-  font-size: 16px;
-  color: #003366;
-  font-weight: bold;
+    font-size: 16px;
+    color: #152A62; /* Tekstkleur kaartjes */
+    font-weight: bold;
 }
 
 .card p {
-  font-size: 14px;
-  color: #003366;
+    font-size: 14px;
+    color: #152A62;
 }
 
 .view-card {
-  background: none;
-  border: none;
-  font-size: 16px;
-  color: #003366;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
+    background: none;
+    border: none;
+    font-size: 16px;
+    color: #152A62; /* Tekstkleur voor 'Bekijk' */
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* 'Bekijk →' rechtsonder */
+    margin-top: auto; /* Verplaats de knop naar de onderkant van de kaart */
 }
 
 .arrow {
-  margin-left: 5px;
-  font-size: 16px;
-  color: #003366;
+    margin-left: 5px;
+    font-size: 16px;
+    color: #152A62;
 }
 
 #details {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: white;
-  z-index: 100;
-  padding: 20px;
-  box-sizing: border-box;
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    z-index: 100;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 #details h3 {
-  margin-top: 60px;
+    margin-top: 60px;
+    color: #152A62;
 }
 
 #details-content {
-  margin-top: 20px;
+    margin-top: 20px;
 }
 
 #close-details,
 #delete-details {
-  background-color: #f0f0f0;
-  border: none;
-  padding: 10px;
-  border-radius: 50%;
-  font-size: 18px;
-  cursor: pointer;
-  position: absolute;
-  top: 10px;
+    background-color: #f0f0f0;
+    border: none;
+    padding: 10px;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
 }
 
 #close-details {
-  left: 10px;
+    left: 10px;
 }
 
 #delete-details {
-  right: 10px;
-}
-
-#details h3 {
-  text-align: center;
-  font-size: 24px;
-  margin-top: 20px;
+    right: 10px;
 }
