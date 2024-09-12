@@ -179,7 +179,7 @@ main {
 }
 
 #question-screen {
-  display: none;
+  display: none; /* Zorgt ervoor dat het vraag-scherm standaard niet zichtbaar is */
   position: fixed;
   top: 0;
   left: 0;
