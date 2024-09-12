@@ -24,6 +24,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
 }
 
 .menu-button {
@@ -40,10 +41,11 @@ header {
   font-size: 18px;
   color: #003366;
   cursor: pointer;
+  margin-left: auto; /* Zorgt ervoor dat de help-knop rechts uitgelijnd is */
 }
 
 main {
-  padding-top: 60px; /* Zorgt ervoor dat de content niet achter de navbar komt */
+  padding-top: 60px;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -55,7 +57,7 @@ main {
 
 .scan-section {
   text-align: center;
-  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .scan-btn {
@@ -68,12 +70,12 @@ main {
   cursor: pointer;
   width: 100%;
   max-width: 300px;
-  margin: 20px auto;
+  margin: 0 auto 20px auto; /* Zorgt ervoor dat de knop in het midden staat met witruimte */
 }
 
 .wallet-grid {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* Veranderd naar 1 kaart per rij */
   gap: 15px;
   padding: 10px;
   overflow-y: auto;
@@ -85,7 +87,6 @@ main {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   padding: 15px;
   text-align: left;
-  height: 100px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -125,10 +126,4 @@ main {
   display: none;
   width: 300px;
   margin: auto;
-}
-
-/* Zorgt ervoor dat de navbar bovenaan blijft en de rest scrollbaar is */
-main {
-  padding-top: 60px;
-  overflow-y: auto;
 }
