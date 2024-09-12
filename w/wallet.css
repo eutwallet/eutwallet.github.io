@@ -111,17 +111,17 @@ main {
 }
 
 .card {
-    background-color: #E0F7FA;
-    padding: 20px;
-    border-radius: 15px; /* Hoeken afronden van kaartjes */
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Lichte schaduw */
-    position: relative;
-    font-size: 14px;
-    height: 180px; /* Kaartjes hoger maken */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    color: #152A62; /* Tekstkleur aanpassen naar #152A62 */
+  background-color: #E0F7FA;
+  padding: 20px;
+  border-radius: 15px; /* Hoeken afgerond */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Lichte schaduw */
+  margin-bottom: 20px; /* Witruimte tussen de kaartjes */
+  position: relative;
+  font-size: 14px;
+  height: 140px; /* Hogere kaartjes zoals gevraagd */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .card h3 {
@@ -134,11 +134,13 @@ main {
     background: none;
     border: none;
     font-size: 16px;
-    color: #152A62; /* Tekstkleur voor 'Bekijk' */
+    color: #152A62;
     display: flex;
     align-items: center;
-    justify-content: flex-end; /* 'Bekijk →' rechtsonder */
-    margin-top: auto; /* Verplaats de knop naar de onderkant van de kaart */
+    justify-content: flex-end; /* Rechts uitlijnen */
+    position: absolute;
+    bottom: 10px;
+    right: 10px; /* Positioneer het naar rechtsonder op de kaart */
 }
 
 .arrow {
