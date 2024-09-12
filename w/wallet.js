@@ -13,6 +13,7 @@ const deleteDetailsBtn = document.getElementById('delete-details');
 
 let credentials = [];
 
+// Laad opgeslagen credentials uit localStorage
 function loadCredentials() {
   const storedCredentials = localStorage.getItem('credentials');
   if (storedCredentials) {
@@ -20,10 +21,12 @@ function loadCredentials() {
   }
 }
 
+// Sla credentials op in localStorage
 function saveCredentials() {
   localStorage.setItem('credentials', JSON.stringify(credentials));
 }
 
+// Toon alle opgeslagen credentials
 function displayCredentials() {
   walletGrid.innerHTML = '';
   credentials.forEach((cred, index) => {
@@ -31,13 +34,13 @@ function displayCredentials() {
       const card = document.createElement('div');
       card.className = 'card';
       card.innerHTML = `<h3>${cred.name}</h3>`;
-      card.addEventListener('click', () => showDetails(cred, index)); // Voeg event listener toe om details te bekijken
+      card.addEventListener('click', () => showDetails(cred, index));
       walletGrid.appendChild(card);
     }
   });
 }
 
-// Functie om details van een kaartje te tonen
+// Toon details van een kaartje
 function showDetails(credential, index) {
   detailsTitle.textContent = credential.name;
   let detailsHTML = '';
@@ -127,6 +130,6 @@ scanButton.addEventListener('click', () => {
   );
 });
 
-// Laden en weergeven van de opgeslagen kaartjes
+// Laad opgeslagen kaartjes en toon ze
 loadCredentials();
 displayCredentials();
