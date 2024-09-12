@@ -30,7 +30,7 @@ function displayCredentials() {
     if (!cred.isShareAction) { // Alleen normale kaartjes tonen, geen deelacties
       const card = document.createElement('div');
       card.className = 'card';
-      card.innerHTML = `<h3>${cred.name}</h3>`; // Verwijder 'Valid until N/A' tekst
+      card.innerHTML = `<h3>${cred.name}</h3>`;
       card.addEventListener('click', () => showDetails(cred, index)); // Voeg event listener toe om details te bekijken
       walletGrid.appendChild(card);
     }
@@ -65,6 +65,7 @@ function showDetails(credential, index) {
   };
 }
 
+// QR-code scannen
 scanButton.addEventListener('click', () => {
   readerDiv.style.display = 'block';
   const html5QrCode = new Html5Qrcode("reader");
@@ -126,5 +127,6 @@ scanButton.addEventListener('click', () => {
   );
 });
 
+// Laden en weergeven van de opgeslagen kaartjes
 loadCredentials();
 displayCredentials();
