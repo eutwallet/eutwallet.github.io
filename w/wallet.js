@@ -5,6 +5,7 @@ const walletGrid = document.getElementById('wallet-grid');
 
 let credentials = [];
 
+// Functie om opgeslagen kaartjes te laden
 function loadCredentials() {
   const storedCredentials = localStorage.getItem('credentials');
   if (storedCredentials) {
@@ -12,10 +13,12 @@ function loadCredentials() {
   }
 }
 
+// Functie om opgeslagen kaartjes te bewaren
 function saveCredentials() {
   localStorage.setItem('credentials', JSON.stringify(credentials));
 }
 
+// Functie om alle kaartjes in de wallet weer te geven
 function displayCredentials() {
   walletGrid.innerHTML = '';
   credentials.forEach((cred) => {
@@ -62,16 +65,17 @@ scanButton.addEventListener('click', () => {
       console.error(`QR scan failed: ${errorMessage}`);
     }
   );
+});
 
-  // Sluit de scanner handmatig wanneer op "Scannen afsluiten" wordt geklikt
-  closeScanButton.addEventListener('click', () => {
-    html5QrCode.stop().then(() => {
-      readerDiv.style.display = 'none';
-      closeScanButton.style.display = 'none';
-      scanButton.style.display = 'block'; // Herstel scan-knop
-    }).catch(err => {
-      console.error("Failed to stop scanning: ", err);
-    });
+// Sluit de scanner handmatig wanneer op "Scannen afsluiten" wordt geklikt
+closeScanButton.addEventListener('click', () => {
+  const html5QrCode = new Html5Qrcode("reader");
+  html5QrCode.stop().then(() => {
+    readerDiv.style.display = 'none';
+    closeScanButton.style.display = 'none';
+    scanButton.style.display = 'block'; // Herstel scan-knop
+  }).catch(err => {
+    console.error("Failed to stop scanning: ", err);
   });
 });
 
