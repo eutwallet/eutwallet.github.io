@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>QR Credential Wallet</title>
-  <link rel="stylesheet" href="wallet.css"> <!-- Link naar het aparte CSS-bestand -->
+  <link rel="stylesheet" href="wallet.css">
 </head>
 <body>
 
@@ -22,7 +22,14 @@
     <button class="scan-btn" id="scan-button">Scan QR Code</button>
   </div>
 
-  <!-- Full-screen question screen for sharing a specific card -->
+  <!-- Details view for individual cards -->
+  <div id="details">
+    <button class="close-btn" id="close-details">&times;</button>
+    <button class="delete-btn" id="delete-details">&#128465;</button>
+    <h3 id="details-title"></h3>
+    <div id="details-content"></div>
+  </div>
+
   <div id="question-screen">
     <h3 id="share-question"></h3>
     <button class="yes-btn" id="yes-button">Ja</button>
@@ -30,6 +37,6 @@
   </div>
 
   <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
-  <script src="wallet.js"></script> <!-- Verplaats de JavaScript naar een extern bestand -->
+  <script src="wallet.js"></script>
 </body>
 </html>
