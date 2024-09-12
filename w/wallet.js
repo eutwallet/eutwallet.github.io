@@ -29,7 +29,8 @@ function displayCredentials() {
   credentials.forEach((cred, index) => {
     const card = document.createElement('div');
     card.className = 'card';
-    card.innerHTML = `<h3>${cred.name}</h3>`;
+    card.innerHTML = `<h3>${cred.name}</h3>
+    <button class="view-card">Bekijk <span class="arrow">→</span></button>` ;
     card.addEventListener('click', () => showDetails(cred, index)); // Klik op kaartje toont details
     walletGrid.appendChild(card);
   });
