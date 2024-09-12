@@ -83,10 +83,38 @@ scanButton.addEventListener('click', () => {
           console.error("Failed to stop scanning: ", err);
         });
 
-        // Verwerk issuer-QR-code (normaal kaartje opslaan)
-        credentials.push({ name: data.name || "Unknown", validUntil: 'N/A', data: data });
-        saveCredentials();
-        displayCredentials();
+        // Controleer of de QR-code van een verifier komt
+        if (data.verifier && data.requestedCard) {
+          const requestedCard = data.requestedCard;
+          const requester = data.requester;
+
+          // Toon vraag in full screen
+          questionScreen.style.display = 'block';
+          shareQuestion.innerText = `Wil je het kaartje "${requestedCard}" delen met ${requester}?`;
+
+          // Handle Yes/No response
+          yesButton.onclick = () => {
+            // Sla de deelactie op in localStorage zonder deze als kaartje te tonen
+            const timestamp = new Date().toLocaleString();
+            credentials.push({
+              name: `Kaartje "${requestedCard}" gedeeld met ${requester}`,
+              validUntil: timestamp,
+              isShareAction: true // Markeer als deelactie
+            });
+            saveCredentials();
+            questionScreen.style.display = 'none'; // Ga terug naar het hoofscherm zonder de actie te tonen
+          };
+
+          noButton.onclick = () => {
+            questionScreen.style.display = 'none'; // Ga terug naar het hoofscherm
+          };
+
+        } else {
+          // Verwerk issuer-QR-code (normaal kaartje opslaan)
+          credentials.push({ name: data.name || "Unknown", validUntil: 'N/A', data: data });
+          saveCredentials();
+          displayCredentials();
+        }
 
       } catch (error) {
         console.error(`QR-code parse error: ${error}`);
