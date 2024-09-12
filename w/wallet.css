@@ -57,15 +57,15 @@ main {
 
 .scan-btn {
     background-color: #5651EB; /* Kleur QR-knop */
-    border-radius: 20px;
+    border-radius: 35px;
     padding: 20px;
     width: 120px;
     height: 120px;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4); /* Lichte schaduw rechtsonder */
-    border: 5px solid #D3D3D3; /* Lichtgrijze rand om QR-knop */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Lichte schaduw rechtsonder */
+    border: 5px solid #f0f0f0; /* Lichtgrijze rand om QR-knop */
     margin: 0 auto;
     position: relative;
     color: white; /* Tekst wit maken */
