@@ -2,6 +2,11 @@ const scanButton = document.getElementById('scan-button');
 const closeScanButton = document.getElementById('close-scan-button'); // Nieuwe afsluitknop
 const readerDiv = document.getElementById('reader');
 const walletGrid = document.getElementById('wallet-grid');
+const detailsView = document.getElementById('details');
+const detailsTitle = document.getElementById('details-title');
+const detailsContent = document.getElementById('details-content');
+const closeDetailsBtn = document.getElementById('close-details');
+const deleteDetailsBtn = document.getElementById('delete-details');
 
 let credentials = [];
 
@@ -21,12 +26,41 @@ function saveCredentials() {
 // Functie om alle kaartjes in de wallet weer te geven
 function displayCredentials() {
   walletGrid.innerHTML = '';
-  credentials.forEach((cred) => {
+  credentials.forEach((cred, index) => {
     const card = document.createElement('div');
     card.className = 'card';
     card.innerHTML = `<h3>${cred.name}</h3>`;
+    card.addEventListener('click', () => showDetails(cred, index)); // Klik op kaartje toont details
     walletGrid.appendChild(card);
   });
+}
+
+// Functie om details van een kaartje te tonen
+function showDetails(credential, index) {
+  detailsTitle.textContent = credential.name;
+  let detailsHTML = '';
+  
+  for (const key in credential.data) {
+    if (credential.data.hasOwnProperty(key)) {
+      detailsHTML += `<p><strong>${key}:</strong> ${credential.data[key]}</p>`;
+    }
+  }
+
+  detailsContent.innerHTML = detailsHTML;
+  detailsView.style.display = 'block';
+
+  // Sluit details weergave
+  closeDetailsBtn.onclick = () => {
+    detailsView.style.display = 'none';
+  };
+
+  // Verwijder het kaartje
+  deleteDetailsBtn.onclick = () => {
+    credentials.splice(index, 1);
+    saveCredentials();
+    displayCredentials();
+    detailsView.style.display = 'none';
+  };
 }
 
 // QR-code scan starten
@@ -45,6 +79,7 @@ scanButton.addEventListener('click', () => {
         const data = JSON.parse(decodedText);
         credentials.push({
           name: data.name || "Unknown", // Naam uit QR-code
+          data: data // Bewaar de details van het kaartje
         });
         saveCredentials();
         displayCredentials();
