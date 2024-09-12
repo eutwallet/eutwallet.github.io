@@ -1,54 +1,61 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
+/* Algemene stijlen */
+* {
+  margin: 0;
   padding: 0;
-  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
+
+body {
+  background-color: #F9F9F9;
+  color: #333;
+}
+
+header {
+  background-color: #fff;
+  padding: 10px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+}
+
+.navbar {
   display: flex;
-  flex-direction: column;
-  height: 100vh;
   justify-content: space-between;
+  align-items: center;
 }
 
-.header {
-  background-color: #e0e7ff;
-  padding: 20px;
-  text-align: center;
-}
-
-.header h2 {
-  margin: 0;
-}
-
-.wallet-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  padding: 10px;
-  flex-grow: 1;
-}
-
-.card {
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  padding: 15px;
-  text-align: center;
+.menu-button {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #003366;
   cursor: pointer;
-  height: 150px;
+}
+
+.help-button {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #003366;
+  cursor: pointer;
+}
+
+main {
+  padding-top: 60px; /* Zorgt ervoor dat de content niet achter de navbar komt */
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  gap: 20px;
+  max-width: 400px;
+  margin: 0 auto;
+  height: calc(100vh - 60px);
+  overflow-y: auto;
 }
 
-.card h3 {
-  margin: 10px 0;
-}
-
-.footer {
-  padding: 10px;
-  background-color: white;
+.scan-section {
   text-align: center;
-  box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
 }
 
 .scan-btn {
@@ -61,7 +68,40 @@ body {
   cursor: pointer;
   width: 100%;
   max-width: 300px;
-  margin: auto;
+  margin: 20px auto;
+}
+
+.wallet-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+.card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  text-align: left;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card h3 {
+  margin: 5px 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.footer {
+  padding: 10px;
+  background-color: white;
+  text-align: center;
+  box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
 }
 
 #details {
@@ -79,4 +119,16 @@ body {
 
 #details h3 {
   margin-top: 60px;
+}
+
+#reader {
+  display: none;
+  width: 300px;
+  margin: auto;
+}
+
+/* Zorgt ervoor dat de navbar bovenaan blijft en de rest scrollbaar is */
+main {
+  padding-top: 60px;
+  overflow-y: auto;
 }
