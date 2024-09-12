@@ -39,7 +39,8 @@ function displayCredentials() {
 function showDetails(credential, index) {
   detailsTitle.textContent = credential.name;
   let detailsHTML = '';
-  
+
+  // Vul de details van het kaartje, deze zijn altijd aanwezig
   for (const key in credential.data) {
     if (credential.data.hasOwnProperty(key)) {
       detailsHTML += `<p><strong>${key}:</strong> ${credential.data[key]}</p>`;
