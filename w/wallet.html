@@ -8,19 +8,24 @@
 </head>
 <body>
 
-  <div class="header">
-    <h2>Wallet</h2>
-  </div>
+  <header>
+    <nav class="navbar">
+      <button class="menu-button">☰ Menu</button>
+      <button class="help-button">?</button>
+    </nav>
+  </header>
 
-  <div class="wallet-grid" id="wallet-grid">
-    <!-- Cards will be dynamically added here -->
-  </div>
+  <main>
+    <section class="scan-section">
+      <button class="scan-btn" id="scan-button">Scan QR Code</button>
+    </section>
+
+    <section class="wallet-grid" id="wallet-grid">
+      <!-- Cards will be dynamically added here -->
+    </section>
+  </main>
 
   <div id="reader"></div> <!-- QR Code Scanner element -->
-
-  <div class="footer">
-    <button class="scan-btn" id="scan-button">Scan QR Code</button>
-  </div>
 
   <!-- Details view for individual cards -->
   <div id="details">
