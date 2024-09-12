@@ -1,5 +1,5 @@
 const scanButton = document.getElementById('scan-button');
-const closeScanButton = document.getElementById('close-scan-button'); // Nieuwe afsluitknop
+const closeScanButton = document.getElementById('close-scan-button'); // Sluit-knop
 const readerDiv = document.getElementById('reader');
 const walletGrid = document.getElementById('wallet-grid');
 const detailsView = document.getElementById('details');
@@ -8,6 +8,7 @@ const detailsContent = document.getElementById('details-content');
 const closeDetailsBtn = document.getElementById('close-details');
 const deleteDetailsBtn = document.getElementById('delete-details');
 
+let html5QrCode = null; // We zullen de QR-code scanner hier initialiseren
 let credentials = [];
 
 // Functie om opgeslagen kaartjes te laden
@@ -71,12 +72,18 @@ scanButton.addEventListener('click', () => {
   closeScanButton.style.display = 'block'; // Toon de sluit-knop
   readerDiv.style.display = 'block'; // Toon de camera
 
-  const html5QrCode = new Html5Qrcode("reader");
+  // Check of html5QrCode al bestaat, zo niet, initialiseer het
+  if (!html5QrCode) {
+    html5QrCode = new Html5Qrcode("reader");
+  }
+
+  console.log("Starting QR scanner...");
 
   html5QrCode.start(
     { facingMode: "environment" },
     { fps: 10, qrbox: 250 },
     (decodedText) => {
+      console.log("QR code scanned: ", decodedText);
       try {
         const data = JSON.parse(decodedText);
         credentials.push({
@@ -88,6 +95,7 @@ scanButton.addEventListener('click', () => {
 
         // Sluit camera na succesvolle scan
         html5QrCode.stop().then(() => {
+          console.log("QR scanner stopped.");
           readerDiv.style.display = 'none';
           closeScanButton.style.display = 'none';
           scanButton.style.display = 'block'; // Herstel scan-knop
@@ -106,14 +114,19 @@ scanButton.addEventListener('click', () => {
 
 // Sluit de scanner handmatig wanneer op "Scannen afsluiten" wordt geklikt
 closeScanButton.addEventListener('click', () => {
-  const html5QrCode = new Html5Qrcode("reader");
-  html5QrCode.stop().then(() => {
-    readerDiv.style.display = 'none';
-    closeScanButton.style.display = 'none';
-    scanButton.style.display = 'block'; // Herstel scan-knop
-  }).catch(err => {
-    console.error("Failed to stop scanning: ", err);
-  });
+  if (html5QrCode) {
+    console.log("Stopping QR scanner...");
+    html5QrCode.stop().then(() => {
+      console.log("QR scanner stopped manually.");
+      readerDiv.style.display = 'none';
+      closeScanButton.style.display = 'none';
+      scanButton.style.display = 'block'; // Herstel scan-knop
+    }).catch(err => {
+      console.error("Failed to stop scanning: ", err);
+    });
+  } else {
+    console.error("Cannot stop scanner as it is not running.");
+  }
 });
 
 // Laad bestaande kaartjes bij het opstarten
