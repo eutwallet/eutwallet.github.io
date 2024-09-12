@@ -64,10 +64,13 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Lichte schaduw rechtsonder */
-    border: 1px solid #D3D3D3; /* Lichtgrijze rand om QR-knop */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4); /* Lichte schaduw rechtsonder */
+    border: 5px solid #D3D3D3; /* Lichtgrijze rand om QR-knop */
     margin: 0 auto;
     position: relative;
+    color: white; /* Tekst wit maken */
+    font-weight: bold; /* Tekst dikgedrukt maken */
+
 }
 
 .close-scan-btn {
