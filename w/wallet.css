@@ -55,7 +55,7 @@ main {
     margin-bottom: 20px;
 }
 
-.scan-button {
+.scan-btn {
     background-color: #5651EB; /* Kleur QR-knop */
     border-radius: 20px;
     padding: 20px;
@@ -69,6 +69,21 @@ main {
     margin: 0 auto;
     position: relative;
 }
+
+.close-scan-btn {
+  background-color: #f44336; /* Rode kleur */
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 25px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+  max-width: 300px;
+  margin: 20px auto 0 auto;
+  display: none;
+}
+
 
 .qr-placeholder {
     font-size: 24px;
@@ -113,11 +128,6 @@ main {
     font-size: 16px;
     color: #152A62; /* Tekstkleur kaartjes */
     font-weight: bold;
-}
-
-.card p {
-    font-size: 14px;
-    color: #152A62;
 }
 
 .view-card {
