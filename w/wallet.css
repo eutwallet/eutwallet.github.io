@@ -1,67 +1,164 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
-  padding: 0;
+/* Algemene stijlen */
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
+
+body {
+  background-color: #F9F9F9;
+  color: #333;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.menu-button {
+  color: #003366;
+  font-size: 18px;
+  border: none;
+  background-color: transparent;
+}
+
+.help-button {
+  background-color: transparent;
+  border-radius: 50%;
+  font-size: 18px;
+  color: #003366;
+  border: 2px solid #E0E7FF;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+main {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  justify-content: space-between;
+  gap: 20px;
+  max-width: 400px;
+  margin: 0 auto;
+  height: calc(100vh - 60px); /* Zodat het scrollen werkt */
+  overflow-y: auto;
 }
 
-.header {
-  background-color: #e0e7ff;
-  padding: 20px;
+.scan-section {
   text-align: center;
+  margin-bottom: 20px;
 }
 
-.header h2 {
-  margin: 0;
+.scan-button {
+  background-color: #5651EB;
+  border-radius: 20px;
+  padding: 20px;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid #D3D3D3;
+  margin: 0 auto;
+  position: relative;
+}
+
+.qr-placeholder {
+  font-size: 24px;
+  color: white;
+  background-color: transparent;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+
+.scan-text {
+  position: absolute;
+  bottom: -25px;
+  font-size: 14px;
+  color: #5651EB;
+}
+
+.card-summary {
+  background-color: white;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 15px;
+  border: 1px solid #D3D3D3;
+  font-size: 14px;
+}
+
+.card-summary .summary-text {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.5;
+}
+
+.view-summary {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #003366;
+  cursor: pointer;
 }
 
 .wallet-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  padding: 10px;
-  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .card {
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  padding: 15px;
-  text-align: center;
-  cursor: pointer;
-  height: 150px;
+  background-color: #E0F7FA;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+  font-size: 14px;
+  height: 140px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
 }
 
 .card h3 {
-  margin: 10px 0;
-}
-
-.footer {
-  padding: 10px;
-  background-color: white;
-  text-align: center;
-  box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
-}
-
-.scan-btn {
-  background-color: #4CAF50;
-  color: white;
-  padding: 15px;
-  border: none;
-  border-radius: 25px;
   font-size: 16px;
-  cursor: pointer;
-  width: 100%;
-  max-width: 300px;
-  margin: auto;
+  color: #003366;
+  font-weight: bold;
+}
+
+.card p {
+  font-size: 14px;
+  color: #003366;
+}
+
+.view-card {
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: #003366;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.arrow {
+  margin-left: 5px;
+  font-size: 16px;
+  color: #003366;
 }
 
 #details {
@@ -95,12 +192,12 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center; /* Centreert de vraag horizontaal */
+  align-items: center;
 }
 
 #share-question {
-  max-width: 90%; /* Zorgt ervoor dat de tekst binnen het scherm past */
-  word-wrap: break-word; /* Breekt lange woorden af */
+  max-width: 90%;
+  word-wrap: break-word;
 }
 
 .yes-btn, .no-btn {
