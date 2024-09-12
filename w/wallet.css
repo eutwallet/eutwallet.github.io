@@ -92,6 +92,15 @@ body {
   padding: 20px;
   text-align: center;
   z-index: 200;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; /* Centreert de vraag horizontaal */
+}
+
+#share-question {
+  max-width: 90%; /* Zorgt ervoor dat de tekst binnen het scherm past */
+  word-wrap: break-word; /* Breekt lange woorden af */
 }
 
 .yes-btn, .no-btn {
