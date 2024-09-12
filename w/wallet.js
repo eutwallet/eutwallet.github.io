@@ -1,5 +1,5 @@
 const scanButton = document.getElementById('scan-button');
-const closeScanButton = document.getElementById('close-scan-button'); // Nieuwe afsluitknop
+const closeScanButton = document.getElementById('close-scan-btn'); // Nieuwe afsluitknop
 const readerDiv = document.getElementById('reader');
 const walletGrid = document.getElementById('wallet-grid');
 const detailsView = document.getElementById('details');
