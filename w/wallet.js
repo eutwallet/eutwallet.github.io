@@ -30,7 +30,7 @@ function displayCredentials() {
     if (!cred.isShareAction) { // Alleen normale kaartjes tonen, geen deelacties
       const card = document.createElement('div');
       card.className = 'card';
-      card.innerHTML = <h3>${cred.name}</h3>; // Verwijder 'Valid until N/A' tekst
+      card.innerHTML = `<h3>${cred.name}</h3>`; // Gebruik backticks voor string interpolatie
       card.addEventListener('click', () => showDetails(cred, index)); // Voeg event listener toe om details te bekijken
       walletGrid.appendChild(card);
     }
@@ -44,7 +44,7 @@ function showDetails(credential, index) {
 
   for (const key in credential.data) {
     if (credential.data.hasOwnProperty(key)) {
-      detailsHTML += <p><strong>${key}:</strong> ${credential.data[key]}</p>;
+      detailsHTML += `<p><strong>${key}:</strong> ${credential.data[key]}</p>`;
     }
   }
 
@@ -90,14 +90,14 @@ scanButton.addEventListener('click', () => {
 
           // Toon vraag in full screen
           questionScreen.style.display = 'block';
-          shareQuestion.innerText = Wil je het kaartje "${requestedCard}" delen met ${requester}?;
+          shareQuestion.innerText = `Wil je het kaartje "${requestedCard}" delen met ${requester}?`;
 
           // Handle Yes/No response
           yesButton.onclick = () => {
             // Sla de deelactie op in localStorage zonder deze als kaartje te tonen
             const timestamp = new Date().toLocaleString();
             credentials.push({
-              name: Kaartje "${requestedCard}" gedeeld met ${requester},
+              name: `Kaartje "${requestedCard}" gedeeld met ${requester}`,
               validUntil: timestamp,
               isShareAction: true // Markeer als deelactie
             });
@@ -117,14 +117,15 @@ scanButton.addEventListener('click', () => {
         }
 
       } catch (error) {
-        console.error(QR-code parse error: ${error});
+        console.error(`QR-code parse error: ${error}`);
       }
     },
     (errorMessage) => {
-      console.error(QR scan failed: ${errorMessage});
+      console.error(`QR scan failed: ${errorMessage}`);
     }
   );
 });
 
+// Laden en weergeven van de opgeslagen kaartjes
 loadCredentials();
 displayCredentials();
