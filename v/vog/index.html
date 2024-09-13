@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,26 +16,35 @@
 
     h1 {
       font-size: 28px;
-      color: #152A62;
-      text-align: center;
-      margin-bottom: 10px;
+      color: #d35400; /* Donkeroranje kleur voor de titel */
+      margin-left: 20px;
     }
 
     .container {
       max-width: 800px;
       margin: 0 auto;
-      text-align: left; /* Zorgt ervoor dat de tekst links is uitgelijnd */
+      text-align: left;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .logo-container img {
+      max-width: 100px; /* Verklein het logo zodat het netjes naast de titel past */
     }
 
     p {
       font-size: 16px;
       color: #555;
-      margin-bottom: 20px;
     }
 
     a {
-      color: #152A62;
+      color: #d35400;
       text-decoration: none;
+      font-weight: bold;
     }
 
     a:hover {
@@ -47,19 +56,46 @@
       margin: 20px 0;
     }
 
+    .box {
+      border: 1px solid #ccc; /* Lichtgrijze omlijning */
+      padding: 20px;
+      margin-bottom: 30px;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+
+    .step {
+      background-color: #E0F7FA; /* Achtergrondkleur zoals bij 'start voorbeeld VOG' */
+      padding: 10px;
+      display: inline-block;
+      font-weight: bold;
+      border-radius: 5px;
+      color: #152A62;
+      margin-bottom: 10px;
+    }
+
+    .step a {
+      color: #d35400;
+      font-weight: bold;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .step a::after {
+      content: " →"; /* Pijl toegevoegd */
+      font-size: 18px;
+      margin-left: 5px;
+    }
+
     .qr-code {
       text-align: center;
-      margin-top: 30px;
+      margin-top: 20px;
     }
 
-    .logo-container {
-      text-align: center;
-      margin-bottom: 30px;
+    .qr-code img {
+      border: 1px solid #ccc; /* Grijze omlijning voor de QR-code */
     }
 
-    .logo-container img {
-      max-width: 150px;
-    }
   </style>
 </head>
 <body>
@@ -67,7 +103,7 @@
   <div class="container">
     <!-- Logo en bedrijfsnaam -->
     <div class="logo-container">
-      <img src="https://via.placeholder.com/150?text=Logo" alt="Innovatiemakers B.V. Logo">
+      <img src="1.png" alt="Innovatiemakers B.V. Logo">
       <h1>Innovatiemakers B.V.</h1>
     </div>
     
@@ -77,18 +113,26 @@
     <p>Beste,</p>
     <p>In verband met het sollicitatieproces vragen we om een Verklaring Omtrent Gedrag (VOG). Volg onderstaande stappen om deze aan te leveren.</p>
 
-    <ol>
-      <li><strong>Stap 1:</strong> Ga naar Juust om je digitale bewijs voor een Verklaring Omtrent Gedrag (VOG) op te halen. <br>
-      <a href="https://www.eutw.nl/i/vog/" target="_blank">Klik op deze link om naar de juiste pagina te gaan.</a></li>
-      
-      <li><strong>Stap 2:</strong> Zodra je het digitale bewijs van een Verklaring Omtrent Gedrag (VOG) hebt opgehaald, kun je met je wallet onderstaande QR-code scannen om de VOG te delen.</li>
-    </ol>
-
-    <!-- QR Code -->
-    <div class="qr-code">
-      <img src="https://api.qrserver.com/v1/create-qr-code/?data=%7B%22verifier%22%3Atrue%2C%22requestedCard%22%3A%22Verklaring%20Omtrent%20Gedrag%22%2C%22requester%22%3A%22Innovatiemakers%20B.V.%22%2C%22purpose%22%3A%22Controle%20van%20achtergrond%22%7D&size=200x200" alt="QR Code for VOG Verifier">
+    <!-- Stap 1 vak met grijze omlijning -->
+    <div class="box">
+      <div class="step">Stap 1</div>
+      <p>Ga naar Juust om je digitale bewijs voor een Verklaring Omtrent Gedrag (VOG) op te halen.</p>
+      <a href="https://www.eutw.nl/i/vog/" target="_blank">Klik op deze link om naar de juiste pagina te gaan.</a>
     </div>
-    
+
+    <!-- Witruimte -->
+    <div class="divider"></div>
+
+    <!-- Stap 2 vak met grijze omlijning -->
+    <div class="box">
+      <div class="step">Stap 2</div>
+      <p>Zodra je het digitale bewijs van een Verklaring Omtrent Gedrag (VOG) hebt opgehaald, kun je met je wallet onderstaande QR-code scannen om de VOG te delen.</p>
+      
+      <!-- QR Code -->
+      <div class="qr-code">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?data=%7B%22verifier%22%3Atrue%2C%22requestedCard%22%3A%22Verklaring%20Omtrent%20Gedrag%22%2C%22requester%22%3A%22Innovatiemakers%20B.V.%22%2C%22purpose%22%3A%22Controle%20van%20achtergrond%22%7D&size=200x200" alt="QR Code for VOG Verifier">
+      </div>
+    </div>
   </div>
 
 </body>
