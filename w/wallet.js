@@ -29,16 +29,19 @@ function saveCredentials() {
   localStorage.setItem('credentials', JSON.stringify(credentials));
 }
 
-// Functie om alle kaartjes in de wallet weer te geven
+// Functie om kaartjes van issuers in de wallet weer te geven en kaartjes van verifiers niet weer te geven
 function displayCredentials() {
-  walletGrid.innerHTML = '';
+  walletGrid.innerHTML = ''; // Maak de wallet leeg
   credentials.forEach((cred, index) => {
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.innerHTML = `<h3>${cred.name}</h3>
-    <button class="view-card">Bekijk <span class="arrow">→</span></button>` ;
-    card.addEventListener('click', () => showDetails(cred, index)); // Klik op kaartje toont details
-    walletGrid.appendChild(card);
+    // Controleer of het een deelactie is (verifier-kaartje)
+    if (!cred.isShareAction) {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `<h3>${cred.name}</h3>
+      <button class="view-card">Bekijk <span class="arrow">→</span></button>`;
+      card.addEventListener('click', () => showDetails(cred, index)); // Klik op kaartje toont details
+      walletGrid.appendChild(card);
+    }
   });
 }
 
