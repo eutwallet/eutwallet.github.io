@@ -65,6 +65,28 @@
     </div>
   </section>
 
+  <!-- Modal voor het delen van gegevens -->
+<div id="share-question-modal" class="modal">
+  <div class="modal-content">
+    <h2 id="share-question-text"><strong></strong></h2>
+    <div class="divider"></div>
+    <div class="reason-section">
+      <h3><strong>Reden</strong></h3>
+      <p id="share-reason"></p>
+    </div>
+    <div class="divider"></div>
+    <div class="details-section">
+      <h3><strong>Gegevens</strong></h3>
+      <p id="share-details"></p>
+    </div>
+    <div class="divider"></div>
+    <div class="button-container">
+      <button id="stop-share-btn" class="stop-button">Stop</button>
+      <button id="yes-share-btn" class="share-button">Delen</button>
+    </div>
+  </div>
+</div>
+
   <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
   <script src="wallet.js"></script>
   <script>
