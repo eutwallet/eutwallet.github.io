@@ -79,7 +79,7 @@ scanButton.addEventListener('click', () => {
 
   // Check of html5QrCode al bestaat, zo niet, initialiseer het
   if (!html5QrCode) {
-    html5QrCode = new Html5Qrcode("reader");
+    html5QrCode = new Html5QrCode("reader");
   }
 
   console.log("Starting QR scanner...");
@@ -92,32 +92,82 @@ scanButton.addEventListener('click', () => {
       try {
         const data = JSON.parse(decodedText);
 
-        // Stap 1: Controleer of het een verifier QR-code is
-        if (data.verifier && data.requestedCard && data.requester) {
+        // Controleer of het een verifier QR-code is
+        if (data.verifier && data.requestedCard && data.requester && data.purpose) {
           console.log("Verifier QR-code herkend.");
           console.log("Gevraagde kaart: ", data.requestedCard);
           console.log("Aanvrager: ", data.requester);
 
-        // Stap 2: Dynamische vraag in de modal
-        shareQuestionText.innerText = `Wilt u onderstaande gegevens delen met ${data.requester} voor ${data.purpose}?`;
-        shareDetails.innerText = `Gevraagde gegevens: ${data.requestedCard}`;
-        shareQuestionModal.style.display = 'flex';
+          // Dynamische vraag in de modal
+          shareQuestionText.innerText = `Wilt u onderstaande gegevens delen met ${data.requester} voor ${data.purpose}?`;
+          shareDetails.innerText = `Gevraagde gegevens: ${data.requestedCard}`;
+          shareQuestionModal.style.display = 'flex';
 
-        // Verwerk het antwoord
-        yesShareBtn.onclick = () => {
-          const timestamp = new Date().toLocaleString();
-          credentials.push({
-            name: `Gegevens gedeeld met ${data.requester}`,
-            validUntil: timestamp,
-            isShareAction: true // Markeer als deelactie
-          });
-          saveCredentials();
-          shareQuestionModal.style.display = 'none'; // Verberg modal
-        };
+          // Verwerk het antwoord bij "Ja"
+          yesShareBtn.onclick = () => {
+            const timestamp = new Date().toLocaleString();
+            
+            // Opslaan in local storage met status "Geslaagde datadeling"
+            const shareAction = {
+              requester: data.requester,
+              requestedCard: data.requestedCard,
+              purpose: data.purpose,
+              timestamp: timestamp,
+              status: "Geslaagde datadeling"
+            };
 
-        noShareBtn.onclick = () => {
-          shareQuestionModal.style.display = 'none'; // Verberg modal zonder actie
-        };
+            // Haal bestaande deelacties op of maak een nieuwe lijst
+            let shareLog = localStorage.getItem('shareLog');
+            if (shareLog) {
+              shareLog = JSON.parse(shareLog);
+            } else {
+              shareLog = [];
+            }
+
+            // Voeg de nieuwe deelactie toe aan de lijst
+            shareLog.push(shareAction);
+
+            // Sla de bijgewerkte lijst op in local storage
+            localStorage.setItem('shareLog', JSON.stringify(shareLog));
+
+            // Verberg de modal na succesvolle datadeling
+            shareQuestionModal.style.display = 'none';
+
+            console.log("Datadeling opgeslagen:", shareAction);
+          };
+
+          // Verwerk het antwoord bij "Nee"
+          noShareBtn.onclick = () => {
+            const timestamp = new Date().toLocaleString();
+            
+            // Opslaan in local storage met status "Wel gevraagd, maar gegevens niet gedeeld"
+            const shareAction = {
+              requester: data.requester,
+              requestedCard: data.requestedCard,
+              purpose: data.purpose,
+              timestamp: timestamp,
+              status: "Wel gevraagd, maar gegevens niet gedeeld"
+            };
+
+            // Haal bestaande deelacties op of maak een nieuwe lijst
+            let shareLog = localStorage.getItem('shareLog');
+            if (shareLog) {
+              shareLog = JSON.parse(shareLog);
+            } else {
+              shareLog = [];
+            }
+
+            // Voeg de nieuwe deelactie toe aan de lijst
+            shareLog.push(shareAction);
+
+            // Sla de bijgewerkte lijst op in local storage
+            localStorage.setItem('shareLog', JSON.stringify(shareLog));
+
+            // Verberg de modal na het weigeren van datadeling
+            shareQuestionModal.style.display = 'none';
+
+            console.log("Datadeling geweigerd:", shareAction);
+          };
         } else {
           // Verwerk issuer QR-code zoals normaal
           credentials.push({
