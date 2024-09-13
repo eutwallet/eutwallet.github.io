@@ -8,56 +8,91 @@
 </head>
 <body>
 
-  <header>
-    <nav class="navbar">
-      <button class="menu-button">☰ Menu</button>
-      <button class="help-button">?</button>
-    </nav>
-  </header>
+  <!-- Welkomstscherm -->
+  <section id="welcome-screen" style="display: flex; justify-content: center; align-items: center; height: 100vh; flex-direction: column;">
+    <h1>Welcome to the NL Wallet</h1>
+    <p>This is your digital wallet. You can add cards with your details, such as your name and address.</p>
+    <img src="image-path.png" alt="Digital Wallet Image" style="width: 200px;">
+    <button id="next-welcome" style="margin-top: 20px;">Next</button>
+  </section>
 
-  <main>
-    <section class="scan-section">
-      <button class="scan-btn" id="scan-button">Scan QR Code</button>
-      <button class="close-scan-btn" id="close-scan-button" style="display: none;">Scannen afsluiten</button>
-      <div id="reader"></div> <!-- QR Code Scanner element direct onder de scan-knop -->
-    </section>
+  <!-- Pincode-scherm -->
+  <section id="pin-screen" style="display: none; justify-content: center; align-items: center; height: 100vh; flex-direction: column;">
+    <h2>Enter PIN</h2>
+    <div class="pin-input">
+      <input type="password" maxlength="1">
+      <input type="password" maxlength="1">
+      <input type="password" maxlength="1">
+      <input type="password" maxlength="1">
+    </div>
+    <button id="submit-pin" style="margin-top: 20px;">Unlock</button>
+  </section>
 
-    <section class="wallet-grid" id="wallet-grid">
-      <!-- Dynamische kaartjes zullen hier worden toegevoegd -->
-    </section>
-  </main>
+  <!-- Wallet-scherm -->
+  <section id="wallet-screen" style="display: none;">
+    <header>
+      <nav class="navbar">
+        <button class="menu-button">☰ Menu</button>
+        <button class="help-button">?</button>
+      </nav>
+    </header>
 
-  <!-- Details view for individual cards -->
-  <div id="details">
-    <button class="close-btn" id="close-details">&times;</button>
-    <button class="delete-btn" id="delete-details">&#128465;</button>
-    <h3 id="details-title"></h3>
-    <div id="details-content"></div>
+    <main>
+      <section class="scan-section">
+        <button class="scan-btn" id="scan-button">Scan QR Code</button>
+        <button class="close-scan-btn" id="close-scan-button" style="display: none;">Scannen afsluiten</button>
+        <div id="reader"></div> <!-- QR Code Scanner element direct onder de scan-knop -->
+      </section>
+
+      <section class="wallet-grid" id="wallet-grid">
+        <!-- Dynamische kaartjes zullen hier worden toegevoegd -->
+      </section>
+    </main>
+
+    <!-- Details view for individual cards -->
+    <div id="details">
+      <button class="close-btn" id="close-details">&times;</button>
+      <button class="delete-btn" id="delete-details">&#128465;</button>
+      <h3 id="details-title"></h3>
+      <div id="details-content"></div>
+    </div>
+  </section>
+
+  <!-- Modal voor het delen van gegevens -->
+  <div id="share-question-modal" class="modal">
+    <div class="modal-content">
+      <h2 id="share-question-text"><strong></strong></h2>
+      <div class="divider"></div>
+      <div class="reason-section">
+        <h3><strong>Reden</strong></h3>
+        <p id="share-reason"></p>
+      </div>
+      <div class="divider"></div>
+      <div class="details-section">
+        <h3><strong>Gegevens</strong></h3>
+        <p id="share-details"></p>
+      </div>
+      <div class="divider"></div>
+      <div class="button-container">
+        <button id="stop-share-btn" class="stop-button">Stop</button>
+        <button id="yes-share-btn" class="share-button">Delen</button>
+      </div>
+    </div>
   </div>
-
-<!-- Modal voor het delen van gegevens -->
-<div id="share-question-modal" class="modal">
-  <div class="modal-content">
-    <h2 id="share-question-text"><strong></strong></h2>
-    <div class="divider"></div>
-    <div class="reason-section">
-      <h3><strong>Reden</strong></h3>
-      <p id="share-reason"></p>
-    </div>
-    <div class="divider"></div>
-    <div class="details-section">
-      <h3><strong>Gegevens</strong></h3>
-      <p id="share-details"></p>
-    </div>
-    <div class="divider"></div>
-    <div class="button-container">
-      <button id="stop-share-btn" class="stop-button">Stop</button>
-      <button id="yes-share-btn" class="share-button">Delen</button>
-    </div>
-  </div>
-</div>
 
   <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
   <script src="wallet.js"></script>
+  <script>
+    // Logica voor het wisselen van schermen
+    document.getElementById('next-welcome').addEventListener('click', function() {
+      document.getElementById('welcome-screen').style.display = 'none';
+      document.getElementById('pin-screen').style.display = 'flex';
+    });
+
+    document.getElementById('submit-pin').addEventListener('click', function() {
+      document.getElementById('pin-screen').style.display = 'none';
+      document.getElementById('wallet-screen').style.display = 'block';
+    });
+  </script>
 </body>
 </html>
