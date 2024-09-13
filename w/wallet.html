@@ -38,10 +38,22 @@
 <!-- Modal voor het delen van gegevens -->
 <div id="share-question-modal" class="modal">
   <div class="modal-content">
-    <h3 id="share-question-text"></h3>
-    <div id="share-details"></div>
-    <button id="yes-share-btn">Ja</button>
-    <button id="no-share-btn">Nee</button>
+    <h2 id="share-question-text"><strong></strong></h2>
+    <div class="divider"></div>
+    <div class="reason-section">
+      <h3><strong>Reden</strong></h3>
+      <p id="share-reason"></p>
+    </div>
+    <div class="divider"></div>
+    <div class="details-section">
+      <h3><strong>Gegevens</strong></h3>
+      <p id="share-details"></p>
+    </div>
+    <div class="divider"></div>
+    <div class="button-container">
+      <button id="stop-share-btn" class="stop-button">Stop</button>
+      <button id="yes-share-btn" class="share-button">Delen</button>
+    </div>
   </div>
 </div>
 
