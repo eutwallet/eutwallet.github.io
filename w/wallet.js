@@ -12,6 +12,7 @@ const shareQuestionText = document.getElementById('share-question-text');
 const shareDetails = document.getElementById('share-details');
 const yesShareBtn = document.getElementById('yes-share-btn');
 const noShareBtn = document.getElementById('no-share-btn');
+const stopShareBtn = document.getElementById('stop-share-btn');
 
 let html5QrCode = null; // We zullen de QR-code scanner hier initialiseren
 let credentials = [];
@@ -119,12 +120,33 @@ scanButton.addEventListener('click', () => {
             });
             saveCredentials();
             shareQuestionModal.style.display = 'none'; // Verberg modal
+          
+            // Stop de QR-scanner en herstel de knoppen
+            html5QrCode.stop().then(() => {
+              console.log("QR scanner stopped.");
+              readerDiv.style.display = 'none';
+              closeScanButton.style.display = 'none';
+              scanButton.style.display = 'block'; // Herstel scan-knop
+            }).catch(err => {
+              console.error("Failed to stop scanning: ", err);
+            });
           };
         
           // Verwerk het antwoord bij "Stop"
           stopShareBtn.onclick = () => {
             shareQuestionModal.style.display = 'none'; // Verberg modal zonder actie
+          
+            // Stop de QR-scanner en herstel de knoppen
+            html5QrCode.stop().then(() => {
+              console.log("QR scanner stopped.");
+              readerDiv.style.display = 'none';
+              closeScanButton.style.display = 'none';
+              scanButton.style.display = 'block'; // Herstel scan-knop
+            }).catch(err => {
+              console.error("Failed to stop scanning: ", err);
+            });
           };
+
         } else {
           // Verwerk issuer QR-code zoals normaal
           credentials.push({
