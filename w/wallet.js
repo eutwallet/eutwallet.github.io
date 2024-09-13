@@ -79,7 +79,7 @@ scanButton.addEventListener('click', () => {
 
   // Check of html5QrCode al bestaat, zo niet, initialiseer het
   if (!html5QrCode) {
-    html5QrCode = new Html5QrCode("reader");
+    html5QrCode = new Html5Qrcode("reader");
   }
 
   console.log("Starting QR scanner...");
@@ -92,13 +92,32 @@ scanButton.addEventListener('click', () => {
       try {
         const data = JSON.parse(decodedText);
 
-        // Controleer of het een verifier QR-code is
-        if (data.verifier && data.requestedCard && data.requester && data.purpose) {
+        // Stap 1: Controleer of het een verifier QR-code is
+        if (data.verifier && data.requestedCard && data.requester) {
           console.log("Verifier QR-code herkend.");
           console.log("Gevraagde kaart: ", data.requestedCard);
           console.log("Aanvrager: ", data.requester);
 
-          // Log alleen de verifier-informatie zonder verdere actie
+        // Stap 2: Dynamische vraag in de modal
+        shareQuestionText.innerText = `Wilt u onderstaande gegevens delen met ${data.requester} voor ${data.purpose}?`;
+        shareDetails.innerText = `Gevraagde gegevens: ${data.requestedCard}`;
+        shareQuestionModal.style.display = 'flex';
+
+        // Verwerk het antwoord
+        yesShareBtn.onclick = () => {
+          const timestamp = new Date().toLocaleString();
+          credentials.push({
+            name: `Gegevens gedeeld met ${data.requester}`,
+            validUntil: timestamp,
+            isShareAction: true // Markeer als deelactie
+          });
+          saveCredentials();
+          shareQuestionModal.style.display = 'none'; // Verberg modal
+        };
+
+        noShareBtn.onclick = () => {
+          shareQuestionModal.style.display = 'none'; // Verberg modal zonder actie
+        };
         } else {
           // Verwerk issuer QR-code zoals normaal
           credentials.push({
