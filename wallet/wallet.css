@@ -39,7 +39,7 @@ header {
     align-items: center;
     position: absolute;
     top: 10px; /* Correctie van uitlijning met menu-knop */
-    right: 10px; /* Uitlijning rechts */
+    right: 30px; /* Uitlijning rechts */
 }
 
 main {
@@ -143,7 +143,7 @@ main {
     justify-content: flex-start; /* Rechts uitlijnen */
     position: absolute;
     bottom: 10px;
-    left: 10px; /* Positioneer het naar rechtsonder op de kaart */
+    left: 30px; /* Positioneer het naar rechtsonder op de kaart */
 }
 
 .arrow {
