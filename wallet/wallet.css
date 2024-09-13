@@ -281,22 +281,17 @@ p {
     flex-direction: column;
     justify-content: space-between;
     height: 100vh;
-    text-align: center;
     padding: 20px;
 }
 
 .welcome-content {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    text-align: center;
+    flex-grow: 1; /* Duwt de knop naar beneden */
 }
 
 #welcome-screen img {
-    width: 50%;
-    max-width: 200px;
     margin: 20px 0;
+    max-width: 100%; /* Zorg dat de afbeelding op mobiele apparaten netjes past */
 }
 
 #welcome-screen button {
@@ -305,12 +300,10 @@ p {
     padding: 15px;
     border: none;
     border-radius: 5px;
-    width: 90%;
-    max-width: 300px;
-    font-size: 16px;
     cursor: pointer;
-    margin-bottom: 20px;
-    align-self: center;
+    width: 100%;
+    max-width: 300px;
+    margin: 20px auto 10px auto; /* Zorgt dat de knop altijd boven de rand van het scherm blijft */
 }
 
 /* Pincode-scherm */
@@ -320,19 +313,17 @@ p {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    text-align: center;
     padding: 20px;
 }
 
-#pin-screen h2 {
-    color: #152A62;
-    margin-bottom: 20px;
+.pin-content {
+    text-align: center;
 }
 
 .pin-input {
     display: flex;
     gap: 10px;
-    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 .pin-input input {
@@ -340,25 +331,20 @@ p {
     font-size: 24px;
     padding: 10px;
     width: 50px;
-    height: 50px;
-    border: 2px solid #ccc;
+    height: 60px;
+    border: 1px solid #ccc;
     border-radius: 5px;
 }
 
-#pin-screen button {
+#submit-pin {
     background-color: #5A50ED;
     color: white;
     padding: 15px;
     border: none;
     border-radius: 5px;
-    width: 90%;
-    max-width: 300px;
-    font-size: 16px;
     cursor: pointer;
-    align-self: center;
-}
-
-#pin-screen button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
+    width: 100%;
+    max-width: 300px;
+    margin-top: 20px;
+    align-self: center; /* Centreer de knop horizontaal */
 }
