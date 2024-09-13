@@ -213,6 +213,13 @@ main {
   text-align: center;
 }
 
+.modal #share-details {
+  font-size: 18px;
+  color: white;
+  text-align: center;
+  margin: 10px 0;
+}
+
 .modal button {
   background-color: #5D3EBC;
   color: white;
@@ -222,4 +229,3 @@ main {
   font-size: 18px;
   cursor: pointer;
 }
-
