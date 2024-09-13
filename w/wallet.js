@@ -68,62 +68,37 @@ function showDetails(credential, index) {
 
 // QR-code scan starten
 scanButton.addEventListener('click', () => {
-  scanButton.style.display = 'none';
-  closeScanButton.style.display = 'block';
-  readerDiv.style.display = 'block';
+  scanButton.style.display = 'none'; // Verberg de scan-knop
+  closeScanButton.style.display = 'block'; // Toon de sluit-knop
+  readerDiv.style.display = 'block'; // Toon de camera
+
+  // Check of html5QrCode al bestaat, zo niet, initialiseer het
   if (!html5QrCode) {
-    console.log("About to initialize Html5QrCode...");
-    html5QrCode = new Html5QrCode("reader");
+    html5QrCode = new Html5Qrcode("reader");
   }
+
+  console.log("Starting QR scanner...");
 
   html5QrCode.start(
     { facingMode: "environment" },
     { fps: 10, qrbox: 250 },
     (decodedText) => {
+      console.log("QR code scanned: ", decodedText);
       try {
         const data = JSON.parse(decodedText);
-        
-        // Controleer of het een verifier QR-code is
-        if (data.verifier && data.requestedCard && data.requester && data.purpose) {
-          const requestedCard = data.requestedCard;
-          const requester = data.requester;
-          const purpose = data.purpose;
-
-          // Dynamische vraag in de modal
-          shareQuestionText.innerText = `Wilt u onderstaande gegevens delen met ${requester} voor ${purpose}?`;
-          shareDetails.innerText = `Gevraagde gegevens: ${requestedCard}`;
-          shareQuestionModal.style.display = 'flex';
-
-          // Verwerk het antwoord
-          yesShareBtn.onclick = () => {
-            const timestamp = new Date().toLocaleString();
-            credentials.push({
-              name: `Gegevens gedeeld met ${requester}`,
-              validUntil: timestamp,
-              isShareAction: true // Markeer als deelactie
-            });
-            saveCredentials();
-            shareQuestionModal.style.display = 'none';
-          };
-
-          noShareBtn.onclick = () => {
-            shareQuestionModal.style.display = 'none'; // Verberg de modal
-          };
-        } else {
-          // Verwerk issuer QR-code
-          credentials.push({
-            name: data.name || "Unknown",
-            data: data
-          });
-          saveCredentials();
-          displayCredentials();
-        }
+        credentials.push({
+          name: data.name || "Unknown", // Naam uit QR-code
+          data: data // Bewaar de details van het kaartje
+        });
+        saveCredentials();
+        displayCredentials();
 
         // Sluit camera na succesvolle scan
         html5QrCode.stop().then(() => {
+          console.log("QR scanner stopped.");
           readerDiv.style.display = 'none';
           closeScanButton.style.display = 'none';
-          scanButton.style.display = 'block';
+          scanButton.style.display = 'block'; // Herstel scan-knop
         }).catch(err => {
           console.error("Failed to stop scanning: ", err);
         });
@@ -132,7 +107,7 @@ scanButton.addEventListener('click', () => {
       }
     },
     (errorMessage) => {
-      console.error(`QR scan failed: ${errorMessage}`);
+      console.error(QR scan failed: ${errorMessage});
     }
   );
 });
