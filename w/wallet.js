@@ -79,7 +79,7 @@ scanButton.addEventListener('click', () => {
 
   // Check of html5QrCode al bestaat, zo niet, initialiseer het
   if (!html5QrCode) {
-    html5QrCode = new Html5Qrcode("reader");
+    html5QrCode = new Html5QrCode("reader");
   }
 
   console.log("Starting QR scanner...");
@@ -103,21 +103,54 @@ scanButton.addEventListener('click', () => {
         shareDetails.innerText = `Gevraagde gegevens: ${data.requestedCard}`;
         shareQuestionModal.style.display = 'flex';
 
-        // Verwerk het antwoord
+        // Verwerk het antwoord bij "Ja"
         yesShareBtn.onclick = () => {
           const timestamp = new Date().toLocaleString();
-          credentials.push({
-            name: `Gegevens gedeeld met ${data.requester}`,
-            validUntil: timestamp,
-            isShareAction: true // Markeer als deelactie
-          });
-          saveCredentials();
+
+          // Deelactie opslaan met status "Geslaagde datadeling"
+          const shareAction = {
+            requester: data.requester,
+            requestedCard: data.requestedCard,
+            purpose: data.purpose,
+            timestamp: timestamp,
+            status: "Geslaagde datadeling"
+          };
+
+          let shareLog = localStorage.getItem('shareLog');
+          shareLog = shareLog ? JSON.parse(shareLog) : [];
+
+          // Voeg de nieuwe deelactie toe aan de lijst
+          shareLog.push(shareAction);
+          localStorage.setItem('shareLog', JSON.stringify(shareLog));
+
+          console.log("Datadeling opgeslagen:", shareAction);
           shareQuestionModal.style.display = 'none'; // Verberg modal
         };
 
+        // Verwerk het antwoord bij "Nee"
         noShareBtn.onclick = () => {
-          shareQuestionModal.style.display = 'none'; // Verberg modal zonder actie
+          const timestamp = new Date().toLocaleString();
+
+          // Deelactie opslaan met status "Wel gevraagd, maar gegevens niet gedeeld"
+          const shareAction = {
+            requester: data.requester,
+            requestedCard: data.requestedCard,
+            purpose: data.purpose,
+            timestamp: timestamp,
+            status: "Wel gevraagd, maar gegevens niet gedeeld"
+          };
+
+          let shareLog = localStorage.getItem('shareLog');
+          shareLog = shareLog ? JSON.parse(shareLog) : [];
+
+          // Voeg de nieuwe deelactie toe aan de lijst
+          shareLog.push(shareAction);
+          localStorage.setItem('shareLog', JSON.stringify(shareLog));
+
+          console.log("Datadeling geweigerd:", shareAction);
+          shareQuestionModal.style.display = 'none'; // Verberg modal
         };
+
         } else {
           // Verwerk issuer QR-code zoals normaal
           credentials.push({
