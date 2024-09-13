@@ -120,16 +120,13 @@ main {
   margin-bottom: 20px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start; /* Zorgt ervoor dat tekst bovenaan blijft */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  height: 120px; /* Verhoog de hoogte van de kaart */
-  max-width: 350px; /* Een breedte instellen */
-  transition: transform 0.2s ease-in-out;
+  height: 100px; /* Verhoog de hoogte om het meer als een pasje te laten aanvoelen */
+  width: 100%; /* Zorg ervoor dat de kaart de volledige breedte behoudt */
+  max-width: 100%; /* Houd de breedte maximaal */
 }
 
-.card:hover {
-  transform: scale(1.02); /* Een subtiele hover-animatie */
-}
 
 .card h3 {
     font-size: 16px;
