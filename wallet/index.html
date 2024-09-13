@@ -23,19 +23,17 @@
 
   <!-- Pincode-scherm -->
   <section id="pin-screen" style="display: none;">
-    <div class="pin-content">
-      <h2>Voer je 6-cijferige pincode in</h2>
-      <div class="pin-input">
-        <input type="password" maxlength="1" class="pin-box" />
-        <input type="password" maxlength="1" class="pin-box" />
-        <input type="password" maxlength="1" class="pin-box" />
-        <input type="password" maxlength="1" class="pin-box" />
-        <input type="password" maxlength="1" class="pin-box" />
-        <input type="password" maxlength="1" class="pin-box" />
-      </div>
-      <button id="submit-pin" disabled>Ontgrendelen</button>
+    <h2>Voer je 6-cijferige pincode in</h2>
+    <div class="pin-input">
+        <input type="password" maxlength="1" class="pin-box" inputmode="numeric" pattern="[0-9]*">
+        <input type="password" maxlength="1" class="pin-box" inputmode="numeric" pattern="[0-9]*">
+        <input type="password" maxlength="1" class="pin-box" inputmode="numeric" pattern="[0-9]*">
+        <input type="password" maxlength="1" class="pin-box" inputmode="numeric" pattern="[0-9]*">
+        <input type="password" maxlength="1" class="pin-box" inputmode="numeric" pattern="[0-9]*">
+        <input type="password" maxlength="1" class="pin-box" inputmode="numeric" pattern="[0-9]*">
     </div>
-  </section>
+    <button id="submit-pin" disabled>Ontgrendelen</button>
+</section>
 
   <!-- Wallet-scherm -->
   <section id="wallet-screen" style="display: none;">
