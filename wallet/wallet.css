@@ -275,34 +275,90 @@ p {
 }
 
 /* Welkomstscherm */
-#welcome-screen h1, #pin-screen h2 {
-    color: #152A62;
+#welcome-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+    text-align: center;
 }
 
-#welcome-screen button, #pin-screen button {
+#welcome-screen h1 {
+    color: #152A62;
+    margin-bottom: 20px;
+}
+
+#welcome-screen p {
+    color: #6c757d; /* Lichtere tekstkleur voor de beschrijving */
+    margin-bottom: 40px;
+}
+
+#welcome-screen button {
     background-color: #5A50ED;
     color: white;
-    padding: 10px 20px;
+    padding: 15px;
     border: none;
     border-radius: 5px;
+    width: 90%;  /* Knop over bijna de hele breedte op mobiel */
+    max-width: 300px;
+    font-size: 16px;
     cursor: pointer;
+    text-align: center;
 }
 
-/* Pincode-styling */
+#welcome-screen img {
+    width: 50%;
+    max-width: 200px;
+    margin-bottom: 40px;
+}
+
+/* Pincode-scherm */
+#pin-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+    text-align: center;
+}
+
+#pin-screen h2 {
+    color: #152A62;
+    margin-bottom: 20px;
+}
+
 .pin-input {
     display: flex;
-    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
 }
 
 .pin-input input {
-  text-align: center;
-  font-size: 24px;
-  padding: 10px;
-  width: 120px;
-  height: 60px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  margin-top: 10px;
+    text-align: center;
+    font-size: 24px;
+    padding: 10px;
+    width: 80%; /* Over de volledige breedte van het scherm met wat padding */
+    max-width: 400px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
 }
 
+/* Pincodeknop */
+#pin-screen button {
+    background-color: #5A50ED;
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    width: 90%; /* Knop over bijna de hele breedte op mobiel */
+    max-width: 300px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+}
 
+#pin-screen button:disabled {
+    background-color: #ccc; /* Grijze knop als deze is uitgeschakeld */
+    cursor: not-allowed;
+}
