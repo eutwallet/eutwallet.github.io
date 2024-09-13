@@ -38,7 +38,7 @@ header {
     justify-content: center;
     align-items: center;
     position: absolute;
-    top: 10px; /* Correctie van uitlijning met menu-knop */
+    top: 30px; /* Correctie van uitlijning met menu-knop */
     right: 30px; /* Uitlijning rechts */
 }
 
@@ -52,7 +52,7 @@ main {
 
 .scan-section {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 }
 
 .scan-btn {
