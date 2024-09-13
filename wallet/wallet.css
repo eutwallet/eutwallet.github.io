@@ -286,6 +286,9 @@ p {
 
 .welcome-content {
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     flex-grow: 1; /* Duwt de knop naar beneden */
 }
 
