@@ -7,6 +7,11 @@ const detailsTitle = document.getElementById('details-title');
 const detailsContent = document.getElementById('details-content');
 const closeDetailsBtn = document.getElementById('close-details');
 const deleteDetailsBtn = document.getElementById('delete-details');
+const shareQuestionModal = document.getElementById('share-question-modal');
+const shareQuestionText = document.getElementById('share-question-text');
+const shareDetails = document.getElementById('share-details');
+const yesShareBtn = document.getElementById('yes-share-btn');
+const noShareBtn = document.getElementById('no-share-btn');
 
 let html5QrCode = null; // We zullen de QR-code scanner hier initialiseren
 let credentials = [];
@@ -92,6 +97,27 @@ scanButton.addEventListener('click', () => {
           console.log("Verifier QR-code herkend.");
           console.log("Gevraagde kaart: ", data.requestedCard);
           console.log("Aanvrager: ", data.requester);
+
+        // Stap 2: Dynamische vraag in de modal
+        shareQuestionText.innerText = `Wilt u onderstaande gegevens delen met ${data.requester} voor ${data.purpose}?`;
+        shareDetails.innerText = `Gevraagde gegevens: ${data.requestedCard}`;
+        shareQuestionModal.style.display = 'flex';
+
+        // Verwerk het antwoord
+        yesShareBtn.onclick = () => {
+          const timestamp = new Date().toLocaleString();
+          credentials.push({
+            name: `Gegevens gedeeld met ${data.requester}`,
+            validUntil: timestamp,
+            isShareAction: true // Markeer als deelactie
+          });
+          saveCredentials();
+          shareQuestionModal.style.display = 'none'; // Verberg modal
+        };
+
+        noShareBtn.onclick = () => {
+          shareQuestionModal.style.display = 'none'; // Verberg modal zonder actie
+        };
         } else {
           // Verwerk issuer QR-code zoals normaal
           credentials.push({
