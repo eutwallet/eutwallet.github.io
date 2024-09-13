@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,25 +10,19 @@
 
   <!-- Welkomstscherm -->
   <section id="welcome-screen" style="display: flex; justify-content: center; align-items: center; height: 100vh; flex-direction: column;">
-    <h1>Welkom bij je de test wallet (EUTW)</h1>
-    <p>Dit is jouw digitale portemonnee, je kunt kaartjes hierin opslaan en delen</p>
-    <img src="image.png" alt="Digital Wallet Image" style="width: 200px;">
+    <h1>Welkom bij de test wallet (EUTW)</h1>
+    <p>Dit is jouw digitale portemonnee</p>
+    <img src="image-path.png" alt="Digital Wallet Image" style="width: 200px;">
     <button id="next-welcome" style="margin-top: 20px;">Next</button>
   </section>
 
   <!-- Pincode-scherm -->
   <section id="pin-screen" style="display: none; justify-content: center; align-items: center; height: 100vh; flex-direction: column;">
-    <h2>Voer PIN in</h2>
+    <h2>Enter your 6-digit PIN</h2>
     <div class="pin-input">
-      <input type="password" maxlength="1">
-      <input type="password" maxlength="1">
-      <input type="password" maxlength="1">
-      <input type="password" maxlength="1">
-      <input type="password" maxlength="1">
-      <input type="password" maxlength="1">
-      <input type="password" maxlength="1">
+      <input type="tel" id="pin-input" maxlength="6" pattern="[0-9]*" inputmode="numeric" placeholder="******">
     </div>
-    <button id="submit-pin" style="margin-top: 20px;">Unlock</button>
+    <button id="submit-pin" style="margin-top: 20px;" disabled>Unlock</button>
   </section>
 
   <!-- Wallet-scherm -->
@@ -61,28 +55,6 @@
     </div>
   </section>
 
-  <!-- Modal voor het delen van gegevens -->
-  <div id="share-question-modal" class="modal">
-    <div class="modal-content">
-      <h2 id="share-question-text"><strong></strong></h2>
-      <div class="divider"></div>
-      <div class="reason-section">
-        <h3><strong>Reden</strong></h3>
-        <p id="share-reason"></p>
-      </div>
-      <div class="divider"></div>
-      <div class="details-section">
-        <h3><strong>Gegevens</strong></h3>
-        <p id="share-details"></p>
-      </div>
-      <div class="divider"></div>
-      <div class="button-container">
-        <button id="stop-share-btn" class="stop-button">Stop</button>
-        <button id="yes-share-btn" class="share-button">Delen</button>
-      </div>
-    </div>
-  </div>
-
   <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
   <script src="wallet.js"></script>
   <script>
@@ -90,6 +62,17 @@
     document.getElementById('next-welcome').addEventListener('click', function() {
       document.getElementById('welcome-screen').style.display = 'none';
       document.getElementById('pin-screen').style.display = 'flex';
+    });
+
+    // Valideren van PIN invoer
+    document.getElementById('pin-input').addEventListener('input', function() {
+      const pin = this.value;
+      const submitButton = document.getElementById('submit-pin');
+      if (pin.length === 6) {
+        submitButton.disabled = false;
+      } else {
+        submitButton.disabled = true;
+      }
     });
 
     document.getElementById('submit-pin').addEventListener('click', function() {
