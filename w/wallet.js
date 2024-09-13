@@ -105,7 +105,7 @@ scanButton.addEventListener('click', () => {
           // Dynamische vraag in de modal
           document.getElementById('share-question-text').innerText = `Wilt u onderstaande gegevens delen met ${data.requester}?`;
           document.getElementById('share-reason').innerText = `${data.purpose}`; // Reden uit QR-code
-          document.getElementById('share-details').innerText = `Gevraagde gegevens: ${data.requestedCard}`; // Gegevens uit QR-code
+          document.getElementById('share-details').innerText = `${data.requestedCard}`; // Gegevens uit QR-code
         
           // Toon de modal
           shareQuestionModal.style.display = 'flex';
