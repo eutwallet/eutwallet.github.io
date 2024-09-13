@@ -8,7 +8,14 @@ const detailsContent = document.getElementById('details-content');
 const closeDetailsBtn = document.getElementById('close-details');
 const deleteDetailsBtn = document.getElementById('delete-details');
 
-let html5QrCode = null; // We zullen de QR-code scanner hier initialiseren
+// Modal elementen voor verifier-vraag
+const shareQuestionModal = document.getElementById('share-question-modal');
+const shareQuestionText = document.getElementById('share-question-text');
+const shareDetails = document.getElementById('share-details');
+const yesShareBtn = document.getElementById('yes-share-btn');
+const noShareBtn = document.getElementById('no-share-btn');
+
+let html5QrCode = null; // QR-code scanner
 let credentials = [];
 
 // Functie om opgeslagen kaartjes te laden
@@ -28,12 +35,14 @@ function saveCredentials() {
 function displayCredentials() {
   walletGrid.innerHTML = '';
   credentials.forEach((cred, index) => {
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.innerHTML = `<h3>${cred.name}</h3>
-    <button class="view-card">Bekijk <span class="arrow">→</span></button>` ;
-    card.addEventListener('click', () => showDetails(cred, index)); // Klik op kaartje toont details
-    walletGrid.appendChild(card);
+    if (!cred.isShareAction) { // Toon alleen kaartjes, geen deelacties
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `<h3>${cred.name}</h3>
+      <button class="view-card">Bekijk <span class="arrow">→</span></button>`;
+      card.addEventListener('click', () => showDetails(cred, index)); // Klik op kaartje toont details
+      walletGrid.appendChild(card);
+    }
   });
 }
 
@@ -88,10 +97,31 @@ scanButton.addEventListener('click', () => {
         const data = JSON.parse(decodedText);
 
         // Controleer of het een verifier QR-code is
-        if (data.verifier && data.requestedCard && data.requester) {
-          console.log("Verifier QR-code herkend.");
-          console.log("Gevraagde kaart: ", data.requestedCard);
-          console.log("Aanvrager: ", data.requester);
+        if (data.verifier && data.requestedCard && data.requester && data.purpose) {
+          const requestedCard = data.requestedCard;
+          const requester = data.requester;
+          const purpose = data.purpose;
+
+          // Dynamische vraag in de modal
+          shareQuestionText.innerText = `Wilt u onderstaande gegevens delen met ${requester} voor ${purpose}?`;
+          shareDetails.innerText = `Gevraagde gegevens: ${requestedCard}`;
+          shareQuestionModal.style.display = 'flex'; // Toon de modal
+
+          // Verwerk het antwoord
+          yesShareBtn.onclick = () => {
+            const timestamp = new Date().toLocaleString();
+            credentials.push({
+              name: `Gegevens gedeeld met ${requester}`,
+              validUntil: timestamp,
+              isShareAction: true // Markeer als deelactie
+            });
+            saveCredentials();
+            shareQuestionModal.style.display = 'none'; // Verberg de modal
+          };
+
+          noShareBtn.onclick = () => {
+            shareQuestionModal.style.display = 'none'; // Verberg de modal
+          };
         } else {
           // Verwerk issuer QR-code zoals normaal
           credentials.push({
