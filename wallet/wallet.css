@@ -273,3 +273,32 @@ p {
 .share-button:hover {
   background-color: #1e3a82;
 }
+
+/* Welkomstscherm */
+#welcome-screen h1, #pin-screen h2 {
+    color: #152A62;
+}
+
+#welcome-screen button, #pin-screen button {
+    background-color: #5A50ED;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Pincode-styling */
+.pin-input {
+    display: flex;
+    gap: 10px;
+}
+
+.pin-input input {
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    font-size: 24px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
