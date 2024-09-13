@@ -313,10 +313,10 @@ p {
 #pin-screen {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
     height: 80vh;
-    padding: 20px;
+    padding: 50px;
 }
 
 .pin-content {
