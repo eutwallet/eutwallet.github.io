@@ -74,7 +74,7 @@ scanButton.addEventListener('click', () => {
 
   // Check of html5QrCode al bestaat, zo niet, initialiseer het
   if (!html5QrCode) {
-    html5QrCode = new Html5QrCode("reader");
+    html5QrCode = new Html5Qrcode("reader");
   }
 
   console.log("Starting QR scanner...");
@@ -86,21 +86,12 @@ scanButton.addEventListener('click', () => {
       console.log("QR code scanned: ", decodedText);
       try {
         const data = JSON.parse(decodedText);
-
-        // Controleer of het een verifier QR-code is
-        if (data.verifier && data.requestedCard && data.requester) {
-          console.log("Verifier QR-code herkend.");
-          console.log("Gevraagde kaart: ", data.requestedCard);
-          console.log("Aanvrager: ", data.requester);
-        } else {
-          // Verwerk issuer QR-code zoals normaal
-          credentials.push({
-            name: data.name || "Unknown", // Naam uit QR-code
-            data: data // Bewaar de details van het kaartje
-          });
-          saveCredentials();
-          displayCredentials();
-        }
+        credentials.push({
+          name: data.name || "Unknown", // Naam uit QR-code
+          data: data // Bewaar de details van het kaartje
+        });
+        saveCredentials();
+        displayCredentials();
 
         // Sluit camera na succesvolle scan
         html5QrCode.stop().then(() => {
@@ -121,6 +112,22 @@ scanButton.addEventListener('click', () => {
   );
 });
 
+// Sluit de scanner handmatig wanneer op "Scannen afsluiten" wordt geklikt
+closeScanButton.addEventListener('click', () => {
+  if (html5QrCode) {
+    console.log("Stopping QR scanner...");
+    html5QrCode.stop().then(() => {
+      console.log("QR scanner stopped manually.");
+      readerDiv.style.display = 'none';
+      closeScanButton.style.display = 'none';
+      scanButton.style.display = 'block'; // Herstel scan-knop
+    }).catch(err => {
+      console.error("Failed to stop scanning: ", err);
+    });
+  } else {
+    console.error("Cannot stop scanner as it is not running.");
+  }
+});
 
 // Laad bestaande kaartjes bij het opstarten
 loadCredentials();
