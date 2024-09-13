@@ -72,6 +72,7 @@ scanButton.addEventListener('click', () => {
   closeScanButton.style.display = 'block';
   readerDiv.style.display = 'block';
   if (!html5QrCode) {
+    console.log("About to initialize Html5QrCode...");
     html5QrCode = new Html5QrCode("reader");
   }
 
