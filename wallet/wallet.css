@@ -280,7 +280,7 @@ p {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 100vh;
+    height: 80vh;
     padding: 20px;
 }
 
@@ -312,7 +312,7 @@ p {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 80vh;
     padding: 20px;
 }
 
