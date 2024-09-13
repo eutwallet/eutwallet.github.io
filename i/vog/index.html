@@ -4,10 +4,118 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VOG Issuer</title>
+  <style>
+    body {
+      font-family: 'Helvetica', sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .logo-section {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .logo {
+      background-color: #00588E;
+      width: 40px;
+      height: 80px;
+      margin-right: 10px;
+    }
+    .company-name {
+      font-family: 'Times New Roman', serif;
+      font-size: 20px;
+      color: black;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid lightgray;
+      margin: 20px 0;
+    }
+    .step-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+    .step-circle {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: #00588E;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      margin-right: 10px;
+    }
+    .step-text {
+      text-align: left;
+    }
+    .highlight {
+      background-color: #E0F7FA;
+      padding: 10px;
+      border-radius: 5px;
+    }
+    .qr-code {
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
-  <h1>Scan de QR-code om een VOG-kaartje te ontvangen</h1>
-  <p>Scan de onderstaande QR-code met je wallet om een VOG-kaartje toe te voegen:</p>
-  <img src="https://api.qrserver.com/v1/create-qr-code/?data=%7B%22issuer%22%3Atrue%2C%22name%22%3A%22VOG%22%2C%22validUntil%22%3A%222025-12-31%22%2C%22description%22%3A%22Verklaring%20Omtrent%20Gedrag%20voor%20persoonlijke%20integriteit%22%7D&size=200x200" alt="QR Code for VOG">
+
+  <div class="container">
+    <!-- Logo and Company Name -->
+    <div class="logo-section">
+      <div class="logo"></div>
+      <div class="company-name">Juust</div>
+    </div>
+
+    <hr>
+
+    <!-- Title and Steps -->
+    <h2>VOG aanvragen</h2>
+    <p>Voor het aanvragen van uw VOG volgt u onderstaande stappen:</p>
+
+    <!-- Step 1 -->
+    <div class="step-container">
+      <div class="step-circle">1</div>
+      <div class="step-text">
+        <p class="highlight">Open uw digitale wallet op uw <strong>mobiele telefoon</strong></p>
+        <p><em>Ga naar eutw.nl/w/wallet</em> op uw mobiele telefoon.</p>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="step-container">
+      <div class="step-circle">2</div>
+      <div class="step-text">
+        <p class="highlight">Zodra u de wallet op uw telefoon heeft geopend, scan dan onderstaande QR code om een digitale versie van uw VOG toe te voegen in uw wallet:</p>
+        <div class="qr-code">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?data=%7B%22issuer%22%3Atrue%2C%22name%22%3A%22Verklaring%20Omtrent%20Gedrag%22%2C%22validUntil%22%3A%222025-12-31%22%2C%22description%22%3A%22Verklaring%20Omtrent%20Gedrag%20voor%20persoonlijke%20integriteit%22%7D&size=200x200" alt="QR Code for VOG">
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="step-container">
+      <div class="step-circle">3</div>
+      <div class="step-text">
+        <p class="highlight">Zodra u de digitale VOG in uw wallet heeft opgeslagen, kunt u deze delen met de partij die u gevraagd heeft om de VOG.</p>
+      </div>
+    </div>
+
+  </div>
+
 </body>
 </html>
