@@ -38,7 +38,7 @@ header {
     justify-content: center;
     align-items: center;
     position: absolute;
-    top: 30px; /* Correctie van uitlijning met menu-knop */
+    top: 20px; /* Correctie van uitlijning met menu-knop */
     right: 30px; /* Uitlijning rechts */
 }
 
