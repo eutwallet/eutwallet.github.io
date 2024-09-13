@@ -288,7 +288,7 @@ p {
     text-align: center;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-evenly;
     flex-grow: 1; /* Duwt de knop naar beneden */
 }
 
