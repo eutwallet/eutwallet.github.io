@@ -74,7 +74,7 @@ scanButton.addEventListener('click', () => {
 
   // Check of html5QrCode al bestaat, zo niet, initialiseer het
   if (!html5QrCode) {
-    html5QrCode = new Html5Qrcode("reader");
+    html5QrCode = new Html5QrCode("reader");
   }
 
   console.log("Starting QR scanner...");
@@ -86,12 +86,21 @@ scanButton.addEventListener('click', () => {
       console.log("QR code scanned: ", decodedText);
       try {
         const data = JSON.parse(decodedText);
-        credentials.push({
-          name: data.name || "Unknown", // Naam uit QR-code
-          data: data // Bewaar de details van het kaartje
-        });
-        saveCredentials();
-        displayCredentials();
+
+        // Controleer of het een verifier QR-code is
+        if (data.verifier && data.requestedCard && data.requester) {
+          console.log("Verifier QR-code herkend.");
+          console.log("Gevraagde kaart: ", data.requestedCard);
+          console.log("Aanvrager: ", data.requester);
+        } else {
+          // Verwerk issuer QR-code zoals normaal
+          credentials.push({
+            name: data.name || "Unknown", // Naam uit QR-code
+            data: data // Bewaar de details van het kaartje
+          });
+          saveCredentials();
+          displayCredentials();
+        }
 
         // Sluit camera na succesvolle scan
         html5QrCode.stop().then(() => {
