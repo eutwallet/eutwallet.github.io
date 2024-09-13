@@ -194,38 +194,54 @@ main {
     right: 10px;
 }
 
+/* Stijlen voor de modal */
 .modal {
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
+  background-color: rgba(0, 0, 0, 0.8); /* Donkere overlay */
   justify-content: center;
   align-items: center;
-  z-index: 200;
+  z-index: 999;
 }
 
-.modal h3 {
-  font-size: 24px;
-  color: white;
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
   text-align: center;
+  width: 90%;
+  max-width: 400px;
 }
 
-.modal #share-details {
+#share-question-text {
   font-size: 18px;
-  color: white;
-  text-align: center;
-  margin: 10px 0;
+  color: black;
+  margin-bottom: 15px;
 }
 
-.modal button {
-  background-color: #5D3EBC;
+#share-details {
+  font-size: 16px;
+  color: black;
+  margin-bottom: 15px;
+}
+
+#yes-share-btn,
+#no-share-btn {
+  background-color: #5651EB;
   color: white;
   border: none;
   padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
   margin: 10px;
-  font-size: 18px;
   cursor: pointer;
+}
+
+#yes-share-btn:hover,
+#no-share-btn:hover {
+  background-color: #4CAF50; /* Kleurverandering bij hover */
 }
