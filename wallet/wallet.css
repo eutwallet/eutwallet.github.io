@@ -274,12 +274,6 @@ p {
   background-color: #1e3a82;
 }
 
-/* Algemene styling */
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #F5F5F5;
-}
 
 /* Welkomstscherm */
 #welcome-screen {
@@ -292,13 +286,17 @@ body {
 }
 
 .welcome-content {
-    margin-top: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 #welcome-screen img {
     width: 50%;
     max-width: 200px;
-    margin: auto;
+    margin: 20px 0;
 }
 
 #welcome-screen button {
@@ -311,6 +309,8 @@ body {
     max-width: 300px;
     font-size: 16px;
     cursor: pointer;
+    margin-bottom: 20px;
+    align-self: center;
 }
 
 /* Pincode-scherm */
@@ -355,6 +355,7 @@ body {
     max-width: 300px;
     font-size: 16px;
     cursor: pointer;
+    align-self: center;
 }
 
 #pin-screen button:disabled {
