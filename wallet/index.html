@@ -9,20 +9,27 @@
 <body>
 
   <!-- Welkomstscherm -->
-  <section id="welcome-screen" style="display: flex; justify-content: center; align-items: center; height: 100vh; flex-direction: column;">
-    <h1>Welkom bij de test wallet (EUTW)</h1>
-    <p>Dit is jouw digitale portemonnee</p>
-    <img src="image.png" alt="Digital Wallet Image" style="width: 200px;">
-    <button id="next-welcome" style="margin-top: 20px;">Volgende</button>
+  <section id="welcome-screen">
+    <div class="welcome-content">
+      <h1>Welkom bij de test wallet (EUTW)</h1>
+      <p>Dit is jouw digitale portemonnee</p>
+      <img src="image-path.png" alt="Digital Wallet Image">
+    </div>
+    <button id="next-welcome">Volgende</button>
   </section>
 
   <!-- Pincode-scherm -->
-  <section id="pin-screen" style="display: none; justify-content: center; align-items: center; height: 100vh; flex-direction: column;">
-    <h2>Voer je 6-cijferige PIN in</h2>
+  <section id="pin-screen" style="display: none;">
+    <h2>Voer je 6-cijferige pincode in</h2>
     <div class="pin-input">
-      <input type="tel" id="pin-input" maxlength="6" pattern="[0-9]*" inputmode="numeric" placeholder="******" style="text-align: center; font-size: 24px; padding: 10px; width: 80%; max-width: 400px; border: 2px solid #ccc; border-radius: 5px;">
+      <input type="password" maxlength="1" class="pin-box" />
+      <input type="password" maxlength="1" class="pin-box" />
+      <input type="password" maxlength="1" class="pin-box" />
+      <input type="password" maxlength="1" class="pin-box" />
+      <input type="password" maxlength="1" class="pin-box" />
+      <input type="password" maxlength="1" class="pin-box" />
     </div>
-    <button id="submit-pin" style="margin-top: 20px;" disabled>Ontgrendel</button>
+    <button id="submit-pin" disabled>Ontgrendelen</button>
   </section>
 
   <!-- Wallet-scherm -->
@@ -38,7 +45,7 @@
       <section class="scan-section">
         <button class="scan-btn" id="scan-button">Scan QR Code</button>
         <button class="close-scan-btn" id="close-scan-button" style="display: none;">Scannen afsluiten</button>
-        <div id="reader"></div> <!-- QR Code Scanner element direct onder de scan-knop -->
+        <div id="reader"></div>
       </section>
 
       <section class="wallet-grid" id="wallet-grid">
@@ -65,15 +72,20 @@
     });
 
     // Valideren van PIN invoer
-    document.getElementById('pin-input').addEventListener('input', function() {
-      const pin = this.value;
-      const submitButton = document.getElementById('submit-pin');
-      if (pin.length === 6) {
-        submitButton.disabled = false;
-      } else {
-        submitButton.disabled = true;
-      }
+    const pinBoxes = document.querySelectorAll('.pin-box');
+    pinBoxes.forEach((box, index) => {
+      box.addEventListener('input', (e) => {
+        if (e.target.value.length === 1 && index < pinBoxes.length - 1) {
+          pinBoxes[index + 1].focus();
+        }
+        validatePin();
+      });
     });
+
+    function validatePin() {
+      const pinComplete = Array.from(pinBoxes).every(box => box.value.length === 1);
+      document.getElementById('submit-pin').disabled = !pinComplete;
+    }
 
     document.getElementById('submit-pin').addEventListener('click', function() {
       document.getElementById('pin-screen').style.display = 'none';
