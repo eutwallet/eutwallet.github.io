@@ -11,7 +11,6 @@ const shareQuestionModal = document.getElementById('share-question-modal');
 const shareQuestionText = document.getElementById('share-question-text');
 const shareDetails = document.getElementById('share-details');
 const yesShareBtn = document.getElementById('yes-share-btn');
-const noShareBtn = document.getElementById('no-share-btn');
 const stopShareBtn = document.getElementById('stop-share-btn');
 
 let html5QrCode = null; // We zullen de QR-code scanner hier initialiseren
@@ -46,8 +45,41 @@ function displayCredentials() {
   });
 }
 
+
+// Event listener voor de standaardkaartjes
+document.querySelectorAll('.default-card').forEach((card, index) => {
+  card.addEventListener('click', () => {
+    if (index === 0) { // Controleer of het om het eerste kaartje gaat
+      showPersonalDataDetails();
+    }
+  });
+});
+
+// Functie om details van een personal data kaartje te tonen
+function showPersonalDataDetails() {
+  const detailsView = document.getElementById('personal-data-details');
+  if (detailsView) { // Controleer of het element bestaat
+    detailsView.style.display = 'block';
+
+    // Zorg dat de "Back" knop de details weer verbergt
+    const backBtn = document.getElementById('back-btn');
+    if (backBtn) {
+      backBtn.onclick = () => {
+        detailsView.style.display = 'none';
+      };
+    }
+  }
+}
+
 // Functie om details van een kaartje te tonen
 function showDetails(credential, index) {
+  // Controleer of het een standaardkaartje is
+  if (credential.name === "Personal data") {
+    showPersonalDataDetails();
+    return;
+  }
+
+  // Als het geen standaardkaartje is, toon de details van het kaartje
   detailsTitle.textContent = credential.name;
   let detailsHTML = '';
 
@@ -59,14 +91,17 @@ function showDetails(credential, index) {
   }
 
   detailsContent.innerHTML = detailsHTML;
+  
+  // Toon de juiste details container voor niet-standaard kaartjes
+  const detailsView = document.getElementById('details');
   detailsView.style.display = 'block';
 
-  // Sluit details weergave
+  // Sluit details weergave (Terug-knop)
   closeDetailsBtn.onclick = () => {
     detailsView.style.display = 'none';
   };
 
-  // Verwijder het kaartje
+  // Verwijder het kaartje (Verwijderen-knop)
   deleteDetailsBtn.onclick = () => {
     credentials.splice(index, 1);
     saveCredentials();
@@ -75,9 +110,10 @@ function showDetails(credential, index) {
   };
 }
 
-// QR-code scan starten
-scanButton.addEventListener('click', () => {
-  scanButton.style.display = 'none'; // Verberg de scan-knop
+
+// Functie om de QR-code scanner te starten
+function startQrScan() {
+  document.querySelector('.scan-container').style.display = 'none'; // Verberg scan-knop en tekst
   closeScanButton.style.display = 'block'; // Toon de sluit-knop
   readerDiv.style.display = 'block'; // Toon de camera
 
@@ -126,7 +162,7 @@ scanButton.addEventListener('click', () => {
               console.log("QR scanner stopped.");
               readerDiv.style.display = 'none';
               closeScanButton.style.display = 'none';
-              scanButton.style.display = 'block'; // Herstel scan-knop
+              document.querySelector('.scan-container').style.display = 'flex'; // Toon scan-knop en tekst
             }).catch(err => {
               console.error("Failed to stop scanning: ", err);
             });
@@ -141,7 +177,7 @@ scanButton.addEventListener('click', () => {
               console.log("QR scanner stopped.");
               readerDiv.style.display = 'none';
               closeScanButton.style.display = 'none';
-              scanButton.style.display = 'block'; // Herstel scan-knop
+              document.querySelector('.scan-container').style.display = 'flex'; // Toon scan-knop en tekst
             }).catch(err => {
               console.error("Failed to stop scanning: ", err);
             });
@@ -162,7 +198,7 @@ scanButton.addEventListener('click', () => {
           console.log("QR scanner stopped.");
           readerDiv.style.display = 'none';
           closeScanButton.style.display = 'none';
-          scanButton.style.display = 'block'; // Herstel scan-knop
+          document.querySelector('.scan-container').style.display = 'flex'; // Toon scan-knop en tekst
         }).catch(err => {
           console.error("Failed to stop scanning: ", err);
         });
@@ -174,7 +210,7 @@ scanButton.addEventListener('click', () => {
       console.error(`QR scan failed: ${errorMessage}`);
     }
   );
-});
+}
 
 // Sluit de scanner handmatig wanneer op "Scannen afsluiten" wordt geklikt
 closeScanButton.addEventListener('click', () => {
@@ -184,13 +220,18 @@ closeScanButton.addEventListener('click', () => {
       console.log("QR scanner stopped manually.");
       readerDiv.style.display = 'none';
       closeScanButton.style.display = 'none';
-      scanButton.style.display = 'block'; // Herstel scan-knop
+      document.querySelector('.scan-container').style.display = 'flex'; // Toon scan-knop en tekst
     }).catch(err => {
       console.error("Failed to stop scanning: ", err);
     });
   } else {
     console.error("Cannot stop scanner as it is not running.");
   }
+});
+
+// Event listener voor de bestaande scan-knop, vervangt deze door de nieuwe functie
+scanButton.addEventListener('click', () => {
+  startQrScan();
 });
 
 // Laad bestaande kaartjes bij het opstarten
