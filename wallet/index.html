@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Test Wallet</title>
   <link rel="stylesheet" href="wallet.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 
@@ -75,9 +76,46 @@
       <section class="wallet-grid" id="wallet-grid">
         <!-- Dynamische kaartjes zullen hier worden toegevoegd -->
       </section>
+<div id="menu-screen" class="menu-screen" style="display: none;">
+    <h2>Menu</h2>
+    <ul class="menu-list">
+        <li id="help-option"><i class="fas fa-question-circle"></i> <span>Hulp nodig?</span><span>→</span></li>
+        <li id="activities-option"><i class="fas fa-clock"></i> <span>Activiteiten</span><span>→</span></li>
+        <li id="settings-option"><i class="fas fa-cog"></i> <span>Instellingen</span><span>→</span></li>
+        <li id="feedback-option"><i class="fas fa-comment-dots"></i> <span>Geef feedback</span><span>→</span></li>
+        <li id="about-option"><i class="fas fa-info-circle"></i> <span>Over deze app</span><span>→</span></li>
+    </ul>
+    <button id="logout-btn" class="menu-logout"><i class="fas fa-sign-out-alt"></i> Uitloggen</button>
+    <button id="back-menu-btn" class="back-btn">← Terug</button>
+    
+    <!-- Activiteiten Sectie -->
+    <div id="activities-section" class="activities-section" style="display: none;">
+        <h3>Activiteiten</h3>
+        <ul id="activities-list"></ul>
+        <button id="back-activities-btn" class="back-btn">← Terug</button>
+    </div>
+</div>
 
+<!-- Menu Scherm -->
+<div id="menu-screen" class="menu-screen" style="display: none;">
+    <h2>Menu</h2>
+    <ul class="menu-list">
+        <li id="help-option"><span>❓ Hulp nodig?</span><span>→</span></li>
+        <li id="activities-option"><span>⏰ Activiteiten</span><span>→</span></li>
+        <li id="settings-option"><span>⚙️ Instellingen</span><span>→</span></li>
+        <li id="feedback-option"><span>📝 Geef feedback</span><span>→</span></li>
+        <li id="about-option"><span>ℹ️ Over deze app</span><span>→</span></li>
+    </ul>
+    <button id="logout-btn" class="menu-logout">↩️ Uitloggen</button>
+    <button id="back-menu-btn" class="back-btn">← Terug</button>
+</div>
 
-
+<!-- Activiteiten Scherm (nu buiten het menu geplaatst) -->
+<div id="activities-section" class="activities-section" style="display: none;">
+    <h3>Activiteiten</h3>
+    <ul id="activities-list"></ul>
+    <button id="back-activities-btn" class="back-btn">← Terug</button>
+</div>
 
     </main>
 
@@ -107,7 +145,7 @@
         <p><strong>Citizen service number (BSN):</strong> 938391772</p>
         <p><strong>Older than 18+:</strong> Yes</p>
     </div>
-    <button id="back-btn" class="purple-btn">← Back</button>
+    <button id="back-btn" class="purple-btn">← Terug</button>
 </div>
 
   </section>
