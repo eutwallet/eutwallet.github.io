@@ -45,24 +45,71 @@
     </header>
 
     <main>
-      <section class="scan-section">
-        <button class="scan-btn" id="scan-button">Scan QR Code</button>
-        <button class="close-scan-btn" id="close-scan-button" style="display: none;">Scannen afsluiten</button>
-        <div id="reader"></div>
-      </section>
+        <section class="scan-section" id="scan-section">
+            <div class="scan-container" onclick="startQrScan()">
+                <div class="scan-btn-container">
+                    <button class="scan-btn" id="scan-button">
+                        <img src="QRlogo.png" alt="QR Code Logo" class="qr-logo">
+                    </button>
+                </div>
+                <div class="scan-text">Scan QR code</div>
+            </div>
+            <div id="reader"></div> <!-- Camerascherm -->
+            <button class="close-scan-btn" id="close-scan-button" style="display: none;">Scannen afsluiten</button>
+        </section>
+
+
+        <section class="default-cards">
+            <div class="card default-card light-card">
+              <h3>Persoonlijke data</h3>
+              <p>Willeke Liselotte</p>
+              <button class="view-card">Bekijk <span class="arrow">→</span></button>
+            </div>
+            <div class="card default-card dark-card">
+              <h3>Woonadres</h3>
+              <p>Den Haag</p>
+              <button class="view-card">Bekijk <span class="arrow">→</span></button>
+            </div>
+          </section>
 
       <section class="wallet-grid" id="wallet-grid">
         <!-- Dynamische kaartjes zullen hier worden toegevoegd -->
       </section>
+
+
+
+
     </main>
 
-    <!-- Details view for individual cards -->
-    <div id="details">
-      <button class="close-btn" id="close-details">&times;</button>
-      <button class="delete-btn" id="delete-details">&#128465;</button>
-      <h3 id="details-title"></h3>
-      <div id="details-content"></div>
+<!-- Details view for individual cards -->
+<div id="details">
+    <h3 id="details-title"></h3>
+    <div class="divider"></div> <!-- Scheidingsstreep -->
+    <div id="details-content"></div>
+    <div class="details-buttons">
+      <button class="close-btn purple-btn" id="close-details">Terug</button>
+      <button class="delete-btn orange-btn" id="delete-details">Verwijderen</button>
     </div>
+  </div>
+
+  <div id="personal-data-details">
+    <h3 id="details-title">Details from Personal data</h3>
+    <div class="divider"></div> <!-- Scheidingsstreep -->
+    <div id="details-content">
+        <!-- Hardcoded data voor het personal data kaartje -->
+        <p><strong>First name:</strong> Willeke Liselotte</p>
+        <p><strong>Last name:</strong> De Bruijn</p>
+        <p><strong>Surname:</strong> Molenaar</p>
+        <p><strong>Date of birth:</strong> March 10, 1997</p>
+        <p><strong>Birth city:</strong> Delft</p>
+        <p><strong>Birth country:</strong> The Netherlands</p>
+        <p><strong>Gender:</strong> Female</p>
+        <p><strong>Citizen service number (BSN):</strong> 938391772</p>
+        <p><strong>Older than 18+:</strong> Yes</p>
+    </div>
+    <button id="back-btn" class="purple-btn">← Back</button>
+</div>
+
   </section>
 
   <!-- Modal voor het delen van gegevens -->
@@ -95,23 +142,26 @@
       document.getElementById('welcome-screen').style.display = 'none';
       document.getElementById('pin-screen').style.display = 'flex';
     });
-
-    // Valideren van PIN invoer
+  
+    // Valideren van PIN invoer (aangepast om niet meer te controleren)
     const pinBoxes = document.querySelectorAll('.pin-box');
     pinBoxes.forEach((box, index) => {
       box.addEventListener('input', (e) => {
         if (e.target.value.length === 1 && index < pinBoxes.length - 1) {
           pinBoxes[index + 1].focus();
         }
-        validatePin();
+        // Verwijder de aanroep naar validatePin()
       });
     });
-
+  
+    // Verwijder of pas de validatePin functie aan zodat deze de knop niet meer uitschakelt
     function validatePin() {
-      const pinComplete = Array.from(pinBoxes).every(box => box.value.length === 1);
-      document.getElementById('submit-pin').disabled = !pinComplete;
+      // Deze functie kan nu leeg blijven of worden verwijderd
     }
-
+  
+    // Zorg ervoor dat de submit-pin knop altijd klikbaar is
+    document.getElementById('submit-pin').disabled = false;
+  
     document.getElementById('submit-pin').addEventListener('click', function() {
       document.getElementById('pin-screen').style.display = 'none';
       document.getElementById('wallet-screen').style.display = 'block';
