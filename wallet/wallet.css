@@ -452,3 +452,97 @@ p {
     margin-top: 20px;
     align-self: center; /* Centreer de knop horizontaal */
 }
+
+/* Menu scherm */
+.menu-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    z-index: 1000;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-list {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+/* Menu lijstitems */
+.menu-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    border-bottom: 1px solid #ccc;
+    cursor: pointer;
+    color: #152A62; /* Donkerpaarse kleur voor tekst */
+    font-size: 18px;
+}
+
+/* Zorg ervoor dat de tekstkleur van de iconen overeenkomt met de tekstkleur */
+.menu-list li span {
+    color: #152A62; /* Donkerpaarse kleur voor iconen en tekst */
+}
+
+.menu-logout {
+    background: none;
+    border: 1px solid #5A50ED;
+    color: #5A50ED;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.back-btn {
+    background-color: #5A50ED; /* Paarse kleur */
+    color: white; /* Witte tekst */
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 60%; /* Maak de knop korter */
+    max-width: 200px; /* Maximale breedte */
+    text-align: center;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Activiteiten scherm */
+.activities-section {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    z-index: 1000;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.activities-section h3 {
+    margin-bottom: 20px;
+}
+
+.activities-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.activities-section li {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
