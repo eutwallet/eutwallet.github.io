@@ -45,113 +45,165 @@ header {
 main {
     display: flex;
     flex-direction: column;
-    gap: 20px;
     max-width: 400px;
     margin: 0 auto;
 }
 
+/* Scan-sectie */
 .scan-section {
     text-align: center;
     margin-bottom: 40px;
+    width: 100%;
+}
+
+.scan-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    cursor: pointer;
+    padding: 20px;
+}
+
+.scan-btn-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 .scan-btn {
-    background-color: #5A50ED; /* Kleur QR-knop */
+    background-color: #5A50ED; /* Paarse knop */
     border-radius: 35px;
-    padding: 20px;
     width: 120px;
     height: 120px;
     display: flex;
     justify-content: center;
     align-items: center;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Lichte schaduw rechtsonder */
-    border: 5px solid #f0f0f0; /* Lichtgrijze rand om QR-knop */
-    margin: 0 auto;
-    position: relative;
-    color: white; /* Tekst wit maken */
-    font-weight: bold; /* Tekst dikgedrukt maken */
-
+    border: none; /* Geen randen om de knop */
+    cursor: pointer;
 }
 
-.close-scan-btn {
-  background-color: #f44336; /* Rode kleur */
-  color: white;
-  padding: 10px;
-  border: none;
-  border-radius: 25px;
-  font-size: 16px;
-  cursor: pointer;
-  width: 100%;
-  max-width: 300px;
-  margin: 20px auto 0 auto;
-  display: none;
-}
-
-
-.qr-placeholder {
-    font-size: 24px;
-    color: white;
-    background-color: transparent;
-    width: 60px;
-    height: 60px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
+/* QR-logo in de knop */
+.qr-logo {
+    width: 50px; /* Pas de grootte aan naar wens */
+    height: 50px; /* Pas de grootte aan naar wens */
 }
 
 .scan-text {
-    position: absolute;
-    bottom: -25px;
-    font-size: 14px;
-    color: #5651EB;
+    font-size: 16px;
+    color: #5D3EBC; /* Paarse tekst */
+    margin-top: 10px;
 }
 
+/* Verberg de hele scan-container tijdens het scannen */
+.scan-container.hidden {
+    display: none;
+}
+
+.close-scan-btn {
+    background-color: #5A50ED; /* Paarse kleur zoals andere knoppen */
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    max-width: 300px;
+    margin: 20px auto; /* Voeg witruimte toe en centreer de knop */
+    display: none; /* Standaard verbergen */
+    text-align: center;
+}
+
+/* Kaartjes sectie */
 .card-list {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    max-width: 400px; /* Maximale breedte van de kaartjescontainer */
+    margin: 0 auto; /* Centreer de kaartjescontainer */
 }
 
-.card {
-  background-color: #E0F7FA;
-  padding: 30px;
-  border-radius: 15px; /* Hoeken afgerond */
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Lichte schaduw */
-  margin-bottom: 20px; /* Witruimte tussen de kaartjes */
-  position: relative;
-  font-size: 14px;
-  height: 180px; 
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+/* Algemene styling voor kaartjes */
+.card, .default-card {
+    background-color: #E0F7FA;
+    padding: 20px;
+    border-radius: 15px; /* Hoeken afgerond */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Lichte schaduw */
+    margin-bottom: 20px; /* Witruimte tussen de kaartjes */
+    position: relative;
+    font-size: 14px;
+    width: 100%; /* Neem de volledige breedte van de container */
+    aspect-ratio: 98 / 57; /* Gebruik de verhouding 98:57 voor de hoogte */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden; /* Zorg ervoor dat de pseudo-elementen niet buiten de kaart lopen */
+    background-image: url('wavy.svg'); /* Geef hier het pad van je SVG-bestand */
+    background-size: cover; /* Zorg ervoor dat de SVG de volledige kaart bedekt */
+    background-repeat: no-repeat; /* Voorkom herhaling van de achtergrondafbeelding */
 }
 
-.card h3 {
-    font-size: 24px;
-    color: #152A62; /* Tekstkleur kaartjes */
+/* Stijling voor de lichte kaart */
+.light-card {
+    background-color: #B9E4E2; /* Lichtblauw */
+    color: #152A62;
+}
+
+/* Stijling voor de donkere kaart */
+.dark-card {
+    background-color: #445580; /* Nieuwe kleur voor het donkere kaartje */
+    color: white; /* Witte tekst voor leesbaarheid */
+}
+
+.dark-card h3, .dark-card p, .dark-card .view-card {
+    color: white; /* Zorg ervoor dat alle tekst op de donkere kaart wit is */
+}
+
+/* Stijling van de tekst en knoppen in de kaart */
+.default-card h3, .card h3 {
+    margin: 0;
+    font-size: 20px;
     font-weight: bold;
 }
 
+.default-card p, .card p {
+    margin: 5px 0 15px 0; /* Voeg ruimte toe tussen de titel en de tekst */
+    font-size: 16px;
+}
+
+/* Knop onderaan de kaart */
 .view-card {
     background: none;
     border: none;
     font-size: 16px;
-    color: #152A62;
+    color: inherit; /* Zorg dat de tekstkleur overeenkomt met de kaart */
     display: flex;
     align-items: center;
-    justify-content: flex-start; /* Rechts uitlijnen */
-    position: absolute;
-    bottom: 10px;
-    left: 30px; /* Positioneer het naar rechtsonder op de kaart */
+    justify-content: flex-start;
+    cursor: pointer;
+    margin-top: auto; /* Duw de knop naar de onderkant van de kaart */
 }
 
 .arrow {
     margin-left: 5px;
-    font-size: 16px;
-    color: #152A62;
 }
 
+/* Afbeelding in de kaart */
+.card img {
+    width: 40px; /* Pas de grootte aan naar wens */
+    height: 40px;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
+
+
+
+/* Details sectie voor niet-standaard kaartjes */
 #details {
     display: none;
     position: fixed;
@@ -163,117 +215,166 @@ main {
     z-index: 100;
     padding: 20px;
     box-sizing: border-box;
+    overflow-y: auto; /* Zorg dat je kunt scrollen */
 }
 
 #details h3 {
-    margin-top: 60px;
+    margin-top: 20px; /* Pas de marge aan voor een betere uitlijning */
     color: #152A62;
+}
+
+/* Scheidingsstreep in details */
+.divider {
+    width: 100%;
+    height: 1px;
+    background-color: lightgrey;
+    margin: 20px 0; /* Voeg wat marge toe rondom de streep */
 }
 
 #details-content {
     margin-top: 20px;
 }
 
-#close-details,
-#delete-details {
-    width: 40px; /* Zorg ervoor dat de breedte en hoogte gelijk zijn voor een cirkelvorm */
-    height: 40px;
-    background-color: #f0f0f0;
+/* Knoppen in het detailscherm */
+.details-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+/* Stijl voor de "Terug"-knop */
+.purple-btn {
+    background-color: #5A50ED; /* Paarse kleur */
+    color: white;
+    padding: 15px;
     border: none;
-    padding: 0px;
-    border-radius: 50%;
-    font-size: 18px;
+    border-radius: 5px;
     cursor: pointer;
-    position: absolute;
-    top: 10px;
+    width: 45%;
+    text-align: center;
 }
 
-#close-details {
-    left: 10px;
+/* Stijl voor de "Verwijderen"-knop */
+.orange-btn {
+    background-color: #FFA500; /* Oranje kleur */
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 45%;
+    text-align: center;
 }
 
-#delete-details {
-    right: 10px;
+/* Details sectie voor standaardkaartjes (Personal Data) */
+#personal-data-details {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    z-index: 100;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto; /* Zorg dat je kunt scrollen */
 }
+
+#personal-data-details .message-box {
+    background-color: #445580;
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+/* Stijl voor de "Back"-knop in standaardkaartjes */
+#back-btn {
+    background-color: #5A50ED; /* Paarse kleur */
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
 
 /* Algemene styling voor de modal */
 .modal {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.8); /* Donkere overlay */
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8); /* Donkere overlay */
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
 }
 
 .modal-content {
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  text-align: left;
-  width: 100%;
-  max-width: 500px;
-  height: auto;
-  box-sizing: border-box;
-  margin: 0 10px;
-  font-family: Arial, sans-serif;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: left;
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    box-sizing: border-box;
+    margin: 0 10px;
+    font-family: Arial, sans-serif;
 }
 
 h2, h3 {
-  color: #152A62; /* Tekstkleur */
+    color: #152A62; /* Tekstkleur */
 }
 
 p {
-  color: #152A62;
-}
-
-/* Streepjes tussen secties */
-.divider {
-  width: 100%;
-  height: 1px;
-  background-color: lightgrey;
-  margin: 20px 0;
+    color: #152A62;
 }
 
 /* Knoppen styling */
 .button-container {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
 }
 
 .stop-button {
-  background-color: white;
-  border: 2px solid #152A62;
-  color: #152A62;
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
+    background-color: white;
+    border: 2px solid #152A62;
+    color: #152A62;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
 }
 
 .share-button {
-  background-color: #152A62;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 5px;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
+    background-color: #152A62;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
 }
 
 .stop-button:hover {
-  background-color: #f0f0f0;
+    background-color: #f0f0f0;
 }
 
 .share-button:hover {
-  background-color: #1e3a82;
+    background-color: #1e3a82;
 }
-
 
 /* Welkomstscherm */
 #welcome-screen {
