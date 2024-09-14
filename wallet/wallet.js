@@ -47,10 +47,12 @@ backActivitiesBtn.addEventListener('click', () => {
 // Functie om opgeslagen deelacties te tonen in activiteitenlijst
 function showActivities() {
   activitiesList.innerHTML = ''; // Leeg de lijst
+  // Sorteer de activiteiten op datum en tijd (meest recente eerst)
+  credentials.sort((a, b) => new Date(b.validUntil) - new Date(a.validUntil));
   credentials.forEach((cred) => {
       if (cred.isShareAction) {
           const activityItem = document.createElement('li');
-          activityItem.textContent = `${cred.name} - ${cred.validUntil}`;
+          activityItem.innerHTML = `${cred.name}<br><small>${cred.validUntil}</small>`;
           activitiesList.appendChild(activityItem);
       }
   });
