@@ -404,6 +404,13 @@ p {
     color: #152A62;
 }
 
+.welcome-text h1{
+    margin-bottom: 10px;
+    text-align: center;
+    color: #152A62;
+}
+
+
 /* Achtergrondcontainer */
 .welcome-background {
     background-color: #F2F5FF;
