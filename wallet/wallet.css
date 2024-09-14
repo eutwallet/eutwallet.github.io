@@ -448,7 +448,13 @@ p {
     justify-content: start;
     align-items: center;
     height: 80vh;
-    padding: 50px;
+    padding: 20px;
+}
+
+#pin-screen h2 {
+    text-align: center; /* Centreer de tekst */
+    max-width: 100%; /* Pas de breedte van de tekst aan */
+    margin-bottom: 20px; /* Voeg wat extra ruimte onder de tekst toe */
 }
 
 .pin-content {
@@ -480,7 +486,7 @@ p {
     cursor: pointer;
     width: 100%;
     max-width: 300px;
-    margin-top: 20px;
+    margin-top: 40px;
     align-self: center; /* Centreer de knop horizontaal */
 }
 
