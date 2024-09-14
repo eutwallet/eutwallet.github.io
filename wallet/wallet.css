@@ -380,24 +380,52 @@ p {
 #welcome-screen {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    height: 90vh;
     justify-content: space-between;
-    height: 80vh;
-    padding: 20px;
+    box-sizing: border-box;
+    position: relative;
+    padding: 0; /* Specifiek voor het welkomstscherm */
+    overflow: hidden; /* Voorkom extra scrollbars */
 }
 
 .welcome-content {
-    text-align: center;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
-    flex-grow: 1; /* Duwt de knop naar beneden */
+    align-items: center;
+    width: 100%;
+    min-height: 80%; /* Zorgt dat de content minimaal de hele hoogte inneemt */
 }
 
-#welcome-screen img {
-    margin: 20px 0;
-    max-width: 100%; /* Zorg dat de afbeelding op mobiele apparaten netjes past */
+/* Nieuwe container voor de tekst */
+.welcome-text {
+    padding: 20px 0; /* Voeg witruimte toe boven en onder de tekst */
+    text-align: center;
+    color: #152A62;
 }
 
+/* Achtergrondcontainer */
+.welcome-background {
+    background-color: #F2F5FF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex-grow: 0.5; /* Zorg dat de afbeelding de resterende ruimte inneemt */
+}
+
+.welcome-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.welcome-image img {
+    max-width: 80%;
+    height: auto;
+}
+
+/* Knop onderaan het scherm */
 #welcome-screen button {
     background-color: #5A50ED;
     color: white;
@@ -407,7 +435,10 @@ p {
     cursor: pointer;
     width: 100%;
     max-width: 300px;
-    margin: 20px auto 10px auto; /* Zorgt dat de knop altijd boven de rand van het scherm blijft */
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 /* Pincode-scherm */
