@@ -12,9 +12,49 @@ const shareQuestionText = document.getElementById('share-question-text');
 const shareDetails = document.getElementById('share-details');
 const yesShareBtn = document.getElementById('yes-share-btn');
 const stopShareBtn = document.getElementById('stop-share-btn');
+const menuScreen = document.getElementById('menu-screen');
+const menuButton = document.querySelector('.menu-button');
+const backMenuBtn = document.getElementById('back-menu-btn');
+const activitiesOption = document.getElementById('activities-option');
+const activitiesSection = document.getElementById('activities-section');
+const activitiesList = document.getElementById('activities-list');
+const backActivitiesBtn = document.getElementById('back-activities-btn');
 
 let html5QrCode = null; // We zullen de QR-code scanner hier initialiseren
 let credentials = [];
+// Open menu
+menuButton.addEventListener('click', () => {
+  menuScreen.style.display = 'flex';
+});
+
+// Sluit menu
+backMenuBtn.addEventListener('click', () => {
+  menuScreen.style.display = 'none';
+  activitiesSection.style.display = 'none'; // Verberg activiteiten sectie als deze open is
+});
+
+// Open activiteiten sectie
+activitiesOption.addEventListener('click', () => {
+  activitiesSection.style.display = 'block';
+  showActivities();
+});
+
+// Sluit activiteiten sectie
+backActivitiesBtn.addEventListener('click', () => {
+  activitiesSection.style.display = 'none';
+});
+
+// Functie om opgeslagen deelacties te tonen in activiteitenlijst
+function showActivities() {
+  activitiesList.innerHTML = ''; // Leeg de lijst
+  credentials.forEach((cred) => {
+      if (cred.isShareAction) {
+          const activityItem = document.createElement('li');
+          activityItem.textContent = `${cred.name} - ${cred.validUntil}`;
+          activitiesList.appendChild(activityItem);
+      }
+  });
+}
 
 // Functie om opgeslagen kaartjes te laden
 function loadCredentials() {
