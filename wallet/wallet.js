@@ -81,15 +81,35 @@ function showActivities() {
   // Voeg activiteiten toe aan de lijst
   filteredCredentials.forEach((cred) => {
     let activityItem = document.createElement('li');
+    
+    // Verander de datum- en tijdnotatie naar "15 september 14:45"
+    const dateObj = new Date(convertToStandardDate(cred.actionTimestamp));
+    const options = { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' };
+    const formattedDate = dateObj.toLocaleDateString('nl-NL', options);
+
     if (cred.isShareAction) {
       // Verifier-actie
-      activityItem.innerHTML = `Gegevens gedeeld met ${cred.name}<br><small>${cred.actionTimestamp}</small>`;
+      activityItem.innerHTML = `
+        <strong style="color: #152A62;">${cred.name}</strong><br>
+        <span style="color: #152A62;">Gegevens gedeeld</span><br>
+        <span style="color: #152A62;">${formattedDate}</span>
+      `;
     } else {
       // Issuer-actie
-      const issuerInfo = cred.issuedBy ? `Gegevens opgehaald bij ${cred.issuedBy}` : "Onbekende uitgever";
-      activityItem.innerHTML = `${issuerInfo}<br><small>${cred.actionTimestamp}</small>`;
+      const issuerInfo = cred.issuedBy ? cred.issuedBy : "Onbekende uitgever";
+      activityItem.innerHTML = `
+        <strong style="color: #152A62;">${issuerInfo}</strong><br>
+        <span style="color: #152A62;">${cred.name} opgehaald</span><br>
+        <span style="color: #152A62;">${formattedDate}</span>
+      `;
     }
+
+    // Voeg scheidingslijn toe
+    const divider = document.createElement('div');
+    divider.className = 'activity-divider';
+
     activitiesList.appendChild(activityItem);
+    activitiesList.appendChild(divider);
   });
 }
 
@@ -238,7 +258,7 @@ function startQrScan() {
             
             // Stap 1: Deelactie opslaan
             credentials.push({
-                name: `Gegevens gedeeld met ${data.requester}`,
+                name: `${data.requester}`,
                 actionTimestamp: timestamp, // Tijdstip van de deelactie
                 isShareAction: true // Markeer als deelactie
             });
