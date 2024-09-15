@@ -328,7 +328,8 @@ function startQrScan() {
             name: data.name || "Onbekend kaartje", // Gebruik de naam uit de QR-code
             issuedBy: data.issuedBy || "Onbekende uitgever", // Opslaan van de uitgever van de kaart
             actionTimestamp: timestamp, // Tijdstip van het scannen van de issuer-QR-code
-            isShareAction: false // Markeer als geen deelactie, maar als een issuer-scan
+            isShareAction: false, // Markeer als geen deelactie, maar als een issuer-scan
+            data: data // Bewaar alle details van het kaartje
           });
           saveCredentials();
           displayCredentials();
