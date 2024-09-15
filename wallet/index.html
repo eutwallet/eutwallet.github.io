@@ -113,7 +113,7 @@
     <button id="back-menu-btn" class="back-btn">← Terug</button>
 </div>
 
-<!-- Activiteiten Scherm (nu buiten het menu geplaatst) -->
+<!-- Activiteiten Scherm  -->
 <div id="activities-section" class="activities-section" style="display: none;">
     <h3>Activiteiten</h3>
     <ul id="activities-list"></ul>
@@ -174,6 +174,31 @@
     </div>
   </div>
 </div>
+
+<!-- Pincode bevestiging-scherm -->
+<section id="pin-confirmation-screen" style="display: none;">
+  <h2>Voer je pincode in om gegevens te delen</h2>
+  <div class="pin-input confirmation-pin-input"> <!-- Nieuwe class toegevoegd -->
+      <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
+      <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
+      <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
+      <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
+      <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
+      <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
+  </div>
+  <div class="button-container"> <!-- Nieuwe container toegevoegd -->
+    <button id="confirm-pin">Bevestig</button>
+</section>
+
+<!-- Succes-scherm na het delen van gegevens -->
+<section id="success-screen" style="display: none;">
+  <h2 id="success-message">Succes!</h2>
+  <p>Je hebt de gegevens gedeeld met <span id="verifier-name"></span>.</p>
+  <div class="button-container">
+    <button id="see-activity-btn" class="stop-button">Zie Activiteit</button>
+    <button id="close-success-btn" class="share-button">Sluiten</button>
+  </div>
+</section>
 
   <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
   <script src="wallet.js"></script>
