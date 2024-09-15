@@ -30,7 +30,6 @@ const verifierNameElement = document.getElementById('verifier-name');
 const seeActivityBtn = document.getElementById('see-activity-btn');
 const closeSuccessBtn = document.getElementById('close-success-btn');
 
-
 let html5QrCode = null; // We zullen de QR-code scanner hier initialiseren
 let credentials = [];
 let currentVerifierName = ""; // Variabele om de naam van de verifier op te slaan
@@ -68,48 +67,27 @@ function convertToStandardDate(dateString) {
 function showActivities() {
   activitiesList.innerHTML = ''; // Leeg de lijst
 
-  // Filter activiteiten met geldige tijdstempels
+  // Filter activiteiten zonder geldige tijdstempel en log de gefilterde activiteiten
   const filteredCredentials = credentials.filter(cred => cred.actionTimestamp);
-  
-  // Sorteer de activiteiten op datum en tijd (meest recente eerst)
+  console.log("Gefilterde activiteiten:", filteredCredentials);
+
+  // Sorteer de gefilterde activiteiten op datum en tijd (meest recente eerst)
   filteredCredentials.sort((a, b) => {
     let dateA = Date.parse(convertToStandardDate(a.actionTimestamp));
     let dateB = Date.parse(convertToStandardDate(b.actionTimestamp));
+    
     return dateB - dateA;
   });
+  console.log("Gesorteerde activiteiten na filtering:", filteredCredentials);
 
-  // Voeg activiteiten toe aan de lijst
+  // Voeg gesorteerde activiteiten toe aan de lijst
   filteredCredentials.forEach((cred) => {
-    let activityItem = document.createElement('li');
-    
-    // Verander de datum- en tijdnotatie naar "15 september 14:45"
-    const dateObj = new Date(convertToStandardDate(cred.actionTimestamp));
-    const options = { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' };
-    const formattedDate = dateObj.toLocaleDateString('nl-NL', options);
-
     if (cred.isShareAction) {
-      // Verifier-actie
-      activityItem.innerHTML = `
-        <strong style="color: #152A62;">${cred.name}</strong><br>
-        <span style="color: #152A62;">Gegevens gedeeld</span><br>
-        <span style="color: #152A62;">${formattedDate}</span>
-      `;
-    } else {
-      // Issuer-actie
-      const issuerInfo = cred.issuedBy ? cred.issuedBy : "Onbekende uitgever";
-      activityItem.innerHTML = `
-        <strong style="color: #152A62;">${issuerInfo}</strong><br>
-        <span style="color: #152A62;">${cred.name} opgehaald</span><br>
-        <span style="color: #152A62;">${formattedDate}</span>
-      `;
+      const activityItem = document.createElement('li');
+      activityItem.innerHTML = `${cred.name}<br><small>${cred.actionTimestamp}</small>`;
+      activitiesList.appendChild(activityItem);
+      console.log("Toegevoegd aan activiteitenlijst:", cred.name, cred.actionTimestamp);
     }
-
-    // Voeg scheidingslijn toe
-    const divider = document.createElement('div');
-    divider.className = 'activity-divider';
-
-    activitiesList.appendChild(activityItem);
-    activitiesList.appendChild(divider);
   });
 }
 
@@ -227,8 +205,6 @@ function startQrScan() {
       try {
         const data = JSON.parse(decodedText);
 
-        const timestamp = new Date().toLocaleString();
-
         // Stap 1: Controleer of het een verifier QR-code is
         if (data.verifier && data.requestedCard && data.requester && data.purpose) {
           console.log("Verifier QR-code herkend.");
@@ -254,11 +230,11 @@ function startQrScan() {
             // Log het tijdstip van het drukken op de "Delen"-knop
             console.log("Delen-knop ingedrukt op:", new Date().toLocaleString());
         
-            
+            const timestamp = new Date().toLocaleString();
             
             // Stap 1: Deelactie opslaan
             credentials.push({
-                name: `${data.requester}`,
+                name: `Gegevens gedeeld met ${data.requester}`,
                 actionTimestamp: timestamp, // Tijdstip van de deelactie
                 isShareAction: true // Markeer als deelactie
             });
@@ -325,11 +301,8 @@ function startQrScan() {
         } else {
           // Verwerk issuer QR-code zoals normaal
           credentials.push({
-            name: data.name || "Onbekend kaartje", // Gebruik de naam uit de QR-code
-            issuedBy: data.issuedBy || "Onbekende uitgever", // Opslaan van de uitgever van de kaart
-            actionTimestamp: timestamp, // Tijdstip van het scannen van de issuer-QR-code
-            isShareAction: false, // Markeer als geen deelactie, maar als een issuer-scan
-            data: data // Bewaar alle details van het kaartje
+            name: data.name || "Unknown", // Naam uit QR-code
+            data: data // Bewaar de details van het kaartje
           });
           saveCredentials();
           displayCredentials();
@@ -418,6 +391,7 @@ function goToSuccessScreen(verifierName) {
 
 // Verwerk de bevestiging van de pincode
 confirmPinBtn.addEventListener('click', () => {
+  const timestamp = new Date().toLocaleString();
   goToSuccessScreen(currentVerifierName);
 });
 
