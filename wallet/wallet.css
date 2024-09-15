@@ -289,8 +289,41 @@ main {
     margin-bottom: 20px;
 }
 
+/* Details sectie voor standaardkaartjes (Personal Data) */
+#address-details {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    z-index: 100;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto; /* Zorg dat je kunt scrollen */
+}
+
 /* Stijl voor de "Back"-knop in standaardkaartjes */
 #back-btn {
+    background-color: #5A50ED; /* Paarse kleur */
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 60%; /* Maak de knop korter */
+    max-width: 200px; /* Maximale breedte */
+    text-align: center;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+
+/* Stijl voor de "Back"-knop in standaardkaartjes */
+#back-btn-address {
     background-color: #5A50ED; /* Paarse kleur */
     color: white;
     padding: 15px;
