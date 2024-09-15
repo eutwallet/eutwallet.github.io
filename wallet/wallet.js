@@ -30,7 +30,6 @@ const verifierNameElement = document.getElementById('verifier-name');
 const seeActivityBtn = document.getElementById('see-activity-btn');
 const closeSuccessBtn = document.getElementById('close-success-btn');
 
-
 let html5QrCode = null; // We zullen de QR-code scanner hier initialiseren
 let credentials = [];
 let currentVerifierName = ""; // Variabele om de naam van de verifier op te slaan
@@ -83,13 +82,27 @@ function showActivities() {
     let activityItem = document.createElement('li');
     if (cred.isShareAction) {
       // Verifier-actie
-      activityItem.innerHTML = `Gegevens gedeeld met ${cred.name}<br><small>${cred.actionTimestamp}</small>`;
+      activityItem.innerHTML = `
+        <strong style="color: #152A62;">${cred.name}</strong><br>
+        <span style="color: #152A62;">Gegevens gedeeld</span><br>
+        <span style="color: #152A62;">${cred.actionTimestamp}</span>
+      `;
     } else {
       // Issuer-actie
-      const issuerInfo = cred.issuedBy ? `Gegevens opgehaald bij ${cred.issuedBy}` : "Onbekende uitgever";
-      activityItem.innerHTML = `${issuerInfo}<br><small>${cred.actionTimestamp}</small>`;
+      const issuerInfo = cred.issuedBy ? cred.issuedBy : "Onbekende uitgever";
+      activityItem.innerHTML = `
+        <strong style="color: #152A62;">${issuerInfo}</strong><br>
+        <span style="color: #152A62;">${cred.name} opgehaald</span><br>
+        <span style="color: #152A62;">${cred.actionTimestamp}</span>
+      `;
     }
+
+    // Voeg scheidingslijn toe
+    const divider = document.createElement('div');
+    divider.className = 'activity-divider';
+
     activitiesList.appendChild(activityItem);
+    activitiesList.appendChild(divider);
   });
 }
 
@@ -234,11 +247,9 @@ function startQrScan() {
             // Log het tijdstip van het drukken op de "Delen"-knop
             console.log("Delen-knop ingedrukt op:", new Date().toLocaleString());
         
-            
-            
             // Stap 1: Deelactie opslaan
             credentials.push({
-                name: `Gegevens gedeeld met ${data.requester}`,
+                name: `${data.requester}`,
                 actionTimestamp: timestamp, // Tijdstip van de deelactie
                 isShareAction: true // Markeer als deelactie
             });
@@ -265,17 +276,17 @@ function startQrScan() {
                 successScreen.style.display = 'block'; // Toon het success-scherm
                 verifierNameElement.textContent = currentVerifierName; // Laat de naam van de verifier zien in het success-scherm
             };
-        };
+          };
         
-        function goToPinConfirmation() {
+          function goToPinConfirmation() {
             // Log het moment waarop naar het pincode-scherm wordt genavigeerd
             console.log("Navigating to pin confirmation screen at:", new Date().toLocaleString());
         
             shareQuestionModal.style.display = 'none'; // Verberg de modal
             pinConfirmationScreen.style.display = 'block'; // Toon het pincode-scherm
-        }
+          }
         
-        closeSuccessBtn.addEventListener('click', () => {
+          closeSuccessBtn.addEventListener('click', () => {
             successScreen.style.display = 'none';
             walletGrid.style.display = 'block'; // Keer terug naar het wallet-scherm
             resetPinInputs(); // Reset pincode-invoer
@@ -285,7 +296,7 @@ function startQrScan() {
         
             // Reset de status van de deelactie
             isSharingActionInProgress = false;
-        });
+          });
 
           // Verwerk het antwoord bij "Stop"
           stopShareBtn.onclick = () => {
@@ -308,7 +319,8 @@ function startQrScan() {
             name: data.name || "Onbekend kaartje", // Gebruik de naam uit de QR-code
             issuedBy: data.issuedBy || "Onbekende uitgever", // Opslaan van de uitgever van de kaart
             actionTimestamp: timestamp, // Tijdstip van het scannen van de issuer-QR-code
-            isShareAction: false // Markeer als geen deelactie, maar als een issuer-scan
+            isShareAction: false, // Markeer als geen deelactie, maar als een issuer-scan
+            data: data // Bewaar alle details van het kaartje
           });
           saveCredentials();
           displayCredentials();
@@ -366,7 +378,6 @@ pinInputs.forEach((box, index) => {
     if (e.target.value.length === 1 && index < pinInputs.length - 1) {
       pinInputs[index + 1].focus();
     }
-    // checkPinInputs(); // Verwijderd omdat deze functie niet langer nodig is
   });
 });
 
@@ -404,7 +415,7 @@ confirmPinBtn.addEventListener('click', () => {
 seeActivityBtn.addEventListener('click', () => {
   console.log("Activiteiten scherm wordt geopend...");
   successScreen.style.display = 'none';
-  menuScreen.style.display = 'flex'
+  menuScreen.style.display = 'flex';
   activitiesSection.style.display = 'block'; // Toon activiteiten scherm
   showActivities();
 });
