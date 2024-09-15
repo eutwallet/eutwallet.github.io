@@ -136,15 +136,18 @@ function displayCredentials() {
 }
 
 // Event listener voor de standaardkaartjes
-document.querySelectorAll('.default-card').forEach((card, index) => {
+document.querySelectorAll('.default-card').forEach((card) => {
   card.addEventListener('click', () => {
-    if (index === 0) { // Controleer of het om het eerste kaartje gaat
+    if (card.classList.contains('light-card')) {
       showPersonalDataDetails();
+    } else if (card.classList.contains('dark-card')) {
+      showAddressDetails();
     }
   });
 });
 
-// Functie om details van een personal data kaartje te tonen
+
+// Functie om details van het personal data kaartje te tonen
 function showPersonalDataDetails() {
   const detailsView = document.getElementById('personal-data-details');
   if (detailsView) { // Controleer of het element bestaat
@@ -155,6 +158,22 @@ function showPersonalDataDetails() {
     if (backBtn) {
       backBtn.onclick = () => {
         detailsView.style.display = 'none';
+      };
+    }
+  }
+}
+
+// Functie om details van het tweede kaartje ("Woonadres") te tonen
+function showAddressDetails() {
+  const addressDetailsView = document.getElementById('address-details');
+  if (addressDetailsView) {
+    addressDetailsView.style.display = 'block';
+
+    // Zorg dat de "Terug"-knop de details weer verbergt
+    const backBtnAddress = document.getElementById('back-btn-address');
+    if (backBtnAddress) {
+      backBtnAddress.onclick = () => {
+        addressDetailsView.style.display = 'none';
       };
     }
   }
