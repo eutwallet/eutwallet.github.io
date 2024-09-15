@@ -19,9 +19,23 @@ const activitiesOption = document.getElementById('activities-option');
 const activitiesSection = document.getElementById('activities-section');
 const activitiesList = document.getElementById('activities-list');
 const backActivitiesBtn = document.getElementById('back-activities-btn');
+const pinConfirmationScreen = document.getElementById('pin-confirmation-screen');
+if (!pinConfirmationScreen) {
+  console.error("Pincode scherm niet gevonden!");
+}
+const successScreen = document.getElementById('success-screen');
+const confirmPinBtn = document.getElementById('confirm-pin');
+const successMessage = document.getElementById('success-message');
+const verifierNameElement = document.getElementById('verifier-name');
+const seeActivityBtn = document.getElementById('see-activity-btn');
+const closeSuccessBtn = document.getElementById('close-success-btn');
+
 
 let html5QrCode = null; // We zullen de QR-code scanner hier initialiseren
 let credentials = [];
+let currentVerifierName = ""; // Variabele om de naam van de verifier op te slaan
+
+
 // Open menu
 menuButton.addEventListener('click', () => {
   menuScreen.style.display = 'flex';
@@ -188,28 +202,34 @@ function startQrScan() {
           // Toon de modal
           shareQuestionModal.style.display = 'flex';
         
-          // Verwerk het antwoord bij "Delen"
           yesShareBtn.onclick = () => {
             const timestamp = new Date().toLocaleString();
+            
+            // Stap 1: Deelactie opslaan
             credentials.push({
-              name: `Gegevens gedeeld met ${data.requester}`,
-              validUntil: timestamp,
-              isShareAction: true // Markeer als deelactie
+                name: `Gegevens gedeeld met ${data.requester}`,
+                validUntil: timestamp,
+                isShareAction: true // Markeer als deelactie
             });
             saveCredentials();
-            shareQuestionModal.style.display = 'none'; // Verberg modal
-          
-            // Stop de QR-scanner en herstel de knoppen
-            html5QrCode.stop().then(() => {
-              console.log("QR scanner stopped.");
-              readerDiv.style.display = 'none';
-              closeScanButton.style.display = 'none';
-              document.querySelector('.scan-container').style.display = 'flex'; // Toon scan-knop en tekst
-            }).catch(err => {
-              console.error("Failed to stop scanning: ", err);
-            });
-          };
         
+            // Stap 2: Verifier naam opslaan
+            currentVerifierName = data.requester;
+        
+            // Stap 3: Verberg de modal en ga naar het pincode-scherm
+            shareQuestionModal.style.display = 'none'; // Verberg modal
+            goToPinConfirmation(); // Toon het pincode-scherm
+        
+            // Voeg event listener toe voor de "Bevestig" knop
+            confirmPinBtn.onclick = () => {
+                console.log("Pincode bevestigd, naar successcherm gaan...");
+        
+                // Stap 4: Toon het success-scherm
+                pinConfirmationScreen.style.display = 'none'; // Verberg het pincode-scherm
+                successScreen.style.display = 'block'; // Toon het success-scherm
+                verifierNameElement.textContent = currentVerifierName; // Laat de naam van de verifier zien in het success-scherm
+            };
+        };
           // Verwerk het antwoord bij "Stop"
           stopShareBtn.onclick = () => {
             shareQuestionModal.style.display = 'none'; // Verberg modal zonder actie
@@ -276,6 +296,86 @@ scanButton.addEventListener('click', () => {
   startQrScan();
 });
 
+
+
 // Laad bestaande kaartjes bij het opstarten
 loadCredentials();
 displayCredentials();
+
+// Voeg pincode-invoerfunctionaliteit toe
+const pinInputs = document.querySelectorAll('.pin-input input');
+pinInputs.forEach((box, index) => {
+  box.addEventListener('input', (e) => {
+    if (e.target.value.length === 1 && index < pinInputs.length - 1) {
+      pinInputs[index + 1].focus();
+    }
+    // checkPinInputs(); // Verwijderd omdat deze functie niet langer nodig is
+  });
+});
+
+// Pincodevelden voor het bevestigingsscherm
+const confirmationPinInputs = document.querySelectorAll('.confirmation-pin-input input');
+confirmationPinInputs.forEach((box, index) => {
+  box.addEventListener('input', (e) => {
+    if (e.target.value.length === 1 && index < confirmationPinInputs.length - 1) {
+      confirmationPinInputs[index + 1].focus();
+    }
+  });
+});
+
+// Functie om naar het pincode-scherm te gaan
+function goToPinConfirmation() {
+  console.log("Navigating to pin confirmation screen..."); // Debugging
+  shareQuestionModal.style.display = 'none'; // Verberg de modal
+  pinConfirmationScreen.style.display = 'block'; // Toon het pincode-scherm
+}
+
+// Functie om naar het success-scherm te gaan
+function goToSuccessScreen(verifierName) {
+  pinConfirmationScreen.style.display = 'none'; // Verberg het pincode-scherm
+  successMessage.textContent = "Succes!";
+  verifierNameElement.textContent = verifierName;
+  successScreen.style.display = 'block'; // Toon het success-scherm
+}
+
+// Verwerk de bevestiging van de pincode
+confirmPinBtn.addEventListener('click', () => {
+  const timestamp = new Date().toLocaleString();
+  credentials.push({
+    name: `Gegevens gedeeld met ${currentVerifierName}`,
+    validUntil: timestamp,
+    isShareAction: true // Markeer als deelactie
+  });
+  saveCredentials();
+  goToSuccessScreen(currentVerifierName);
+});
+
+
+// Knoppen in het success-scherm
+seeActivityBtn.addEventListener('click', () => {
+  console.log("Activiteiten scherm wordt geopend...");
+  successScreen.style.display = 'none';
+  menuScreen.style.display = 'flex'
+  activitiesSection.style.display = 'block'; // Toon activiteiten scherm
+  showActivities();
+});
+
+closeSuccessBtn.addEventListener('click', () => {
+  successScreen.style.display = 'none';
+  walletGrid.style.display = 'block'; // Keer terug naar het wallet-scherm
+});
+
+// Reset pincode-scherm na gebruik
+function resetPinInputs() {
+  pinInputs.forEach((input) => {
+    input.value = '';
+  });
+  confirmPinBtn.disabled = true; // Schakel de bevestig-knop uit
+}
+
+// Voeg deze regel toe bij het verlaten van het success-scherm
+closeSuccessBtn.addEventListener('click', () => {
+  successScreen.style.display = 'none';
+  walletGrid.style.display = 'block'; // Keer terug naar het wallet-scherm
+  resetPinInputs(); // Reset pincode-invoer
+});
