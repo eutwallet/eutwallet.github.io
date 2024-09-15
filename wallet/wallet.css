@@ -577,20 +577,55 @@ p {
     flex-direction: column;
 }
 
+/* Witruimte en scheidingslijn onder de titel "Activiteiten" */
 .activities-section h3 {
-    margin-bottom: 20px;
+    margin-bottom: 20px; /* Voeg witruimte onder de titel toe */
+    color: #152A62; /* Zorg dat de titel dezelfde kleur heeft als de activiteiten */
 }
+
+/* Scheidingslijn onder de titel "Activiteiten" */
+.activities-section .title-divider {
+    width: 100%;
+    height: 1px;
+    background-color: #152A62; /* Kleur van de scheidingslijn */
+    margin-bottom: 10px; /* Voeg wat ruimte onder de lijn toe */
+}
+
 
 .activities-section ul {
     list-style: none;
     padding: 0;
 }
 
-.activities-section li {
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
+/* Stijl voor de scheidingslijn tussen activiteiten */
+.activity-divider {
+    width: 100%;
+    height: 1px;
+    background-color: lightgrey;
+    margin: 10px 0; /* Voeg wat ruimte rondom de lijn toe */
 }
 
+/* Stijl voor de activiteitenlijstitems */
+.activities-section li {
+    padding: 10px;
+    color: #152A62;
+    font-size: 16px;
+    line-height: 1.5; /* Voeg wat extra ruimte tussen de regels toe */
+}
+
+/* Container voor de achtergrond van de "Terug"-knop */
+.activities-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: white; /* Maak de achtergrond wit */
+    height: 80px; /* 20px boven de knop + hoogte van de knop */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Lichte schaduw boven de achtergrond */
+}
 
 #pin-confirmation-screen {
     display: flex;
