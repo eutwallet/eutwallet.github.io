@@ -30,11 +30,10 @@ const verifierNameElement = document.getElementById('verifier-name');
 const seeActivityBtn = document.getElementById('see-activity-btn');
 const closeSuccessBtn = document.getElementById('close-success-btn');
 
-
 let html5QrCode = null; // We zullen de QR-code scanner hier initialiseren
 let credentials = [];
 let currentVerifierName = ""; // Variabele om de naam van de verifier op te slaan
-
+let isSharingActionInProgress = false; // Houd de status van de deelactie bij
 
 // Open menu
 menuButton.addEventListener('click', () => {
@@ -58,17 +57,37 @@ backActivitiesBtn.addEventListener('click', () => {
   activitiesSection.style.display = 'none';
 });
 
-// Functie om opgeslagen deelacties te tonen in activiteitenlijst
+function convertToStandardDate(dateString) {
+  // Converteer 'DD/MM/YYYY, HH:mm:ss' naar 'YYYY-MM-DDTHH:mm:ss'
+  let [datePart, timePart] = dateString.split(', ');
+  let [day, month, year] = datePart.split('/');
+  return `${year}-${month}-${day}T${timePart}`;
+}
+
 function showActivities() {
   activitiesList.innerHTML = ''; // Leeg de lijst
-  // Sorteer de activiteiten op datum en tijd (meest recente eerst)
-  credentials.sort((a, b) => new Date(b.validUntil) - new Date(a.validUntil));
-  credentials.forEach((cred) => {
-      if (cred.isShareAction) {
-          const activityItem = document.createElement('li');
-          activityItem.innerHTML = `${cred.name}<br><small>${cred.validUntil}</small>`;
-          activitiesList.appendChild(activityItem);
-      }
+
+  // Filter activiteiten zonder geldige tijdstempel en log de gefilterde activiteiten
+  const filteredCredentials = credentials.filter(cred => cred.actionTimestamp);
+  console.log("Gefilterde activiteiten:", filteredCredentials);
+
+  // Sorteer de gefilterde activiteiten op datum en tijd (meest recente eerst)
+  filteredCredentials.sort((a, b) => {
+    let dateA = Date.parse(convertToStandardDate(a.actionTimestamp));
+    let dateB = Date.parse(convertToStandardDate(b.actionTimestamp));
+    
+    return dateB - dateA;
+  });
+  console.log("Gesorteerde activiteiten na filtering:", filteredCredentials);
+
+  // Voeg gesorteerde activiteiten toe aan de lijst
+  filteredCredentials.forEach((cred) => {
+    if (cred.isShareAction) {
+      const activityItem = document.createElement('li');
+      activityItem.innerHTML = `${cred.name}<br><small>${cred.actionTimestamp}</small>`;
+      activitiesList.appendChild(activityItem);
+      console.log("Toegevoegd aan activiteitenlijst:", cred.name, cred.actionTimestamp);
+    }
   });
 }
 
@@ -100,7 +119,6 @@ function displayCredentials() {
     }
   });
 }
-
 
 // Event listener voor de standaardkaartjes
 document.querySelectorAll('.default-card').forEach((card, index) => {
@@ -166,7 +184,6 @@ function showDetails(credential, index) {
   };
 }
 
-
 // Functie om de QR-code scanner te starten
 function startQrScan() {
   document.querySelector('.scan-container').style.display = 'none'; // Verberg scan-knop en tekst
@@ -201,16 +218,30 @@ function startQrScan() {
         
           // Toon de modal
           shareQuestionModal.style.display = 'flex';
-        
+          yesShareBtn.onclick = null; 
+
           yesShareBtn.onclick = () => {
+            // Controleer of de actie al is uitgevoerd
+            if (isSharingActionInProgress) return;
+        
+            // Markeer de actie als in uitvoering
+            isSharingActionInProgress = true;
+        
+            // Log het tijdstip van het drukken op de "Delen"-knop
+            console.log("Delen-knop ingedrukt op:", new Date().toLocaleString());
+        
             const timestamp = new Date().toLocaleString();
             
             // Stap 1: Deelactie opslaan
             credentials.push({
                 name: `Gegevens gedeeld met ${data.requester}`,
-                validUntil: timestamp,
+                actionTimestamp: timestamp, // Tijdstip van de deelactie
                 isShareAction: true // Markeer als deelactie
             });
+        
+            // Log het moment waarop de actie is vastgelegd
+            console.log("Deelactie vastgelegd op:", timestamp);
+        
             saveCredentials();
         
             // Stap 2: Verifier naam opslaan
@@ -222,7 +253,8 @@ function startQrScan() {
         
             // Voeg event listener toe voor de "Bevestig" knop
             confirmPinBtn.onclick = () => {
-                console.log("Pincode bevestigd, naar successcherm gaan...");
+                // Log het moment waarop de pincode wordt bevestigd
+                console.log("Pincode bevestigd op:", new Date().toLocaleString());
         
                 // Stap 4: Toon het success-scherm
                 pinConfirmationScreen.style.display = 'none'; // Verberg het pincode-scherm
@@ -230,6 +262,27 @@ function startQrScan() {
                 verifierNameElement.textContent = currentVerifierName; // Laat de naam van de verifier zien in het success-scherm
             };
         };
+        
+        function goToPinConfirmation() {
+            // Log het moment waarop naar het pincode-scherm wordt genavigeerd
+            console.log("Navigating to pin confirmation screen at:", new Date().toLocaleString());
+        
+            shareQuestionModal.style.display = 'none'; // Verberg de modal
+            pinConfirmationScreen.style.display = 'block'; // Toon het pincode-scherm
+        }
+        
+        closeSuccessBtn.addEventListener('click', () => {
+            successScreen.style.display = 'none';
+            walletGrid.style.display = 'block'; // Keer terug naar het wallet-scherm
+            resetPinInputs(); // Reset pincode-invoer
+        
+            // Log het moment waarop naar het hoofdscherm wordt teruggekeerd
+            console.log("Terug naar het hoofdscherm op:", new Date().toLocaleString());
+        
+            // Reset de status van de deelactie
+            isSharingActionInProgress = false;
+        });
+
           // Verwerk het antwoord bij "Stop"
           stopShareBtn.onclick = () => {
             shareQuestionModal.style.display = 'none'; // Verberg modal zonder actie
@@ -296,8 +349,6 @@ scanButton.addEventListener('click', () => {
   startQrScan();
 });
 
-
-
 // Laad bestaande kaartjes bij het opstarten
 loadCredentials();
 displayCredentials();
@@ -341,15 +392,8 @@ function goToSuccessScreen(verifierName) {
 // Verwerk de bevestiging van de pincode
 confirmPinBtn.addEventListener('click', () => {
   const timestamp = new Date().toLocaleString();
-  credentials.push({
-    name: `Gegevens gedeeld met ${currentVerifierName}`,
-    validUntil: timestamp,
-    isShareAction: true // Markeer als deelactie
-  });
-  saveCredentials();
   goToSuccessScreen(currentVerifierName);
 });
-
 
 // Knoppen in het success-scherm
 seeActivityBtn.addEventListener('click', () => {
@@ -363,6 +407,10 @@ seeActivityBtn.addEventListener('click', () => {
 closeSuccessBtn.addEventListener('click', () => {
   successScreen.style.display = 'none';
   walletGrid.style.display = 'block'; // Keer terug naar het wallet-scherm
+  resetPinInputs(); // Reset pincode-invoer
+
+  // Reset de status van de deelactie
+  isSharingActionInProgress = false;
 });
 
 // Reset pincode-scherm na gebruik
