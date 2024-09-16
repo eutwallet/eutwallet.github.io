@@ -898,3 +898,42 @@ p {
 #close-issuer-success-btn:hover {
     background-color: #1e3a82; /* Donkerdere kleur bij hover */
 }
+
+/* Nieuwe rdfci modal styling */
+#rdfci-modal {
+    display: none;
+    position: fixed;
+    display: flex;
+    justify-content: flex-start; /* Zorg ervoor dat de inhoud aan de bovenkant begint */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    z-index: 1000;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+#rdfci-modal h2 {
+    margin-bottom: 20px;
+}
+
+#rdfci-modal .button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+/* Divider styling */
+.divider {
+    height: 1px;
+    background-color: #ccc;
+    margin: 10px 0;
+}
+
+/* Stijling voor de sterke (bold) teksten */
+#rdfci-modal p strong {
+    font-weight: bold;
+}
