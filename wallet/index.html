@@ -216,6 +216,59 @@
   </div>
 </section>
 
+<!-- Issuer modal voor de vraag na het scannen -->
+<section id="issuer-question-modal" class="modal">
+  <div class="modal-content">
+    <!-- Regel 1 -->
+    <h2 id="issuer-question-message"><strong>Wilt u onderstaande gegevens opslaan in uw wallet?</strong></h2>
+    
+    <!-- Witruimte en dividerlijn -->
+    <div class="divider" style="margin: 10px 0;"></div>
+    
+    <!-- Regel 2: Gegevens -->
+    <p><strong>Gegevens</strong></p>
+    
+    <!-- Regel 3: Ingevulde gegevens -->
+    <p id="issuer-data"><strong></strong></p>
+    
+    <!-- Divider -->
+    <div class="divider"></div>
+    
+    <!-- Regel 4: Uitgegeven door -->
+    <p><strong>Uitgegeven door</strong></p>
+    
+    <!-- Regel 5: Ingevulde issuer -->
+    <p id="issuer-issuedBy"><strong></strong></p>
+    
+    <!-- Divider -->
+    <div class="divider"></div>
+    
+    <!-- Knoppen -->
+    <div class="button-container">
+      <button id="stop-button-issuer" class="stop-button">Stop</button>
+      <button id="save-button" class="share-button">Opslaan</button>
+    </div>
+  </div>
+</section>
+
+<!-- Issuer success-scherm -->
+<section id="issuer-success-screen" style="display: none;">
+  <h2 id="issuer-success-message"><strong>Succes!</strong></h2>
+  <div class="divider"></div> <!-- Divider lijn -->
+  <p style="margin-top: 20px;">De gegevens</p>
+  <p><strong id="issuer-success-data"></strong></p>
+  <p>uitgegeven door</p>
+  <p><strong id="issuer-success-issuedBy"></strong></p>
+  <p>zijn succesvol opgeslagen in je wallet</p>
+  <div class="divider" style="margin-top: 20px;"></div> <!-- Tweede divider lijn -->
+  <div id="issuer-success-card" class="card"></div> <!-- Kaartje-element -->
+  <div class="button-container">
+    <button id="close-issuer-success-btn" class="share-button">Sluiten</button>
+  </div>
+</section>
+
+
+
   <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
   <script src="wallet.js"></script>
   <script>
