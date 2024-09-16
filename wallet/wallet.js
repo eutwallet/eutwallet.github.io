@@ -20,15 +20,17 @@ const activitiesSection = document.getElementById('activities-section');
 const activitiesList = document.getElementById('activities-list');
 const backActivitiesBtn = document.getElementById('back-activities-btn');
 const pinConfirmationScreen = document.getElementById('pin-confirmation-screen');
-if (!pinConfirmationScreen) {
-  console.error("Pincode scherm niet gevonden!");
-}
 const successScreen = document.getElementById('success-screen');
 const confirmPinBtn = document.getElementById('confirm-pin');
 const successMessage = document.getElementById('success-message');
 const verifierNameElement = document.getElementById('verifier-name');
 const seeActivityBtn = document.getElementById('see-activity-btn');
 const closeSuccessBtn = document.getElementById('close-success-btn');
+const issuerQuestionModal = document.getElementById('issuer-question-modal');
+const saveButton = document.getElementById('save-button'); // Nieuw: opslaan-knop
+const stopButtonIssuer = document.getElementById('stop-button-issuer'); // Nieuw: stop-knop voor issuer
+const issuerSuccessScreen = document.getElementById('issuer-success-screen');
+const closeIssuerSuccessBtn = document.getElementById('close-issuer-success-btn'); // Nieuw: sluitknop voor successcherm
 
 let html5QrCode = null; // We zullen de QR-code scanner hier initialiseren
 let credentials = [];
@@ -226,141 +228,143 @@ function startQrScan() {
 
   // Check of html5QrCode al bestaat, zo niet, initialiseer het
   if (!html5QrCode) {
-    html5QrCode = new Html5Qrcode("reader");
+      html5QrCode = new Html5Qrcode("reader");
   }
 
   console.log("Starting QR scanner...");
 
   html5QrCode.start(
-    { facingMode: "environment" },
-    { fps: 10, qrbox: 250 },
-    (decodedText) => {
-      console.log("QR code scanned: ", decodedText);
-      try {
-        const data = JSON.parse(decodedText);
+      { facingMode: "environment" },
+      { fps: 10, qrbox: 250 },
+      (decodedText) => {
+          console.log("QR code scanned: ", decodedText);
+          try {
+              const data = JSON.parse(decodedText);
+              const timestamp = new Date().toLocaleString();
 
-        const timestamp = new Date().toLocaleString();
+              // Stap 1: Controleer of het een verifier QR-code is
+              if (data.verifier && data.requestedCard && data.requester && data.purpose) {
+                  console.log("Verifier QR-code herkend.");
+                  console.log("Gevraagde kaart: ", data.requestedCard);
+                  console.log("Aanvrager: ", data.requester);
+                  
+                  // Dynamische vraag in de modal
+                  document.getElementById('share-question-text').innerText = `Wilt u onderstaande gegevens delen met ${data.requester}?`;
+                  document.getElementById('share-reason').innerText = `${data.purpose}`; // Reden uit QR-code
+                  document.getElementById('share-details').innerText = `${data.requestedCard}`; // Gegevens uit QR-code
 
-        // Stap 1: Controleer of het een verifier QR-code is
-        if (data.verifier && data.requestedCard && data.requester && data.purpose) {
-          console.log("Verifier QR-code herkend.");
-          console.log("Gevraagde kaart: ", data.requestedCard);
-          console.log("Aanvrager: ", data.requester);
-        
-          // Dynamische vraag in de modal
-          document.getElementById('share-question-text').innerText = `Wilt u onderstaande gegevens delen met ${data.requester}?`;
-          document.getElementById('share-reason').innerText = `${data.purpose}`; // Reden uit QR-code
-          document.getElementById('share-details').innerText = `${data.requestedCard}`; // Gegevens uit QR-code
-        
-          // Toon de modal
-          shareQuestionModal.style.display = 'flex';
-          yesShareBtn.onclick = null; 
+                  // Toon de modal voor de verifier-vraag
+                  shareQuestionModal.style.display = 'flex';
+                  yesShareBtn.onclick = null;
 
-          yesShareBtn.onclick = () => {
-            // Controleer of de actie al is uitgevoerd
-            if (isSharingActionInProgress) return;
-        
-            // Markeer de actie als in uitvoering
-            isSharingActionInProgress = true;
-        
-            // Log het tijdstip van het drukken op de "Delen"-knop
-            console.log("Delen-knop ingedrukt op:", new Date().toLocaleString());
-        
-            // Stap 1: Deelactie opslaan
-            credentials.push({
-                name: `${data.requester}`,
-                actionTimestamp: timestamp, // Tijdstip van de deelactie
-                isShareAction: true // Markeer als deelactie
-            });
-        
-            // Log het moment waarop de actie is vastgelegd
-            console.log("Deelactie vastgelegd op:", timestamp);
-        
-            saveCredentials();
-        
-            // Stap 2: Verifier naam opslaan
-            currentVerifierName = data.requester;
-        
-            // Stap 3: Verberg de modal en ga naar het pincode-scherm
-            shareQuestionModal.style.display = 'none'; // Verberg modal
-            goToPinConfirmation(); // Toon het pincode-scherm
-        
-            // Voeg event listener toe voor de "Bevestig" knop
-            confirmPinBtn.onclick = () => {
-                // Log het moment waarop de pincode wordt bevestigd
-                console.log("Pincode bevestigd op:", new Date().toLocaleString());
-        
-                // Stap 4: Toon het success-scherm
-                pinConfirmationScreen.style.display = 'none'; // Verberg het pincode-scherm
-                successScreen.style.display = 'block'; // Toon het success-scherm
-                verifierNameElement.textContent = currentVerifierName; // Laat de naam van de verifier zien in het success-scherm
-            };
-          };
-        
-          function goToPinConfirmation() {
-            // Log het moment waarop naar het pincode-scherm wordt genavigeerd
-            console.log("Navigating to pin confirmation screen at:", new Date().toLocaleString());
-        
-            shareQuestionModal.style.display = 'none'; // Verberg de modal
-            pinConfirmationScreen.style.display = 'block'; // Toon het pincode-scherm
+                  yesShareBtn.onclick = () => {
+                      // Controleer of de actie al is uitgevoerd
+                      if (isSharingActionInProgress) return;
+
+                      // Markeer de actie als in uitvoering
+                      isSharingActionInProgress = true;
+
+                      // Log het tijdstip van het drukken op de "Delen"-knop
+                      console.log("Delen-knop ingedrukt op:", new Date().toLocaleString());
+
+                      // Stap 1: Deelactie opslaan
+                      credentials.push({
+                          name: `${data.requester}`,
+                          actionTimestamp: timestamp, // Tijdstip van de deelactie
+                          isShareAction: true // Markeer als deelactie
+                      });
+
+                      // Log het moment waarop de actie is vastgelegd
+                      console.log("Deelactie vastgelegd op:", timestamp);
+
+                      saveCredentials();
+
+                      // Stap 2: Verifier naam opslaan
+                      currentVerifierName = data.requester;
+
+                      // Stap 3: Verberg de modal en ga naar het pincode-scherm
+                      shareQuestionModal.style.display = 'none'; // Verberg modal
+                      goToPinConfirmation(); // Toon het pincode-scherm
+
+                      // Voeg event listener toe voor de "Bevestig" knop
+                      confirmPinBtn.onclick = () => {
+                          // Log het moment waarop de pincode wordt bevestigd
+                          console.log("Pincode bevestigd op:", new Date().toLocaleString());
+
+                          // Stap 4: Toon het success-scherm
+                          pinConfirmationScreen.style.display = 'none'; // Verberg het pincode-scherm
+                          successScreen.style.display = 'block'; // Toon het success-scherm
+                          verifierNameElement.textContent = currentVerifierName; // Laat de naam van de verifier zien in het success-scherm
+                      };
+                  };
+
+                  // Verwerk het antwoord bij "Stop"
+                  stopShareBtn.onclick = () => {
+                      shareQuestionModal.style.display = 'none'; // Verberg modal zonder actie
+                      closeScanButton.click(); // Reset de QR-scanner en interface
+                  };
+
+              } else if (data.issuedBy && data.name) {
+                  // Verwerk issuer QR-code
+                  console.log("Issuer QR-code herkend.");
+                  
+                  // Toon de nieuwe issuer modal
+                  issuerQuestionModal.style.display = 'flex';
+                  console.log("Issuer modal geopend.");
+
+                  
+                  // Vul de tekstvelden in de issuer modal
+                  const issuerName = data.issuedBy || 'Onbekende uitgever';
+                  const cardName = data.name || 'Onbekend kaartje';
+                  document.getElementById('issuer-data').innerText = cardName;
+                  document.getElementById('issuer-issuedBy').innerText = issuerName;
+                  // Opslaan-knop functionaliteit
+                  saveButton.onclick = () => {
+                      console.log("Opslaan-knop ingedrukt voor issuer.");
+                      credentials.push({
+                          name: cardName,
+                          issuedBy: issuerName,
+                          actionTimestamp: timestamp,
+                          isShareAction: false, // Markeer als issuer-scan
+                          data: data // Bewaar alle details van het kaartje
+                      });
+                      saveCredentials();
+                      console.log("Issuer gegevens opgeslagen in de wallet.");
+
+                      // Toon het issuer success-scherm
+                      goToIssuerSuccessScreen(cardName, issuerName);
+                      console.log("Issuer success-scherm weergegeven.");
+
+                      // Sluit het modal
+                      issuerQuestionModal.style.display = 'none';
+                  };
+
+                  // Stop-knop functionaliteit
+                  stopButtonIssuer.onclick = () => {
+                      console.log("Stop-knop ingedrukt. Issuer actie geannuleerd.");
+                      issuerQuestionModal.style.display = 'none';
+                      resetQrScanner(); // Reset de QR-scanner en interface
+                  };
+              } else {
+                  console.log("Onbekende QR-code structuur.");
+              }
+
+              // Sluit camera na succesvolle scan
+              html5QrCode.stop().then(() => {
+                  console.log("QR scanner stopped.");
+                  readerDiv.style.display = 'none';
+                  closeScanButton.style.display = 'none';
+                  document.querySelector('.scan-container').style.display = 'flex'; // Toon scan-knop en tekst
+              }).catch(err => {
+                  console.error("Failed to stop scanning: ", err);
+              });
+          } catch (error) {
+              console.error("QR-code parse error: ", error);
           }
-        
-          closeSuccessBtn.addEventListener('click', () => {
-            successScreen.style.display = 'none';
-            walletGrid.style.display = 'block'; // Keer terug naar het wallet-scherm
-            resetPinInputs(); // Reset pincode-invoer
-        
-            // Log het moment waarop naar het hoofdscherm wordt teruggekeerd
-            console.log("Terug naar het hoofdscherm op:", new Date().toLocaleString());
-        
-            // Reset de status van de deelactie
-            isSharingActionInProgress = false;
-          });
-
-          // Verwerk het antwoord bij "Stop"
-          stopShareBtn.onclick = () => {
-            shareQuestionModal.style.display = 'none'; // Verberg modal zonder actie
-          
-            // Stop de QR-scanner en herstel de knoppen
-            html5QrCode.stop().then(() => {
-              console.log("QR scanner stopped.");
-              readerDiv.style.display = 'none';
-              closeScanButton.style.display = 'none';
-              document.querySelector('.scan-container').style.display = 'flex'; // Toon scan-knop en tekst
-            }).catch(err => {
-              console.error("Failed to stop scanning: ", err);
-            });
-          };
-
-        } else {
-          // Verwerk issuer QR-code zoals normaal
-          credentials.push({
-            name: data.name || "Onbekend kaartje", // Gebruik de naam uit de QR-code
-            issuedBy: data.issuedBy || "Onbekende uitgever", // Opslaan van de uitgever van de kaart
-            actionTimestamp: timestamp, // Tijdstip van het scannen van de issuer-QR-code
-            isShareAction: false, // Markeer als geen deelactie, maar als een issuer-scan
-            data: data // Bewaar alle details van het kaartje
-          });
-          saveCredentials();
-          displayCredentials();
-        }
-
-        // Sluit camera na succesvolle scan
-        html5QrCode.stop().then(() => {
-          console.log("QR scanner stopped.");
-          readerDiv.style.display = 'none';
-          closeScanButton.style.display = 'none';
-          document.querySelector('.scan-container').style.display = 'flex'; // Toon scan-knop en tekst
-        }).catch(err => {
-          console.error("Failed to stop scanning: ", err);
-        });
-      } catch (error) {
-        console.error("QR-code parse error: ", error);
+      },
+      (errorMessage) => {
+          console.error(`QR scan failed: ${errorMessage}`);
       }
-    },
-    (errorMessage) => {
-      console.error(`QR scan failed: ${errorMessage}`);
-    }
   );
 }
 
@@ -385,6 +389,8 @@ closeScanButton.addEventListener('click', () => {
 scanButton.addEventListener('click', () => {
   startQrScan();
 });
+
+
 
 // Laad bestaande kaartjes bij het opstarten
 loadCredentials();
@@ -417,35 +423,9 @@ function goToPinConfirmation() {
   pinConfirmationScreen.style.display = 'block'; // Toon het pincode-scherm
 }
 
-// Functie om naar het success-scherm te gaan
-function goToSuccessScreen(verifierName) {
-  pinConfirmationScreen.style.display = 'none'; // Verberg het pincode-scherm
-  successMessage.textContent = "Succes!";
-  verifierNameElement.textContent = verifierName;
-  successScreen.style.display = 'block'; // Toon het success-scherm
-}
-
 // Verwerk de bevestiging van de pincode
 confirmPinBtn.addEventListener('click', () => {
   goToSuccessScreen(currentVerifierName);
-});
-
-// Knoppen in het success-scherm
-seeActivityBtn.addEventListener('click', () => {
-  console.log("Activiteiten scherm wordt geopend...");
-  successScreen.style.display = 'none';
-  menuScreen.style.display = 'flex';
-  activitiesSection.style.display = 'block'; // Toon activiteiten scherm
-  showActivities();
-});
-
-closeSuccessBtn.addEventListener('click', () => {
-  successScreen.style.display = 'none';
-  walletGrid.style.display = 'block'; // Keer terug naar het wallet-scherm
-  resetPinInputs(); // Reset pincode-invoer
-
-  // Reset de status van de deelactie
-  isSharingActionInProgress = false;
 });
 
 // Reset pincode-scherm na gebruik
@@ -456,9 +436,50 @@ function resetPinInputs() {
   confirmPinBtn.disabled = true; // Schakel de bevestig-knop uit
 }
 
-// Voeg deze regel toe bij het verlaten van het success-scherm
+
+// Functie om naar het success-scherm verifier te gaan
+function goToSuccessScreen(verifierName) {
+  pinConfirmationScreen.style.display = 'none'; // Verberg het pincode-scherm
+  successMessage.textContent = "Succes!";
+  verifierNameElement.textContent = verifierName;
+  successScreen.style.display = 'block'; // Toon het success-scherm
+}
+
+// Knoppen in het success-scherm verifier
+seeActivityBtn.addEventListener('click', () => {
+  console.log("Activiteiten scherm wordt geopend...");
+  successScreen.style.display = 'none';
+  menuScreen.style.display = 'flex';
+  activitiesSection.style.display = 'block'; // Toon activiteiten scherm
+  showActivities();
+});
+
+// Voeg deze regel toe bij het verlaten van het success-scherm verifier
 closeSuccessBtn.addEventListener('click', () => {
   successScreen.style.display = 'none';
   walletGrid.style.display = 'block'; // Keer terug naar het wallet-scherm
   resetPinInputs(); // Reset pincode-invoer
+
+  // Reset de status van de deelactie
+  isSharingActionInProgress = false;
+});
+
+// Issuer successscherm
+function goToIssuerSuccessScreen(cardName, issuedBy) {
+  issuerSuccessScreen.style.display = 'block';
+
+  // Vul de nieuwe tekstvelden in het successcherm
+  document.getElementById('issuer-success-data').innerText = cardName;
+  document.getElementById('issuer-success-issuedBy').innerText = issuedBy;
+
+  // Toon een kaartje met de gegevens
+  const successCard = document.getElementById('issuer-success-card');
+  successCard.innerHTML = `<h3>${cardName}</h3>`;
+  successCard.classList.add('card'); // Voeg de kaartstijl toe
+}
+
+// Sluitknop voor het issuer success-scherm
+closeIssuerSuccessBtn.addEventListener('click', () => {
+  issuerSuccessScreen.style.display = 'none';
+  displayCredentials(); // Zorg dat het nieuwe kaartje wordt weergegeven
 });
