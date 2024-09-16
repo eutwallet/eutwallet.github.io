@@ -339,7 +339,7 @@ main {
     transform: translateX(-50%);
 }
 
-/* Modal styling */
+/* Modal styling verifier*/
 #share-question-modal {
     display: none;
     position: fixed;
@@ -354,7 +354,7 @@ main {
     justify-content: flex-start; /* Plaats inhoud bovenaan */
 }
 
-/* Inhoud van de modal */
+/* Inhoud van de modal verifier*/
 .modal-content {
     background-color: white;
     padding: 20px;
@@ -712,7 +712,7 @@ p {
 }
 
 
-/* Success-scherm */
+/* Success-scherm verifier */
 #success-screen {
     display: none; /* Verberg standaard */
     position: fixed; /* Zorg ervoor dat het bovenop andere elementen staat */
@@ -755,7 +755,7 @@ p {
     cursor: pointer;
 }
 
-/* Sluiten-knop */
+/* Sluiten-knop verifier successcherm  */
 #close-success-btn {
     background-color: #373EDE;
     color: white;
@@ -764,4 +764,137 @@ p {
     border: none;
     font-size: 16px;
     cursor: pointer;
+}
+
+/* Issuer modal styling (vraagscherm) */
+#issuer-question-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    z-index: 1000;
+    padding: 20px;
+    box-sizing: border-box;
+    justify-content: flex-start; /* Zorg ervoor dat de inhoud aan de bovenkant begint */
+    align-items: center;
+    flex-direction: column;
+    overflow-y: auto; /* Zorg ervoor dat er gescrold kan worden als er veel inhoud is */
+}
+
+/* Tekst in het vraagscherm */
+#issuer-question-modal p {
+    text-align: left;
+    margin: 5px 0; /* Algemene marge voor de tekstregels */
+}
+
+#issuer-question-modal h2 {
+    margin-bottom: 10px; /* Witruimte van 10px onder de titel */
+    font-weight: bold; /* Maak de tekst dikgedrukt */
+}
+
+/* Divider lijn */
+.divider {
+    width: 100%;
+    height: 1px;
+    background-color: lightgrey;
+    margin: 20px 0; /* Witruimte van 20px boven en onder de divider */
+}
+
+/* Knoppen styling voor het vraagscherm */
+#issuer-question-modal .button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+#stop-button-issuer {
+    background-color: white;
+    border: 2px solid #152A62;
+    color: #152A62;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#save-button {
+    background-color: #5A50ED; /* Paarse kleur */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#save-button:hover {
+    background-color: #1e3a82;
+}
+
+/* Issuer success-scherm styling */
+#issuer-success-screen {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    z-index: 1000;
+    display: flex;
+    justify-content: flex-start; /* Zorg ervoor dat de inhoud aan de bovenkant begint */
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto; /* Zorg ervoor dat er gescrold kan worden als er veel inhoud is */
+}
+
+#issuer-success-screen h2 {
+    margin-bottom: 10px; /* Witruimte van 10px onder de titel */
+    font-weight: bold; /* Maak de tekst dikgedrukt */
+    text-align: left;
+}
+
+/* Tekst in het success-scherm */
+#issuer-success-screen p {
+    text-align: left;
+    margin: 5px 0; /* Algemene marge voor de tekstregels */
+}
+
+/* Kaartje in het success-scherm */
+#issuer-success-card {
+    background-color: #E0F7FA;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    width: 100%; /* Neem de volledige breedte van de container */
+    max-width: 400px; /* Maximale breedte van het kaartje */
+    text-align: center;
+}
+
+/* Knoppen styling voor het success-scherm */
+#issuer-success-screen .button-container {
+    display: flex;
+    justify-content: center; /* Centreer de knop */
+    margin-top: 20px;
+}
+
+#close-issuer-success-btn {
+    width: 150px; /* Pas de breedte van de knop aan indien nodig */
+    background-color: #5A50ED; /* Paarse kleur */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#close-issuer-success-btn:hover {
+    background-color: #1e3a82; /* Donkerdere kleur bij hover */
 }
