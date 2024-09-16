@@ -191,7 +191,7 @@
   </div>
 </div>
 
-<!-- Pincode bevestiging-scherm -->
+<!-- Pincode bevestiging-scherm delen gegevens-->
 <section id="pin-confirmation-screen" style="display: none;">
   <h2>Voer je pincode in om gegevens te delen</h2>
   <div class="pin-input confirmation-pin-input"> <!-- Nieuwe class toegevoegd -->
@@ -206,15 +206,65 @@
     <button id="confirm-pin">Bevestig</button>
 </section>
 
-<!-- Succes-scherm na het delen van gegevens -->
+<!-- Succes-scherm na het delen van gegevens verifier-->
 <section id="success-screen" style="display: none;">
   <h2 id="success-message">Succes!</h2>
-  <p>Je hebt de gegevens gedeeld met <span id="verifier-name"></span>.</p>
+  <div class="divider"></div>
+  <p>Je hebt de gegevens gedeeld met</p>
+  <p><strong><span id="verifier-name"></span></strong></p>
   <div class="button-container">
     <button id="see-activity-btn" class="stop-button">Zie Activiteit</button>
     <button id="close-success-btn" class="share-button">Sluiten</button>
   </div>
 </section>
+
+<!-- Nieuwe rdfci modal -->
+<section id="rdfci-modal" class="modal" style="display: none;">
+  <div class="modal-content">
+    <p><strong>Om onderstaande gegevens te ontvangen:</strong></p>
+    <div class="divider"></div>
+
+    <!-- Gegevens sectie -->
+    <p><strong>Gegevens</strong></p>
+    <p id="rdfci-name"></p>
+    <div class="divider"></div>
+
+    <!-- Uitgegeven door sectie -->
+    <p><strong>Uitgegeven door</strong></p>
+    <p id="rdfci-issuedBy"></p>
+    <div class="divider" style="margin-bottom: 15px;"></div>
+
+    <!-- Gegevens delen met sectie -->
+    <p id="rdfci-share-with"><strong>Wilt u de volgende gegevens delen met:</strong></p>
+    <div class="divider"></div>
+
+    <!-- Container voor dynamisch gevraagde kaartjes -->
+    <div id="rdfci-details-container">
+      <!-- Een voorbeeld van een kaartje -->
+      <!-- <div class="card-container">
+        <div class="card-title">Persoonsgegevens</div>
+        <div class="card-details">
+          <p>First name: Willeke Liselotte</p>
+          <p>Surname: De Bruijn</p>
+          ...
+        </div>
+        <div class="divider"></div>
+      </div> -->
+    </div>
+    <div class="divider"></div>
+    <!-- Agreement sectie -->
+    <p><strong>Overeenkomst</strong></p>
+    <p id="rdfci-agreement"></p>
+    <div class="divider"></div>
+
+    <!-- Knoppen -->
+    <div class="button-container">
+      <button id="rdfci-stop-button" class="stop-button">Stop</button>
+      <button id="rdfci-accept-button" class="share-button">Akkoord</button>
+    </div>
+  </div>
+</section>
+
 
 <!-- Issuer modal voor de vraag na het scannen -->
 <section id="issuer-question-modal" class="modal">
@@ -250,6 +300,7 @@
     </div>
   </div>
 </section>
+
 
 <!-- Issuer success-scherm -->
 <section id="issuer-success-screen" style="display: none;">
