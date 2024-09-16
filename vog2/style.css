@@ -1,1 +1,93 @@
+/* Algemeen */
+body {
+  font-family: Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: white;
+  color: #152A62;
+  text-align: center;
+}
 
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Header met logo en tekst */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.header-logo {
+  background-color: #00588E;
+  width: 30px;
+  height: 60px;
+  margin-right: 10px;
+}
+
+.header-text {
+  font-size: 18px;
+  font-family: "Times New Roman", Times, serif;
+  color: #000;
+  margin: 0;
+}
+
+.divider {
+  border-bottom: 1px solid #E0E0E0;
+  margin: 20px 0;
+}
+
+/* Titel en paragraaf */
+h1 {
+  text-align: left;
+  font-weight: bold;
+  color: #152A62;
+  font-size: 24px;
+}
+
+h2 {
+  text-align: left;
+  font-size: 20px;
+  font-weight: bold;
+  color: #152A62;
+}
+
+p {
+  text-align: left;
+  font-size: 16px;
+  color: #152A62;
+  margin-top: 10px;
+}
+
+/* Stappen en tekst uitlijning */
+.step-container {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.step-title {
+  background-color: #00588E;
+  color: white;
+  padding: 5px 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  display: inline-block;
+}
+
+.highlight-link {
+  font-weight: bold;
+  background-color: #D9F2FF;
+  padding: 5px;
+  color: #152A62;
+}
+
+/* Divider tussen de stappen */
+.divider-step {
+  border: 1px solid #E0E0E0;
+  margin: 20px 0;
+}
