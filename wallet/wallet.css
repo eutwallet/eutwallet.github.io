@@ -937,3 +937,42 @@ p {
 #rdfci-modal p strong {
     font-weight: bold;
 }
+
+/* Kaartcontainer met een omlijning */
+.card-container {
+    background-color: white;
+    border: 1px solid #ccc; /* Add border to visualize the card */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 16px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Balk aan de bovenkant van het kaartje */
+.card-header {
+    height: 40px; /* Hoogte van de balk */
+    width: 100%;
+    background-color: #0072C6; /* Kleur van de balk, pas aan zoals gewenst */
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* Inhoud van de kaart */
+.card-content {
+    padding: 56px 16px 16px 16px; /* Zorg voor ruimte onder de header */
+}
+
+/* Titel van de kaart */
+.card-title {
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+/* Details van de kaart */
+.card-details p {
+    margin: 4px 0;
+}
