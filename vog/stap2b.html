@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Juust - VOG aanvragen - Stap 2b</title>
+  <style>
+    /* Algemeen */
+    body {
+      font-family: Helvetica, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: white;
+      color: #152A62;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+      text-align: left;
+    }
+
+    /* Header met logo en tekst */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .header-logo {
+      background-color: #00588E;
+      width: 30px;
+      height: 60px;
+      margin-right: 10px;
+    }
+
+    .header-text {
+      font-size: 18px;
+      font-family: "Times New Roman", Times, serif;
+      color: #000;
+      margin: 0;
+    }
+
+    .divider {
+      border-bottom: 1px solid #E0E0E0;
+      margin: 20px 0;
+    }
+
+    /* Titel en paragraaf */
+    h1 {
+      text-align: left;
+      font-weight: bold;
+      color: #152A62;
+      font-size: 24px;
+    }
+
+    p {
+      text-align: left;
+      font-size: 16px;
+      color: #152A62;
+      margin-top: 10px;
+    }
+
+    /* Stappen en tekst uitlijning */
+    .step-container {
+      text-align: left;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .step-title {
+      background-color: white;
+      color: #00588E;
+      font-weight: bold;
+      padding: 5px 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      display: inline-block;
+    }
+
+    .highlight-link {
+      font-weight: bold;
+      background-color: #D9F2FF;
+      padding: 5px;
+      color: #152A62;
+    }
+
+    /* Divider tussen de stappen */
+    .divider-step {
+      border: 1px solid #E0E0E0;
+      margin: 20px 0;
+    }
+
+    /* Knoppen */
+    .next-button {
+      background-color: #00588E;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+      font-size: 16px;
+      display: inline-block;
+      text-align: left;
+      text-decoration: none; /* Zorgt ervoor dat de tekst niet onderstreept is */
+    }
+
+    .next-button:hover {
+      background-color: #00416a;
+    }
+
+    .button-container {
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="header-logo"></div>
+      <div class="header-text">Juust</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <h1>VOG aanvragen</h1>
+    <p>Voor het aanvragen van uw VOG volgt u onderstaande stappen:</p>
+
+    <div class="divider-step"></div>
+
+    <!-- Stap 2 -->
+    <div id="step2" class="step-container">
+      <div class="step-title">Stap 2 - VOG ophalen</div>
+      <p>Zodra u de wallet op uw telefoon heeft geopend, scan dan onderstaande QR-code om een digitale versie van uw VOG toe te voegen in uw wallet:</p>
+      <img src="https://api.qrserver.com/v1/create-qr-code/?data=%7B%22Issuer%22%3Atrue%2C%22name%22%3A%22Verklaring%20Omtrent%20Gedrag%20%28VOG%29%22%2C%22issuedBy%22%3A%22Juust%22%2C%22LEID%22%3A%22NL_KVK_27378698%22%2C%22Issued_Date%22%3A%222023-09-17%22%2C%22Issued_to_subject%22%3A%22Willeke%20Liselotte%20de%20Bruijn%2C%20PB123456789%22%2C%22Algemeen_profiel%22%3A%224%2C5%2C6%2C7%22%2C%22Specifiek_profiel%22%3A%2255%22%2C%22Attestation_Trust_Type%22%3A%22QEAA%22%7D&size=300x300" alt="QR Code for Verklaring Omtrent Gedrag (VOG)">
+    </div>
+    <div class="button-container">
+      <a href="/vog/stap2b.html" class="next-button">Verder naar stap 3</a>
+    </div>
+  </div>
+</body>
+</html>
