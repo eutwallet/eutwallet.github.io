@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Juust - VOG aanvragen</title>
+  <title>Juust - VOG aanvragen - stap 1</title>
   <style>
     /* Algemeen */
     body {
@@ -57,13 +57,6 @@
       font-size: 24px;
     }
 
-    h2 {
-      text-align: left;
-      font-size: 20px;
-      font-weight: bold;
-      color: #152A62;
-    }
-
     p {
       text-align: left;
       font-size: 16px;
@@ -79,10 +72,11 @@
     }
 
     .step-title {
-      background-color: white; /* Achtergrondkleur wit */
-      color: #00588E; /* Tekstkleur #00588E */
-      font-weight: bold; /* Dikke tekst */
-      font-size: 18px;
+      background-color: white;
+      color: #00588E;
+      font-weight: bold;
+      padding: 5px 10px;
+      font-size: 16px;
       border-radius: 5px;
       margin-bottom: 10px;
       display: inline-block;
@@ -113,6 +107,7 @@
       font-size: 16px;
       display: inline-block;
       text-align: left;
+      text-decoration: none; /* Zorgt ervoor dat de tekst niet onderstreept is */
     }
 
     .next-button:hover {
@@ -120,7 +115,7 @@
     }
 
     .button-container {
-      text-align: left; /* Knop links uitlijnen */
+      text-align: left;
     }
   </style>
 </head>
@@ -144,48 +139,10 @@
       <p>Ga naar <span class="highlight-link">www.eutw.nl/wallet</span> op uw mobiele telefoon om de wallet te openen</p>
       <p>of scan onderstaande QR code:</p>
       <img src="https://api.qrserver.com/v1/create-qr-code/?data=https://eutw.nl/wallet&size=300x300" alt="QR Code openen wallet">
+    </div>
     <div class="button-container">
-      <button class="next-button" onclick="showStep(2)">Verder naar stap 2</button>
-    </div>
-
-    </div>
-
- 
-
-    <!-- Stap 2 -->
-    <div id="step2" class="step-container">
-      <div class="step-title">Stap 2 - VOG ophalen</div>
-      <p>Zodra u de wallet op uw telefoon heeft geopend, scan dan onderstaande QR-code om een digitale versie van uw VOG toe te voegen in uw wallet:</p>
-      <img src="https://api.qrserver.com/v1/create-qr-code/?data=%7B%22Issuer%22%3Atrue%2C%22name%22%3A%22Verklaring%20Omtrent%20Gedrag%20%28VOG%29%22%2C%22issuedBy%22%3A%22Juust%22%2C%22LEID%22%3A%22NL_KVK_27378698%22%2C%22Issued_Date%22%3A%222023-09-17%22%2C%22Issued_to_subject%22%3A%22Willeke%20Liselotte%20de%20Bruijn%2C%20PB123456789%22%2C%22Algemeen_profiel%22%3A%224%2C5%2C6%2C7%22%2C%22Specifiek_profiel%22%3A%2255%22%2C%22Attestation_Trust_Type%22%3A%22QEAA%22%7D&size=300x300" alt="QR Code for Verklaring Omtrent Gedrag (VOG)">
- <div class="button-container">
-      <button class="next-button" onclick="showStep(3)">Verder naar stap 3</button>
-    </div>
-  
-  </div>
-   
-  
-
-    <!-- Stap 3 -->
-    <div id="step3" class="step-container">
-      <div class="step-title">Stap 3 - Terugkeren naar vragende partij</div>
-      <p>Zodra u de digitale VOG in uw wallet heeft opgeslagen, kunt u deze delen met de partij die u gevraagd heeft om de VOG.</p>
-      <p><a href="https://www.eutw.nl/vog/stap3.html">Voor deze demo kunt u deze link openen om naar het scherm van de werkgever terug te keren.</a></p>
+      <a href="/vog/stap2a.html" class="next-button">Verder naar stap 2</a>
     </div>
   </div>
-
-  <script>
-    // Functie om de stappen te tonen
-    function showStep(step) {
-      // Alle step-containers verbergen
-      document.querySelectorAll('.step-container').forEach(container => {
-        container.style.display = 'none';
-      });
-      // Toon de huidige stap
-      document.getElementById('step' + step).style.display = 'block';
-    }
-
-    // Start met het tonen van stap 1
-    showStep(1);
-  </script>
 </body>
 </html>
