@@ -585,7 +585,7 @@ function populateRdfciModal(data) {
   const detailsContainer = document.getElementById('rdfci-details-container');
   detailsContainer.innerHTML = ''; // Clear the container before adding new content
 
-  // List to keep track of which cards have been processed
+  // Group fields by card
   let fieldsByCard = {};
 
   // Mapping of standard cards to their selectors
@@ -631,13 +631,49 @@ function populateRdfciModal(data) {
     }
   });
 
-  // Now iterate over each card and append its details
+  // Now iterate over each card and create the card elements
   const cardNames = Object.keys(fieldsByCard);
-  cardNames.forEach((cardName, index) => {
+  cardNames.forEach((cardName) => {
     const cardInfo = fieldsByCard[cardName];
-    const cardTitleElement = document.createElement('p');
-    cardTitleElement.innerHTML = `<strong>${cardName}</strong>`;
-    detailsContainer.appendChild(cardTitleElement);
+
+    // Create card container
+    const cardContainer = document.createElement('div');
+    cardContainer.className = 'card-container';
+
+    // Create card header
+    const cardHeader = document.createElement('div');
+    cardHeader.className = 'card-header';
+
+    // Example: Set header color based on card name
+    switch (cardName) {
+      case 'Persoonsgegevens':
+        cardHeader.style.backgroundColor = '#B9E4E2';   
+        break;
+      case 'Woonadres':
+        cardHeader.style.backgroundColor = '#445580'; 
+        break;
+      case 'Organisatiemachtiging VOG':
+        cardHeader.style.backgroundColor = '#5A50ED'; 
+        break;
+      // Add more cases as needed
+      default:
+        cardHeader.style.backgroundColor = '#0072C6'; // Default color
+    }
+    // Optionally set the header color based on the card name or type
+    // cardHeader.style.backgroundColor = '#0072C6'; // Adjust as needed
+
+    // Create card content container
+    const cardContent = document.createElement('div');
+    cardContent.className = 'card-content';
+
+    // Create card title
+    const cardTitleElement = document.createElement('div');
+    cardTitleElement.className = 'card-title';
+    cardTitleElement.textContent = cardName;
+
+    // Create card details container
+    const cardDetails = document.createElement('div');
+    cardDetails.className = 'card-details';
 
     if (cardInfo.type === 'localStorage') {
       // Add all details from local storage card
@@ -645,7 +681,7 @@ function populateRdfciModal(data) {
         if (cardInfo.data.data.hasOwnProperty(key)) {
           const detailElement = document.createElement('p');
           detailElement.textContent = `${key}: ${cardInfo.data.data[key]}`;
-          detailsContainer.appendChild(detailElement);
+          cardDetails.appendChild(detailElement);
         }
       }
     } else if (cardInfo.type === 'standardCard') {
@@ -657,17 +693,21 @@ function populateRdfciModal(data) {
           const detailElement = document.createElement('p');
           // Remove bold formatting by using textContent
           detailElement.textContent = element.textContent;
-          detailsContainer.appendChild(detailElement);
+          cardDetails.appendChild(detailElement);
         }
       });
     }
 
-    // Add a divider after the card unless it's the last one
-    if (index < cardNames.length - 1) {
-      const dividerElement = document.createElement('div');
-      dividerElement.className = 'divider';
-      detailsContainer.appendChild(dividerElement);
-    }
+    // Assemble card content
+    cardContent.appendChild(cardTitleElement);
+    cardContent.appendChild(cardDetails);
+
+    // Assemble card container
+    cardContainer.appendChild(cardHeader);
+    cardContainer.appendChild(cardContent);
+
+    // Append card to the details container
+    detailsContainer.appendChild(cardContainer);
   });
 
   // Agreement processing (always add under the heading "Overeenkomst")
