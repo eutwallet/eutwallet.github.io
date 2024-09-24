@@ -1,0 +1,81 @@
+body {
+    font-family: 'Helvetica', sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+h1 {
+    font-size: 28px;
+    color: #152A62;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: #ccc;
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 20px;
+    margin-top: 0px; /* Dit verkleint de witruimte tussen h4 en p */
+}
+
+h4 {
+    margin-bottom: 0px;
+}
+
+.step {
+    display: none; /* Standaard zijn alle secties verborgen */
+}
+
+.active {
+    display: block; /* Alleen de actieve sectie wordt getoond */
+}
+
+.button-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center; /* Zorgt ervoor dat de knoppen horizontaal gecentreerd zijn */
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 0 10px; /* Ruimte tussen de knoppen */
+}
+
+.qr-code {
+    display: flex;
+    justify-content: center; /* Horizontale centrering */
+    align-items: center; /* Verticale centrering */
+    height: 100%; /* Zorg ervoor dat de container de volledige hoogte inneemt */
+    margin-top: 20px; /* Eventueel ruimte boven de QR-code */
+    margin-bottom: 40px;
+  }
+
+#logo-container-innovatiemakers  {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+
+#logo-container-innovatiemakers img {
+    max-width: 100px; /* Verklein het logo zodat het netjes naast de titel past */
+  }
+
+
+#logo-container-innovatiemakers  h1 {
+    font-size: 28px;
+    color: #d35400; /* Donkeroranje kleur voor de titel */
+    margin-left: 20px;
+  }
