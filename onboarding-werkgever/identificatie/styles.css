@@ -55,8 +55,12 @@ button {
 }
 
 .qr-code {
-    text-align: center;
-    margin-top: 20px;
+    display: flex;
+    justify-content: center; /* Horizontale centrering */
+    align-items: center; /* Verticale centrering */
+    height: 100%; /* Zorg ervoor dat de container de volledige hoogte inneemt */
+    margin-top: 20px; /* Eventueel ruimte boven de QR-code */
+    margin-bottom: 40px;
   }
 
 #logo-container-innovatiemakers  {
