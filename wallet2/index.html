@@ -103,13 +103,13 @@
         <button class="close-btn" id="close-details">
           <i class="fas fa-arrow-left"></i>
         </button>
+        <button class="delete-btn" id="delete-details">
+          <i class="fas fa-trash"></i> <!-- Voeg hier het fa-trash icoon toe -->
+        </button>
       </div>
       <h3 id="details-title"></h3>
       <div class="divider"></div>
       <div id="details-content"></div>
-      <div class="details-buttons">
-        <button class="delete-btn orange-btn" id="delete-details">Verwijderen</button>
-      </div>
     </div>
 
   <!-- *** Details voor Standaard Kaartje: Persoonlijke Data *** -->
@@ -131,7 +131,9 @@
     <p><strong>Birth country:</strong> The Netherlands</p>
     <p><strong>Gender:</strong> Female</p>
     <p><strong>Citizen service number (BSN):</strong> 938391772</p>
-    <p><strong>Older than 18+:</strong> Yes</p>
+    <p><strong>Nationaliteit:</strong> Nederlands</p>
+    <p><strong>Geldigheid paspoort:</strong> March 11, 2027</p>
+    <p><strong>Older than 18:</strong> Yes</p>
   </div>
 </div>
 
@@ -164,15 +166,16 @@
     <i class="fas fa-exchange-alt"></i>
     <span>Activiteiten</span>
   </a>
-  <a href="#" class="nav-item">
+  <a href="#" class="nav-item" id="machtigingen-navbar-item">
     <i class="fas fa-key"></i>
     <span>Machtigingen</span>
   </a>
-  <a href="#" class="nav-item">
+  <a href="#" class="nav-item" id="instellingen-navbar-item">
     <i class="fas fa-sliders-h"></i>
     <span>Instellingen</span>
   </a>
 </nav>
+
 
 <!-- *** Activiteiten Sectie *** -->
 <div id="activities-section" class="activities-section" style="display: none;">
@@ -180,6 +183,22 @@
   <div class="title-divider"></div>
   <ul id="activities-list"></ul>
 </div>
+
+<!-- *** machtigingen Sectie *** -->
+<div id="machtiging-section" class="machtiging-section" style="display: none;"> 
+  <h3>Machtigingen</h3> 
+  <div class="title-divider"></div>
+<p> Deze pagina volgt later </p>
+</div>
+
+<!-- *** Instellingen Sectie *** -->
+<div id="instellingen-section" class="instellingen-section" style="display: none;">
+  <h3>Instellingen</h3>
+  <div class="title-divider"></div>
+  <p>Deze pagina volgt later</p>
+</div>
+
+
 
   <!-- *** Modals *** -->
 
@@ -261,7 +280,7 @@
     <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
     <input type="password" class="pin-box" inputmode="numeric">
   </div>
-  <button id="confirm-pin-verifier">Bevestig</button>
+  <button class= "confirm-pin"id="confirm-pin-verifier">Bevestig</button>
 </section>
 
 
