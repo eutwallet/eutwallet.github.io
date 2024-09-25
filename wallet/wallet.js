@@ -1,51 +1,93 @@
+// *** QR Code Scanner Elementen ***
 const scanButton = document.getElementById('scan-button');
-const closeScanButton = document.getElementById('close-scan-button'); // Sluit-knop
+const closeScanButton = document.getElementById('close-scan-button');
 const readerDiv = document.getElementById('reader');
+
+// *** Wallet Elementen ***
 const walletGrid = document.getElementById('wallet-grid');
 const detailsView = document.getElementById('details');
 const detailsTitle = document.getElementById('details-title');
 const detailsContent = document.getElementById('details-content');
 const closeDetailsBtn = document.getElementById('close-details');
 const deleteDetailsBtn = document.getElementById('delete-details');
+const walletScreen = document.getElementById('wallet-screen');
+
+// *** Menu Elementen ***
+const menuScreen = document.getElementById('menu-screen');
+const menuButton = document.querySelector('.menu-button');
+const backMenuBtn = document.getElementById('back-menu-btn');
+const activitiesNavbarItem = document.getElementById('activities-navbar-item');
+const overviewNavbarItem = document.getElementById('overview-navbar-item');
+const bottomNav = document.querySelector('.bottom-nav');
+const machtigingNavbarItem = document.getElementById('machtigingen-navbar-item'); 
+const instellingenNavbarItem = document.getElementById('instellingen-navbar-item');
+const instellingenSection = document.getElementById('instellingen-section');
+
+// *** Activiteiten Elementen ***
+const activitiesOption = document.getElementById('activities-option');
+const activitiesSection = document.getElementById('activities-section');
+const activitiesList = document.getElementById('activities-list');
+const backActivitiesBtn = document.getElementById('back-activities-btn');
+const activityScreen = document.getElementById('activities-section');
+
+// *** Pincode Bevestiging Elementen ***
+const pinConfirmationScreen = document.getElementById('pin-confirmation-screen');
+const confirmPinBtn = document.getElementById('confirm-pin');
+const pinConfirmationScreenVerifier = document.getElementById('pin-confirmation-screen-verifier');
+const confirmPinBtnVerifier = document.getElementById('confirm-pin-verifier');
+
+// *** Successcherm Elementen ***
+const successScreen = document.getElementById('success-screen');
+const successMessage = document.getElementById('success-message');
+const verifierNameElement = document.getElementById('verifier-name');
+const seeActivityBtn = document.getElementById('see-activity-btn');
+const closeSuccessBtn = document.getElementById('close-success-btn');
+
+// *** Issuer Elementen ***
+const issuerQuestionModal = document.getElementById('issuer-question-modal');
+const saveButton = document.getElementById('save-button'); // Opslaan-knop
+const stopButtonIssuer = document.getElementById('stop-button-issuer'); // Stop-knop voor issuer
+const issuerSuccessScreen = document.getElementById('issuer-success-screen');
+const closeIssuerSuccessBtn = document.getElementById('close-issuer-success-btn'); // Sluitknop voor successcherm
+
+// *** Verifier elementen ***
 const shareQuestionModal = document.getElementById('share-question-modal');
 const shareQuestionText = document.getElementById('share-question-text');
 const shareDetails = document.getElementById('share-details');
 const yesShareBtn = document.getElementById('yes-share-btn');
 const stopShareBtn = document.getElementById('stop-share-btn');
-const menuScreen = document.getElementById('menu-screen');
-const menuButton = document.querySelector('.menu-button');
-const backMenuBtn = document.getElementById('back-menu-btn');
-const activitiesOption = document.getElementById('activities-option');
-const activitiesSection = document.getElementById('activities-section');
-const activitiesList = document.getElementById('activities-list');
-const backActivitiesBtn = document.getElementById('back-activities-btn');
-const pinConfirmationScreen = document.getElementById('pin-confirmation-screen');
-const successScreen = document.getElementById('success-screen');
-const confirmPinBtn = document.getElementById('confirm-pin');
-const successMessage = document.getElementById('success-message');
-const verifierNameElement = document.getElementById('verifier-name');
-const seeActivityBtn = document.getElementById('see-activity-btn');
-const closeSuccessBtn = document.getElementById('close-success-btn');
-const issuerQuestionModal = document.getElementById('issuer-question-modal');
-const saveButton = document.getElementById('save-button'); // Nieuw: opslaan-knop
-const stopButtonIssuer = document.getElementById('stop-button-issuer'); // Nieuw: stop-knop voor issuer
-const issuerSuccessScreen = document.getElementById('issuer-success-screen');
-const closeIssuerSuccessBtn = document.getElementById('close-issuer-success-btn'); // Nieuw: sluitknop voor successcherm
+
+
+// *** RDFCI Modal Elementen ***
 const rdfciModal = document.getElementById('rdfci-modal');
 const rdfciAgreement = document.getElementById('rdfci-agreement');
 const rdfciData = document.getElementById('rdfci-data');
 const rdfciAcceptButton = document.getElementById('rdfci-accept-button');
 const rdfciStopButton = document.getElementById('rdfci-stop-button');
-// Fieldmapping object voor afkortingen
+
+// *** RDFCV Modal Elementen ***
+const rdfcvModal = document.getElementById('rdfcv-modal');
+const rdfcvReason = document.getElementById('rdfcv-reason');
+const rdfcvDetailsContainer = document.getElementById('rdfcv-details-container');
+const rdfcvAgreement = document.getElementById('rdfcv-agreement');
+const rdfcvAcceptButton = document.getElementById('rdfcv-accept-button');
+const rdfcvStopButton = document.getElementById('rdfcv-stop-button');
+
+
+// *** Veldmapping Object ***
 const fieldMapping = {
   gn: 'First name',
   sn: 'Surname',
   bd: 'Date of birth',
   bsn: 'Citizen service number (BSN)',
   omv: 'Organisatiemachtiging VOG',
+  vog: 'Verklaring Omtrent Gedrag (VOG)',
+  nat: 'Nationaliteit',
+  va: 'Geldigheid paspoort',
   a: {
-    '12t': 'opslag: 12 maanden, gedeeld met 3den: nee'
-}
+    '12t': 'opslag: 12 maanden, gedeeld met 3den: nee',
+    '60t': 'opslag: 60 maanden, gedeeld met 3den: nee'
+  },
 };
 
 
@@ -54,26 +96,102 @@ let credentials = [];
 let currentVerifierName = ""; // Variabele om de naam van de verifier op te slaan
 let isSharingActionInProgress = false; // Houd de status van de deelactie bij
 
-// Open menu
-menuButton.addEventListener('click', () => {
-  menuScreen.style.display = 'flex';
+// Logica voor het wisselen van schermen
+document.getElementById('next-welcome').addEventListener('click', function() {
+  document.getElementById('welcome-screen').style.display = 'none';
+  document.getElementById('pin-inlog-screen').style.display = 'flex';
 });
 
-// Sluit menu
-backMenuBtn.addEventListener('click', () => {
-  menuScreen.style.display = 'none';
-  activitiesSection.style.display = 'none'; // Verberg activiteiten sectie als deze open is
+// Zorg ervoor dat de submit-pin knop altijd klikbaar is
+document.getElementById('submit-pin').disabled = false;
+
+// Event listener voor het inloggen met de pincode
+document.getElementById('submit-pin').addEventListener('click', function() {
+  document.getElementById('pin-inlog-screen').style.display = 'none';
+  document.getElementById('wallet-screen').style.display = 'block';
 });
 
-// Open activiteiten sectie
-activitiesOption.addEventListener('click', () => {
-  activitiesSection.style.display = 'block';
-  showActivities();
+
+// Toon de navbar na succesvol inloggen
+document.getElementById('submit-pin').addEventListener('click', function() {
+  document.getElementById('pin-inlog-screen').style.display = 'none';
+  document.getElementById('wallet-screen').style.display = 'block';
+  
+  // Toon de navbar nu de gebruiker is ingelogd
+  bottomNav.style.display = 'flex';
 });
 
-// Sluit activiteiten sectie
-backActivitiesBtn.addEventListener('click', () => {
+
+// Voeg de event listener toe voor het klikken op de overzicht-knop in de navbar
+overviewNavbarItem.addEventListener('click', () => {
+  // Verberg het activiteiten-scherm, machtiging-sectie en instellingen-sectie
   activitiesSection.style.display = 'none';
+  document.getElementById('machtiging-section').style.display = 'none';
+  instellingenSection.style.display = 'none'; // Verberg instellingen-sectie
+
+  // Toon het wallet-overzichtsscherm
+  document.getElementById('wallet-screen').style.display = 'block';
+
+  // Zorg ervoor dat de andere navbar-items niet meer actief zijn
+  document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+
+  // Zet het overzicht-item actief in de navbar
+  overviewNavbarItem.classList.add('active');
+});
+
+// Voeg de event listener toe voor het klikken op de activiteiten-knop in de navbar
+activitiesNavbarItem.addEventListener('click', () => {
+  // Verberg alle andere secties
+  document.getElementById('wallet-screen').style.display = 'none';
+  document.getElementById('machtiging-section').style.display = 'none'; // Verberg machtigingen-sectie
+  instellingenSection.style.display = 'none'; // Verberg instellingen-sectie
+
+  // Toon het activiteiten-scherm
+  activitiesSection.style.display = 'flex';
+
+  // Haal de activiteiten op en toon ze
+  showActivities();
+
+  // Zorg ervoor dat de andere navbar-items niet meer actief zijn
+  document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+
+  // Zet het activiteiten-item actief in de navbar
+  activitiesNavbarItem.classList.add('active');
+});
+
+
+// Voeg de event listener toe voor het klikken op de machtingen-knop in de navbar
+machtigingNavbarItem.addEventListener('click', () => {
+  // Verberg alle andere secties, zoals de wallet-sectie, activiteiten-sectie en instellingen-sectie
+  document.getElementById('wallet-screen').style.display = 'none';
+  activitiesSection.style.display = 'none'; // Verberg activiteiten-sectie
+  instellingenSection.style.display = 'none'; // Verberg instellingen-sectie
+
+  // Toon het machtigingen-scherm
+  document.getElementById('machtiging-section').style.display = 'flex';
+
+  // Zorg ervoor dat de andere navbar-items niet meer actief zijn
+  document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+
+  // Zet het machtigingen-item actief in de navbar
+  machtigingNavbarItem.classList.add('active');
+});
+
+// Voeg de event listener toe voor het klikken op de instellingen-knop in de navbar
+instellingenNavbarItem.addEventListener('click', () => {
+  // Verberg alle andere secties
+  document.getElementById('wallet-screen').style.display = 'none';
+  activitiesSection.style.display = 'none'; // Verberg activiteiten-sectie
+  document.getElementById('machtiging-section').style.display = 'none'; // Verberg machtigingen-sectie
+
+  // Toon het instellingen-scherm
+  instellingenSection.style.display = 'flex';
+
+  // Zorg ervoor dat de andere navbar-items niet meer actief zijn
+  document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+
+  // Zet het instellingen-item actief in de navbar
+  instellingenNavbarItem.classList.add('active');
 });
 
 function convertToStandardDate(dateString) {
@@ -169,14 +287,22 @@ document.querySelectorAll('.default-card').forEach((card) => {
 // Functie om details van het personal data kaartje te tonen
 function showPersonalDataDetails() {
   const detailsView = document.getElementById('personal-data-details');
-  if (detailsView) { // Controleer of het element bestaat
+  if (detailsView) {
     detailsView.style.display = 'block';
 
-    // Zorg dat de "Back" knop de details weer verbergt
-    const backBtn = document.getElementById('back-btn');
-    if (backBtn) {
-      backBtn.onclick = () => {
+    // Verberg het wallet-scherm
+    document.getElementById('wallet-screen').style.display = 'none';
+
+    // Verberg de bottom-nav
+    bottomNav.style.display = 'none';
+
+    // Sluit details weergave (Terug-knop)
+    const closeDetailsBtn = document.getElementById('close-details-personal');
+    if (closeDetailsBtn) {
+      closeDetailsBtn.onclick = () => {
         detailsView.style.display = 'none';
+        document.getElementById('wallet-screen').style.display = 'block'; // Toon het wallet-scherm opnieuw
+        bottomNav.style.display = 'flex'; // Toon de bottom-nav weer
       };
     }
   }
@@ -188,21 +314,37 @@ function showAddressDetails() {
   if (addressDetailsView) {
     addressDetailsView.style.display = 'block';
 
-    // Zorg dat de "Terug"-knop de details weer verbergt
-    const backBtnAddress = document.getElementById('back-btn-address');
-    if (backBtnAddress) {
-      backBtnAddress.onclick = () => {
+    // Verberg het wallet-scherm
+    document.getElementById('wallet-screen').style.display = 'none';
+
+    // Verberg de bottom-nav
+    bottomNav.style.display = 'none';
+
+    // Sluit details weergave (Terug-knop)
+    const closeDetailsBtn = document.getElementById('close-details-address');
+    if (closeDetailsBtn) {
+      closeDetailsBtn.onclick = () => {
         addressDetailsView.style.display = 'none';
+        document.getElementById('wallet-screen').style.display = 'block'; // Toon het wallet-scherm opnieuw
+        bottomNav.style.display = 'flex'; // Toon de bottom-nav weer
       };
     }
   }
 }
 
-// Functie om details van een kaartje te tonen
 function showDetails(credential, index) {
+  // Verberg het wallet-scherm
+  document.getElementById('wallet-screen').style.display = 'none';
+
+  // Verberg de bottom-nav
+  bottomNav.style.display = 'none';
+
   // Controleer of het een standaardkaartje is
   if (credential.name === "Personal data") {
     showPersonalDataDetails();
+    return;
+  } else if (credential.name === "Woonadres") {
+    showAddressDetails();
     return;
   }
 
@@ -218,7 +360,7 @@ function showDetails(credential, index) {
   }
 
   detailsContent.innerHTML = detailsHTML;
-  
+
   // Toon de juiste details container voor niet-standaard kaartjes
   const detailsView = document.getElementById('details');
   detailsView.style.display = 'block';
@@ -226,14 +368,18 @@ function showDetails(credential, index) {
   // Sluit details weergave (Terug-knop)
   closeDetailsBtn.onclick = () => {
     detailsView.style.display = 'none';
+    document.getElementById('wallet-screen').style.display = 'block'; // Toon het wallet-scherm opnieuw
+    bottomNav.style.display = 'flex'; // Toon de bottom-nav weer
   };
 
   // Verwijder het kaartje (Verwijderen-knop)
   deleteDetailsBtn.onclick = () => {
-    credentials.splice(index, 1);
-    saveCredentials();
-    displayCredentials();
+    credentials.splice(index, 1); // Verwijder het kaartje uit de lijst
+    saveCredentials(); // Sla de wijzigingen op
+    displayCredentials(); // Werk de weergave van kaartjes bij
     detailsView.style.display = 'none';
+    document.getElementById('wallet-screen').style.display = 'block'; // Toon het wallet-scherm opnieuw
+    bottomNav.style.display = 'flex'; // Toon de bottom-nav weer
   };
 }
 
@@ -259,68 +405,42 @@ function startQrScan() {
               const data = JSON.parse(decodedText);
               const timestamp = new Date().toLocaleString();
 
-              // Stap 1: Controleer of het een verifier QR-code is
-              if (data.verifier && data.requestedCard && data.requester && data.purpose) {
-                  console.log("Verifier QR-code herkend.");
-                  console.log("Gevraagde kaart: ", data.requestedCard);
-                  console.log("Aanvrager: ", data.requester);
-                  
-                  // Dynamische vraag in de modal
-                  document.getElementById('share-question-text').innerText = `Wilt u onderstaande gegevens delen met ${data.requester}?`;
-                  document.getElementById('share-reason').innerText = `${data.purpose}`; // Reden uit QR-code
-                  document.getElementById('share-details').innerText = `${data.requestedCard}`; // Gegevens uit QR-code
+              // Stap 1: Controleer of het een verifier QR-code is (rdfcv)
+              if (data.rdfcv && data.requester && data.reason) {
+                  console.log("Verifier QR-code met rdfcv herkend.");
 
-                  // Toon de modal voor de verifier-vraag
-                  shareQuestionModal.style.display = 'flex';
-                  yesShareBtn.onclick = null;
+                  // Vul de rdfcv modal met de juiste gegevens
+                  populateRdfcvModal(data);
 
-                  yesShareBtn.onclick = () => {
-                      // Controleer of de actie al is uitgevoerd
-                      if (isSharingActionInProgress) return;
+                  // Toon het rdfcv vraagscherm
+                  rdfcvModal.style.display = 'flex';
 
-                      // Markeer de actie als in uitvoering
-                      isSharingActionInProgress = true;
+                  rdfcvAcceptButton.onclick = () => {
+                      // Toon eerst het pincode-bevestigingsscherm
+                      goToPinConfirmationVerifier();
 
-                      // Log het tijdstip van het drukken op de "Delen"-knop
-                      console.log("Delen-knop ingedrukt op:", new Date().toLocaleString());
-
-                      // Stap 1: Deelactie opslaan
-                      credentials.push({
-                          name: `${data.requester}`,
-                          actionTimestamp: timestamp, // Tijdstip van de deelactie
-                          isShareAction: true // Markeer als deelactie
-                      });
-
-                      // Log het moment waarop de actie is vastgelegd
-                      console.log("Deelactie vastgelegd op:", timestamp);
-
-                      saveCredentials();
-
-                      // Stap 2: Verifier naam opslaan
-                      currentVerifierName = data.requester;
-
-                      // Stap 3: Verberg de modal en ga naar het pincode-scherm
-                      shareQuestionModal.style.display = 'none'; // Verberg modal
-                      goToPinConfirmation(); // Toon het pincode-scherm
-
-                      // Voeg event listener toe voor de "Bevestig" knop
-                      confirmPinBtn.onclick = () => {
-                          // Log het moment waarop de pincode wordt bevestigd
-                          console.log("Pincode bevestigd op:", new Date().toLocaleString());
-
-                          // Stap 4: Toon het success-scherm
-                          pinConfirmationScreen.style.display = 'none'; // Verberg het pincode-scherm
-                          successScreen.style.display = 'block'; // Toon het success-scherm
-                          verifierNameElement.textContent = currentVerifierName; // Laat de naam van de verifier zien in het success-scherm
+                      confirmPinBtnVerifier.onclick = () => {  // Gebruik de specifieke verifier-knop
+                        credentials.push({
+                          name: data.requester || 'Onbekende verifier',  // Verifier naam opslaan
+                          reason: data.reason || 'Geen reden opgegeven',  // Reden opslaan
+                          sharedData: data.rdfcv.map(field => fieldMapping[field] || field),  // Gegevens opslaan volgens fieldmapping
+                          actionTimestamp: timestamp,
+                          isShareAction: true  // Markeer als deelactie, zodat het niet in de wallet verschijnt
+                        });
+                        saveCredentials();
+                        goToVerifierSuccessScreen(data);  // Toon het verifier success-scherm
+                        pinConfirmationScreenVerifier.style.display = 'none';  // Sluit het pincode bevestigingsscherm
                       };
+                    
+                      rdfcvModal.style.display = 'none';  // Verberg het rdfcv vraagscherm
+                    };
+
+                  rdfcvStopButton.onclick = () => {
+                      rdfcvModal.style.display = 'none';
+                      resetQrScanner();
                   };
 
-                  // Verwerk het antwoord bij "Stop"
-                  stopShareBtn.onclick = () => {
-                      shareQuestionModal.style.display = 'none'; // Verberg modal zonder actie
-                      closeScanButton.click(); // Reset de QR-scanner en interface
-                  };
-
+              // Stap 2: Controleer of het een issuer QR-code is (rdfci)
               } else if (data.issuedBy && data.name) {
                   console.log("Issuer QR-code herkend.");
 
@@ -375,7 +495,10 @@ function startQrScan() {
                               issuedBy: issuerName,
                               actionTimestamp: timestamp,
                               isShareAction: false,
-                              data: data
+                              data: {
+                                kaartDetails: data,  // Sla alle kaartdetails op
+                                gevraagdeGegevens: data.rdfci.map(field => fieldMapping[field] || field)  // Gebruik fieldmapping om de gevraagde gegevens op te slaan
+                            }
                           });
                           saveCredentials();
                           console.log("Issuer gegevens opgeslagen in de wallet.");
@@ -445,31 +568,18 @@ loadCredentials();
 displayCredentials();
 
 // Voeg pincode-invoerfunctionaliteit toe
-const pinInputs = document.querySelectorAll('.pin-input input');
+const pinInputs = document.querySelectorAll('.pin-box');
 pinInputs.forEach((box, index) => {
-  box.addEventListener('input', (e) => {
-    if (e.target.value.length === 1 && index < pinInputs.length - 1) {
-      pinInputs[index + 1].focus();
-    }
-  });
+    box.addEventListener('input', (e) => {
+        if (e.target.value.length === 1 && index < pinInputs.length - 1) {
+            pinInputs[index + 1].focus();
+        }
+    });
 });
 
-// Pincodevelden voor het bevestigingsscherm
-const confirmationPinInputs = document.querySelectorAll('.confirmation-pin-input input');
-confirmationPinInputs.forEach((box, index) => {
-  box.addEventListener('input', (e) => {
-    if (e.target.value.length === 1 && index < confirmationPinInputs.length - 1) {
-      confirmationPinInputs[index + 1].focus();
-    }
-  });
-});
 
-// Functie om naar het pincode-scherm te gaan
-function goToPinConfirmation() {
-  console.log("Navigating to pin confirmation screen..."); // Debugging
-  shareQuestionModal.style.display = 'none'; // Verberg de modal
-  pinConfirmationScreen.style.display = 'block'; // Toon het pincode-scherm
-}
+
+
 
 // Verwerk de bevestiging van de pincode
 confirmPinBtn.addEventListener('click', () => {
@@ -479,38 +589,12 @@ confirmPinBtn.addEventListener('click', () => {
 // Reset pincode-scherm na gebruik
 function resetPinInputs() {
   pinInputs.forEach((input) => {
-    input.value = '';
+      input.value = '';
   });
-  confirmPinBtn.disabled = true; // Schakel de bevestig-knop uit
+  // Verwijder deze regel, zodat de bevestigingsknop niet wordt uitgeschakeld
+  // confirmPinBtn.disabled = true;
 }
 
-
-// Functie om naar het success-scherm verifier te gaan
-function goToSuccessScreen(verifierName) {
-  pinConfirmationScreen.style.display = 'none'; // Verberg het pincode-scherm
-  successMessage.textContent = "Succes!";
-  verifierNameElement.textContent = verifierName;
-  successScreen.style.display = 'block'; // Toon het success-scherm
-}
-
-// Knoppen in het success-scherm verifier
-seeActivityBtn.addEventListener('click', () => {
-  console.log("Activiteiten scherm wordt geopend...");
-  successScreen.style.display = 'none';
-  menuScreen.style.display = 'flex';
-  activitiesSection.style.display = 'block'; // Toon activiteiten scherm
-  showActivities();
-});
-
-// Voeg deze regel toe bij het verlaten van het success-scherm verifier
-closeSuccessBtn.addEventListener('click', () => {
-  successScreen.style.display = 'none';
-  walletGrid.style.display = 'block'; // Keer terug naar het wallet-scherm
-  resetPinInputs(); // Reset pincode-invoer
-
-  // Reset de status van de deelactie
-  isSharingActionInProgress = false;
-});
 
 // Issuer successscherm
 function goToIssuerSuccessScreen(cardName, issuedBy) {
@@ -572,6 +656,8 @@ function getFieldValue(field) {
 
   return 'Niet gevonden';
 }
+
+// rdfci vullen
 
 function populateRdfciModal(data) {
   // Fill in the fixed parts
@@ -718,3 +804,205 @@ function populateRdfciModal(data) {
     document.getElementById('rdfci-agreement').innerText = 'Geen overeenkomst gevonden.';
   }
 }
+
+// RFCV vraagscherm vullen
+// RFCV vraagscherm vullen
+function populateRdfcvModal(data) {
+  // Vul de reden
+  document.getElementById('rdfcv-reason').innerText = data.reason || 'Geen reden opgegeven.';
+
+  // Voeg de naam van de verifier toe aan de vraag
+  document.getElementById('rdfcv-question-text').innerText = `Wilt u onderstaande gegevens delen met ${data.requester}?`;
+
+  // Verwerk de gevraagde gegevens
+  const detailsContainer = document.getElementById('rdfcv-details-container');
+  detailsContainer.innerHTML = ''; // Leeg de container
+
+  // Mapping van standaardkaartjes naar selectors
+  const standardCards = {
+      'Persoonsgegevens': '#personal-data-details',
+      'Woonadres': '#address-details',
+      'Verklaring Omtrent het Gedrag (VOG)': '#vog-details' // Voeg VOG-kaartje toe
+  };
+
+  // Groepeer de velden en toon ze in kaartjes
+  let fieldsByCard = {};
+
+  data.rdfcv.forEach((field) => {
+    const fieldName = fieldMapping[field] || field; // Gebruik field mapping
+
+    // Zoek of het veld hoort bij een standaardkaartje
+    const matchingCardName = Object.keys(standardCards).find(cardName => {
+      const cardElement = document.querySelector(standardCards[cardName]);
+      if (cardElement) {
+          const paragraphs = cardElement.querySelectorAll('p');
+          return Array.from(paragraphs).some(p => p.textContent.includes(fieldName));
+      }
+      return false;
+    });
+
+    if (matchingCardName) {
+        if (!fieldsByCard[matchingCardName]) {
+            fieldsByCard[matchingCardName] = { type: 'standardCard', selector: standardCards[matchingCardName], fields: [] };
+        }
+        if (fieldsByCard[matchingCardName].fields) {
+            fieldsByCard[matchingCardName].fields.push(fieldName);
+        } else {
+            fieldsByCard[matchingCardName].fields = [fieldName];
+        }
+    } else {
+        // Zoek of het veld hoort bij een kaartje in localStorage (bijv. voor VOG)
+        const localStorageCard = credentials.find(credential => credential.name === fieldName);
+        if (localStorageCard) {
+            fieldsByCard[fieldName] = { type: 'localStorage', data: localStorageCard };
+        }
+    }
+  });
+
+  // Itereer over elk kaartje en maak de kaart elementen aan
+  const cardNames = Object.keys(fieldsByCard);
+  cardNames.forEach((cardName) => {
+    const cardInfo = fieldsByCard[cardName];
+
+    // Maak kaart container aan
+    const cardContainer = document.createElement('div');
+    cardContainer.className = 'card-container';
+
+    // Maak kaart header aan
+    const cardHeader = document.createElement('div');
+    cardHeader.className = 'card-header';
+
+    // Stel de achtergrondkleur in op basis van de kaartnaam
+    switch (cardName) {
+      case 'Persoonsgegevens':
+        cardHeader.style.backgroundColor = '#B9E4E2';   
+        break;
+      case 'Woonadres':
+        cardHeader.style.backgroundColor = '#445580'; 
+        break;
+      case 'Verklaring Omtrent het Gedrag (VOG)':
+        cardHeader.style.backgroundColor = '#5A50ED'; 
+        break;
+      default:
+        cardHeader.style.backgroundColor = '#0072C6'; // Default kleur
+    }
+
+    // Maak kaart content container aan
+    const cardContent = document.createElement('div');
+    cardContent.className = 'card-content';
+
+    // Maak kaart titel aan
+    const cardTitleElement = document.createElement('div');
+    cardTitleElement.className = 'card-title';
+    cardTitleElement.textContent = cardName;
+    cardContent.appendChild(cardTitleElement);
+
+    // Maak kaart details aan
+    const cardDetails = document.createElement('div');
+    cardDetails.className = 'card-details';
+
+    if (cardInfo.type === 'localStorage') {
+      // Voeg alle details van het kaartje toe uit local storage
+      for (let key in cardInfo.data.data) {
+        if (cardInfo.data.data.hasOwnProperty(key)) {
+          const detailElement = document.createElement('p');
+          detailElement.textContent = `${key}: ${cardInfo.data.data[key]}`;
+          cardDetails.appendChild(detailElement);
+        }
+      }
+    } else if (cardInfo.type === 'standardCard') {
+      // Voeg de specifieke details toe of alle details van het standaardkaartje
+      const elements = document.querySelectorAll(`${cardInfo.selector} p`);
+      elements.forEach(element => {
+        const fieldLabel = element.innerText.split(':')[0];
+        if (!cardInfo.fields || cardInfo.fields.includes(fieldLabel)) {
+          const detailElement = document.createElement('p');
+          detailElement.textContent = element.textContent;
+          cardDetails.appendChild(detailElement);
+        }
+      });
+    }
+
+    // Voeg de kaart content en details samen
+    cardContent.appendChild(cardDetails);
+    cardContainer.appendChild(cardHeader);
+    cardContainer.appendChild(cardContent);
+
+    // Voeg de kaart toe aan de container
+    detailsContainer.appendChild(cardContainer);
+  });
+
+  // Agreement verwerken
+  if (data.a) {
+    const agreementFields = data.a.split(', ').map(agreement => fieldMapping.a[agreement] || agreement).join(', ');
+    document.getElementById('rdfcv-agreement').innerText = agreementFields;
+  } else {
+    document.getElementById('rdfcv-agreement').innerText = 'Geen overeenkomst gevonden.';
+  }
+}
+
+
+
+// Functie om het pincode bevestigingsscherm te tonen
+function goToPinConfirmationVerifier() {
+  console.log("Navigating to pin confirmation screen...");
+  rdfcvModal.style.display = 'none'; // Verberg de vraagmodal
+  pinConfirmationScreenVerifier.style.display = 'block'; // Toon verifier pin bevestigingsscherm
+  resetPinInputs(); // Reset pincode-invoervelden
+}
+
+// Functie voor het succes-scherm na delen met verifier
+function goToVerifierSuccessScreen(data) {
+  successScreen.style.display = 'block';
+  successMessage.textContent = "Succes!";
+  verifierNameElement.textContent = data.requester || 'Onbekende partij'; // Voeg hier data.requester toe
+
+  // Logging wanneer het succes-scherm wordt weergegeven
+  console.log("Succes-scherm geopend voor verifier:", data.requester || 'Onbekende partij');
+
+  // "Zie Activiteit" knop
+  seeActivityBtn.onclick = function() {
+      console.log("Zie Activiteit knop ingedrukt. Wallet-scherm verbergen, activiteiten-scherm tonen.");
+
+      successScreen.style.display = 'none'; // Verberg het succes-scherm
+      walletScreen.style.display = 'none';  // Verberg het wallet-scherm
+      activityScreen.style.display = 'block'; // Toon het activiteiten-scherm
+      showActivities(); // Toon de activiteitenlijst
+
+      // Navigatiebalk correct instellen
+      document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active')); 
+      document.querySelector('.nav-item:nth-child(2)').classList.add('active'); // Activeer het activiteiten-item
+
+      console.log("Wallet-scherm verborgen, activiteiten-scherm getoond.");
+  };
+
+  // "Sluiten" knop
+  closeSuccessBtn.onclick = function() {
+      console.log("Sluiten knop ingedrukt. Terug naar het wallet-scherm.");
+
+      successScreen.style.display = 'none'; // Verberg het succes-scherm
+      walletScreen.style.display = 'block'; // Terug naar het wallet-scherm
+      resetPinInputs(); // Reset de pincode-invoer
+
+      // Reset de status van de deelactie
+      isSharingActionInProgress = false;
+
+      console.log("Succes-scherm verborgen, wallet-scherm getoond, deelactie gereset.");
+  };
+}
+
+
+// Functie om gegevens op te slaan in localStorage zonder een kaartje toe te voegen
+function saveSharedData(data) {
+  const timestamp = new Date().toLocaleString();
+  credentials.push({
+      name: data.name || 'Onbekende partij',
+      reason: data.reason || 'Geen reden opgegeven',
+      sharedData: data.rdfcv.map(field => fieldMapping[field] || field),
+      agreement: data.a ? data.a.split(', ').map(agreement => fieldMapping.a[agreement] || agreement) : [],
+      actionTimestamp: timestamp,
+      isShareAction: true // Markeer als deelactie
+  });
+  saveCredentials();
+}
+
