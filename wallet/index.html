@@ -9,7 +9,7 @@
 </head>
 <body>
 
-  <!-- Welkomstscherm -->
+  <!-- *** Welkomstscherm *** -->
   <section id="welcome-screen">
     <div class="welcome-text">
         <h1>Welkom bij EUTW</h1>
@@ -25,8 +25,8 @@
     <div><button id="next-welcome">Volgende</button></div>
   </section>
 
-  <!-- Pincode-scherm -->
-  <section id="pin-screen" style="display: none;">
+  <!-- *** Pincode-inlog-scherm *** -->
+  <section id="pin-inlog-screen" style="display: none;">
     <h2>Voer je 6-cijferige pincode in</h2>
     <div class="pin-input">
         <input type="password" maxlength="1" class="pin-box" inputmode="numeric" pattern="[0-9]*">
@@ -36,321 +36,319 @@
         <input type="password" maxlength="1" class="pin-box" inputmode="numeric" pattern="[0-9]*">
         <input type="password" maxlength="1" class="pin-box" inputmode="numeric" pattern="[0-9]*">
     </div>
-    <button id="submit-pin" disabled>Ontgrendelen</button>
+    <button id="submit-pin">Ontgrendelen</button>
+  </section>
+
+
+
+  <!-- *** Wallet-scherm *** -->
+  <section id="wallet-screen" style="display: none;">
+
+ 
+
+      <!-- *** Scan Sectie *** -->
+<section class="scan-section" id="scan-section">
+  <div class="scan-container">
+      <div class="scan-btn-container">
+          <button class="scan-btn" id="scan-button">
+              <i class="fas fa-qrcode qr-logo"></i> <!-- Vervang afbeelding door het FontAwesome QR-code icoon -->
+          </button>
+      </div>
+      <div class="scan-text">Scan QR code</div>
+  </div>
+  <div id="reader"></div> <!-- Camerascherm -->
+  <button class="close-scan-btn" id="close-scan-button" style="display: none;">Scannen afsluiten</button>
 </section>
 
-  <!-- Wallet-scherm -->
-  <section id="wallet-screen" style="display: none;">
-    <header>
-      <nav class="navbar">
-        <button class="menu-button">☰ Menu</button>
-        <button class="help-button">?</button>
-      </nav>
-    </header>
 
-    <main>
-        <section class="scan-section" id="scan-section">
-            <div class="scan-container" onclick="startQrScan()">
-                <div class="scan-btn-container">
-                    <button class="scan-btn" id="scan-button">
-                        <img src="QRlogo.png" alt="QR Code Logo" class="qr-logo">
-                    </button>
-                </div>
-                <div class="scan-text">Scan QR code</div>
-            </div>
-            <div id="reader"></div> <!-- Camerascherm -->
-            <button class="close-scan-btn" id="close-scan-button" style="display: none;">Scannen afsluiten</button>
-        </section>
+      <!-- *** Standaard Kaartjes *** -->
+      <section class="default-cards">
+          <div class="card default-card light-card">
+            <h3>Persoonlijke data</h3>
+            <p>Willeke Liselotte</p>
+            <button class="view-card">Bekijk <span class="arrow">→</span></button>
+          </div>
+          <div class="card default-card dark-card">
+            <h3>Woonadres</h3>
+            <p>Den Haag</p>
+            <button class="view-card">Bekijk <span class="arrow">→</span></button>
+          </div>
+      </section>
 
-
-        <section class="default-cards">
-            <div class="card default-card light-card">
-              <h3>Persoonlijke data</h3>
-              <p>Willeke Liselotte</p>
-              <button class="view-card">Bekijk <span class="arrow">→</span></button>
-            </div>
-            <div class="card default-card dark-card">
-              <h3>Woonadres</h3>
-              <p>Den Haag</p>
-              <button class="view-card">Bekijk <span class="arrow">→</span></button>
-            </div>
-          </section>
-
+      <!-- *** Dynamische Kaartjes *** -->
       <section class="wallet-grid" id="wallet-grid">
         <!-- Dynamische kaartjes zullen hier worden toegevoegd -->
       </section>
+
+<!-- *** Menu Scherm *** -->
 <div id="menu-screen" class="menu-screen" style="display: none;">
-    <h2>Menu</h2>
-    <ul class="menu-list">
-        <li id="help-option"><i class="fas fa-question-circle"></i> <span>Hulp nodig?</span><span>→</span></li>
-        <li id="activities-option"><i class="fas fa-clock"></i> <span>Activiteiten</span><span>→</span></li>
-        <li id="settings-option"><i class="fas fa-cog"></i> <span>Instellingen</span><span>→</span></li>
-        <li id="feedback-option"><i class="fas fa-comment-dots"></i> <span>Geef feedback</span><span>→</span></li>
-        <li id="about-option"><i class="fas fa-info-circle"></i> <span>Over deze app</span><span>→</span></li>
-    </ul>
-    <button id="logout-btn" class="menu-logout"><i class="fas fa-sign-out-alt"></i> Uitloggen</button>
-    <button id="back-menu-btn" class="back-btn">← Terug</button>
-    
-    <!-- Activiteiten Sectie -->
-    <div id="activities-section" class="activities-section" style="display: none;">
-        <h3>Activiteiten</h3>
-        <div class="title-divider"></div>
-        <ul id="activities-list"></ul>
-        <div class="activities-footer"> <!-- Nieuwe container voor de achtergrond -->
-          <button id="back-activities-btn" class="back-btn">← Terug</button>
+  <h2>Menu</h2>
+  <ul class="menu-list">
+      <li id="help-option"><i class="fas fa-question-circle"></i> <span>Hulp nodig?</span><span>→</span></li>
+      <li id="activities-option"><i class="fas fa-clock"></i> <span>Activiteiten</span><span>→</span></li>
+      <li id="settings-option"><i class="fas fa-cog"></i> <span>Instellingen</span><span>→</span></li>
+      <li id="feedback-option"><i class="fas fa-comment-dots"></i> <span>Geef feedback</span><span>→</span></li>
+      <li id="about-option"><i class="fas fa-info-circle"></i> <span>Over deze app</span><span>→</span></li>
+  </ul>
+  <button id="logout-btn" class="menu-logout"><i class="fas fa-sign-out-alt"></i> Uitloggen</button>
+  <button id="back-menu-btn" class="back-btn">← Terug</button>
+</div>
+
+
+</section>
+
+
+    <!-- *** Details Weergave voor Kaartjes *** -->
+    <div id="details">
+      <div class="details-header">
+        <button class="close-btn" id="close-details">
+          <i class="fas fa-arrow-left"></i>
+        </button>
+        <button class="delete-btn" id="delete-details">
+          <i class="fas fa-trash"></i> <!-- Voeg hier het fa-trash icoon toe -->
+        </button>
+      </div>
+      <h3 id="details-title"></h3>
+      <div class="divider"></div>
+      <div id="details-content"></div>
+    </div>
+
+  <!-- *** Details voor Standaard Kaartje: Persoonlijke Data *** -->
+<div id="personal-data-details">
+  <div class="details-header">
+    <button class="close-btn" id="close-details-personal">
+      <i class="fas fa-arrow-left"></i>
+    </button>
+  </div>
+  <h3 id="details-title">Details van Persoonlijke Data</h3>
+  <div class="divider"></div>
+  <div id="details-content">
+    <!-- Hardcoded data voor het personal data kaartje -->
+    <p><strong>First name:</strong> Willeke Liselotte</p>
+    <p><strong>Last name:</strong> De Bruijn</p>
+    <p><strong>Surname:</strong> Molenaar</p>
+    <p><strong>Date of birth:</strong> March 10, 1997</p>
+    <p><strong>Birth city:</strong> Delft</p>
+    <p><strong>Birth country:</strong> The Netherlands</p>
+    <p><strong>Gender:</strong> Female</p>
+    <p><strong>Citizen service number (BSN):</strong> 938391772</p>
+    <p><strong>Nationaliteit:</strong> Nederlands</p>
+    <p><strong>Geldigheid paspoort:</strong> March 11, 2027</p>
+    <p><strong>Older than 18:</strong> Yes</p>
+  </div>
+</div>
+
+<!-- *** Details voor Standaard Kaartje: Woonadres *** -->
+<div id="address-details">
+  <div class="details-header">
+    <button class="close-btn" id="close-details-address">
+      <i class="fas fa-arrow-left"></i>
+    </button>
+  </div>
+  <h3 id="details-title">Woonadres</h3>
+  <div class="divider"></div>
+  <div id="details-content">
+    <p><strong>Straat:</strong> Wilhelmina van Pruisenweg</p>
+    <p><strong>Huisnummer:</strong> 52</p>
+    <p><strong>Postcode:</strong> 2595 AN</p>
+    <p><strong>Plaatsnaam:</strong> Den Haag</p>
+  </div>
+</div>
+
+
+
+<!-- *** Navigatiebalk *** -->
+<nav class="bottom-nav" style="display: none;">
+  <a href="#" class="nav-item active" id="overview-navbar-item">
+    <i class="fas fa-home"></i>
+    <span>Overzicht</span>
+  </a>
+  <a href="#" class="nav-item" id="activities-navbar-item">
+    <i class="fas fa-exchange-alt"></i>
+    <span>Activiteiten</span>
+  </a>
+  <a href="#" class="nav-item" id="machtigingen-navbar-item">
+    <i class="fas fa-key"></i>
+    <span>Machtigingen</span>
+  </a>
+  <a href="#" class="nav-item" id="instellingen-navbar-item">
+    <i class="fas fa-sliders-h"></i>
+    <span>Instellingen</span>
+  </a>
+</nav>
+
+
+<!-- *** Activiteiten Sectie *** -->
+<div id="activities-section" class="activities-section" style="display: none;">
+  <h3>Activiteiten</h3>
+  <div class="title-divider"></div>
+  <ul id="activities-list"></ul>
+</div>
+
+<!-- *** machtigingen Sectie *** -->
+<div id="machtiging-section" class="machtiging-section" style="display: none;"> 
+  <h3>Machtigingen</h3> 
+  <div class="title-divider"></div>
+<p> Deze pagina volgt later </p>
+</div>
+
+<!-- *** Instellingen Sectie *** -->
+<div id="instellingen-section" class="instellingen-section" style="display: none;">
+  <h3>Instellingen</h3>
+  <div class="title-divider"></div>
+  <p>Deze pagina volgt later</p>
+</div>
+
+
+
+  <!-- *** Modals *** -->
+
+
+  <!-- *** RDFCV Modal *** -->
+<section id="rdfcv-modal" class="modal" style="display: none;">
+  <div class="modal-content">
+      <p id="rdfcv-question-text"><strong>Wilt u onderstaande gegevens delen?</strong></p>
+      <div class="divider"></div>
+
+      <!-- Reden sectie -->
+      <p><strong>Reden</strong></p>
+      <p id="rdfcv-reason"></p>
+      <div class="divider"></div>
+
+      <!-- Gegevens sectie -->
+      <p><strong>Gegevens</strong></p>
+      <div id="rdfcv-details-container"></div>
+      <div class="divider"></div>
+
+      <!-- Agreement sectie -->
+      <p><strong>Overeenkomst</strong></p>
+      <p id="rdfcv-agreement"></p>
+      <div class="divider"></div>
+
+      <!-- Knoppen -->
+      <div class="button-container">
+          <button id="rdfcv-stop-button" class="stop-button">Stoppen</button>
+          <button id="rdfcv-accept-button" class="share-button">Akkoord</button>
+      </div>
+  </div>
+</section>
+
+  <!-- *** RDFCI Modal *** -->
+  <section id="rdfci-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <p><strong>Om onderstaande gegevens te ontvangen:</strong></p>
+      <div class="divider"></div>
+
+      <!-- Gegevens sectie -->
+      <p><strong>Gegevens</strong></p>
+      <p id="rdfci-name"></p>
+      <div class="divider"></div>
+
+      <!-- Uitgegeven door sectie -->
+      <p><strong>Uitgegeven door</strong></p>
+      <p id="rdfci-issuedBy"></p>
+      <div class="divider" style="margin-bottom: 15px;"></div>
+
+      <!-- Gegevens delen met sectie -->
+      <p id="rdfci-share-with"><strong>Wilt u de volgende gegevens delen met:</strong></p>
+      <div class="divider"></div>
+
+      <!-- Container voor dynamisch gevraagde kaartjes -->
+      <div id="rdfci-details-container"></div>
+      <div class="divider"></div>
+
+      <!-- Agreement sectie -->
+      <p><strong>Overeenkomst</strong></p>
+      <p id="rdfci-agreement"></p>
+      <div class="divider"></div>
+
+      <!-- Knoppen -->
+      <div class="button-container">
+        <button id="rdfci-stop-button" class="stop-button">Stop</button>
+        <button id="rdfci-accept-button" class="share-button">Akkoord</button>
       </div>
     </div>
-</div>
-
-<!-- Menu Scherm -->
-<div id="menu-screen" class="menu-screen" style="display: none;">
-    <h2>Menu</h2>
-    <ul class="menu-list">
-        <li id="help-option"><span>❓ Hulp nodig?</span><span>→</span></li>
-        <li id="activities-option"><span>⏰ Activiteiten</span><span>→</span></li>
-        <li id="settings-option"><span>⚙️ Instellingen</span><span>→</span></li>
-        <li id="feedback-option"><span>📝 Geef feedback</span><span>→</span></li>
-        <li id="about-option"><span>ℹ️ Over deze app</span><span>→</span></li>
-    </ul>
-    <button id="logout-btn" class="menu-logout">↩️ Uitloggen</button>
-    <button id="back-menu-btn" class="back-btn">← Terug</button>
-</div>
-
-<!-- Activiteiten Scherm  -->
-<div id="activities-section" class="activities-section" style="display: none;">
-    <h3>Activiteiten</h3>
-    <ul id="activities-list"></ul>
-    <button id="back-activities-btn" class="back-btn">← Terug</button>
-</div>
-
-    </main>
-
-<!-- Details view for individual cards -->
-<div id="details">
-    <h3 id="details-title"></h3>
-    <div class="divider"></div> <!-- Scheidingsstreep -->
-    <div id="details-content"></div>
-    <div class="details-buttons">
-      <button class="close-btn purple-btn" id="close-details">Terug</button>
-      <button class="delete-btn orange-btn" id="delete-details">Verwijderen</button>
-    </div>
-  </div>
-
-  <div id="personal-data-details">
-    <h3 id="details-title">Details from Personal data</h3>
-    <div class="divider"></div> <!-- Scheidingsstreep -->
-    <div id="details-content">
-        <!-- Hardcoded data voor het personal data kaartje -->
-        <p><strong>First name:</strong> Willeke Liselotte</p>
-        <p><strong>Last name:</strong> De Bruijn</p>
-        <p><strong>Surname:</strong> Molenaar</p>
-        <p><strong>Date of birth:</strong> March 10, 1997</p>
-        <p><strong>Birth city:</strong> Delft</p>
-        <p><strong>Birth country:</strong> The Netherlands</p>
-        <p><strong>Gender:</strong> Female</p>
-        <p><strong>Citizen service number (BSN):</strong> 938391772</p>
-        <p><strong>Older than 18+:</strong> Yes</p>
-    </div>
-    <button id="back-btn" class="purple-btn">← Terug</button>
-</div>
-
-<!-- Details sectie voor het tweede standaardkaartje (Woonadres) -->
-<div id="address-details">
-  <h3 id="details-title">Woonadres</h3>
-  <div class="divider"></div> <!-- Scheidingsstreep -->
-  <div id="details-content">
-      <p><strong>Straat:</strong> Wilhelmina van Pruisenweg</p>
-      <p><strong>Huisnummer:</strong> 52</p>
-      <p><strong>Postcode:</strong> 2595 AN</p>
-      <p><strong>Plaatsnaam:</strong> Den Haag</p>
-  </div>
-  <button id="back-btn-address" class="purple-btn">← Terug</button>
-</div>
-
   </section>
 
-  <!-- Modal voor het delen van gegevens -->
-<div id="share-question-modal" class="modal">
-  <div class="modal-content">
-    <h2 id="share-question-text"><strong></strong></h2>
+  <!-- *** Pincode Bevestiging-scherm (Verifier) *** -->
+<section id="pin-confirmation-screen-verifier" style="display: none;">
+  <p>Voer je pincode in om gegevens te delen</p>
+  <div class="pin-input">
+    <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
+    <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
+    <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
+    <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
+    <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
+    <input type="password" class="pin-box" inputmode="numeric">
+  </div>
+  <button class= "confirm-pin"id="confirm-pin-verifier">Bevestig</button>
+</section>
+
+
+  <!-- *** NIET in gebruik momenteel verifier heeft apart scherm ivm knop en js code Pincode Bevestiging-scherm (Delen Gegevens) *** -->
+  <section id="pin-confirmation-screen" style="display: none;">
+    <p>Voer je pincode in om gegevens te delen</p>
+    <div class="pin-input">
+      <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
+      <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
+      <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
+      <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
+      <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
+      <input type="password" class="pin-box" inputmode="numeric">
+  </div>
+    
+      <button id="confirm-pin">Bevestig</button>
+  
+  </section>
+
+  <!-- *** Success-scherm na Delen Gegevens (Verifier) *** -->
+  <section id="success-screen" style="display: none;">
+    <h2 id="success-message">Succes!</h2>
     <div class="divider"></div>
-    <div class="reason-section">
-      <h3><strong>Reden</strong></h3>
-      <p id="share-reason"></p>
-    </div>
-    <div class="divider"></div>
-    <div class="details-section">
-      <h3><strong>Gegevens</strong></h3>
-      <p id="share-details"></p>
-    </div>
-    <div class="divider"></div>
+    <p>Je hebt de gegevens gedeeld met</p>
+    <p><strong><span id="verifier-name"></span></strong></p>
     <div class="button-container">
-      <button id="stop-share-btn" class="stop-button">Stop</button>
-      <button id="yes-share-btn" class="share-button">Delen</button>
+      <button id="see-activity-btn" class="stop-button">Zie Activiteit</button>
+      <button id="close-success-btn" class="share-button">Sluiten</button>
     </div>
-  </div>
-</div>
+  </section>
 
-<!-- Pincode bevestiging-scherm delen gegevens-->
-<section id="pin-confirmation-screen" style="display: none;">
-  <h2>Voer je pincode in om gegevens te delen</h2>
-  <div class="pin-input confirmation-pin-input"> <!-- Nieuwe class toegevoegd -->
-      <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
-      <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
-      <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
-      <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
-      <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
-      <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
-  </div>
-  <div class="button-container"> <!-- Nieuwe container toegevoegd -->
-    <button id="confirm-pin">Bevestig</button>
-</section>
-
-<!-- Succes-scherm na het delen van gegevens verifier-->
-<section id="success-screen" style="display: none;">
-  <h2 id="success-message">Succes!</h2>
-  <div class="divider"></div>
-  <p>Je hebt de gegevens gedeeld met</p>
-  <p><strong><span id="verifier-name"></span></strong></p>
-  <div class="button-container">
-    <button id="see-activity-btn" class="stop-button">Zie Activiteit</button>
-    <button id="close-success-btn" class="share-button">Sluiten</button>
-  </div>
-</section>
-
-<!-- Nieuwe rdfci modal -->
-<section id="rdfci-modal" class="modal" style="display: none;">
-  <div class="modal-content">
-    <p><strong>Om onderstaande gegevens te ontvangen:</strong></p>
-    <div class="divider"></div>
-
-    <!-- Gegevens sectie -->
-    <p><strong>Gegevens</strong></p>
-    <p id="rdfci-name"></p>
-    <div class="divider"></div>
-
-    <!-- Uitgegeven door sectie -->
-    <p><strong>Uitgegeven door</strong></p>
-    <p id="rdfci-issuedBy"></p>
-    <div class="divider" style="margin-bottom: 15px;"></div>
-
-    <!-- Gegevens delen met sectie -->
-    <p id="rdfci-share-with"><strong>Wilt u de volgende gegevens delen met:</strong></p>
-    <div class="divider"></div>
-
-    <!-- Container voor dynamisch gevraagde kaartjes -->
-    <div id="rdfci-details-container">
-      <div class="card-container">
-        <div class="card-header"></div>
-        <div class="card-content">
-          <div class="card-title">Card Title</div>
-          <div class="card-details">
-            <!-- Detail paragraphs here -->
-          </div>
-        </div>
+  <!-- *** Issuer Modal voor Vraag na Scannen *** -->
+  <section id="issuer-question-modal" class="modal">
+    <div class="modal-content">
+      <h2 id="issuer-question-message"><strong>Wilt u onderstaande gegevens opslaan in uw wallet?</strong></h2>
+      <div class="divider" style="margin: 10px 0;"></div>
+      <p><strong>Gegevens</strong></p>
+      <p id="issuer-data"><strong></strong></p>
+      <div class="divider"></div>
+      <p><strong>Uitgegeven door</strong></p>
+      <p id="issuer-issuedBy"><strong></strong></p>
+      <div class="divider"></div>
+      <div class="button-container">
+        <button id="stop-button-issuer" class="stop-button">Stop</button>
+        <button id="save-button" class="share-button">Opslaan</button>
       </div>
     </div>
-    <div class="divider"></div>
-    <!-- Agreement sectie -->
-    <p><strong>Overeenkomst</strong></p>
-    <p id="rdfci-agreement"></p>
-    <div class="divider"></div>
+  </section>
 
-    <!-- Knoppen -->
+  <!-- *** Issuer Success-scherm na Opslaan Gegevens (Issuer) *** -->
+  <section id="issuer-success-screen" style="display: none;">
+    <h2 id="issuer-success-message"><strong>Succes!</strong></h2>
+    <div class="divider"></div>
+    <p style="margin-top: 20px;">De gegevens</p>
+    <p><strong id="issuer-success-data"></strong></p>
+    <p>uitgegeven door</p>
+    <p><strong id="issuer-success-issuedBy"></strong></p>
+    <p>zijn succesvol opgeslagen in je wallet</p>
+    <div class="divider" style="margin-top: 20px;"></div>
+    <div id="issuer-success-card" class="card"></div>
     <div class="button-container">
-      <button id="rdfci-stop-button" class="stop-button">Stop</button>
-      <button id="rdfci-accept-button" class="share-button">Akkoord</button>
+      <button id="close-issuer-success-btn" class="share-button">Sluiten</button>
     </div>
-  </div>
-</section>
+  </section>
 
-
-<!-- Issuer modal voor de vraag na het scannen -->
-<section id="issuer-question-modal" class="modal">
-  <div class="modal-content">
-    <!-- Regel 1 -->
-    <h2 id="issuer-question-message"><strong>Wilt u onderstaande gegevens opslaan in uw wallet?</strong></h2>
-    
-    <!-- Witruimte en dividerlijn -->
-    <div class="divider" style="margin: 10px 0;"></div>
-    
-    <!-- Regel 2: Gegevens -->
-    <p><strong>Gegevens</strong></p>
-    
-    <!-- Regel 3: Ingevulde gegevens -->
-    <p id="issuer-data"><strong></strong></p>
-    
-    <!-- Divider -->
-    <div class="divider"></div>
-    
-    <!-- Regel 4: Uitgegeven door -->
-    <p><strong>Uitgegeven door</strong></p>
-    
-    <!-- Regel 5: Ingevulde issuer -->
-    <p id="issuer-issuedBy"><strong></strong></p>
-    
-    <!-- Divider -->
-    <div class="divider"></div>
-    
-    <!-- Knoppen -->
-    <div class="button-container">
-      <button id="stop-button-issuer" class="stop-button">Stop</button>
-      <button id="save-button" class="share-button">Opslaan</button>
-    </div>
-  </div>
-</section>
-
-
-<!-- Issuer success-scherm -->
-<section id="issuer-success-screen" style="display: none;">
-  <h2 id="issuer-success-message"><strong>Succes!</strong></h2>
-  <div class="divider"></div> <!-- Divider lijn -->
-  <p style="margin-top: 20px;">De gegevens</p>
-  <p><strong id="issuer-success-data"></strong></p>
-  <p>uitgegeven door</p>
-  <p><strong id="issuer-success-issuedBy"></strong></p>
-  <p>zijn succesvol opgeslagen in je wallet</p>
-  <div class="divider" style="margin-top: 20px;"></div> <!-- Tweede divider lijn -->
-  <div id="issuer-success-card" class="card"></div> <!-- Kaartje-element -->
-  <div class="button-container">
-    <button id="close-issuer-success-btn" class="share-button">Sluiten</button>
-  </div>
-</section>
-
-
-
+  <!-- *** Scripts *** -->
   <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
   <script src="wallet.js"></script>
-  <script>
-    // Logica voor het wisselen van schermen
-    document.getElementById('next-welcome').addEventListener('click', function() {
-      document.getElementById('welcome-screen').style.display = 'none';
-      document.getElementById('pin-screen').style.display = 'flex';
-    });
-  
-    // Valideren van PIN invoer (aangepast om niet meer te controleren)
-    const pinBoxes = document.querySelectorAll('.pin-box');
-    pinBoxes.forEach((box, index) => {
-      box.addEventListener('input', (e) => {
-        if (e.target.value.length === 1 && index < pinBoxes.length - 1) {
-          pinBoxes[index + 1].focus();
-        }
-        // Verwijder de aanroep naar validatePin()
-      });
-    });
-  
-    // Verwijder of pas de validatePin functie aan zodat deze de knop niet meer uitschakelt
-    function validatePin() {
-      // Deze functie kan nu leeg blijven of worden verwijderd
-    }
-  
-    // Zorg ervoor dat de submit-pin knop altijd klikbaar is
-    document.getElementById('submit-pin').disabled = false;
-  
-    document.getElementById('submit-pin').addEventListener('click', function() {
-      document.getElementById('pin-screen').style.display = 'none';
-      document.getElementById('wallet-screen').style.display = 'block';
-    });
-  </script>
 </body>
 </html>
