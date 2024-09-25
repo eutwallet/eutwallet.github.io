@@ -19,6 +19,9 @@ const backMenuBtn = document.getElementById('back-menu-btn');
 const activitiesNavbarItem = document.getElementById('activities-navbar-item');
 const overviewNavbarItem = document.getElementById('overview-navbar-item');
 const bottomNav = document.querySelector('.bottom-nav');
+const machtigingNavbarItem = document.getElementById('machtigingen-navbar-item'); 
+const instellingenNavbarItem = document.getElementById('instellingen-navbar-item');
+const instellingenSection = document.getElementById('instellingen-section');
 
 // *** Activiteiten Elementen ***
 const activitiesOption = document.getElementById('activities-option');
@@ -79,9 +82,12 @@ const fieldMapping = {
   bsn: 'Citizen service number (BSN)',
   omv: 'Organisatiemachtiging VOG',
   vog: 'Verklaring Omtrent Gedrag (VOG)',
+  nat: 'Nationaliteit',
+  va: 'Geldigheid paspoort',
   a: {
-    '12t': 'opslag: 12 maanden, gedeeld met 3den: nee'
-  }
+    '12t': 'opslag: 12 maanden, gedeeld met 3den: nee',
+    '60t': 'opslag: 60 maanden, gedeeld met 3den: nee'
+  },
 };
 
 
@@ -118,8 +124,10 @@ document.getElementById('submit-pin').addEventListener('click', function() {
 
 // Voeg de event listener toe voor het klikken op de overzicht-knop in de navbar
 overviewNavbarItem.addEventListener('click', () => {
-  // Verberg het activiteiten-scherm
+  // Verberg het activiteiten-scherm, machtiging-sectie en instellingen-sectie
   activitiesSection.style.display = 'none';
+  document.getElementById('machtiging-section').style.display = 'none';
+  instellingenSection.style.display = 'none'; // Verberg instellingen-sectie
 
   // Toon het wallet-overzichtsscherm
   document.getElementById('wallet-screen').style.display = 'block';
@@ -131,14 +139,13 @@ overviewNavbarItem.addEventListener('click', () => {
   overviewNavbarItem.classList.add('active');
 });
 
-
-
-
 // Voeg de event listener toe voor het klikken op de activiteiten-knop in de navbar
 activitiesNavbarItem.addEventListener('click', () => {
-  // Verberg alle andere secties, zoals de wallet-sectie
+  // Verberg alle andere secties
   document.getElementById('wallet-screen').style.display = 'none';
-  
+  document.getElementById('machtiging-section').style.display = 'none'; // Verberg machtigingen-sectie
+  instellingenSection.style.display = 'none'; // Verberg instellingen-sectie
+
   // Toon het activiteiten-scherm
   activitiesSection.style.display = 'flex';
 
@@ -153,8 +160,39 @@ activitiesNavbarItem.addEventListener('click', () => {
 });
 
 
+// Voeg de event listener toe voor het klikken op de machtingen-knop in de navbar
+machtigingNavbarItem.addEventListener('click', () => {
+  // Verberg alle andere secties, zoals de wallet-sectie, activiteiten-sectie en instellingen-sectie
+  document.getElementById('wallet-screen').style.display = 'none';
+  activitiesSection.style.display = 'none'; // Verberg activiteiten-sectie
+  instellingenSection.style.display = 'none'; // Verberg instellingen-sectie
 
+  // Toon het machtigingen-scherm
+  document.getElementById('machtiging-section').style.display = 'flex';
 
+  // Zorg ervoor dat de andere navbar-items niet meer actief zijn
+  document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+
+  // Zet het machtigingen-item actief in de navbar
+  machtigingNavbarItem.classList.add('active');
+});
+
+// Voeg de event listener toe voor het klikken op de instellingen-knop in de navbar
+instellingenNavbarItem.addEventListener('click', () => {
+  // Verberg alle andere secties
+  document.getElementById('wallet-screen').style.display = 'none';
+  activitiesSection.style.display = 'none'; // Verberg activiteiten-sectie
+  document.getElementById('machtiging-section').style.display = 'none'; // Verberg machtigingen-sectie
+
+  // Toon het instellingen-scherm
+  instellingenSection.style.display = 'flex';
+
+  // Zorg ervoor dat de andere navbar-items niet meer actief zijn
+  document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+
+  // Zet het instellingen-item actief in de navbar
+  instellingenNavbarItem.classList.add('active');
+});
 
 function convertToStandardDate(dateString) {
   // Converteer 'DD/MM/YYYY, HH:mm:ss' naar 'YYYY-MM-DDTHH:mm:ss'
