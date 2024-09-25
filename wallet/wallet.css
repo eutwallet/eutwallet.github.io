@@ -1,4 +1,4 @@
-/* Algemene stijlen */
+/* *** Algemene Stijlen *** */
 * {
     margin: 0;
     padding: 0;
@@ -7,11 +7,18 @@
 }
 
 body {
-    background-color: #FFFFFF; /* Achtergrond geheel wit */
+    background-color: #FFFFFF;
     padding: 10px;
     color: #333;
+    max-width: 400px;  /* Max breedte voor de mobiele weergave */
+    margin: 0 auto;    /* Centreer de wallet op bredere schermen */
 }
 
+p {
+    font-weight: normal; /* Zorg ervoor dat alle <p> tags een normaal gewicht hebben */
+}
+
+/* *** Header Stijlen *** */
 header {
     display: flex;
     justify-content: space-between;
@@ -20,7 +27,7 @@ header {
 }
 
 .menu-button {
-    color: #5D3EBC; /* Donkerpaars voor menu-knop */
+    color: #5D3EBC;
     font-size: 18px;
     border: none;
     background-color: transparent;
@@ -30,7 +37,7 @@ header {
     background-color: transparent;
     border-radius: 50%;
     font-size: 18px;
-    color: #5D3EBC; /* Donkerpaars voor vraagteken-knop */
+    color: #5D3EBC;
     border: 2px solid #E0E7FF;
     width: 30px;
     height: 30px;
@@ -38,18 +45,16 @@ header {
     justify-content: center;
     align-items: center;
     position: absolute;
-    top: 20px; /* Correctie van uitlijning met menu-knop */
-    right: 30px; /* Uitlijning rechts */
+    top: 20px;
+    right: 30px;
 }
 
-main {
-    display: flex;
-    flex-direction: column;
-    max-width: 400px;
-    margin: 0 auto;
+/* *** Wallet screen *** */
+#wallet-screen {
+    padding-bottom: 80px; /* Voeg voldoende ruimte toe, afhankelijk van de hoogte van de bottom nav */
 }
 
-/* Scan-sectie */
+/* *** Scan Sectie Stijlen *** */
 .scan-section {
     text-align: center;
     margin-bottom: 40px;
@@ -73,37 +78,30 @@ main {
 }
 
 .scan-btn {
-    background-color: #5A50ED; /* Paarse knop */
+    background-color:  #5A50ED;
     border-radius: 35px;
     width: 120px;
     height: 120px;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Lichte schaduw rechtsonder */
-    border: none; /* Geen randen om de knop */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    border: none;
     cursor: pointer;
 }
 
-/* QR-logo in de knop */
 .qr-logo {
-    width: 50px; /* Pas de grootte aan naar wens */
-    height: 50px; /* Pas de grootte aan naar wens */
+    font-size: 50px; /* Pas de grootte aan zoals gewenst */
+    color: #ffffff; /* Of een andere kleur */
 }
-
 .scan-text {
     font-size: 16px;
-    color: #5D3EBC; /* Paarse tekst */
+    color: #4e4e4e;
     margin-top: 10px;
 }
 
-/* Verberg de hele scan-container tijdens het scannen */
-.scan-container.hidden {
-    display: none;
-}
-
 .close-scan-btn {
-    background-color: #5A50ED; /* Paarse kleur zoals andere knoppen */
+    background-color: #5A50ED;
     color: white;
     padding: 15px;
     border: none;
@@ -112,57 +110,53 @@ main {
     cursor: pointer;
     width: 100%;
     max-width: 300px;
-    margin: 20px auto; /* Voeg witruimte toe en centreer de knop */
-    display: none; /* Standaard verbergen */
+    margin: 20px auto;
+    display: none;
     text-align: center;
 }
 
-/* Kaartjes sectie */
+/* *** Kaartjes Stijlen *** */
 .card-list {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    max-width: 400px; /* Maximale breedte van de kaartjescontainer */
-    margin: 0 auto; /* Centreer de kaartjescontainer */
+    max-width: 400px;
+    margin: 0 auto;
 }
 
-/* Algemene styling voor kaartjes */
 .card, .default-card {
     background-color: #E0F7FA;
     padding: 20px;
-    border-radius: 15px; /* Hoeken afgerond */
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Lichte schaduw */
-    margin-bottom: 20px; /* Witruimte tussen de kaartjes */
+    border-radius: 15px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
     position: relative;
     font-size: 14px;
-    width: 100%; /* Neem de volledige breedte van de container */
-    aspect-ratio: 98 / 57; /* Gebruik de verhouding 98:57 voor de hoogte */
+    width: 100%;
+    aspect-ratio: 98 / 57;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    overflow: hidden; /* Zorg ervoor dat de pseudo-elementen niet buiten de kaart lopen */
-    background-image: url('wavy.svg'); /* Geef hier het pad van je SVG-bestand */
-    background-size: cover; /* Zorg ervoor dat de SVG de volledige kaart bedekt */
-    background-repeat: no-repeat; /* Voorkom herhaling van de achtergrondafbeelding */
+    overflow: hidden;
+    background-image: url('wavy.svg');
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
-/* Stijling voor de lichte kaart */
 .light-card {
-    background-color: #B9E4E2; /* Lichtblauw */
+    background-color: #B9E4E2;
     color: #152A62;
 }
 
-/* Stijling voor de donkere kaart */
 .dark-card {
-    background-color: #445580; /* Nieuwe kleur voor het donkere kaartje */
-    color: white; /* Witte tekst voor leesbaarheid */
+    background-color: #445580;
+    color: white;
 }
 
 .dark-card h3, .dark-card p, .dark-card .view-card {
-    color: white; /* Zorg ervoor dat alle tekst op de donkere kaart wit is */
+    color: white;
 }
 
-/* Stijling van de tekst en knoppen in de kaart */
 .default-card h3, .card h3 {
     margin: 0;
     font-size: 20px;
@@ -170,81 +164,114 @@ main {
 }
 
 .default-card p, .card p {
-    margin: 5px 0 15px 0; /* Voeg ruimte toe tussen de titel en de tekst */
+    margin: 5px 0 15px 0;
     font-size: 16px;
+    text-align: left;
 }
 
-/* Knop onderaan de kaart */
 .view-card {
     background: none;
     border: none;
     font-size: 16px;
-    color: inherit; /* Zorg dat de tekstkleur overeenkomt met de kaart */
+    color: inherit;
     display: flex;
     align-items: center;
     justify-content: flex-start;
     cursor: pointer;
-    margin-top: auto; /* Duw de knop naar de onderkant van de kaart */
+    margin-top: auto;
 }
 
 .arrow {
     margin-left: 5px;
 }
 
-/* Afbeelding in de kaart */
 .card img {
-    width: 40px; /* Pas de grootte aan naar wens */
+    width: 40px;
     height: 40px;
     position: absolute;
     top: 15px;
     right: 15px;
 }
 
-
-
-
-/* Details sectie voor niet-standaard kaartjes */
-#details {
+/* *** Details Sectie Stijlen *** */
+#details, #personal-data-details, #address-details {
     display: none;
     position: fixed;
     top: 0;
-    left: 0;
-    width: 100%;
+    width: 100%; /* Behoud de breedte van het scherm */
+    max-width: 400px; /* Zorg ervoor dat het binnen de body blijft */
     height: 100%;
     background-color: white;
-    z-index: 100;
+    z-index: 100; /* Houd dit boven het wallet-scherm */
     padding: 20px;
     box-sizing: border-box;
-    overflow-y: auto; /* Zorg dat je kunt scrollen */
+    overflow-y: auto;
+    margin: 0 auto; /* Centreer binnen de beschikbare ruimte */
 }
 
-#details h3 {
-    margin-top: 20px; /* Pas de marge aan voor een betere uitlijning */
+#details h3, #personal-data-details h3, #address-details h3 {
+    margin-top: 40px;
     color: #152A62;
 }
 
-/* Scheidingsstreep in details */
 .divider {
     width: 100%;
     height: 1px;
     background-color: lightgrey;
-    margin: 20px 0; /* Voeg wat marge toe rondom de streep */
+    margin: 20px 0;
 }
 
 #details-content {
     margin-top: 20px;
 }
 
-/* Knoppen in het detailscherm */
 .details-buttons {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
 }
 
-/* Stijl voor de "Terug"-knop */
-.purple-btn {
-    background-color: #5A50ED; /* Paarse kleur */
+
+#back-btn, #back-btn-address {
+    background: none; /* Geen achtergrondkleur */
+    border: none; /* Geen rand */
+    color: grey; /* Grijze kleur voor de pijl */
+    font-size: 24px; /* Grootte van de pijl */
+    cursor: pointer;
+    position: absolute; /* Plaats het in de linkerbovenhoek */
+
+}
+
+#back-btn i, #back-btn-address i {
+    font-size: 24px; /* Zorg ervoor dat de pijl groot genoeg is */
+    color: grey; /* Grijze kleur voor de pijl */
+}
+
+.details-header {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px; /* Voeg dit toe om de header over de volledige breedte te laten strekken */
+    display: flex;
+    justify-content: space-between; /* Verdeel de knoppen naar links en rechts */
+    align-items: center; /* Lijn de knoppen verticaal uit */
+}
+  
+  .close-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #4a90e2;
+    cursor: pointer;
+  }
+  
+  .close-btn i {
+    font-size: 24px;
+    color: #4a90e2;
+  }
+
+  .orange-btn {
+    background-color: #FFA500;
     color: white;
     padding: 15px;
     border: none;
@@ -254,20 +281,21 @@ main {
     text-align: center;
 }
 
-/* Stijl voor de "Verwijderen"-knop */
-.orange-btn {
-    background-color: #FFA500; /* Oranje kleur */
-    color: white;
-    padding: 15px;
+.delete-btn {
+    background: none;
     border: none;
-    border-radius: 5px;
+    font-size: 18px;
+    color: #fd875c; /* Pas de kleur aan naar oranje voor het verwijdericoon */
     cursor: pointer;
-    width: 45%;
-    text-align: center;
 }
 
-/* Details sectie voor standaardkaartjes (Personal Data) */
-#personal-data-details {
+.delete-btn i {
+    font-size: 18px;
+    color: #ff7b4b; /* Icon kleur voor de verwijderknop */
+}
+
+/* *** Modal Stijlen *** */
+.modal {
     display: none;
     position: fixed;
     top: 0;
@@ -275,86 +303,12 @@ main {
     width: 100%;
     height: 100%;
     background-color: white;
-    z-index: 100;
-    padding: 20px;
+    z-index: 1000;
     box-sizing: border-box;
-    overflow-y: auto; /* Zorg dat je kunt scrollen */
+    justify-content: center;
+    overflow-y: auto;
 }
 
-#personal-data-details .message-box {
-    background-color: #445580;
-    color: white;
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-}
-
-/* Details sectie voor standaardkaartjes (Personal Data) */
-#address-details {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: white;
-    z-index: 100;
-    padding: 20px;
-    box-sizing: border-box;
-    overflow-y: auto; /* Zorg dat je kunt scrollen */
-}
-
-/* Stijl voor de "Back"-knop in standaardkaartjes */
-#back-btn {
-    background-color: #5A50ED; /* Paarse kleur */
-    color: white;
-    padding: 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 60%; /* Maak de knop korter */
-    max-width: 200px; /* Maximale breedte */
-    text-align: center;
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-
-/* Stijl voor de "Back"-knop in standaardkaartjes */
-#back-btn-address {
-    background-color: #5A50ED; /* Paarse kleur */
-    color: white;
-    padding: 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 60%; /* Maak de knop korter */
-    max-width: 200px; /* Maximale breedte */
-    text-align: center;
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-/* Modal styling verifier*/
-#share-question-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%; /* Gebruik 100% in plaats van 100vh om het volledige scherm te vullen */
-    background-color: white; /* Maak de achtergrond wit */
-    z-index: 1000; /* Zorg dat de modal boven andere elementen ligt */
-    padding: 20px;
-    box-sizing: border-box;
-    justify-content: flex-start; /* Plaats inhoud bovenaan */
-}
-
-/* Inhoud van de modal verifier*/
 .modal-content {
     background-color: white;
     padding: 20px;
@@ -362,23 +316,27 @@ main {
     text-align: left;
     width: 90%;
     height: auto;
-    max-height: 90%; /* Zorg dat de modal niet hoger wordt dan het scherm */
+    max-height: 90%;
     box-sizing: border-box;
 }
 
 h2, h3 {
-    color: #152A62; /* Tekstkleur */
+    color: #152A62;
 }
 
 p {
     color: #152A62;
 }
 
-/* Knoppen styling */
-.button-container {
+.modal .button-container {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
+    position: relative; /* Overschrijft de absolute positionering van de algemene stijl */
+    left: auto;         /* Overschrijft de algemene left-stijl */
+    transform: none;    /* Verwijder transform */
+    width: auto;        /* Pas de breedte aan indien nodig */
+    margin-top: 40px;
 }
 
 .stop-button {
@@ -392,8 +350,8 @@ p {
 }
 
 .share-button {
-    background-color: #5A50ED; /* Paarse kleur */
-    color: white; /* Witte tekst */
+    background-color: #5A50ED;
+    color: white;
     padding: 10px 20px;
     border-radius: 5px;
     border: none;
@@ -405,11 +363,7 @@ p {
     background-color: #1e3a82;
 }
 
-.share-button:hover {
-    background-color: #1e3a82;
-}
-
-/* Welkomstscherm */
+/* *** Welkomstscherm Stijlen *** */
 #welcome-screen {
     display: flex;
     flex-direction: column;
@@ -418,8 +372,8 @@ p {
     justify-content: space-between;
     box-sizing: border-box;
     position: relative;
-    padding: 0; /* Specifiek voor het welkomstscherm */
-    overflow: hidden; /* Voorkom extra scrollbars */
+    padding: 0;
+    overflow: hidden;
 }
 
 .welcome-content {
@@ -427,31 +381,28 @@ p {
     flex-direction: column;
     align-items: center;
     width: 100%;
-    min-height: 80%; /* Zorgt dat de content minimaal de hele hoogte inneemt */
+    min-height: 80%;
 }
 
-/* Nieuwe container voor de tekst */
 .welcome-text {
-    padding: 20px 0; /* Voeg witruimte toe boven en onder de tekst */
+    padding: 20px 0;
     text-align: center;
     color: #152A62;
 }
 
-.welcome-text h1{
+.welcome-text h1 {
     margin-bottom: 10px;
     text-align: center;
     color: #152A62;
 }
 
-
-/* Achtergrondcontainer */
 .welcome-background {
     background-color: #F2F5FF;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
-    flex-grow: 0.5; /* Zorg dat de afbeelding de resterende ruimte inneemt */
+    flex-grow: 0.5;
 }
 
 .welcome-image {
@@ -465,7 +416,6 @@ p {
     height: auto;
 }
 
-/* Knop onderaan het scherm */
 #welcome-screen button {
     background-color: #5A50ED;
     color: white;
@@ -481,30 +431,82 @@ p {
     transform: translateX(-50%);
 }
 
-/* Pincode-scherm */
-#pin-screen {
+/* *** Pincode-inlogscherm Stijlen *** */
+#pin-inlog-screen {
     display: flex;
     flex-direction: column;
-    justify-content: start;
+    justify-content: flex-start;
     align-items: center;
-    height: 80vh;
+    height: 100vh;
+    padding: 10px;
+    width: 100%;
+    background-color: white;
+    z-index: 1000;
+}
+
+#pin-inlog-screen h2 {
+    text-align: center;
+    max-width: 100%;
+    margin-bottom: 20px;
+    font-weight: bold; /* Alleen h2 is bold */
+}
+
+#pin-inlog-screen p {
+    text-align: center;
+    max-width: 100%;
+    margin-bottom: 20px;
+    font-weight: normal; /* p heeft een normaal lettergewicht */
+}
+
+/* *** Pincode Bevestiging-scherm Stijlen *** */
+
+#pin-confirmation-screen-verifier {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    z-index: 1000;
     padding: 20px;
 }
 
-#pin-screen h2 {
-    text-align: center; /* Centreer de tekst */
-    max-width: 100%; /* Pas de breedte van de tekst aan */
-    margin-bottom: 20px; /* Voeg wat extra ruimte onder de tekst toe */
-}
-
-.pin-content {
+#pin-confirmation-screen-verifier p {
     text-align: center;
+    max-width: 100%;
+    margin-bottom: 20px;
+    font-weight: normal; /* p heeft een normaal lettergewicht */
 }
 
+
+
+
+
+#pin-confirmation-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    z-index: 1000;
+    padding: 20px;
+}
+
+/* Gemeenschappelijke .pin-input stijl voor beide schermen */
 .pin-input {
     display: flex;
     gap: 10px;
-    margin-top: 20px;
+    margin-bottom: 20px;
+    justify-content: center;
 }
 
 .pin-input input {
@@ -517,20 +519,24 @@ p {
     border-radius: 5px;
 }
 
-#submit-pin {
+/* Knopstijlen voor beide schermen */
+#submit-pin,
+.confirm-pin {
     background-color: #5A50ED;
     color: white;
     padding: 15px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    width: 100%;
-    max-width: 300px;
-    margin-top: 40px;
-    align-self: center; /* Centreer de knop horizontaal */
+    min-width: 250px;
+    text-align: center;
+    margin: 0 auto;
+    display: block;
 }
 
-/* Menu scherm */
+
+
+/* *** Menu en Activiteiten Stijlen *** */
 .menu-screen {
     position: fixed;
     top: 0;
@@ -538,7 +544,7 @@ p {
     width: 100%;
     height: 100%;
     background-color: white;
-    z-index: 1000;
+    z-index: 900;
     padding: 20px;
     box-sizing: border-box;
     overflow-y: auto;
@@ -552,20 +558,18 @@ p {
     margin: 20px 0;
 }
 
-/* Menu lijstitems */
 .menu-list li {
     display: flex;
     justify-content: space-between;
     padding: 15px;
     border-bottom: 1px solid #ccc;
     cursor: pointer;
-    color: #152A62; /* Donkerpaarse kleur voor tekst */
+    color: #152A62;
     font-size: 18px;
 }
 
-/* Zorg ervoor dat de tekstkleur van de iconen overeenkomt met de tekstkleur */
 .menu-list li span {
-    color: #152A62; /* Donkerpaarse kleur voor iconen en tekst */
+    color: #152A62;
 }
 
 .menu-logout {
@@ -579,14 +583,14 @@ p {
 }
 
 .back-btn {
-    background-color: #5A50ED; /* Paarse kleur */
-    color: white; /* Witte tekst */
+    background-color: #5A50ED;
+    color: white;
     padding: 15px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    width: 60%; /* Maak de knop korter */
-    max-width: 200px; /* Maximale breedte */
+    width: 60%;
+    max-width: 200px;
     text-align: center;
     position: fixed;
     bottom: 20px;
@@ -594,146 +598,141 @@ p {
     transform: translateX(-50%);
 }
 
-/* Activiteiten scherm */
 .activities-section {
-    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background-color: white;
-    z-index: 1000;
-    padding: 20px;
+    z-index: 900;
+    padding: 5px;
     box-sizing: border-box;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
+    flex-grow: 1; /* Voeg deze regel toe om de sectie uit te breiden */
+    margin-bottom: 80px;
 }
 
-/* Witruimte en scheidingslijn onder de titel "Activiteiten" */
 .activities-section h3 {
-    margin-bottom: 20px; /* Voeg witruimte onder de titel toe */
-    color: #152A62; /* Zorg dat de titel dezelfde kleur heeft als de activiteiten */
+    margin-bottom: 20px;
+    color: #152A62;
 }
 
-/* Scheidingslijn onder de titel "Activiteiten" */
 .activities-section .title-divider {
     width: 100%;
     height: 1px;
-    background-color: #152A62; /* Kleur van de scheidingslijn */
-    margin-bottom: 10px; /* Voeg wat ruimte onder de lijn toe */
+    background-color: #152A62;
+    margin-bottom: 10px;
 }
-
 
 .activities-section ul {
     list-style: none;
     padding: 0;
 }
 
-/* Stijl voor de scheidingslijn tussen activiteiten */
 .activity-divider {
     width: 100%;
     height: 1px;
     background-color: lightgrey;
-    margin: 10px 0; /* Voeg wat ruimte rondom de lijn toe */
+    margin: 10px 0;
 }
 
-/* Stijl voor de activiteitenlijstitems */
 .activities-section li {
     padding: 10px;
     color: #152A62;
     font-size: 16px;
-    line-height: 1.5; /* Voeg wat extra ruimte tussen de regels toe */
+    line-height: 1.5;
 }
 
-/* Container voor de achtergrond van de "Terug"-knop */
 .activities-footer {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: white; /* Maak de achtergrond wit */
-    height: 80px; /* 20px boven de knop + hoogte van de knop */
+    background-color: white;
+    height: 80px;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Lichte schaduw boven de achtergrond */
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
 }
 
-#pin-confirmation-screen {
+/* *** Machtiging sectie stijlen *** */
+
+.title-divider {
+    width: 100%;
+    height: 1px;
+    background-color: #152A62;
+    margin-bottom: 10px;
+}
+
+.machtiging-section {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    z-index: 900;
+    padding: 5px;
+    box-sizing: border-box;
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Centreer inhoud verticaal */
-    align-items: center; /* Centreer inhoud horizontaal */
-    position: fixed; /* Houd het scherm vast bovenop andere elementen */
+    flex-grow: 1;
+    margin-bottom: 80px;
+}
+
+.machtiging-section h3 {
+    margin-bottom: 20px;
+    color: #152A62;
+}
+
+/* *** Instellingen sectie stijlen *** */
+.instellingen-section {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    z-index: 900;
+    padding: 5px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    margin-bottom: 80px;
+}
+
+.instellingen-section h3 {
+    margin-bottom: 20px;
+    color: #152A62;
+}
+
+
+
+/* *** Success-scherm Stijlen *** */
+#success-screen {
+    display: none;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background-color: white;
     z-index: 1000;
-    padding: 20px;
-}
-
-.pin-input {
     display: flex;
-    gap: 10px; /* Ruimte tussen de inputvelden */
-    margin-bottom: 20px; /* Witruimte tussen pincodevelden en bevestigingsknop */
-}
-
-.pin-input input {
-    text-align: center;
-    font-size: 24px;
-    padding: 10px;
-    width: 50px;
-    height: 60px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.button-container {
-    display: flex; /* Gebruik flexbox om inhoud te centreren */
-    justify-content: center; /* Centreer de knop horizontaal */
-    width: 100%; /* Zorg ervoor dat de container de volledige breedte inneemt */
-    margin-top: 20px; /* Voeg wat ruimte boven de knop toe */
-}
-
-#confirm-pin {
-    background-color: #5A50ED;
-    color: white;
-    padding: 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    max-width: 200px; /* Zorg dat de knop niet te breed wordt */
-    text-align: center;
-    margin: 0 auto; /* Centreer de knop binnen de container */
-    display: block; /* Zorg ervoor dat de knop als een blok-element wordt weergegeven */
-}
-
-
-/* Success-scherm verifier */
-#success-screen {
-    display: none; /* Verberg standaard */
-    position: fixed; /* Zorg ervoor dat het bovenop andere elementen staat */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: white; /* Maak het scherm zichtbaar met een achtergrondkleur */
-    z-index: 1000; /* Zorg voor een hoge z-index om andere elementen te overtreffen */
-    display: flex; /* Gebruik flexbox voor centreren */
-    justify-content: space-between; /* Zorg voor ruimte tussen inhoud */
-    align-items: center; /* Centreer inhoud verticaal */
-    flex-direction: column; /* Stapel de inhoud verticaal */
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
     padding: 20px;
 }
 
 #success-screen h2 {
-    margin-bottom: 20px; /* Voeg witruimte onder de titel toe */
+    margin-bottom: 20px;
 }
 
-/* Knoppen-container onderaan het scherm */
 .button-container {
     position: absolute;
     bottom: 20px;
@@ -741,10 +740,9 @@ p {
     transform: translateX(-50%);
     display: flex;
     justify-content: space-between;
-    width: 90%; /* Pas breedte aan voor lay-out van de knoppen */
+    width: 90%;
 }
 
-/* Zie Activiteit-knop */
 #see-activity-btn {
     background-color: white;
     border: 2px solid #373EDE;
@@ -755,7 +753,6 @@ p {
     cursor: pointer;
 }
 
-/* Sluiten-knop verifier successcherm  */
 #close-success-btn {
     background-color: #373EDE;
     color: white;
@@ -766,75 +763,7 @@ p {
     cursor: pointer;
 }
 
-/* Issuer modal styling (vraagscherm) */
-#issuer-question-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: white;
-    z-index: 1000;
-    padding: 20px;
-    box-sizing: border-box;
-    justify-content: flex-start; /* Zorg ervoor dat de inhoud aan de bovenkant begint */
-    align-items: center;
-    flex-direction: column;
-    overflow-y: auto; /* Zorg ervoor dat er gescrold kan worden als er veel inhoud is */
-}
-
-/* Tekst in het vraagscherm */
-#issuer-question-modal p {
-    text-align: left;
-    margin: 5px 0; /* Algemene marge voor de tekstregels */
-}
-
-#issuer-question-modal h2 {
-    margin-bottom: 10px; /* Witruimte van 10px onder de titel */
-    font-weight: bold; /* Maak de tekst dikgedrukt */
-}
-
-/* Divider lijn */
-.divider {
-    width: 100%;
-    height: 1px;
-    background-color: lightgrey;
-    margin: 20px 0; /* Witruimte van 20px boven en onder de divider */
-}
-
-/* Knoppen styling voor het vraagscherm */
-#issuer-question-modal .button-container {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-}
-
-#stop-button-issuer {
-    background-color: white;
-    border: 2px solid #152A62;
-    color: #152A62;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-#save-button {
-    background-color: #5A50ED; /* Paarse kleur */
-    color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
-    border: none;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-#save-button:hover {
-    background-color: #1e3a82;
-}
-
-/* Issuer success-scherm styling */
+/* *** Issuer Success-scherm Stijlen *** */
 #issuer-success-screen {
     display: none;
     position: fixed;
@@ -845,48 +774,45 @@ p {
     background-color: white;
     z-index: 1000;
     display: flex;
-    justify-content: flex-start; /* Zorg ervoor dat de inhoud aan de bovenkant begint */
+    justify-content: flex-start;
     align-items: center;
     flex-direction: column;
     padding: 20px;
     box-sizing: border-box;
-    overflow-y: auto; /* Zorg ervoor dat er gescrold kan worden als er veel inhoud is */
+    overflow-y: auto;
 }
 
 #issuer-success-screen h2 {
-    margin-bottom: 10px; /* Witruimte van 10px onder de titel */
-    font-weight: bold; /* Maak de tekst dikgedrukt */
+    margin-bottom: 10px;
+    font-weight: bold;
     text-align: left;
 }
 
-/* Tekst in het success-scherm */
 #issuer-success-screen p {
     text-align: left;
-    margin: 5px 0; /* Algemene marge voor de tekstregels */
+    margin: 5px 0;
 }
 
-/* Kaartje in het success-scherm */
 #issuer-success-card {
     background-color: #E0F7FA;
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     margin-top: 20px;
-    width: 100%; /* Neem de volledige breedte van de container */
-    max-width: 400px; /* Maximale breedte van het kaartje */
+    width: 100%;
+    max-width: 400px;
     text-align: center;
 }
 
-/* Knoppen styling voor het success-scherm */
 #issuer-success-screen .button-container {
     display: flex;
-    justify-content: center; /* Centreer de knop */
+    justify-content: center;
     margin-top: 20px;
 }
 
 #close-issuer-success-btn {
-    width: 150px; /* Pas de breedte van de knop aan indien nodig */
-    background-color: #5A50ED; /* Paarse kleur */
+    width: 150px;
+    background-color: #5A50ED;
     color: white;
     padding: 10px 20px;
     border-radius: 5px;
@@ -896,15 +822,15 @@ p {
 }
 
 #close-issuer-success-btn:hover {
-    background-color: #1e3a82; /* Donkerdere kleur bij hover */
+    background-color: #1e3a82;
 }
 
-/* Nieuwe rdfci modal styling */
-#rdfci-modal {
+/* *** RDFCI Modal Stijlen *** */
+#rdfci-modal #rdfcv-modal{
     display: none;
     position: fixed;
     display: flex;
-    justify-content: flex-start; /* Zorg ervoor dat de inhoud aan de bovenkant begint */
+    justify-content: flex-start;
     top: 0;
     left: 0;
     width: 100%;
@@ -926,22 +852,13 @@ p {
     margin-top: 20px;
 }
 
-/* Divider styling */
-.divider {
-    height: 1px;
-    background-color: #ccc;
-    margin: 10px 0;
-}
-
-/* Stijling voor de sterke (bold) teksten */
 #rdfci-modal p strong {
     font-weight: bold;
 }
 
-/* Kaartcontainer met een omlijning */
 .card-container {
     background-color: white;
-    border: 1px solid #ccc; /* Add border to visualize the card */
+    border: 1px solid #ccc;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin: 16px 0;
@@ -949,11 +866,10 @@ p {
     overflow: hidden;
 }
 
-/* Balk aan de bovenkant van het kaartje */
 .card-header {
-    height: 40px; /* Hoogte van de balk */
+    height: 40px;
     width: 100%;
-    background-color: #0072C6; /* Kleur van de balk, pas aan zoals gewenst */
+    background-color: #0072C6;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
     position: absolute;
@@ -961,18 +877,66 @@ p {
     left: 0;
 }
 
-/* Inhoud van de kaart */
 .card-content {
-    padding: 56px 16px 16px 16px; /* Zorg voor ruimte onder de header */
+    padding: 56px 16px 16px 16px;
 }
 
-/* Titel van de kaart */
 .card-title {
     font-weight: bold;
     margin-bottom: 8px;
 }
 
-/* Details van de kaart */
 .card-details p {
     margin: 4px 0;
+}
+
+
+/* *** Navigatiebalk Stijlen *** */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 50%; /* Begin in het midden van het scherm */
+    transform: translateX(-50%); /* Centreer de navbar door 50% van de breedte terug te schuiven */
+    width: 100%; /* Zorg dat de navbar zich volledig aanpast aan kleinere schermen */
+    max-width: 500px; /* Maximaal 500px breedte zoals de rest van de content */
+    height: 60px;
+    background-color: #FFFFFF;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #e0e0e0;
+    z-index: 1000;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #888;
+    text-decoration: none;
+    font-size: 12px;
+    transition: color 0.3s ease;
+    flex: 1; /* Deze regel zorgt ervoor dat alle knoppen dezelfde breedte krijgen */
+}
+
+.nav-item i {
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.nav-item.active {
+    color: #5f5f5f;
+}
+
+.nav-item.active i {
+    color: #4A90E2;
+}
+
+.nav-item.active span {
+    color: #4A90E2; /* Maak de tekst blauw als de knop actief is */
+}
+
+.nav-item:hover {
+    color: #646464;
 }
