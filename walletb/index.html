@@ -43,25 +43,74 @@
 
 <!-- Scan scherm wordt pas zichtbaar als de QR-scan knop wordt ingedrukt -->
 <section class="add-card-screen" id="add-card-screen" style="display: none;">
-    <div class="details-header">
-      <button class="close-btn" id="close-add-card">
-        <i class="fas fa-arrow-left"></i>
-      </button>
-    </div>
+  <div class="details-header">
+    <button class="close-btn" id="close-add-card">
+      <i class="fas fa-arrow-left"></i>
+    </button>
+  </div>
 
   <div class="scan-section" id="scan-section">
-      <div class="scan-container">
-          <div class="scan-btn-container">
-              <button class="scan-btn" id="scan-button">
-                  <i class="fas fa-qrcode qr-logo"></i> <!-- Gebruik bestaand FontAwesome QR-code icoon -->
-              </button>
-          </div>
-          <div class="scan-text">Scan QR code</div>
+    <div class="scan-container">
+      <div class="scan-btn-container">
+        <button class="scan-btn" id="scan-button">
+          <i class="fas fa-qrcode qr-logo"></i> <!-- Gebruik bestaand FontAwesome QR-code icoon -->
+        </button>
       </div>
-      <div id="reader" style="display: none;"></div> <!-- Camerascherm -->
-      <button class="close-scan-btn" id="close-scan-button" style="display: none;">Scannen afsluiten</button>
+      <div class="scan-text">Scan QR code</div>
+    </div>
+    <div id="reader" style="display: none;"></div> <!-- Camerascherm -->
+    <button class="close-scan-btn" id="close-scan-button" style="display: none;">Scannen afsluiten</button>
+  </div>
+
+  <!-- Toegevoegde knoppen onder de QR-code knop -->
+  <div class="button-list">
+    <!-- Eerste knop: National ID -->
+    <button class="card-button checked">
+      <div class="button-content">
+        <i class="fas fa-id-card icon-left"></i>
+        <span class="button-text">National ID</span>
+        <i class="fas fa-check icon-right"></i>
+      </div>
+    </button>
+
+    <!-- Tweede knop: Adres -->
+    <button class="card-button checked">
+      <div class="button-content">
+        <i class="fas fa-home icon-left"></i>
+        <span class="button-text">Adres</span>
+        <i class="fas fa-check icon-right"></i>
+      </div>
+    </button>
+
+    <!-- Derde knop: Rijbewijs -->
+    <button class="card-button">
+      <div class="button-content">
+        <i class="fas fa-car icon-left"></i>
+        <span class="button-text">Rijbewijs</span>
+        <i class="fas fa-plus icon-right"></i>
+      </div>
+    </button>
+
+    <!-- Vierde knop: Diploma's -->
+    <button class="card-button">
+      <div class="button-content">
+        <i class="fas fa-graduation-cap icon-left"></i>
+        <span class="button-text">Diploma's</span>
+        <i class="fas fa-plus icon-right"></i>
+      </div>
+    </button>
+
+    <!-- Vijfde knop: VOG -->
+    <button class="card-button">
+      <div class="button-content">
+        <i class="fas fa-file-contract icon-left"></i>
+        <span class="button-text">VOG</span>
+        <i class="fas fa-plus icon-right"></i>
+      </div>
+    </button>
   </div>
 </section>
+
 
   <!-- *** Wallet-scherm *** -->
   <section id="wallet-screen" style="display: none;">
