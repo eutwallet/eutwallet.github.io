@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Onderzoeksagenda</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* Algemene styling voor de body */
+    body {
+      font-family: 'Helvetica', sans-serif;
+      color: #333;
+      background-color: #ffffff;
+      margin: 0;
+      padding: 20px;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+    }
+
+    h1, h2, h3 {
+      color: #152A62;
+    }
+
+    p {
+      font-size: 16px;
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    ul li {
+      margin-bottom: 10px;
+      text-align: left;
+    }
+
+    /* Algemene knop styling */
+    a {
+      font-size: 16px;
+      color: #385168;
+      text-decoration: none;
+      background-color: #F0F4F8;
+      padding: 12px 20px;
+      border-radius: 8px;
+      display: inline-block;
+      text-align: left;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      margin-bottom: 15px;
+      min-width: 500px;
+    }
+
+    a:hover {
+      background-color: #e0e7ed;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    a i {
+      margin-right: 8px;
+    }
+
+    /* Styling voor secties */
+    .sectie {
+      padding: 20px;
+      border-radius: 8px;
+      background-color: #fefeff;
+      margin-bottom: 30px;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #ccc;
+    }
+
+    .sectie h2, h3 {
+      color: #385168;
+      margin-bottom: 5px;
+    }
+
+    .sectie p {
+        margin-top: 0px;
+    }
+
+    .sectie ul {
+      padding-left: 0;
+      list-style-type: none;
+    }
+
+    .sectie ul li {
+      margin-bottom: 10px;
+      text-align: left;
+    }
+
+    hr {
+      border: 0;
+      height: 1px;
+      background: #ccc;
+      margin-bottom: 20px;
+    }
+
+    strong {
+      font-weight: bold;
+    }
+
+    .collapsible-content {
+      display: none;
+      overflow: hidden;
+      transition: max-height 0.5s ease;
+    }
+
+    .collapsible-content.expanded {
+      display: block;
+    }
+
+    .toggle-btn {
+      width: auto;
+      text-align: center;
+      float: right;
+      padding: 10px 20px;
+      background-color: #87a2bb;
+      color: #fff;
+      border-radius: 5px;
+      cursor: pointer;
+      display: inline-block;
+      margin-top: 10px;
+      width: fit-content;
+      align-self: flex-end;
+      min-width: unset;
+    }
+
+    .toggle-btn:hover {
+      background-color: #6f8ea2;
+    }
+
+    .toggle-btn-bottom {
+      width: auto;
+      text-align: center;
+      float: right;
+      padding: 10px 20px;
+      background-color: #5b7996;
+      color: #fff;
+      border-radius: 5px;
+      cursor: pointer;
+      display: none;
+      margin-top: 10px;
+      width: fit-content;
+      min-width: unset;
+    }
+
+    .toggle-btn.expanded {
+      background-color: #4d6e85; /* Kleuraanpassing bij uitklappen */
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 10px;
+        max-width: 100%;
+      }
+
+      a {
+        min-width: unset;
+        width: 100%;
+        box-sizing: border-box;
+        display: block;
+        text-align: left;
+      }
+
+      .toggle-btn, .toggle-btn-bottom {
+        width: fit-content;
+        text-align: center;
+      }
+
+      .sectie {
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Onderzoeksagenda</h1>
+    <h2>Quafilied Electronic Attesations of Attributes</h2>
+    <hr>
+    <p><strong>Doel</strong><br>
+    Deze onderzoeksagenda richt zich op onderzoek naar attributen vanuit verschillende perspectieven.</p>
+  
+    <!-- Onderzoeksthema 1 -->
+    <section class="sectie">
+      <h2>1. Ontsluiting bronnen</h2>
+      <p>Hoe kunnen authentieke bronnen op een gestandaardiseerde manier worden ontsloten?</p>
+      <a class="toggle-btn" onclick="toggleSection(1)">Klap uit <i class="fas fa-chevron-down"></i></a>
+      <div class="collapsible-content" id="section-1">
+        <ul>
+          <li>Welke uitdagingen zijn er voor authentieke bronnen en geliëerde stakeholders?</li>
+          <li>Welke oplossingsrichtingen zijn voorhanden en welke onderzovragen moeten worden beantwoord?</li>
+          <li>Welke governance is nodig voor het proces?</li>
+          <li>Wat zijn de veiligheidsvereisten voor cross-border toepassingen?</li>
+        </ul>
+        <a class="toggle-btn-bottom" onclick="toggleSection(1)">Klap in <i class="fas fa-chevron-up"></i></a>
+      </div>
+    </section>
+
+    <!-- Onderzoeksthema 2 -->
+    <section class="sectie">
+      <h2>2. Interactiepatroon: Op de hoogte stellen natuurlijk persoon</h2>
+      <p>Welke patronen zijn er om een natuurlijk persoon op de hoogte te stellen van een verzoek tot gegevens?</p>
+      <a class="toggle-btn" onclick="toggleSection(2)">Klap uit <i class="fas fa-chevron-down"></i></a>
+      <div class="collapsible-content" id="section-2">
+        <ul>
+          <li>Welke patronen zijn mogelijk?</li>
+          <li>Welke patronen verkleinen social engineering?</li>
+          <li>Welke patronen vergroten gebruiksvriendelijkheid?</li>
+          <li>...</li>
+        </ul>
+        <a class="toggle-btn-bottom" onclick="toggleSection(2)">Klap in <i class="fas fa-chevron-up"></i></a>
+      </div>
+    </section>
+
+    <!-- Onderzoeksthema 3 -->
+    <section class="sectie">
+      <h2>3. Interactiepatroon: Doorverwijzing natuurlijk persoon naar aanbieder attribuut</h2>
+      <p>Welke patronen zijn er om de natuurlijk persoon door te verwijzen naar een uitgever en hoe wordt de integriteit en betrouwbaarheid van de doorverwijzing gewaarborgd?</p>
+      <a class="toggle-btn" onclick="toggleSection(3)">Klap uit <i class="fas fa-chevron-down"></i></a>
+      <div class="collapsible-content" id="section-3">
+        <ul>
+          <li>Welke patronen zijn er?</li>
+          <li>Welke technische standaardisatie is nog?</li>
+          <li>Welke patronen verkleinen social engineering?</li>
+          <li>...</li>
+        </ul>
+        <a class="toggle-btn-bottom" onclick="toggleSection(3)">Klap in <i class="fas fa-chevron-up"></i></a>
+      </div>
+    </section>
+    
+    <!-- Onderzoeksthema 4 -->
+    <section class="sectie">
+      <h2>4. Interactiepatroon: Uitgestelde uitgifte attributen</h2>
+      <p>Welke patronen zijn er om de natuurlijk persoon op de hoogte te stellen bij een situatie waarbij uitgifte van het attribuut niet per direct mogelijk is?</p>
+      <a class="toggle-btn" onclick="toggleSection(4)">Klap uit <i class="fas fa-chevron-down"></i></a>
+      <div class="collapsible-content" id="section-4">
+        <ul>
+          
+          <li>Welke patronen zijn mogelijk?</li>
+          <li>Welke patronen zijn gebruiksvriendelijk?</li>
+          <li>In hoeverre kunnen deze dienst doen qua integriteit en betrouwbaarheid?</li>
+        </ul>
+        <a class="toggle-btn-bottom" onclick="toggleSection(4)">Klap in <i class="fas fa-chevron-up"></i></a>
+      </div>
+    </section>
+<hr>
+    <!-- Praktijkvoorbeeld Identificatieplicht werkgever -->
+    <section class="sectie">
+      <h2 style="color: green;">Praktijktest Identificatieplicht werkgever</h2>
+      <p>Welke inzichten volgen uit de praktijktest Identificatieplicht werkgever?</p>
+      <a class="toggle-btn" onclick="toggleSection(5)">Klap uit <i class="fas fa-chevron-down"></i></a>
+      <div class="collapsible-content" id="section-5">
+        <ul>
+          <li>Juridische mogelijkheid, verplicht papieren of gekopieerd bewijs aanleveren?</li>
+          <li>Proximity flow</li>
+          <li>Geldigheid paspoort</li>
+          <li>Verificatie van lengte</li>
+          <li>Cross-border en andere nationaliteiten</li>
+          <li>Uitzondering Uitzendbureaus</li>
+          <li>Proces niet-ingezetenen</li>
+        </ul>
+        <a class="toggle-btn-bottom" onclick="toggleSection(5)">Klap in <i class="fas fa-chevron-up"></i></a>
+      </div>
+    </section>
+
+    <!-- Praktijkvoorbeeld VOG -->
+    <section class="sectie">
+      <h2 style="color: green;">Praktijktest VOG</h2>
+      <p>Welke inzichten volgen uit het voorbeeld met VOG?</p>
+      <a class="toggle-btn" onclick="toggleSection(6)">Klap uit <i class="fas fa-chevron-down"></i></a>
+      <div class="collapsible-content" id="section-6">
+        <ul>
+          <li>Uitgestelde uitgifte</li>
+          <li>Betaling in de flow</li>
+          <li>Delen met meerdere werkgevers en organisaties</li>
+          <li>Selective disclosure</li>
+        </ul>
+        <a class="toggle-btn-bottom" onclick="toggleSection(6)">Klap in <i class="fas fa-chevron-up"></i></a>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    function toggleSection(sectionId) {
+      const content = document.getElementById('section-' + sectionId);
+      const button = content.previousElementSibling;
+      const bottomButton = content.querySelector('.toggle-btn-bottom');
+
+      if (content.classList.contains('expanded')) {
+        content.classList.remove('expanded');
+        button.style.display = 'inline-block'; // Toon de "Klap uit" knop
+        bottomButton.style.display = 'none';   // Verberg de "Klap in" knop
+      } else {
+        content.classList.add('expanded');
+        button.style.display = 'none';         // Verberg de "Klap uit" knop
+        bottomButton.style.display = 'inline-block'; // Toon de "Klap in" knop
+      }
+    }
+</script>
+
+</body>
+</html>
