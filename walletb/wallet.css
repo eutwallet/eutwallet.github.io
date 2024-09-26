@@ -976,3 +976,71 @@ p {
     flex-direction: column;
     flex-grow: 1; /* Zorg dat de sectie zich uitbreidt */
 }
+
+
+/* Stijl voor de lijst van knoppen */
+.button-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px; /* Voeg wat marge toe boven de knoppen */
+  }
+  
+  /* Stijl voor individuele knoppen */
+  .card-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(100% - 40px); /* Houd rekening met padding/marge */
+    max-width: 400px; /* Optionele maximale breedte */
+    height: 60px;
+    background-color: #fff;
+    border: none;
+    border-radius: 8px;
+    margin-bottom: 10px; /* Witruimte tussen de knoppen */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+  }
+  
+  /* Stijl voor de groene achtergrond bij geselecteerde knoppen */
+  .card-button.checked {
+    background-color: #E6F4EA; /* Zeer lichte groene achtergrond */
+  }
+  
+  /* Stijl voor de inhoud binnen de knop */
+  .button-content {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0 15px;
+  }
+  
+  /* Stijl voor het linker icoon */
+  .icon-left {
+    font-size: 24px;
+    color: #333;
+  }
+  
+  /* Stijl voor de knoptekst */
+  .button-text {
+    flex: 1;
+    margin-left: 15px;
+    font-size: 18px;
+    text-align: left;
+    color: #333;
+  }
+  
+  /* Stijl voor het rechter icoon */
+  .icon-right {
+    font-size: 20px;
+    color: #333;
+  }
+  
+  /* Kleur aanpassingen voor vinkje en plusje */
+  .card-button.checked .icon-right {
+    color: green; /* Kleur voor het vinkje */
+  }
+  
+  .card-button .icon-right {
+    color: #333; /* Kleur voor het plusje */
+  }
