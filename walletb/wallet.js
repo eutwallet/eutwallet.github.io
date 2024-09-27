@@ -78,17 +78,18 @@ const rdfcvStopButton = document.getElementById('rdfcv-stop-button');
 
 // *** Veldmapping Object ***
 const fieldMapping = {
-  gn: 'First name',
-  sn: 'Surname',
-  bd: 'Date of birth',
-  bsn: 'Citizen service number (BSN)',
+  gn: 'Voornaam',
+  sn: 'Achternaam',
+  bd: 'Geboortedatum',
+  bsn: 'Burgerservicenummer (BSN)',
   omv: 'Organisatiemachtiging VOG',
   vog: 'Verklaring Omtrent Gedrag (VOG)',
   nat: 'Nationaliteit',
   va: 'Geldigheid paspoort',
   a: {
-    '12t': 'opslag: 12 maanden, gedeeld met 3den: nee',
-    '60t': 'opslag: 60 maanden, gedeeld met 3den: nee'
+    '12t': 'opslag: 12 maanden, gedeeld met derden: nee',
+    '60t': 'opslag: 60 maanden, gedeeld met derden: nee',
+    'w': 'Bewaarplicht en datadeling met derden volgens wettelijke richtlijn'
   },
 };
 
@@ -757,10 +758,10 @@ closeIssuerSuccessBtn.addEventListener('click', () => {
 function getFieldValue(field) {
   // Mapping van veldnamen naar specifieke waarden in de HTML van het "Personal data" kaartje
   const fieldMappings = {
-      gn: "First name",
-      sn: "Last name",
-      bd: "Date of birth",
-      bsn: "Citizen service number (BSN)"
+      gn: "Voornaam",
+      sn: "Achternaam",
+      bd: "Geboortedatum",
+      bsn: "Burgerservicenummer (BSN)"
   };
 
   // Haal de waarde uit het "Personal data" kaartje (HTML)
@@ -794,8 +795,8 @@ function getFieldValue(field) {
   return 'Niet gevonden';
 }
 
-// rdfci vullen
 
+// rdfci vullen
 function populateRdfciModal(data) {
   // Fill in the fixed parts
   document.getElementById('rdfci-name').innerText = data.name || 'Onbekend kaartje';
@@ -878,12 +879,9 @@ function populateRdfciModal(data) {
       case 'Organisatiemachtiging VOG':
         cardHeader.style.backgroundColor = '#5A50ED'; 
         break;
-      // Add more cases as needed
       default:
         cardHeader.style.backgroundColor = '#0072C6'; // Default color
     }
-    // Optionally set the header color based on the card name or type
-    // cardHeader.style.backgroundColor = '#0072C6'; // Adjust as needed
 
     // Create card content container
     const cardContent = document.createElement('div');
@@ -899,12 +897,26 @@ function populateRdfciModal(data) {
     cardDetails.className = 'card-details';
 
     if (cardInfo.type === 'localStorage') {
-      // Add all details from local storage card
+      // Add all details from local storage card using structured divs for alignment
       for (let key in cardInfo.data.data) {
         if (cardInfo.data.data.hasOwnProperty(key)) {
-          const detailElement = document.createElement('p');
-          detailElement.textContent = `${key}: ${cardInfo.data.data[key]}`;
-          cardDetails.appendChild(detailElement);
+          const detailRow = document.createElement('div');
+          detailRow.className = 'detail-row'; // Class for styling
+
+          const labelDiv = document.createElement('div');
+          labelDiv.className = 'label';
+          labelDiv.textContent = `${key}:`;
+
+          const valueDiv = document.createElement('div');
+          valueDiv.className = 'value';
+          valueDiv.textContent = cardInfo.data.data[key];
+
+          // Append label and value divs to the detail row
+          detailRow.appendChild(labelDiv);
+          detailRow.appendChild(valueDiv);
+
+          // Append the row to the card details
+          cardDetails.appendChild(detailRow);
         }
       }
     } else if (cardInfo.type === 'standardCard') {
@@ -913,10 +925,23 @@ function populateRdfciModal(data) {
       elements.forEach(element => {
         const fieldLabel = element.innerText.split(':')[0];
         if (!cardInfo.fields || cardInfo.fields.includes(fieldLabel)) {
-          const detailElement = document.createElement('p');
-          // Remove bold formatting by using textContent
-          detailElement.textContent = element.textContent;
-          cardDetails.appendChild(detailElement);
+          const detailRow = document.createElement('div');
+          detailRow.className = 'detail-row'; // Class for styling
+
+          const labelDiv = document.createElement('div');
+          labelDiv.className = 'label';
+          labelDiv.textContent = `${fieldLabel}:`;
+
+          const valueDiv = document.createElement('div');
+          valueDiv.className = 'value';
+          valueDiv.textContent = element.innerText.split(':')[1].trim();
+
+          // Append label and value divs to the detail row
+          detailRow.appendChild(labelDiv);
+          detailRow.appendChild(valueDiv);
+
+          // Append the row to the card details
+          cardDetails.appendChild(detailRow);
         }
       });
     }
@@ -935,12 +960,15 @@ function populateRdfciModal(data) {
 
   // Agreement processing (always add under the heading "Overeenkomst")
   if (data.a) {
+    console.log('Data.a:', data.a);  // Controleer de waarde van data.a
+    console.log('Mapped value:', fieldMapping.a[data.a]);  // Controleer de gemapte waarde
     const agreementFields = data.a.split(', ').map(agreement => fieldMapping.a[agreement] || agreement).join(', ');
     document.getElementById('rdfci-agreement').innerText = agreementFields;
   } else {
     document.getElementById('rdfci-agreement').innerText = 'Geen overeenkomst gevonden.';
   }
 }
+
 
 // RFCV vraagscherm vullen
 // RFCV vraagscherm vullen
@@ -1039,12 +1067,26 @@ function populateRdfcvModal(data) {
     cardDetails.className = 'card-details';
 
     if (cardInfo.type === 'localStorage') {
-      // Voeg alle details van het kaartje toe uit local storage
+      // Voeg alle details van het kaartje toe uit local storage met gestructureerde divs voor uitlijning
       for (let key in cardInfo.data.data) {
         if (cardInfo.data.data.hasOwnProperty(key)) {
-          const detailElement = document.createElement('p');
-          detailElement.textContent = `${key}: ${cardInfo.data.data[key]}`;
-          cardDetails.appendChild(detailElement);
+          const detailRow = document.createElement('div');
+          detailRow.className = 'detail-row'; // Class for styling
+
+          const labelDiv = document.createElement('div');
+          labelDiv.className = 'label';
+          labelDiv.textContent = `${key}:`;
+
+          const valueDiv = document.createElement('div');
+          valueDiv.className = 'value';
+          valueDiv.textContent = cardInfo.data.data[key];
+
+          // Voeg label en waarde toe aan de rij
+          detailRow.appendChild(labelDiv);
+          detailRow.appendChild(valueDiv);
+
+          // Voeg de rij toe aan de kaartdetails
+          cardDetails.appendChild(detailRow);
         }
       }
     } else if (cardInfo.type === 'standardCard') {
@@ -1053,9 +1095,23 @@ function populateRdfcvModal(data) {
       elements.forEach(element => {
         const fieldLabel = element.innerText.split(':')[0];
         if (!cardInfo.fields || cardInfo.fields.includes(fieldLabel)) {
-          const detailElement = document.createElement('p');
-          detailElement.textContent = element.textContent;
-          cardDetails.appendChild(detailElement);
+          const detailRow = document.createElement('div');
+          detailRow.className = 'detail-row'; // Class for styling
+
+          const labelDiv = document.createElement('div');
+          labelDiv.className = 'label';
+          labelDiv.textContent = `${fieldLabel}:`;
+
+          const valueDiv = document.createElement('div');
+          valueDiv.className = 'value';
+          valueDiv.textContent = element.innerText.split(':')[1].trim();
+
+          // Voeg label en waarde toe aan de rij
+          detailRow.appendChild(labelDiv);
+          detailRow.appendChild(valueDiv);
+
+          // Voeg de rij toe aan de kaartdetails
+          cardDetails.appendChild(detailRow);
         }
       });
     }
@@ -1071,6 +1127,8 @@ function populateRdfcvModal(data) {
 
   // Agreement verwerken
   if (data.a) {
+    console.log('Data.a:', data.a);  // Controleer de waarde van data.a
+    console.log('Mapped value:', fieldMapping.a[data.a]);  // Controleer de gemapte waarde
     const agreementFields = data.a.split(', ').map(agreement => fieldMapping.a[agreement] || agreement).join(', ');
     document.getElementById('rdfcv-agreement').innerText = agreementFields;
   } else {
