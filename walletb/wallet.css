@@ -1044,3 +1044,22 @@ p {
   .card-button .icon-right {
     color: #333; /* Kleur voor het plusje */
   }
+
+
+  .detail-row {
+    display: grid;
+    grid-template-columns: 150px 1fr; /* Eerste kolom (labels) krijgt vaste breedte, tweede kolom (waarden) neemt de rest */
+    grid-gap: 10px; /* Ruimte tussen de kolommen */
+    margin-bottom: 10px; /* Ruimte tussen de rijen */
+    font-size: small;
+  }
+  
+  .label {
+    font-weight: bold; /* Labels vetgedrukt */
+    text-align: left; /* links uitlijnen zodat ze netjes naast de waarden staan */
+    padding-right: 10px; /* Wat ruimte tussen het label en de waarde */
+  }
+  
+  .value {
+    text-align: left; /* Waarden links uitlijnen */
+  }
