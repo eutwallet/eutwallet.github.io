@@ -76,20 +76,24 @@ const rdfcvStopButton = document.getElementById('rdfcv-stop-button');
 
 // *** Veldmapping Object ***
 const fieldMapping = {
-  gn: 'First name',
-  sn: 'Surname',
-  bd: 'Date of birth',
-  bsn: 'Citizen service number (BSN)',
+  gn: 'Voornaam',
+  sn: 'Achternaam',
+  bd: 'Geboortedatum',
+  bsn: 'Burgerservicenummer (BSN)',
   omv: 'Organisatiemachtiging VOG',
   vog: 'Verklaring Omtrent Gedrag (VOG)',
   nat: 'Nationaliteit',
   va: 'Geldigheid paspoort',
+  UWV: 'Uitvoeringsinstituut Werknemersverzekeringen (UWV)',
+  BKR: 'Bureau Krediet Registratie (BKR)',
+  BD: 'Belastingdienst',
+  SVB: 'Sociale Verzekeringsbank (SVB)',
   a: {
-    '12t': 'opslag: 12 maanden, gedeeld met 3den: nee',
-    '60t': 'opslag: 60 maanden, gedeeld met 3den: nee'
-  },
+    '12t': 'opslag: 12 maanden, gedeeld met derden: nee',
+    '60t': 'opslag: 60 maanden, gedeeld met derden: nee',
+    'w': 'Bewaarplicht en datadeling met derden volgens wettelijke richtlijn'
+  }
 };
-
 
 let html5QrCode = null; // We zullen de QR-code scanner hier initialiseren
 let credentials = [];
