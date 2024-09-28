@@ -1336,6 +1336,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // Functie om de CSAS Modal te vullen met de juiste gegevens uit de QR-code
 function populateCsasModal(data) {
+  // Sla de CSAS data op voor later gebruik
+  window.currentCsasData = data;
+
   // Toon de naam van de verifier
   csasRequester.textContent = data.requester;
 
@@ -1391,7 +1394,6 @@ function populateCsasModal(data) {
   }
 }
 
-// Functie om CSAS credentials op te slaan in de wallet
 function saveCsasCredentials(data) {
   // Voor elk kaartje in de csas data, voeg een nieuw credential toe
   data.csas.forEach(item => {
@@ -1417,6 +1419,12 @@ function saveCsasCredentials(data) {
 
   // Sla de credentials op in de local storage
   saveCredentials();
+
+  // **Roep displayCredentials aan om de wallet bij te werken**
+  displayCredentials();
+
+  // Optioneel: Log de credentials voor debugging
+  console.log("Credentials na opslaan:", credentials);
 }
 
 // Aangepaste pincode bevestigingslogica voor CSAS
@@ -1509,12 +1517,16 @@ function goToCsasSuccessScreen() {
   addCardScreen.style.display = 'none';
 
   // Close knop logica voor het sluiten van het successcherm
-  closeCsasSuccessBtn.onclick = () => {
-    csasSuccessScreen.style.display = 'none'; // Verberg het successcherm
-    addCardScreen.style.display = 'none'; // Verberg het add-card scherm
-    walletScreen.style.display = 'block'; // Toon het wallet-scherm
-    bottomNav.style.display = 'flex'; // Toon de navigatiebalk onderaan opnieuw
-  };
+closeCsasSuccessBtn.onclick = () => {
+  csasSuccessScreen.style.display = 'none'; // Verberg het successcherm
+  addCardScreen.style.display = 'none'; // Verberg het add-card scherm
+  walletScreen.style.display = 'block'; // Toon het wallet-scherm
+  bottomNav.style.display = 'flex'; // Toon de navigatiebalk onderaan opnieuw
+
+  // **Laad de credentials opnieuw en werk de weergave bij**
+  loadCredentials(); // Laad credentials uit de local storage
+  displayCredentials(); // Werk de wallet-weergave bij
+};
 }
 
 
