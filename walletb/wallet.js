@@ -1583,3 +1583,64 @@ function saveCsasShareAction(data) {
   });
   saveCredentials();
 }
+
+
+// in de add card catalogus een vog ophalen
+document.addEventListener('DOMContentLoaded', function () {
+  const cardButtons = document.querySelectorAll('.card-button');
+
+  cardButtons.forEach(button => {
+    const buttonTextElement = button.querySelector('.button-text');
+    if (buttonTextElement && buttonTextElement.textContent.includes("VOG")) {
+      button.addEventListener('click', function () {
+        // VOG gegevens ophalen alsof deze via QR-code zijn gescand
+        const vogData = {
+          "Issuer": true,
+          "name": "Verklaring Omtrent Gedrag (VOG)",
+          "issuedBy": "Justis",
+          "LEID": "NL_KVK_27378698",
+          "Issued_Date": "2023-09-17",
+          "Issued_to_subject": "Willeke Liselotte de Bruijn",
+          "Algemeen_profiel": "4,5,6,7",
+          "Specifiek_profiel": "55",
+          "Attestation_Trust_Type": "QEAA",
+          "rdfci": ["gn", "sn", "bd", "bsn"],
+          "a": "12t",
+          "t": "w"
+        };
+
+        // Vul het RDFCI modal met de gegevens
+        populateRdfciModal(vogData);
+
+        // Toon het RDFCI modal
+        rdfciModal.style.display = 'flex';
+
+        rdfciAcceptButton.onclick = () => {
+          // Voeg de VOG gegevens toe aan de wallet
+          const timestamp = new Date().toLocaleString();
+
+          credentials.push({
+            name: vogData.name,
+            issuedBy: vogData.issuedBy,
+            actionTimestamp: timestamp,
+            isShareAction: false,
+            data: vogData
+          });
+
+          saveCredentials();
+
+          // Toon het issuer success-scherm
+          goToIssuerSuccessScreen(vogData.name, vogData.issuedBy);
+
+          // Sluit het RDFCI modal
+          rdfciModal.style.display = 'none';
+        };
+
+        rdfciStopButton.onclick = () => {
+          // Sluit het RDFCI modal
+          rdfciModal.style.display = 'none';
+        };
+      });
+    }
+  });
+});
