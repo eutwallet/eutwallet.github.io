@@ -46,6 +46,7 @@ h4 {
     margin-top: 20px;
     display: flex;
     justify-content: center; /* Zorgt ervoor dat de knoppen horizontaal gecentreerd zijn */
+    margin-bottom: 40px;
 }
 
 button.prev, button.next {
