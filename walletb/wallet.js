@@ -308,8 +308,8 @@ const cardStyles = {
     textColor: '#D35400'
   },
   'verklaring omtrent gedrag (vog)': {
-    iconClass: 'fas fa-file-contract',
-    iconColor: '#00588E',
+    imagePath: 'justislogo.svg',
+    iconColor: null,
     textColor: '#00588E'
   },
   // Voeg meer kaartstijlen toe indien nodig
