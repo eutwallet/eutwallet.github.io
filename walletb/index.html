@@ -654,16 +654,30 @@
     </div>
   </section>
 
-  <!-- *** CSAS Modal Scherm voor Gegevens Ophalen, Opslaan en Delen *** -->
+ <!-- *** CSAS Modal Scherm voor Gegevens Ophalen, Opslaan en Delen *** -->
 <div id="csas-modal" class="modal" style="display: none;">
-  <h2>Wilt u onderstaande gegevens ophalen, opslaan in uw wallet en delen met <span id="csas-requester"></span>?</h2>
+  <h2 style="text-align: left;">Wilt u onderstaande gegevens<br>
+    ophalen bij de uitgever,<br> 
+    opslaan in uw wallet en <br>
+    delen met <span id="csas-requester"></span>?</h2>
+  <div class="divider"></div>
   <!-- Hier wordt de naam van de verifier (requester) weergegeven -->
   <div id="csas-details-container"></div>
   <!-- Container voor alle veldnamen die worden opgevraagd -->
   <div class="divider"></div>
   <!-- Een scheidingslijn voor duidelijkheid tussen secties -->
-  <p id="csas-agreement"></p>
-  <!-- Hier wordt de overeenkomst weergegeven, bijvoorbeeld opslagduur en datadeling -->
+
+  <!-- Reden voor verzoek, links uitgelijnd -->
+  <p class="left-aligned"><strong>Reden voor dit verzoek:</strong></p>
+  <p id="csas-reason" class="left-aligned"></p>
+  <div class="divider"></div>
+
+  <!-- Overeenkomst, links uitgelijnd -->
+  <p class="left-aligned"><strong>Overeenkomst</strong></p>
+  <p id="csas-agreement" class="left-aligned"></p>
+  <div class="divider"></div>
+
+  <!-- Knoppen voor stop en doorgaan -->
   <div class="button-container">
     <button id="csas-stop-button" class="stop-button">Stoppen</button>
     <!-- Knop voor de gebruiker om het proces te stoppen en terug te keren naar het wallet-scherm -->
@@ -693,7 +707,7 @@
 <div id="csas-success-screen" class="modal" style="display: none;">
   <h2>Succes! U heeft de gegevens gedeeld met <span id="csas-success-requester"></span> en onderstaande gegevens in uw wallet opgeslagen:</h2>
   <!-- Hier wordt de naam van de verifier weergegeven, gevolgd door een overzicht van de opgeslagen gegevens -->
-  <div id="csas-success-card-container" class="card-container"></div>
+  <div id="csas-success-card-container"></div>
   <!-- Container waar de kaartjes worden getoond die succesvol zijn opgehaald en opgeslagen -->
   <button id="close-csas-success-btn" class="orange-btn">Sluiten</button>
   <!-- Knop om het successcherm te sluiten en terug te keren naar het wallet-scherm -->
