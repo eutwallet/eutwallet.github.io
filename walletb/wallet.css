@@ -113,6 +113,8 @@ header {
     font-size: 16px;
     color: #4e4e4e;
     margin-top: 10px;
+    font-weight: bold;
+    color: #2681cc;
 }
 
 .close-scan-btn {
@@ -936,6 +938,31 @@ p {
     color: #646464;
 }
 
+
+/* CSS weergave kaartjes velden in vraagscherm rdfci rdfcv */
+.detail-row {
+    display: grid;
+    grid-template-columns: 150px 1fr; /* Eerste kolom (labels) krijgt vaste breedte, tweede kolom (waarden) neemt de rest */
+    grid-gap: 10px; /* Ruimte tussen de kolommen */
+    margin-bottom: 10px; /* Ruimte tussen de rijen */
+    font-size: small;
+  }
+  
+  .label {
+    font-weight: bold; /* Labels vetgedrukt */
+    text-align: left; /* links uitlijnen zodat ze netjes naast de waarden staan */
+    padding-right: 10px; /* Wat ruimte tussen het label en de waarde */
+  }
+  
+  .value {
+    text-align: left; /* Waarden links uitlijnen */
+  }
+
+
+
+
+
+
 /* CSS voor de zwevende QR-code knop */
 .floating-qr-button {
     position: fixed;
@@ -978,26 +1005,19 @@ p {
 }
 
 
-/* Stijl voor de lijst van knoppen */
-.button-list {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px; /* Voeg wat marge toe boven de knoppen */
-  }
-  
-  /* Stijl voor individuele knoppen */
-  .card-button {
+
+/* Stijl voor individuele knoppen */
+.card-button {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: calc(100% - 40px); /* Houd rekening met padding/marge */
+    width: calc(100% - 10px); /* Houd rekening met padding/marge */
     max-width: 400px; /* Optionele maximale breedte */
     height: 60px;
     background-color: #fff;
     border: none;
     border-radius: 8px;
-    margin-bottom: 10px; /* Witruimte tussen de knoppen */
+    margin-bottom: 15px; /* Witruimte tussen de knoppen */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     cursor: pointer;
   }
@@ -1015,10 +1035,14 @@ p {
     padding: 0 15px;
   }
   
-  /* Stijl voor het linker icoon */
-  .icon-left {
-    font-size: 24px;
+/* Stijl voor het linker icoon */
+.icon-left {
+    font-size: 24px; /* Zorg ervoor dat elk icoon dezelfde grootte heeft */
     color: #333;
+    width: 40px; /* Voeg een vaste breedte toe om consistentie te garanderen */
+    height: 40px; /* Voeg een vaste hoogte toe voor consistentie */
+    text-align: center; /* Zorg ervoor dat het icoon gecentreerd is binnen de ruimte */
+    line-height: 40px; /* Zorg ervoor dat het icoon verticaal gecentreerd is */
   }
   
   /* Stijl voor de knoptekst */
@@ -1028,6 +1052,8 @@ p {
     font-size: 18px;
     text-align: left;
     color: #333;
+    display: flex;
+    flex-direction: column;
   }
   
   /* Stijl voor het rechter icoon */
@@ -1044,22 +1070,262 @@ p {
   .card-button .icon-right {
     color: #333; /* Kleur voor het plusje */
   }
+/* Stijl voor de subtekst van de knoppen */
+.button-text-sub {
+    font-size: 14px; /* Pas de font-size aan naar wens */
+    color: #777; /* Kleur van de subtekst voor onderscheid */
+  }
 
 
-  .detail-row {
-    display: grid;
-    grid-template-columns: 150px 1fr; /* Eerste kolom (labels) krijgt vaste breedte, tweede kolom (waarden) neemt de rest */
-    grid-gap: 10px; /* Ruimte tussen de kolommen */
-    margin-bottom: 10px; /* Ruimte tussen de rijen */
-    font-size: small;
+
+/* *** Header Balk voor Belastingdienst *** */
+.header-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f5f5f5; /* Zelfde achtergrondkleur als de andere knoppen */
+    padding: 5px; /* Zelfde padding als de andere knoppen zoals "Rijbewijs" */
+    color: #474747; /* Zelfde tekstkleur als de knoppen */
+    width: calc(100% - 10px); /* Zelfde breedte als de andere knoppen */
+    box-sizing: border-box;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px; /* Border-radius zoals de knoppen "Rijbewijs" */
+    margin: 20px auto; /* Centreer de balk en voeg ruimte toe */
+    height: 60px; /* Zelfde hoogte als de knoppen zoals "Rijbewijs" */
+    flex-direction:row ;
+    padding: 0 15px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center; /* Verticale uitlijning van logo en tekst */
+}
+
+.header-logo {
+    width: 40px; /* Breedte van het logo */
+    height: 40px; /* Hoogte van het logo */
+    margin-left: 10px; 
+    margin-right: 20px; /* Witruimte tussen het logo en de tekst */
+}
+
+.header-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* *** Formulier Knoppen *** */
+.form-buttons {
+    margin-left: 20px; /* Consistente indent ten opzichte van de header */
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Ruimte tussen de knoppen */
+}
+
+.form-button {
+    background-color: #ffffff; /* Zelfde achtergrondkleur als de andere knoppen */
+    color: #152A62; /* Zelfde tekstkleur als de knoppen */
+    padding: 10px; /* Zelfde padding als de knoppen zoals "Rijbewijs" */
+    border: none;
+    border-radius: 15px; /* Border-radius zoals de knoppen "Rijbewijs" */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    cursor: pointer;
+    text-align: left; /* Linker uitlijning van de tekst */
+    width: calc(100% - 20px); /* Zelfde breedte als de andere knoppen */
+    margin: 0 auto; /* Centreer de knop */
+    height: 60px; /* Zelfde hoogte als de knoppen zoals "Rijbewijs" */
+}
+
+.form-button:hover {
+    box-shadow: inset 15px 15px 30px #e7e7e7, inset -15px -15px 30px #ffffff; /* Schaduw bij hover zoals bij de andere knoppen */
+}
+
+
+/* Stijl voor de weergave-wisselknop */
+.toggle-view-button {
+    background-color: #0072C6;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 20px auto;
+    display: block;
+    width: calc(100% - 40px);
   }
   
-  .label {
-    font-weight: bold; /* Labels vetgedrukt */
-    text-align: left; /* links uitlijnen zodat ze netjes naast de waarden staan */
-    padding-right: 10px; /* Wat ruimte tussen het label en de waarde */
+  .toggle-view-button:hover {
+    background-color: #0056b3;
   }
-  
-  .value {
-    text-align: left; /* Waarden links uitlijnen */
+
+  .toggle-view-button i {
+    margin-right: 8px; /* Voeg ruimte toe tussen icoon en tekst */
+}
+
+  .get-direct-attribute-title {
+    font-size: 14px;
+    margin: 20px auto;
+    font-weight: bold;
+    color: #878787;
   }
+
+
+  /* *** CSAS Modal Scherm Stijlen (CSAS) *** */
+#csas-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    z-index: 1000;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+#csas-modal h2 {
+    margin-bottom: 20px;
+    text-align: center;
+    color: #152A62;
+}
+
+#csas-details-container {
+    margin-bottom: 20px;
+}
+
+#csas-agreement {
+    color: #555;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+#csas-modal .button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    width: 100%;
+}
+
+#csas-stop-button {
+    background-color: white;
+    border: 2px solid #2681cc;
+    color: #2681cc;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#csas-accept-button {
+    background-color: #FFA500;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* *** CSAS Pincode Bevestigingsscherm Stijlen (CSAS) *** */
+#csas-pin-confirmation-screen {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    z-index: 1000;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+#csas-pin-confirmation-screen h2 {
+    margin-bottom: 20px;
+    text-align: center;
+    color: #152A62;
+}
+
+.pin-input {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+.pin-input input {
+    text-align: center;
+    font-size: 24px;
+    padding: 10px;
+    width: 50px;
+    height: 60px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#confirm-pin-csas {
+    background-color: #2681cc;
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    min-width: 250px;
+    text-align: center;
+    margin: 0 auto;
+    display: block;
+}
+
+/* *** CSAS Success-scherm Stijlen (CSAS) *** */
+#csas-success-screen {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    z-index: 1000;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+#csas-success-screen h2 {
+    margin-bottom: 20px;
+    text-align: center;
+    color: #152A62;
+}
+
+#csas-success-card-container {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+#close-csas-success-btn {
+    background-color: #2681cc;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+}
