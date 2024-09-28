@@ -1435,8 +1435,9 @@ document.addEventListener('DOMContentLoaded', function() {
     confirmPinCsas.onclick = () => {
       // Bevestig de pincode en sla gegevens op
       if (window.currentCsasData) {
-        saveCsasCredentials(window.currentCsasData); // Gebruik de opgeslagen data in `window.currentCsasData`
-        console.log("Credentials opgeslagen:", credentials);
+        saveCsasCredentials(window.currentCsasData); // Sla de nieuwe kaartjes op
+        saveCsasShareAction(window.currentCsasData); // Sla de deelactie op
+        console.log("Credentials en deelactie opgeslagen:", credentials);
       } else {
         console.error("Er is geen CSAS data beschikbaar om op te slaan.");
         return;
@@ -1564,3 +1565,21 @@ csasStopButton.onclick = () => {
     });
   }
 };
+
+function saveCsasShareAction(data) {
+  const timestamp = new Date().toLocaleString();
+  credentials.push({
+    name: data.requester || 'Onbekende partij',
+    reason: data.reason || 'Geen reden opgegeven',
+    sharedData: data.csas.map(item => {
+      return {
+        issuedBy: fieldMapping[item.issuedBy] || item.issuedBy,
+        name: fieldMapping[item.name] || item.name
+      };
+    }),
+    agreement: data.a ? (fieldMapping.a[data.a] || data.a) : 'Geen overeenkomst',
+    actionTimestamp: timestamp,
+    isShareAction: true // Markeer als deelactie
+  });
+  saveCredentials();
+}
