@@ -1193,9 +1193,15 @@ p {
 
 #csas-modal h2 {
     margin-bottom: 20px;
-    text-align: center;
+    text-align: left;
     color: #152A62;
 }
+
+.left-aligned {
+    text-align: left;
+    margin-top: 5px;
+    color: #555;  /* Of een andere kleur naar wens */
+  }
 
 #csas-details-container {
     margin-bottom: 20px;
@@ -1225,7 +1231,7 @@ p {
 }
 
 #csas-accept-button {
-    background-color: #FFA500;
+    background-color: #4a90e2;
     color: white;
     padding: 10px 20px;
     border-radius: 5px;
