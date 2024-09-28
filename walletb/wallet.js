@@ -90,7 +90,6 @@ const csasSuccessCardContainer = document.getElementById('csas-success-card-cont
 const closeCsasSuccessBtn = document.getElementById('close-csas-success-btn');
 
 
-// *** Veldmapping Object ***
 const fieldMapping = {
   gn: 'Voornaam',
   sn: 'Achternaam',
@@ -100,11 +99,15 @@ const fieldMapping = {
   vog: 'Verklaring Omtrent Gedrag (VOG)',
   nat: 'Nationaliteit',
   va: 'Geldigheid paspoort',
+  UWV: 'Uitvoeringsinstituut Werknemersverzekeringen (UWV)',
+  BKR: 'Bureau Krediet Registratie (BKR)',
+  BD: 'Belastingdienst',
+  SVB: 'Sociale Verzekeringsbank (SVB)',
   a: {
     '12t': 'opslag: 12 maanden, gedeeld met derden: nee',
     '60t': 'opslag: 60 maanden, gedeeld met derden: nee',
     'w': 'Bewaarplicht en datadeling met derden volgens wettelijke richtlijn'
-  },
+  }
 };
 
 
@@ -279,6 +282,26 @@ const cardStyles = {
     iconColor: '#D4A5D7',
     textColor: '#7A3E9D'
   },
+  'inkomensverklaring': {
+    imagePath: 'bdlogo.svg',
+    iconColor: null,
+    textColor: '#2681cc' // Nieuwe kleur passend bij het logo
+  },
+  'kredietregistratie': {
+    imagePath: 'bkrlogo.svg',
+    iconColor: null,
+    textColor: '#FDC830' // Kleur aangepast op basis van het logo
+  },
+  'aow-status': {
+    imagePath: 'svblogo.svg',
+    iconColor: null,
+    textColor: '#57C4E5' // Kleur aangepast op basis van het logo
+  },
+  'verzekeringsgegevens': {
+    imagePath: 'uwvlogo.svg',
+    iconColor: null,
+    textColor: '#00588E' // Kleur aangepast op basis van het logo
+  },
   'werkgever': {
     iconClass: 'fas fa-briefcase',
     iconColor: '#FBC4AB',
@@ -340,11 +363,17 @@ function displayCredentials() {
       const issuerTextSize = '14px'; // Kleiner lettertype voor de issuer
       const iconMarginBottom = '10px';
 
-      // Voeg FA-icoon en tekst toe aan de kaart met dynamische kleur en inline styles
+      // Controleer of er een afbeeldingspad is opgegeven in plaats van een icoon
+      let iconHtml = '';
+      if (styles.imagePath) {
+        iconHtml = `<img src="${styles.imagePath}" alt="${cred.name} logo" style="width: ${iconSize}; height: ${iconSize}; margin-bottom: ${iconMarginBottom};">`;
+      } else {
+        iconHtml = `<i class="${styles.iconClass}" style="color: ${styles.iconColor}; font-size: ${iconSize}; margin-bottom: ${iconMarginBottom};"></i>`;
+      }
+
+      // Voeg de HTML voor het kaartje toe
       card.innerHTML = `
-        <i class="${styles.iconClass}" 
-            style="color: ${styles.iconColor}; font-size: ${iconSize}; margin-bottom: ${iconMarginBottom};">
-        </i>
+        ${iconHtml}
         <div class="card-text" style="font-size: ${textSize};">
           <h3 style="color: ${styles.textColor}; margin: 0;">${cred.name}</h3>
           ${cred.issuedBy ? `<p style="font-size: ${issuerTextSize}; color: #555; margin: 5px 0 0 0;">${cred.issuedBy}</p>` : ''}
@@ -359,6 +388,7 @@ function displayCredentials() {
     }
   });
 }
+
 
 // Functie om standaard kaartjes toe te voegen
 function loadDefaultCredentials() {
@@ -536,20 +566,7 @@ function startQrScan() {
                   populateCsasModal(data);
 
                   // Toon de CSAS modal
-                  csasModal.style.display = 'flex';
-
-                  csasAcceptButton.onclick = () => {
-                    goToCsasPinConfirmationScreen(); // Ga naar pincode bevestigingsscherm
-                    csasModal.style.display = 'none'; // Verberg de CSAS-modal
-                  };
-                  
-
-                  csasStopButton.onclick = () => {
-                    csasModal.style.display = 'none'; // Verberg de CSAS-modal
-                    walletScreen.style.display = 'block'; // Toon het wallet-scherm
-                    bottomNav.style.display = 'flex'; // Toon de navigatiebalk onderaan opnieuw
-                  };
-                  
+                  csasModal.style.display = 'flex';     
 
               // Stap 2: Controleer of het een verifier QR-code is (rdfcv)
               } else if (data.rdfcv && data.requester && data.reason) {
@@ -1321,44 +1338,75 @@ function populateCsasModal(data) {
   // Leeg de details-container zodat oude gegevens worden verwijderd
   csasDetailsContainer.innerHTML = '';
 
+  // Toon de reden waarom de gegevens worden opgevraagd, indien aanwezig
+  const reasonElement = document.getElementById('csas-reason');
+  if (data.reason) {
+    reasonElement.textContent = `Reden: ${data.reason}`;
+  } else {
+    reasonElement.textContent = '';
+  }
+
   // Vul de details-container met de gegevens die opgevraagd worden
   data.csas.forEach(item => {
-    const fieldName = fieldMapping[item.name] || item.name;  // Gebruik fieldmapping voor leesbare veldnamen
-    const detail = document.createElement('p');
-    detail.textContent = `${item.issuedBy}: ${fieldName}`;  // Toon uitgever en veldnaam
-    csasDetailsContainer.appendChild(detail);
+    // Controleer of zowel `issuedBy` als `name` aanwezig zijn
+    if (item.issuedBy && item.name) {
+      const issuerName = fieldMapping[item.issuedBy] || item.issuedBy;  // Gebruik fieldmapping voor leesbare namen van de uitgever
+      const cardName = fieldMapping[item.name] || item.name;  // Gebruik fieldmapping voor de kaartnaam
+
+      // Maak een element aan om de informatie weer te geven
+      const detail = document.createElement('div');
+      detail.className = 'csas-detail';
+
+      // Voeg een gestructureerde weergave toe van de uitgever en het kaartje
+      detail.innerHTML = `
+        <p>Uitgegeven door:</p>
+        <p><strong>${issuerName}</strong></p>
+        <p>Gegevens:</p>
+        <p><strong>${cardName}</strong></p>
+      `;
+
+      // Voeg een divider toe voor nette scheiding
+      const divider = document.createElement('div');
+      divider.className = 'divider';
+      divider.style.borderTop = '1px solid #ccc';
+      divider.style.margin = '10px 0';
+
+      // Voeg het detail en de divider toe aan de details-container
+      csasDetailsContainer.appendChild(detail);
+      csasDetailsContainer.appendChild(divider);
+    } else {
+      console.error('CSAS item ontbreekt belangrijke gegevens: ', item);
+    }
   });
 
   // Vul de overeenkomst informatie (bijv. opslagduur)
-  csasAgreement.textContent = `Opslagduur: ${data.a.replace('t', ' maanden')}`;
-}
-
-// Functie om naar het pincode bevestigingsscherm te gaan voor CSAS
-function goToCsasPinConfirmationScreen() {
-  // Toon het pincode bevestigingsscherm voor CSAS
-  csasPinConfirmationScreen.style.display = 'flex';
-
-  // Wanneer de pincode wordt bevestigd
-  confirmPinCsas.onclick = () => {
-    // Bevestig de pincode en sla gegevens op
-    saveCsasCredentials();
-    goToCsasSuccessScreen();
-    
-    // Sluit het pincode bevestigingsscherm
-    csasPinConfirmationScreen.style.display = 'none';
-  };
+  if (data.a && fieldMapping.a[data.a]) {
+    csasAgreement.textContent = fieldMapping.a[data.a];
+  } else {
+    csasAgreement.textContent = 'Geen overeenkomst gevonden.';
+  }
 }
 
 // Functie om CSAS credentials op te slaan in de wallet
-function saveCsasCredentials() {
+function saveCsasCredentials(data) {
   // Voor elk kaartje in de csas data, voeg een nieuw credential toe
   data.csas.forEach(item => {
+    // Gebruik fieldMapping om leesbare namen te verkrijgen
+    const issuerName = fieldMapping[item.issuedBy] || item.issuedBy;
+    const cardName = fieldMapping[item.name] || item.name;
+
+    // Creëer een nieuw credential object
     const newCredential = {
-      name: item.name,
-      issuedBy: item.issuedBy,
+      name: cardName,  // Kaartnaam (bijv. "Verzekeringsgegevens")
+      issuedBy: issuerName,  // Naam van de instantie die het kaartje uitgeeft (bijv. "UWV")
       actionTimestamp: new Date().toLocaleString(), // De tijd waarop het kaartje is opgeslagen
-      isShareAction: false // Dit is een kaartje, geen deelactie
+      isShareAction: false, // Dit is een kaartje, geen deelactie
+      data: {
+        issuedBy: issuerName,
+        cardName: cardName
+      }
     };
+
     // Voeg het nieuwe credential toe aan de lijst van credentials
     credentials.push(newCredential);
   });
@@ -1366,6 +1414,37 @@ function saveCsasCredentials() {
   // Sla de credentials op in de local storage
   saveCredentials();
 }
+
+// Aangepaste pincode bevestigingslogica voor CSAS
+confirmPinCsas.onclick = () => {
+  // Bevestig de pincode en sla gegevens op
+  if (window.currentCsasData) {
+    saveCsasCredentials(window.currentCsasData); // Gebruik de opgeslagen data in `window.currentCsasData`
+    console.log("Credentials opgeslagen:", credentials);
+  } else {
+    console.error("Er is geen CSAS data beschikbaar om op te slaan.");
+    return;
+  }
+
+  goToCsasSuccessScreen();
+
+  // Sluit het pincode bevestigingsscherm
+  csasPinConfirmationScreen.style.display = 'none';
+
+  // Stop de QR-code scanner
+  if (html5QrCode) {
+    console.log("Stopping QR scanner after CSAS confirmation...");
+    html5QrCode.stop().then(() => {
+      console.log("QR scanner stopped after CSAS confirmation.");
+      readerDiv.style.display = 'none';
+      closeScanButton.style.display = 'none';
+      document.querySelector('.scan-container').style.display = 'flex';
+    }).catch(err => {
+      console.error("Failed to stop QR scanner: ", err);
+    });
+  }
+};
+
 
 // Functie om het CSAS successcherm te tonen
 function goToCsasSuccessScreen() {
@@ -1376,25 +1455,88 @@ function goToCsasSuccessScreen() {
   csasSuccessCardContainer.innerHTML = '';
 
   // Voeg de nieuwe kaartjes toe aan het successcherm
-  data.csas.forEach(item => {
+  currentCsasData.csas.forEach(item => {
     const card = document.createElement('div');
     card.className = 'card';
+
+    // Haal stijlen op basis van kaartnaam
+    const nameLower = item.name.toLowerCase();
+    const styles = cardStyles[nameLower] || {
+      imagePath: null,
+      iconColor: '#333',
+      textColor: '#333'
+    };
+
+    // Gebruik fieldMapping voor de leesbare issuer en kaartnaam
+    const issuerName = fieldMapping[item.issuedBy] || item.issuedBy;
+    const cardName = fieldMapping[item.name.toLowerCase()] || item.name;
+
+    // Creëer een logo element als er een logo beschikbaar is
+    let logoElement = '';
+    if (styles.imagePath) {
+      logoElement = `<img src="${styles.imagePath}" alt="${cardName}" class="card-logo" style="width: 30px; height: 30px; margin-bottom: 10px;">`;
+    }
+
+    // Voeg de HTML voor de kaart toe, inclusief logo indien beschikbaar
     card.innerHTML = `
-      <i class="fas fa-file-contract"></i>
-      <div class="card-text">
-        <h3>${item.name}</h3>
-        <p>${item.issuedBy}</p>
+      ${logoElement}
+      <div class="card-text" style="color: ${styles.textColor};">
+        <h3>${cardName}</h3>
+        <p style="font-size: 14px; color: #555; margin: 5px 0 0 0;">${issuerName}</p>
       </div>
     `;
+
+    // Voeg de kaart toe aan de success card container
     csasSuccessCardContainer.appendChild(card);
   });
 
   // Toon het CSAS successcherm
   csasSuccessScreen.style.display = 'flex';
 
+  // Verberg het add-card scherm
+  addCardScreen.style.display = 'none';
+
+  // Close knop logica voor het sluiten van het successcherm
   closeCsasSuccessBtn.onclick = () => {
     csasSuccessScreen.style.display = 'none'; // Verberg het successcherm
+    addCardScreen.style.display = 'none'; // Verberg het add-card scherm
     walletScreen.style.display = 'block'; // Toon het wallet-scherm
     bottomNav.style.display = 'flex'; // Toon de navigatiebalk onderaan opnieuw
   };
 }
+
+
+
+
+
+// Event listener voor de "Doorgaan"-knop in de CSAS-modal
+csasAcceptButton.onclick = () => {
+  console.log("CSAS Accept Button clicked.");
+  csasPinConfirmationScreen.style.display = 'flex'; // Ga naar pincode bevestigingsscherm
+  csasModal.style.display = 'none'; // Verberg de CSAS-modal
+};
+
+// Event listener voor de "Stoppen"-knop in de CSAS-modal
+csasStopButton.onclick = () => {
+  console.log("CSAS Stop Button clicked.");
+  // Verberg de CSAS-modal
+  csasModal.style.display = 'none';
+  addCardScreen.style.display = 'none';
+  
+  // Toon het wallet-scherm
+  walletScreen.style.display = 'block';
+  bottomNav.style.display = 'flex'; // Toon de navigatiebalk onderaan opnieuw
+  
+  // Stop de QR-code scanner
+  if (html5QrCode) {
+    console.log("Stopping QR scanner after stopping CSAS...");
+    html5QrCode.stop().then(() => {
+      console.log("QR scanner stopped after CSAS cancellation.");
+      readerDiv.style.display = 'none';
+      closeScanButton.style.display = 'none';
+      document.querySelector('.scan-container').style.display = 'flex';
+    }).catch(err => {
+      console.error("Failed to stop QR scanner: ", err);
+    });
+  }
+};
