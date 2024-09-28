@@ -1395,36 +1395,59 @@ function populateCsasModal(data) {
 }
 
 function saveCsasCredentials(data) {
-  // Voor elk kaartje in de csas data, voeg een nieuw credential toe
   data.csas.forEach(item => {
     // Gebruik fieldMapping om leesbare namen te verkrijgen
     const issuerName = fieldMapping[item.issuedBy] || item.issuedBy;
-    const cardName = fieldMapping[item.name] || item.name;
+    const cardName = fieldMapping[item.name.toLowerCase()] || item.name;
 
-    // Creëer een nieuw credential object
-    const newCredential = {
-      name: cardName,  // Kaartnaam (bijv. "Verzekeringsgegevens")
-      issuedBy: issuerName,  // Naam van de instantie die het kaartje uitgeeft (bijv. "UWV")
-      actionTimestamp: new Date().toLocaleString(), // De tijd waarop het kaartje is opgeslagen
-      isShareAction: false, // Dit is een kaartje, geen deelactie
-      data: {
+    // Controleer of het om de VOG gaat
+    if (issuerName === 'Justis' && cardName === 'Verklaring Omtrent Gedrag (VOG)') {
+      // Voeg de gedetailleerde VOG-gegevens toe
+      const newCredential = {
+        name: 'Verklaring Omtrent Gedrag (VOG)',
+        issuedBy: 'Justis',
+        actionTimestamp: new Date().toLocaleString(),
+        isShareAction: false,
+        data: {
+          "Issuer": true,
+          "name": "Verklaring Omtrent Gedrag (VOG)",
+          "issuedBy": "Justis",
+          "LEID": "NL_KVK_27378698",
+          "Issued_Date": "2023-09-17",
+          "Issued_to_subject": "Willeke Liselotte de Bruijn",
+          "Algemeen_profiel": "4,5,6,7",
+          "Specifiek_profiel": "55",
+          "Attestation_Trust_Type": "QEAA",
+          "rdfci": ["gn", "sn", "bd", "bsn"],
+          "a": "12t",
+          "t": "w"
+        }
+      };
+      credentials.push(newCredential);
+    } else {
+      // Bestaande code voor andere credentials
+      const newCredential = {
+        name: cardName,
         issuedBy: issuerName,
-        cardName: cardName
-      }
-    };
-
-    // Voeg het nieuwe credential toe aan de lijst van credentials
-    credentials.push(newCredential);
+        actionTimestamp: new Date().toLocaleString(),
+        isShareAction: false,
+        data: {
+          issuedBy: issuerName,
+          cardName: cardName
+        }
+      };
+      credentials.push(newCredential);
+    }
   });
 
   // Sla de credentials op in de local storage
   saveCredentials();
 
-  // **Roep displayCredentials aan om de wallet bij te werken**
+  // Werk de weergave van de wallet bij
   displayCredentials();
 
-  // Optioneel: Log de credentials voor debugging
-  console.log("Credentials na opslaan:", credentials);
+    // Optioneel: Log de credentials voor debugging
+    console.log("Credentials na opslaan:", credentials);
 }
 
 // Aangepaste pincode bevestigingslogica voor CSAS
