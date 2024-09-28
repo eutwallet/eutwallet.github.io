@@ -83,7 +83,7 @@ const csasAgreement = document.getElementById('csas-agreement');
 const csasAcceptButton = document.getElementById('csas-accept-button');
 const csasStopButton = document.getElementById('csas-stop-button');
 const csasPinConfirmationScreen = document.getElementById('csas-pin-confirmation-screen');
-const confirmPinCsas = document.getElementById('confirm-pin-csas');
+
 const csasSuccessScreen = document.getElementById('csas-success-screen');
 const csasSuccessRequester = document.getElementById('csas-success-requester');
 const csasSuccessCardContainer = document.getElementById('csas-success-card-container');
@@ -560,13 +560,17 @@ function startQrScan() {
 
               // Stap 1: Controleer of het een verifier QR-code is (csas)
               if (data.type === "verifier" && data.csas) {
-                  console.log("CSAS QR-code herkend.");
-
-                  // Vul de modal met de gegevens van het CSAS-verzoek
-                  populateCsasModal(data);
-
-                  // Toon de CSAS modal
-                  csasModal.style.display = 'flex';     
+                console.log("CSAS QR-code herkend.");
+            
+                // Sla de CSAS data op voor later gebruik
+                window.currentCsasData = data;
+            
+                // Vul de modal met de gegevens van het CSAS-verzoek
+                populateCsasModal(data);
+            
+                // Toon de CSAS modal
+                csasModal.style.display = 'flex';     
+            
 
               // Stap 2: Controleer of het een verifier QR-code is (rdfcv)
               } else if (data.rdfcv && data.requester && data.reason) {
@@ -1416,34 +1420,42 @@ function saveCsasCredentials(data) {
 }
 
 // Aangepaste pincode bevestigingslogica voor CSAS
-confirmPinCsas.onclick = () => {
-  // Bevestig de pincode en sla gegevens op
-  if (window.currentCsasData) {
-    saveCsasCredentials(window.currentCsasData); // Gebruik de opgeslagen data in `window.currentCsasData`
-    console.log("Credentials opgeslagen:", credentials);
+document.addEventListener('DOMContentLoaded', function() {
+  const confirmPinCsas = document.getElementById('confirm-pin-csas');
+  
+  if (confirmPinCsas) {
+    confirmPinCsas.onclick = () => {
+      // Bevestig de pincode en sla gegevens op
+      if (window.currentCsasData) {
+        saveCsasCredentials(window.currentCsasData); // Gebruik de opgeslagen data in `window.currentCsasData`
+        console.log("Credentials opgeslagen:", credentials);
+      } else {
+        console.error("Er is geen CSAS data beschikbaar om op te slaan.");
+        return;
+      }
+ 
+      goToCsasSuccessScreen();
+ 
+      // Sluit het pincode bevestigingsscherm
+      csasPinConfirmationScreen.style.display = 'none';
+ 
+      // Stop de QR-code scanner
+      if (html5QrCode) {
+        console.log("Stopping QR scanner after CSAS confirmation...");
+        html5QrCode.stop().then(() => {
+          console.log("QR scanner stopped after CSAS confirmation.");
+          readerDiv.style.display = 'none';
+          closeScanButton.style.display = 'none';
+          document.querySelector('.scan-container').style.display = 'flex';
+        }).catch(err => {
+          console.error("Failed to stop QR scanner: ", err);
+        });
+      }
+    };
   } else {
-    console.error("Er is geen CSAS data beschikbaar om op te slaan.");
-    return;
+    console.error("Element 'confirm-pin-csas' niet gevonden.");
   }
-
-  goToCsasSuccessScreen();
-
-  // Sluit het pincode bevestigingsscherm
-  csasPinConfirmationScreen.style.display = 'none';
-
-  // Stop de QR-code scanner
-  if (html5QrCode) {
-    console.log("Stopping QR scanner after CSAS confirmation...");
-    html5QrCode.stop().then(() => {
-      console.log("QR scanner stopped after CSAS confirmation.");
-      readerDiv.style.display = 'none';
-      closeScanButton.style.display = 'none';
-      document.querySelector('.scan-container').style.display = 'flex';
-    }).catch(err => {
-      console.error("Failed to stop QR scanner: ", err);
-    });
-  }
-};
+});
 
 
 // Functie om het CSAS successcherm te tonen
