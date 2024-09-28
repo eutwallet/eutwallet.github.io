@@ -9,7 +9,7 @@
     /* Algemene styling voor de body */
     body {
       font-family: 'Helvetica', sans-serif;
-      color: #333;
+      color: #555;
       background-color: #ffffff;
       margin: 0;
       padding: 20px;
@@ -24,19 +24,42 @@
       border-radius: 10px;
     }
 
-    h1, h2, h3 {
-      color: #152A62;
+    h1, h2, h3, h4 {
+      color: #555;
+    }
+
+    h2 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    h4 {
+      margin-bottom: 0px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+
+    h4 i {
+      margin-left: auto;
+      transition: transform 0.3s;
     }
 
     p {
       font-size: 16px;
       color: #555;
+      margin-top: 0px;
       margin-bottom: 20px;
     }
 
     ul li {
       margin-bottom: 10px;
       text-align: left;
+      color: #555;
+    }
+
+    .accordion-header{
+      background-color: #fefeff;
     }
 
     /* Algemene knop styling */
@@ -72,19 +95,18 @@
       border-radius: 8px;
       background-color: #fefeff; /* Bijna witte achtergrondkleur */
       margin-bottom: 30px;
-      
       display: flex;
-    flex-direction: column;
-    border: 1px solid #ccc; /* Voeg een duidelijke 1px omlijning toe */
+      flex-direction: column;
+      border: 1px solid #ccc; /* Voeg een duidelijke 1px omlijning toe */
     }
 
-    .sectie h2, h3 {
+    .sectie h2, .sectie h3 {
       color: #385168;
       margin-bottom: 5px;
     }
 
     .sectie p {
-        margin-top: 0px;
+      margin-top: 0px;
     }
 
     .sectie ul {
@@ -107,92 +129,106 @@
     strong {
       font-weight: bold;
     }
-/* Verborgen inhoud */
-.collapsible-content {
-  display: none; /* Verbergt de inhoud standaard */
-  overflow: hidden;
-  transition: max-height 0.5s ease; /* Soepele overgang */
-}
 
-.collapsible-content.expanded {
-  display: block; /* Toont de inhoud wanneer uitgeklapt */
-}
+    /* Verborgen inhoud voor accordeon */
+    .accordion-content {
+      display: none;
+      overflow: hidden;
+    }
 
+    .accordion-content.expanded {
+      display: block;
+    }
 
-/* Uitklapknop rechts uitlijnen */
-.toggle-btn {
-  width: auto; /* Laat de breedte automatisch zijn */
-  text-align: center; /* Zorg ervoor dat de tekst gecentreerd is binnen de knop */
-  float: right; /* Rechts uitlijnen */
-  padding: 10px 20px; /* Padding voor voldoende klikoppervlak */
-  background-color: #87a2bb; /* Achtergrondkleur zoals eerder */
-  color: #fff;
-  border-radius: 5px;
-  cursor: pointer;
-  display: inline-block; /* Inline-block voor knopeffect */
-  margin-top: 10px;
-  width: fit-content;
-  align-self: flex-end; /* Flexbox uitlijning naar rechts */
-  min-width: unset; 
-}
+    /* Rotatie van chevron bij uitklappen */
+    .accordion-header i.rotate {
+      transform: rotate(180deg);
+    }
 
-.toggle-btn:hover {
-  background-color: #6f8ea2; /* Iets donkerdere tint bij hover */
-}
+    /* Verborgen inhoud voor collapsible sectie */
+    .collapsible-content {
+      display: none;
+      overflow: hidden;
+      transition: max-height 0.5s ease;
+    }
 
-/* Inklapknop onderin de sectie */
-.toggle-btn-bottom {
-  width: auto; /* Laat de breedte automatisch zijn */
-  text-align: center; /* Zorg ervoor dat de tekst gecentreerd is binnen de knop */
-  float: right; /* Rechts uitlijnen */
-  padding: 10px 20px; /* Padding voor voldoende klikoppervlak */
-  background-color: #87a2bb; /* Zelfde achtergrondkleur als andere knop */
-  color: #fff;
-  border-radius: 5px;
-  cursor: pointer;
-  display: inline-block; /* Inline-block voor knopeffect */
-  margin-top: 10px;
-  width: fit-content;
-  min-width: unset; 
-}
+    .collapsible-content.expanded {
+      display: block;
+    }
 
-.toggle-btn-bottom:hover {
-  background-color: #6f8ea2;
-}
+    /* Uitklapknop rechts uitlijnen */
+    .toggle-btn {
+      width: auto;
+      text-align: center;
+      float: right;
+      padding: 10px 20px;
+      background-color: #87a2bb;
+      color: #fff;
+      border-radius: 5px;
+      cursor: pointer;
+      display: inline-block;
+      margin-top: 10px;
+      width: fit-content;
+      align-self: flex-end;
+      min-width: unset; 
+    }
 
+    .toggle-btn:hover {
+      background-color: #6f8ea2;
+    }
 
-@media (max-width: 768px) {
-  /* Maak de container breder op kleinere schermen */
-  .container {
-    padding: 10px;
-    max-width: 100%;
-  }
+    /* Inklapknop onderin de sectie */
+    .toggle-btn-bottom {
+      width: auto;
+      text-align: center;
+      float: right;
+      padding: 10px 20px;
+      background-color: #87a2bb;
+      color: #fff;
+      border-radius: 5px;
+      cursor: pointer;
+      display: inline-block;
+      margin-top: 10px;
+      width: fit-content;
+      min-width: unset; 
+    }
 
-  /* Knoppen moeten de volledige breedte hebben op mobiele schermen */
-  a {
-    min-width: unset; /* Verwijder de vaste breedte voor knoppen */
-    width: -webkit-fill-available;
-  width: -moz-available;
-  width: fill-available;
-  width: 100%; /* Fallback voor oudere browsers */
-  box-sizing: border-box; /* Inclusief padding en borders in de breedte */
-  display: block;
-    text-align: left; /* Gecentreerde tekst voor een betere leesbaarheid */
-  }
+    .toggle-btn-bottom:hover {
+      background-color: #6f8ea2;
+    }
 
-  /* Specifieke styling voor toggle buttons op mobiel */
-  .toggle-btn, .toggle-btn-bottom {
-    width: fit-content; /* Knoppen volledig breed op mobiel */
-    text-align: center;
-  }
+    @media (max-width: 768px) {
+      /* Maak de container breder op kleinere schermen */
+      .container {
+        padding: 10px;
+        max-width: 100%;
+      }
 
-  /* Zorg ervoor dat de sectie goed zichtbaar is op mobiel */
-  .sectie {
-    padding: 15px;
-    border-radius: 5px;
-    margin-bottom: 20px;
-  }
-}
+      /* Knoppen moeten de volledige breedte hebben op mobiele schermen */
+      a {
+        min-width: unset;
+        width: -webkit-fill-available;
+        width: -moz-available;
+        width: fill-available;
+        width: 100%;
+        box-sizing: border-box;
+        display: block;
+        text-align: left;
+      }
+
+      /* Specifieke styling voor toggle buttons op mobiel */
+      .toggle-btn, .toggle-btn-bottom {
+        width: fit-content;
+        text-align: center;
+      }
+
+      /* Zorg ervoor dat de sectie goed zichtbaar is op mobiel */
+      .sectie {
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+      }
+    }
 
   </style>
 </head>
@@ -200,111 +236,130 @@
   <div class="container">
     <h1>Europese Test Wallet (EUTW)</h1>
     <hr>
-    <p><strong>Doel</strong><br>
-    Deze website is bedoeld om een indruk te krijgen van hoe de Europese identiteits wallet zou kunnen werken bij het uitwisselen van digitale bewijzen, en het gesprek over de mogelijkheden, ideeën, ontwikkelpunten en overwegingen te faciliteren. Deze website biedt daarom een lichtgewicht wallet aan met bijbehorende voorbeelden voor test- en demodoeleinden.</p>
 
-    <p><strong>Disclaimer</strong><br>
-    In de getoonde wallet en onderdelen ontbreken bepaalde functies en deze wallet representeert dus niet een volledig werkend eindproduct. 
-    Deze lichtgewicht wallet is geen app, heeft geen backend, en is puur voor demonstratiedoeleinden. Digitale bewijzen worden opgeslagen in de lokale browser opslag van je telefoon. 
-    De getoonde websites zijn fictieve websites.</p>
-  
-    <p style="margin-bottom: 0px;"><strong>Korte handleiding</strong></p>
-    <ul style="list-style-type: disc; margin-left: 20px; padding-left: 0; margin-top: 0px;">
-      <li style="margin-bottom: 0px;">In onderstaand voorbeeld wordt je stapsgewijs door de schermen geleid.</li>
-      <li style="margin-bottom: 0px;">Op een gegeven moment wordt aan je gevraagd om de wallet op je telefoon te openen: je krijgt een url om te openen op je telefoon, of je kunt een QR code scannen om naar de url te gaan.</li>
-      <li style="margin-bottom: 0px;">De wallet is al geactiveerd voor Willeke de Bruijn (fictieve burger op het voorbeeldpaspoort) en bevat twee 'kaartjes' met haar fictieve gegevens. Nieuwe opgeslagen kaartjes worden onder deze 2 bestaande kaartjes weergegeven.</li>
-      <li style="margin-bottom: 0px;">De pincode kun je zelf verzinnen of klikken op doorgaan zonder invoer van pincode.</li>
-      <li style="margin-bottom: 0px;">In het menu van de wallet kun je de acties die je onderneemt terugvinden onder activiteiten.</li>
-    </ul>
+    <!-- Accordeon voor Doel -->
+    <h4><strong>Doel</strong></h4>
+    <p>Deze website is bedoeld om een indruk te krijgen van hoe de Europese identiteits wallet zou kunnen werken bij het uitwisselen van digitale bewijzen, en het gesprek over de mogelijkheden, ideeën, ontwikkelpunten en overwegingen te faciliteren. Deze website biedt daarom een lichtgewicht wallet aan met bijbehorende voorbeelden voor test- en demodoeleinden.</p>
 
-    <p><strong>Voorbeelden</strong><br>
-    In onderstaande voorbeelden kun je het gebruik van de wallet testen in verschillende fictieve situaties.<br>
+    <!-- Accordeon voor Disclaimer -->
+    <div class="accordion-section">
+      <h4 class="accordion-header"><strong>Disclaimer</strong> <i class="fas fa-chevron-down"></i></h4>
+      <div class="accordion-content">
+        <p>In de getoonde wallet en onderdelen ontbreken bepaalde functies en deze wallet representeert dus niet een volledig werkend eindproduct. 
+        Deze lichtgewicht wallet is geen app, heeft geen backend, en is puur voor demonstratiedoeleinden. Digitale bewijzen worden opgeslagen in de lokale browser opslag van je telefoon. 
+        De getoonde websites zijn fictieve websites.</p>
+      </div>
+    </div>
+
+    <!-- Accordeon voor Korte handleiding -->
+    <div class="accordion-section">
+      <h4 class="accordion-header"><strong>Korte handleiding</strong> <i class="fas fa-chevron-down"></i></h4>
+      <div class="accordion-content">
+        <ul style="list-style-type: disc; margin-left: 20px; padding-left: 0; margin-top: 0px;">
+          <li style="margin-bottom: 0px;">In onderstaand voorbeeld wordt je stapsgewijs door de schermen geleid.</li>
+          <li style="margin-bottom: 0px;">Op een gegeven moment wordt aan je gevraagd om de wallet op je telefoon te openen: je krijgt een url om te openen op je telefoon, of je kunt een QR code scannen om naar de url te gaan.</li>
+          <li style="margin-bottom: 0px;">De wallet is al geactiveerd voor Willeke de Bruijn (fictieve burger op het voorbeeldpaspoort) en bevat twee 'kaartjes' met haar fictieve gegevens. Nieuwe opgeslagen kaartjes worden onder deze 2 bestaande kaartjes weergegeven.</li>
+          <li style="margin-bottom: 0px;">De pincode kun je zelf verzinnen of klikken op doorgaan zonder invoer van pincode.</li>
+          <li style="margin-bottom: 0px;">In het menu van de wallet kun je de acties die je onderneemt terugvinden onder activiteiten.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h4><strong>Voorbeelden</strong></h4>
+    <p>In onderstaande voorbeelden kun je het gebruik van de wallet testen in verschillende fictieve situaties.<br>
     Kies een van de volgende opties:</p>
 
     <!-- Sectie: Aan de slag bij een nieuwe werkgever -->
-
-<section class="sectie">
-    <h2>Aan de slag bij een nieuwe werkgever</h2>
-    <p>Willeke gaat aan de slag bij een nieuwe werkgever en daarbij komt nogal wat administratie kijken. Gelukkig biedt haar nieuwe werkgever de mogelijkheid om 
-      de identiteits-wallet te gebruiken om deze zaken te regelen.
-In plaats van een kopie paspoort aanleveren, handtekeningen inscannen, digitale bewijzen mailen en handmatig valideren, pdf-formulieren handmatig bewerken en invullen 
-met kans op fouten bij overtypen van gegevens 
-kan ze nu met hoge betrouwbaarheid, gemak en efficiëntie het proces doorlopen 
-omdat het proces gestandaardiseerd is, via veilige kanalen verloopt, handmatig overtypen niet meer nodig is en bewijzen automatisch worden gevalideerd.
-
-    </p>
-   
-  <!-- Uitklapknop rechts uitgelijnd -->
-  <a class="toggle-btn" onclick="toggleSection()">Klap uit <i class="fas fa-chevron-down"></i></a>
-    
-    <!-- Plaats de inhoud die je wilt verbergen binnen deze div -->
-    <div class="collapsible-content">
-      <ul>
-        <li><a href="/werkgever/id/index.html" href="#" target="_blank"><i class="fas fa-play"></i>Identificatie van de werknemer door de werkgever</a></li>
-        <li><a href="/werkgever/vog/index.html"href="#" target="_blank"><i class="fas fa-play"></i>Verklaring Omtrent Gedrag ophalen en delen met de werkgever</a></li>
-        <li>i.o.  <a href="/werkgever/formulier-loonheffing/index.html"href="#" target="_blank"><i class="fas fa-play"></i>Formulier loonheffing invullen en ondertekenen</a></li>
-        <li>i.o. <a href="/werkgever/diploma/index.html"href="#" target="_blank"><i class="fas fa-play"></i>Diploma ophalen en delen met de werkgever</a></li>
-        <li>i.o. <a href="/werkgever/arbeidsovereenkomst/index.html"href="#" target="_blank"><i class="fas fa-play"></i>Ondertekenen arbeidsovereenkomst</a></li>
-      </ul>
+    <section class="sectie">
+      <h2>Aan de slag bij een nieuwe werkgever</h2>
+      <p>Willeke gaat aan de slag bij een nieuwe werkgever en daarbij komt nogal wat administratie kijken. Gelukkig biedt haar nieuwe werkgever de mogelijkheid om 
+        de identiteits-wallet te gebruiken om deze zaken te regelen.
+        In plaats van een kopie paspoort aanleveren, handtekeningen inscannen, digitale bewijzen mailen en handmatig valideren, pdf-formulieren handmatig bewerken en invullen 
+        met kans op fouten bij overtypen van gegevens 
+        kan ze nu met hoge betrouwbaarheid, gemak en efficiëntie het proces doorlopen 
+        omdat het proces gestandaardiseerd is, via veilige kanalen verloopt, handmatig overtypen niet meer nodig is en bewijzen automatisch worden gevalideerd.
+      </p>
+     
+      <!-- Uitklapknop rechts uitgelijnd -->
+      <a class="toggle-btn" onclick="toggleSection()">Klap uit <i class="fas fa-chevron-down"></i></a>
       
-      <h3>Na indiensttreding</h3>
-      <p>Na je indiensttreding kun je met de wallet ook andere zaken regelen:</p>
-      <ul>
-        <li>i.o. <a href="/werkgever/toegangspas/index.html"href="#" target="_blank"><i class="fas fa-play"></i>Ontvangen van een toegangspas</a></li>    
-        <li>i.o. <a href="/werkgever/parkeerkosten/index.html"href="#" target="_blank"><i class="fas fa-play"></i>Declareren van parkeerkosten</a></li>
-      </ul>
+      <!-- Plaats de inhoud die je wilt verbergen binnen deze div -->
+      <div class="collapsible-content">
+        <ul>
+          <li><a href="/werkgever/id/index.html" target="_blank"><i class="fas fa-play"></i>Identificatie van de werknemer door de werkgever</a></li>
+          <li><a href="/werkgever/vog/index.html" target="_blank"><i class="fas fa-play"></i>Verklaring Omtrent Gedrag ophalen en delen met de werkgever</a></li>
+          <li>i.o.  <a href="/werkgever/formulier-loonheffing/index.html" target="_blank"><i class="fas fa-play"></i>Formulier loonheffing invullen en ondertekenen</a></li>
+          <li>i.o. <a href="/werkgever/diploma/index.html" target="_blank"><i class="fas fa-play"></i>Diploma ophalen en delen met de werkgever</a></li>
+          <li>i.o. <a href="/werkgever/arbeidsovereenkomst/index.html" target="_blank"><i class="fas fa-play"></i>Ondertekenen arbeidsovereenkomst</a></li>
+        </ul>
+        
+        <h3>Na indiensttreding</h3>
+        <p>Na je indiensttreding kun je met de wallet ook andere zaken regelen:</p>
+        <ul>
+          <li>i.o. <a href="/werkgever/toegangspas/index.html" target="_blank"><i class="fas fa-play"></i>Ontvangen van een toegangspas</a></li>    
+          <li>i.o. <a href="/werkgever/parkeerkosten/index.html" target="_blank"><i class="fas fa-play"></i>Declareren van parkeerkosten</a></li>
+        </ul>
 
-       <!-- Inklapknop onderin rechts uitgelijnd -->
-       <a class="toggle-btn-bottom" onclick="toggleSection()">Klap in <i class="fas fa-chevron-up"></i></a>
+         <!-- Inklapknop onderin rechts uitgelijnd -->
+         <a class="toggle-btn-bottom" onclick="toggleSection()">Klap in <i class="fas fa-chevron-up"></i></a>
 
-    </div>
-  </section>
+      </div>
+    </section>
     <!-- Einde sectie -->
 
-    
     <section class="sectie">
       <h2>Hypotheek aanvragen</h2>
-      <p>volgt later </p>
+      <p>Volgt later.</p>
     </section>
 
     <section class="sectie">
       <h2>Toegang met kwalificatie tot registers</h2>
-      <p>volgt later </p>
+      <p>Volgt later.</p>
     </section>
 
     <section class="sectie">
       <h2>Logistiek en mobiliteit</h2>
-      <p>volgt later </p>
+      <p>Volgt later.</p>
     </section>
 
     <section class="sectie">
       <h2>Dienstverlening gemeentes</h2>
-      <p>volgt later </p>
+      <p>Volgt later.</p>
     </section>
 
     <section class="sectie">
       <h2>WMO indicatie</h2>
-      <p>volgt later </p>
+      <p>Volgt later.</p>
     </section>
-
 
   </div>
   <script>
-function toggleSection() {
-  const content = document.querySelector('.collapsible-content');
-  const button = document.querySelector('.toggle-btn');
-  const bottomButton = document.querySelector('.toggle-btn-bottom');
-  
-  if (content.classList.contains('expanded')) {
-    content.classList.remove('expanded');
-    button.style.display = 'inline-block'; // Toon de "Klap uit" knop
-    bottomButton.style.display = 'none';   // Verberg de "Klap in" knop
-  } else {
-    content.classList.add('expanded');
-    button.style.display = 'none';         // Verberg de "Klap uit" knop
-    bottomButton.style.display = 'inline-block'; // Toon de "Klap in" knop
-  }
-}
+    // Functie voor het uitklappen van de collapsible sectie
+    function toggleSection() {
+      const content = document.querySelector('.collapsible-content');
+      const button = document.querySelector('.toggle-btn');
+      const bottomButton = document.querySelector('.toggle-btn-bottom');
+      
+      if (content.classList.contains('expanded')) {
+        content.classList.remove('expanded');
+        button.style.display = 'inline-block'; // Toon de "Klap uit" knop
+        bottomButton.style.display = 'none';   // Verberg de "Klap in" knop
+      } else {
+        content.classList.add('expanded');
+        button.style.display = 'none';         // Verberg de "Klap uit" knop
+        bottomButton.style.display = 'inline-block'; // Toon de "Klap in" knop
+      }
+    }
+
+    // JavaScript voor de accordeon
+    document.querySelectorAll('.accordion-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const accordionContent = header.nextElementSibling;
+        const icon = header.querySelector('i');
+        accordionContent.classList.toggle('expanded');
+        icon.classList.toggle('rotate');
+      });
+    });
   </script>
 
 </body>
