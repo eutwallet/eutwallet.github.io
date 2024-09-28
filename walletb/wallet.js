@@ -75,6 +75,20 @@ const rdfcvAgreement = document.getElementById('rdfcv-agreement');
 const rdfcvAcceptButton = document.getElementById('rdfcv-accept-button');
 const rdfcvStopButton = document.getElementById('rdfcv-stop-button');
 
+// *** CSAS Elementen ***
+const csasModal = document.getElementById('csas-modal');
+const csasRequester = document.getElementById('csas-requester');
+const csasDetailsContainer = document.getElementById('csas-details-container');
+const csasAgreement = document.getElementById('csas-agreement');
+const csasAcceptButton = document.getElementById('csas-accept-button');
+const csasStopButton = document.getElementById('csas-stop-button');
+const csasPinConfirmationScreen = document.getElementById('csas-pin-confirmation-screen');
+const confirmPinCsas = document.getElementById('confirm-pin-csas');
+const csasSuccessScreen = document.getElementById('csas-success-screen');
+const csasSuccessRequester = document.getElementById('csas-success-requester');
+const csasSuccessCardContainer = document.getElementById('csas-success-card-container');
+const closeCsasSuccessBtn = document.getElementById('close-csas-success-btn');
+
 
 // *** Veldmapping Object ***
 const fieldMapping = {
@@ -492,7 +506,6 @@ loadDefaultCredentials();
 displayCredentials();
 
 
-
 // Functie om de QR-code scanner te starten
 function startQrScan() {
   document.querySelector('.scan-container').style.display = 'none'; // Verberg scan-knop en tekst
@@ -515,8 +528,31 @@ function startQrScan() {
               const data = JSON.parse(decodedText);
               const timestamp = new Date().toLocaleString();
 
-              // Stap 1: Controleer of het een verifier QR-code is (rdfcv)
-              if (data.rdfcv && data.requester && data.reason) {
+              // Stap 1: Controleer of het een verifier QR-code is (csas)
+              if (data.type === "verifier" && data.csas) {
+                  console.log("CSAS QR-code herkend.");
+
+                  // Vul de modal met de gegevens van het CSAS-verzoek
+                  populateCsasModal(data);
+
+                  // Toon de CSAS modal
+                  csasModal.style.display = 'flex';
+
+                  csasAcceptButton.onclick = () => {
+                    goToCsasPinConfirmationScreen(); // Ga naar pincode bevestigingsscherm
+                    csasModal.style.display = 'none'; // Verberg de CSAS-modal
+                  };
+                  
+
+                  csasStopButton.onclick = () => {
+                    csasModal.style.display = 'none'; // Verberg de CSAS-modal
+                    walletScreen.style.display = 'block'; // Toon het wallet-scherm
+                    bottomNav.style.display = 'flex'; // Toon de navigatiebalk onderaan opnieuw
+                  };
+                  
+
+              // Stap 2: Controleer of het een verifier QR-code is (rdfcv)
+              } else if (data.rdfcv && data.requester && data.reason) {
                   console.log("Verifier QR-code met rdfcv herkend.");
 
                   // Vul de rdfcv modal met de juiste gegevens
@@ -541,53 +577,52 @@ function startQrScan() {
                         goToVerifierSuccessScreen(data);  // Toon het verifier success-scherm
                         pinConfirmationScreenVerifier.style.display = 'none';  // Sluit het pincode bevestigingsscherm
                       };
-                    
+
                       rdfcvModal.style.display = 'none';  // Verberg het rdfcv vraagscherm
-                    };
+                  };
 
                   rdfcvStopButton.onclick = () => {
                       rdfcvModal.style.display = 'none';
                       resetQrScanner();
                   };
 
-              // Stap 2: Controleer of het een issuer QR-code is (rdfci)
+              // Stap 3: Controleer of het een issuer QR-code is (rdfci)
               } else if (data.issuedBy && data.name) {
                   console.log("Issuer QR-code herkend.");
 
-                  // Stap 2: Controleer op 'rdfci' in issuer QR-code
                   if (data.rdfci) {
-                    console.log("Issuer QR-code met rdfci herkend.");
-                
-                    // Vul de modal met de nieuwe functie
-                    populateRdfciModal(data);
-                
-                    // Toon het extra vraagscherm
-                    rdfciModal.style.display = 'flex';
-                
-                    rdfciAcceptButton.onclick = () => {
-                        // Voeg hier functionaliteit toe om de issuer-kaartje op te slaan
-                        credentials.push({
-                            name: data.name || 'Onbekend kaartje',
-                            issuedBy: data.issuedBy || 'Onbekende uitgever',
-                            actionTimestamp: timestamp,
-                            isShareAction: false,
-                            data: data // Bewaar alle details van het kaartje
-                        });
-                
-                        saveCredentials();
-                
-                        // Toon het issuer success-scherm
-                        goToIssuerSuccessScreen(data.name, data.issuedBy);
-                
-                        // Sluit het extra vraagscherm
-                        rdfciModal.style.display = 'none';
-                    };
-                
-                    rdfciStopButton.onclick = () => {
-                        rdfciModal.style.display = 'none';
-                        resetQrScanner();
-                    };
-                
+                      console.log("Issuer QR-code met rdfci herkend.");
+
+                      // Vul de modal met de nieuwe functie
+                      populateRdfciModal(data);
+
+                      // Toon het extra vraagscherm
+                      rdfciModal.style.display = 'flex';
+
+                      rdfciAcceptButton.onclick = () => {
+                          // Voeg hier functionaliteit toe om de issuer-kaartje op te slaan
+                          credentials.push({
+                              name: data.name || 'Onbekend kaartje',
+                              issuedBy: data.issuedBy || 'Onbekende uitgever',
+                              actionTimestamp: timestamp,
+                              isShareAction: false,
+                              data: data // Bewaar alle details van het kaartje
+                          });
+
+                          saveCredentials();
+
+                          // Toon het issuer success-scherm
+                          goToIssuerSuccessScreen(data.name, data.issuedBy);
+
+                          // Sluit het extra vraagscherm
+                          rdfciModal.style.display = 'none';
+                      };
+
+                      rdfciStopButton.onclick = () => {
+                          rdfciModal.style.display = 'none';
+                          resetQrScanner();
+                      };
+
                   } else {
                       // Toon de bestaande issuer modal
                       issuerQuestionModal.style.display = 'flex';
@@ -647,6 +682,7 @@ function startQrScan() {
       }
   );
 }
+
 
 
 // Sluit de scanner handmatig wanneer op "Scannen afsluiten" wordt geklikt
@@ -1226,5 +1262,139 @@ if (closeAddCardBtn) {
     // Toon het wallet-screen opnieuw
     walletScreen.style.display = 'block';
     bottomNav.style.display = 'flex'; // Toon de navbar onderaan opnieuw
+  };
+}
+
+
+document.addEventListener('DOMContentLoaded', function () {
+  const toggleButton = document.getElementById('toggle-view-button');
+  const buttonList = document.querySelector('.button-list');
+  const sectionHeaders = document.getElementById('section-organisation-headers');
+
+  // Start logica: button-list zichtbaar, section-organisation-headers verborgen
+  toggleButton.addEventListener('click', function () {
+      const icon = toggleButton.querySelector('i');
+
+      if (buttonList.style.display === 'none') {
+          // Toon button-list, verberg de headers
+          buttonList.style.display = 'block';
+          sectionHeaders.style.display = 'none';
+          icon.className = 'fas fa-building';
+          toggleButton.innerHTML = '<i class="fas fa-building"></i> Weergave per organisatie';
+      } else {
+          // Verberg button-list, toon de headers
+          buttonList.style.display = 'none';
+          sectionHeaders.style.display = 'block';
+          icon.className = 'fas fa-list';
+          toggleButton.innerHTML = '<i class="fas fa-list"></i> Weergave per attribuut';
+      }
+  });
+});
+
+
+document.addEventListener('DOMContentLoaded', function () {
+  const headers = document.querySelectorAll('.header-bar');
+
+  headers.forEach(header => {
+    header.addEventListener('click', function () {
+      const formButtons = header.nextElementSibling;
+
+      // Wissel de zichtbaarheid van de form-buttons
+      if (formButtons.style.display === 'none' || formButtons.style.display === '') {
+        formButtons.style.display = 'block';
+        header.querySelector('.fa-chevron-down').classList.remove('fa-chevron-down');
+        header.querySelector('.header-right i').classList.add('fa-chevron-up');
+      } else {
+        formButtons.style.display = 'none';
+        header.querySelector('.header-right i').classList.remove('fa-chevron-up');
+        header.querySelector('.header-right i').classList.add('fa-chevron-down');
+      }
+    });
+  });
+});
+
+// Functie om de CSAS Modal te vullen met de juiste gegevens uit de QR-code
+function populateCsasModal(data) {
+  // Toon de naam van de verifier
+  csasRequester.textContent = data.requester;
+
+  // Leeg de details-container zodat oude gegevens worden verwijderd
+  csasDetailsContainer.innerHTML = '';
+
+  // Vul de details-container met de gegevens die opgevraagd worden
+  data.csas.forEach(item => {
+    const fieldName = fieldMapping[item.name] || item.name;  // Gebruik fieldmapping voor leesbare veldnamen
+    const detail = document.createElement('p');
+    detail.textContent = `${item.issuedBy}: ${fieldName}`;  // Toon uitgever en veldnaam
+    csasDetailsContainer.appendChild(detail);
+  });
+
+  // Vul de overeenkomst informatie (bijv. opslagduur)
+  csasAgreement.textContent = `Opslagduur: ${data.a.replace('t', ' maanden')}`;
+}
+
+// Functie om naar het pincode bevestigingsscherm te gaan voor CSAS
+function goToCsasPinConfirmationScreen() {
+  // Toon het pincode bevestigingsscherm voor CSAS
+  csasPinConfirmationScreen.style.display = 'flex';
+
+  // Wanneer de pincode wordt bevestigd
+  confirmPinCsas.onclick = () => {
+    // Bevestig de pincode en sla gegevens op
+    saveCsasCredentials();
+    goToCsasSuccessScreen();
+    
+    // Sluit het pincode bevestigingsscherm
+    csasPinConfirmationScreen.style.display = 'none';
+  };
+}
+
+// Functie om CSAS credentials op te slaan in de wallet
+function saveCsasCredentials() {
+  // Voor elk kaartje in de csas data, voeg een nieuw credential toe
+  data.csas.forEach(item => {
+    const newCredential = {
+      name: item.name,
+      issuedBy: item.issuedBy,
+      actionTimestamp: new Date().toLocaleString(), // De tijd waarop het kaartje is opgeslagen
+      isShareAction: false // Dit is een kaartje, geen deelactie
+    };
+    // Voeg het nieuwe credential toe aan de lijst van credentials
+    credentials.push(newCredential);
+  });
+
+  // Sla de credentials op in de local storage
+  saveCredentials();
+}
+
+// Functie om het CSAS successcherm te tonen
+function goToCsasSuccessScreen() {
+  // Toon de naam van de verifier in het successcherm
+  csasSuccessRequester.textContent = csasRequester.textContent;
+
+  // Leeg de container voor de kaartjes zodat oude gegevens worden verwijderd
+  csasSuccessCardContainer.innerHTML = '';
+
+  // Voeg de nieuwe kaartjes toe aan het successcherm
+  data.csas.forEach(item => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <i class="fas fa-file-contract"></i>
+      <div class="card-text">
+        <h3>${item.name}</h3>
+        <p>${item.issuedBy}</p>
+      </div>
+    `;
+    csasSuccessCardContainer.appendChild(card);
+  });
+
+  // Toon het CSAS successcherm
+  csasSuccessScreen.style.display = 'flex';
+
+  closeCsasSuccessBtn.onclick = () => {
+    csasSuccessScreen.style.display = 'none'; // Verberg het successcherm
+    walletScreen.style.display = 'block'; // Toon het wallet-scherm
+    bottomNav.style.display = 'flex'; // Toon de navigatiebalk onderaan opnieuw
   };
 }
