@@ -41,44 +41,352 @@
 
 
 
+<!-- Scan scherm wordt pas zichtbaar als de QR-scan knop wordt ingedrukt -->
+<section class="add-card-screen" id="add-card-screen" style="display: none;">
+  <div class="details-header">
+    <button class="close-btn" id="close-add-card">
+      <i class="fas fa-arrow-left"></i>
+    </button>
+  </div>
+
+  <div class="scan-section" id="scan-section">
+    <div class="scan-container">
+      <div class="scan-btn-container">
+        <button class="scan-btn" id="scan-button">
+          <i class="fas fa-qrcode qr-logo"></i> <!-- Gebruik bestaand FontAwesome QR-code icoon -->
+        </button>
+      </div>
+      <div class="scan-text">Scan QR code</div>
+    </div>
+    <div id="reader" style="display: none;"></div> <!-- Camerascherm -->
+    <button class="close-scan-btn" id="close-scan-button" style="display: none;">Scannen afsluiten</button>
+  </div>
+
+  <hr>
+  <div class="get-direct-attribute-title">Haal bewijzen direct op bij organisaties zonder QR</div>
+
+  <!-- Toegevoegde knoppen onder de QR-code knop -->
+  <div class="button-list">
+<!-- Eerste knop: National ID -->
+<button class="card-button checked">
+  <div class="button-content">
+    <i class="fas fa-id-card icon-left"></i>
+    <div class="button-text">
+      <span>National ID</span>
+      <div class="button-text-sub">Rijksoverheid</div>
+    </div>
+    <i class="fas fa-check icon-right"></i>
+  </div>
+</button>
+
+<!-- Tweede knop: Adres -->
+<button class="card-button checked">
+  <div class="button-content">
+    <i class="fas fa-home icon-left"></i>
+    <div class="button-text">
+      <span>Woonadres</span>
+      <div class="button-text-sub">Rijksoverheid</div>
+    </div>
+    <i class="fas fa-check icon-right"></i>
+  </div>
+</button>
+
+<!-- Derde knop: Rijbewijs -->
+<button class="card-button">
+  <div class="button-content">
+    <i class="fas fa-car icon-left"></i>
+    <div class="button-text">
+      <span>Rijbewijs</span>
+      <div class="button-text-sub">RDW</div>
+    </div>
+    <i class="fas fa-plus icon-right"></i>
+  </div>
+</button>
+
+<!-- Vierde knop: Diploma's -->
+<button class="card-button">
+  <div class="button-content">
+    <i class="fas fa-graduation-cap icon-left"></i>
+    <div class="button-text">
+      <span>Diploma's</span>
+      <div class="button-text-sub">DUO</div>
+    </div>
+    <i class="fas fa-plus icon-right"></i>
+  </div>
+</button>
+
+<!-- Vijfde knop: VOG -->
+<button class="card-button">
+  <div class="button-content">
+    <i class="fas fa-file-contract icon-left"></i>
+    <div class="button-text">
+      <span>VOG</span>
+      <div class="button-text-sub">Justis</div>
+    </div>
+    <i class="fas fa-plus icon-right"></i>
+  </div>
+</button>
+
+</div>
+
+<!-- Toggle knop voor weergave-wisseling -->
+<button id="toggle-view-button" class="toggle-view-button">
+  <i class="fas fa-building"></i> Weergave per organisatie
+</button>
+
+
+
+<div id="section-organisation-headers" class="section-organisation-headers" style="display: none;">
+
+  <!-- *** Header Balk voor RDW *** -->
+  <div class="header-bar">
+    <div class="header-left">
+      <img src="rdwlogo.svg" alt="Logo RDW" class="header-logo">
+      <span class="header-title">RDW</span>
+    </div>
+    <div class="header-right">
+      <i class="fas fa-chevron-down"></i>
+    </div>
+  </div>
+  <div class="form-buttons" id="rdw-form-buttons" style="display: none;">
+    <button class="card-button">
+      <div class="button-content">
+        <i class="fas fa-file-contract icon-left"></i>
+        <span class="button-text">Rijbewijs</span>
+        <i class="fas fa-plus icon-right"></i>
+      </div>
+    </button>
+  </div>
+
+  <!-- *** Header Balk voor DUO *** -->
+  <div class="header-bar">
+    <div class="header-left">
+      <img src="duologo.svg" alt="Logo DUO" class="header-logo">
+      <span class="header-title">DUO</span>
+    </div>
+    <div class="header-right">
+      <i class="fas fa-chevron-down"></i>
+    </div>
+  </div>
+  <div class="form-buttons" id="duo-form-buttons" style="display: none;">
+    <button class="card-button">
+      <div class="button-content">
+        <i class="fas fa-file-contract icon-left"></i>
+        <span class="button-text">Diploma('s)</span>
+        <i class="fas fa-plus icon-right"></i>
+      </div>
+    </button>
+  </div>
+
+  <!-- *** Header Balk voor Justis *** -->
+  <div class="header-bar">
+    <div class="header-left">
+      <img src="justislogo.svg" alt="Logo Justis" class="header-logo">
+      <span class="header-title">Justis</span>
+    </div>
+    <div class="header-right">
+      <i class="fas fa-chevron-down"></i>
+    </div>
+  </div>
+  <div class="form-buttons" id="justis-form-buttons" style="display: none;">
+    <button class="card-button">
+      <div class="button-content">
+        <i class="fas fa-file-contract icon-left"></i>
+        <span class="button-text">VOG</span>
+        <i class="fas fa-plus icon-right"></i>
+      </div>
+    </button>
+  </div>
+
+  <!-- *** Header Balk voor UWV *** -->
+  <div class="header-bar">
+    <div class="header-left">
+      <img src="uwvlogo.svg" alt="Logo UWV" class="header-logo">
+      <span class="header-title">UWV</span>
+    </div>
+    <div class="header-right">
+      <i class="fas fa-chevron-down"></i>
+    </div>
+  </div>
+  <div class="form-buttons" id="uwv-form-buttons" style="display: none;">
+    <button class="card-button">
+      <div class="button-content">
+        <i class="fas fa-file-contract icon-left"></i>
+        <span class="button-text">Verzekeringsgegevens</span>
+        <i class="fas fa-plus icon-right"></i>
+      </div>
+    </button>
+  </div>
+
+  <!-- *** Header Balk voor BKR *** -->
+  <div class="header-bar">
+    <div class="header-left">
+      <img src="bkrlogo.svg" alt="Logo BKR" class="header-logo">
+      <span class="header-title">BKR</span>
+    </div>
+    <div class="header-right">
+      <i class="fas fa-chevron-down"></i>
+    </div>
+  </div>
+  <div class="form-buttons" id="bkr-form-buttons" style="display: none;">
+    <button class="card-button">
+      <div class="button-content">
+        <i class="fas fa-file-contract icon-left"></i>
+        <span class="button-text">Kredietregistratie</span>
+        <i class="fas fa-plus icon-right"></i>
+      </div>
+    </button>
+  </div>
+
+  <!-- *** Header Balk voor Kadaster *** -->
+  <div class="header-bar">
+    <div class="header-left">
+      <img src="kadasterlogo.svg" alt="Logo Kadaster" class="header-logo">
+      <span class="header-title">Kadaster</span>
+    </div>
+    <div class="header-right">
+      <i class="fas fa-chevron-down"></i>
+    </div>
+  </div>
+  <div class="form-buttons" id="kadaster-form-buttons" style="display: none;">
+    <button class="card-button">
+      <div class="button-content">
+        <i class="fas fa-file-contract icon-left"></i>
+        <span class="button-text">Eigendomsinformatie Woning(en)</span>
+        <i class="fas fa-plus icon-right"></i>
+      </div>
+    </button>
+  </div>
+
+  <!-- *** Header Balk voor Belastingdienst *** -->
+  <div class="header-bar">
+    <div class="header-left">
+      <img src="bdlogo.svg" alt="Logo Belastingdienst" class="header-logo">
+      <span class="header-title">Belastingdienst</span>
+    </div>
+    <div class="header-right">
+      <i class="fas fa-chevron-down"></i>
+    </div>
+  </div>
+  <div class="form-buttons" id="belastingdienst-form-buttons" style="display: none;">
+    <button class="card-button">
+      <div class="button-content">
+        <i class="fas fa-file-contract icon-left"></i>
+        <span class="button-text">Inkomensverklaring</span>
+        <i class="fas fa-plus icon-right"></i>
+      </div>
+    </button>
+    <button class="card-button">
+      <div class="button-content">
+        <i class="fas fa-file-contract icon-left"></i>
+        <span class="button-text">Vooraf Ingevulde Aangifte</span>
+        <i class="fas fa-plus icon-right"></i>
+      </div>
+    </button>
+    <button class="card-button">
+      <div class="button-content">
+        <i class="fas fa-file-contract icon-left"></i>
+        <span class="button-text">Aangifte Inkomstenbelasting</span>
+        <i class="fas fa-plus icon-right"></i>
+      </div>
+    </button>
+    <button class="card-button">
+      <div class="button-content">
+        <i class="fas fa-file-contract icon-left"></i>
+        <span class="button-text">Loonheffing formulier</span>
+        <i class="fas fa-plus icon-right"></i>
+      </div>
+    </button>
+  </div>
+
+
+  <!-- *** Header Balk voor Sociale Verzekerings Bank (SVB) *** -->
+  <div class="header-bar">
+    <div class="header-left">
+      <img src="svblogo.svg" alt="Logo SVB" class="header-logo">
+      <span class="header-title">Sociale Verzekerings Bank (SVB)</span>
+    </div>
+    <div class="header-right">
+      <i class="fas fa-chevron-down"></i>
+    </div>
+  </div>
+  <div class="form-buttons" id="svb-form-buttons" style="display: none;">
+    <button class="card-button">
+      <div class="button-content">
+        <i class="fas fa-file-contract icon-left"></i>
+        <span class="button-text">AOW-status en AOW-leeftijd</span>
+        <i class="fas fa-plus icon-right"></i>
+      </div>
+    </button>
+  </div>
+
+  <!-- *** Header Balk voor CAK *** -->
+  <div class="header-bar">
+    <div class="header-left">
+      <img src="caklogo.svg" alt="Logo CAK" class="header-logo">
+      <span class="header-title">CAK</span>
+    </div>
+    <div class="header-right">
+      <i class="fas fa-chevron-down"></i>
+    </div>
+  </div>
+  <div class="form-buttons" id="cak-form-buttons" style="display: none;">
+    <button class="card-button">
+      <div class="button-content">
+        <i class="fas fa-file-contract icon-left"></i>
+        <span class="button-text">Toewijzing van zorg en ondersteuning</span>
+        <i class="fas fa-plus icon-right"></i>
+      </div>
+    </button>
+  </div>
+
+
+</div>
+
+
+</section>
+
+
   <!-- *** Wallet-scherm *** -->
   <section id="wallet-screen" style="display: none;">
 
  
+<!-- Zwevende QR-scan/onderteken knop -->
+<button class="floating-qr-button" id="floating-qr-button">
+  <i class="fas fa-plus"></i>
+</button>
 
-      <!-- *** Scan Sectie *** -->
-<section class="scan-section" id="scan-section">
-  <div class="scan-container">
-      <div class="scan-btn-container">
-          <button class="scan-btn" id="scan-button">
-              <i class="fas fa-qrcode qr-logo"></i> <!-- Vervang afbeelding door het FontAwesome QR-code icoon -->
-          </button>
-      </div>
-      <div class="scan-text">Scan QR code</div>
-  </div>
-  <div id="reader"></div> <!-- Camerascherm -->
-  <button class="close-scan-btn" id="close-scan-button" style="display: none;">Scannen afsluiten</button>
+<section class="wallet-header">
+  <h3>Mijn digitale bewijzen</h3>
+  <div class="title-divider"></div>
 </section>
 
 
-      <!-- *** Standaard Kaartjes *** -->
-      <section class="default-cards">
-          <div class="card default-card light-card">
-            <h3>Persoonlijke data</h3>
-            <p>Willeke Liselotte</p>
-            <button class="view-card">Bekijk <span class="arrow">→</span></button>
-          </div>
-          <div class="card default-card dark-card">
-            <h3>Woonadres</h3>
-            <p>Den Haag</p>
-            <button class="view-card">Bekijk <span class="arrow">→</span></button>
-          </div>
-      </section>
+<!-- *** Standaard Kaartjes *** -->
+<section class="default-cards">
 
-      <!-- *** Dynamische Kaartjes *** -->
-      <section class="wallet-grid" id="wallet-grid">
-        <!-- Dynamische kaartjes zullen hier worden toegevoegd -->
-      </section>
+  <div class="card default-card light-card">
+    <i class="fas fa-id-card"></i>
+    <div class="card-text" style="font-size: 18px;">
+        <h3 >Persoonlijke data</h3>
+        <p>Rijksoverheid</p>
+    </div>
+</div>
+
+<!-- Woonadres kaart -->
+<div class="card default-card dark-card">
+  <i class="fas fa-home" ></i>
+  <div class="card-text" style="font-size: 18px;">
+      <h3 >Woonadres</h3>
+      <p>Rijksoverheid</p>
+  </div>
+</div>
+</section>
+
+<!-- *** Dynamische Kaartjes *** -->
+<section class="wallet-grid" id="wallet-grid">
+  <!-- Dynamische kaartjes zullen hier worden toegevoegd -->
+</section>
 
 <!-- *** Menu Scherm *** -->
 <div id="menu-screen" class="menu-screen" style="display: none;">
@@ -120,18 +428,17 @@
       <i class="fas fa-arrow-left"></i>
     </button>
   </div>
-  <h3 id="details-title">Details van Persoonlijke Data</h3>
+  <h3 id="details-title">Details Persoonlijke Data</h3>
   <div class="divider"></div>
   <div id="details-content">
     <!-- Hardcoded data voor het personal data kaartje -->
-    <p><strong>First name:</strong> Willeke Liselotte</p>
-    <p><strong>Last name:</strong> De Bruijn</p>
-    <p><strong>Surname:</strong> Molenaar</p>
-    <p><strong>Date of birth:</strong> March 10, 1997</p>
-    <p><strong>Birth city:</strong> Delft</p>
-    <p><strong>Birth country:</strong> The Netherlands</p>
-    <p><strong>Gender:</strong> Female</p>
-    <p><strong>Citizen service number (BSN):</strong> 938391772</p>
+    <p><strong>Voornaam:</strong> Willeke Liselotte</p>
+    <p><strong>Achternaam:</strong> De Bruijn</p>
+    <p><strong>Geboortedatum:</strong> March 10, 1997</p>
+    <p><strong>Geboorteplaats:</strong> Delft</p>
+    <p><strong>Geboorteland:</strong> Nederland</p>
+    <p><strong>Geslacht:</strong> Vrouw</p>
+    <p><strong>Burgerservicenummer (BSN):</strong> 938391772</p>
     <p><strong>Nationaliteit:</strong> Nederlands</p>
     <p><strong>Geldigheid paspoort:</strong> March 11, 2027</p>
     <p><strong>Older than 18:</strong> Yes</p>
@@ -145,7 +452,7 @@
       <i class="fas fa-arrow-left"></i>
     </button>
   </div>
-  <h3 id="details-title">Woonadres</h3>
+  <h3 id="details-title">Details Woonadres</h3>
   <div class="divider"></div>
   <div id="details-content">
     <p><strong>Straat:</strong> Wilhelmina van Pruisenweg</p>
@@ -346,6 +653,65 @@
       <button id="close-issuer-success-btn" class="share-button">Sluiten</button>
     </div>
   </section>
+
+ <!-- *** CSAS Modal Scherm voor Gegevens Ophalen, Opslaan en Delen *** -->
+<div id="csas-modal" class="modal" style="display: none;">
+  <h2 style="text-align: left;">Wilt u onderstaande gegevens<br>
+    ophalen bij de uitgever,<br> 
+    opslaan in uw wallet en <br>
+    delen met <span id="csas-requester"></span>?</h2>
+  <div class="divider"></div>
+  <!-- Hier wordt de naam van de verifier (requester) weergegeven -->
+  <div id="csas-details-container"></div>
+  <!-- Container voor alle veldnamen die worden opgevraagd -->
+  <div class="divider"></div>
+  <!-- Een scheidingslijn voor duidelijkheid tussen secties -->
+
+  <!-- Reden voor verzoek, links uitgelijnd -->
+  <p class="left-aligned"><strong>Reden voor dit verzoek:</strong></p>
+  <p id="csas-reason" class="left-aligned"></p>
+  <div class="divider"></div>
+
+  <!-- Overeenkomst, links uitgelijnd -->
+  <p class="left-aligned"><strong>Overeenkomst</strong></p>
+  <p id="csas-agreement" class="left-aligned"></p>
+  <div class="divider"></div>
+
+  <!-- Knoppen voor stop en doorgaan -->
+  <div class="button-container">
+    <button id="csas-stop-button" class="stop-button">Stoppen</button>
+    <!-- Knop voor de gebruiker om het proces te stoppen en terug te keren naar het wallet-scherm -->
+    <button id="csas-accept-button" class="orange-btn">Doorgaan</button>
+    <!-- Knop voor de gebruiker om verder te gaan naar het pincode bevestigingsscherm -->
+  </div>
+</div>
+
+<!-- *** CSAS Pincode Bevestigingsscherm voor Actiebevestiging (CSAS) *** -->
+<div id="csas-pin-confirmation-screen" class="modal" style="display: none;">
+  <h2>Voer uw pincode in om de actie te bevestigen</h2>
+  <!-- Titel voor het invoeren van de pincode ter bevestiging van de actie -->
+  <div class="pin-input">
+    <input type="password" maxlength="1" class="pin-box" inputmode="numeric" pattern="[0-9]*">
+    <input type="password" maxlength="1" class="pin-box" inputmode="numeric" pattern="[0-9]*">
+    <input type="password" maxlength="1" class="pin-box" inputmode="numeric" pattern="[0-9]*">
+    <input type="password" maxlength="1" class="pin-box" inputmode="numeric" pattern="[0-9]*">
+    <input type="password" maxlength="1" class="pin-box" inputmode="numeric" pattern="[0-9]*">
+    <input type="password" maxlength="1" class="pin-box" inputmode="numeric" pattern="[0-9]*">
+    <!-- Pincode invoervelden voor een 6-cijferige pincode -->
+  </div>
+  <button id="confirm-pin-csas" class="orange-btn confirm-pin">Bevestigen</button>
+  <!-- Knop om de ingevoerde pincode te bevestigen en verder te gaan naar het CSAS successcherm -->
+</div>
+
+<!-- *** CSAS Success-scherm na Ophalen, Opslaan en Delen van Gegevens (CSAS) *** -->
+<div id="csas-success-screen" class="modal" style="display: none;">
+  <h2>Succes! U heeft de gegevens gedeeld met <span id="csas-success-requester"></span> en onderstaande gegevens in uw wallet opgeslagen:</h2>
+  <!-- Hier wordt de naam van de verifier weergegeven, gevolgd door een overzicht van de opgeslagen gegevens -->
+  <div id="csas-success-card-container"></div>
+  <!-- Container waar de kaartjes worden getoond die succesvol zijn opgehaald en opgeslagen -->
+  <button id="close-csas-success-btn" class="orange-btn">Sluiten</button>
+  <!-- Knop om het successcherm te sluiten en terug te keren naar het wallet-scherm -->
+</div>
 
   <!-- *** Scripts *** -->
   <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
