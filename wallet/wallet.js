@@ -2,6 +2,8 @@
 const scanButton = document.getElementById('scan-button');
 const closeScanButton = document.getElementById('close-scan-button');
 const readerDiv = document.getElementById('reader');
+const floatingQrButton = document.getElementById('floating-qr-button');
+const addCardScreen = document.getElementById('add-card-screen');
 
 // *** Wallet Elementen ***
 const walletGrid = document.getElementById('wallet-grid');
@@ -73,8 +75,21 @@ const rdfcvAgreement = document.getElementById('rdfcv-agreement');
 const rdfcvAcceptButton = document.getElementById('rdfcv-accept-button');
 const rdfcvStopButton = document.getElementById('rdfcv-stop-button');
 
+// *** CSAS Elementen ***
+const csasModal = document.getElementById('csas-modal');
+const csasRequester = document.getElementById('csas-requester');
+const csasDetailsContainer = document.getElementById('csas-details-container');
+const csasAgreement = document.getElementById('csas-agreement');
+const csasAcceptButton = document.getElementById('csas-accept-button');
+const csasStopButton = document.getElementById('csas-stop-button');
+const csasPinConfirmationScreen = document.getElementById('csas-pin-confirmation-screen');
 
-// *** Veldmapping Object ***
+const csasSuccessScreen = document.getElementById('csas-success-screen');
+const csasSuccessRequester = document.getElementById('csas-success-requester');
+const csasSuccessCardContainer = document.getElementById('csas-success-card-container');
+const closeCsasSuccessBtn = document.getElementById('close-csas-success-btn');
+
+
 const fieldMapping = {
   gn: 'Voornaam',
   sn: 'Achternaam',
@@ -94,6 +109,7 @@ const fieldMapping = {
     'w': 'Bewaarplicht en datadeling met derden volgens wettelijke richtlijn'
   }
 };
+
 
 let html5QrCode = null; // We zullen de QR-code scanner hier initialiseren
 let credentials = [];
@@ -247,6 +263,147 @@ function showActivities() {
   });
 }
 
+
+
+// Mapping van kaartnamen naar stijlen
+const cardStyles = {
+  'persoonlijke data': {
+    iconClass: 'fas fa-id-card',
+    iconColor: '#D6E6F2',
+    textColor: '#4A6C85'
+  },
+  'woonadres': {
+    iconClass: 'fas fa-home',
+    iconColor: '#DAEEDC',
+    textColor: '#5F7F60'
+  },
+  'organisatiemachtiging vog': {
+    iconClass: 'fas fa-file-signature',
+    iconColor: '#D4A5D7',
+    textColor: '#7A3E9D'
+  },
+  'inkomensverklaring': {
+    imagePath: 'bdlogo.svg',
+    iconColor: null,
+    textColor: '#2681cc' // Nieuwe kleur passend bij het logo
+  },
+  'kredietregistratie': {
+    imagePath: 'bkrlogo.svg',
+    iconColor: null,
+    textColor: '#FDC830' // Kleur aangepast op basis van het logo
+  },
+  'aow-status': {
+    imagePath: 'svblogo.svg',
+    iconColor: null,
+    textColor: '#57C4E5' // Kleur aangepast op basis van het logo
+  },
+  'verzekeringsgegevens': {
+    imagePath: 'uwvlogo.svg',
+    iconColor: null,
+    textColor: '#00588E' // Kleur aangepast op basis van het logo
+  },
+  'werkgever': {
+    iconClass: 'fas fa-briefcase',
+    iconColor: '#FBC4AB',
+    textColor: '#D35400'
+  },
+  'verklaring omtrent gedrag (vog)': {
+    imagePath: 'justislogo.svg',
+    iconColor: null,
+    textColor: '#00588E'
+  },
+  // Voeg meer kaartstijlen toe indien nodig
+};
+
+
+function applyStylesToCards() {
+  document.querySelectorAll('.default-card').forEach((card) => {
+    const cardName = card.querySelector('.card-text h3').textContent.trim().toLowerCase();
+    const styles = cardStyles[cardName] || {
+      iconClass: 'far fa-id-badge',
+      iconColor: '#333',
+      textColor: '#333'
+    };
+
+    const iconElement = card.querySelector('i');
+    const h3Element = card.querySelector('.card-text h3');
+
+    // Update de icon class
+    iconElement.className = styles.iconClass;
+
+    // Pas de kleuren toe
+    iconElement.style.color = styles.iconColor;
+    h3Element.style.color = styles.textColor;
+  });
+}
+
+// **Roep de functie hier aan**
+applyStylesToCards();
+
+// Functie om kaartjes van issuers in de wallet weer te geven en kaartjes van verifiers niet weer te geven
+function displayCredentials() {
+  walletGrid.innerHTML = ''; // Maak de wallet leeg
+
+  credentials.forEach((cred, index) => {
+    if (!cred.isShareAction) {
+      const card = document.createElement('div');
+      card.className = 'card';
+
+      // Haal stijlen op basis van kaartnaam
+      const nameLower = cred.name.toLowerCase();
+      const styles = cardStyles[nameLower] || {
+        iconClass: 'far fa-id-badge',
+        iconColor: '#333',
+        textColor: '#333'
+      };
+
+      // Definieer grootte en marges
+      const iconSize = '30px';
+      const textSize = '18px';
+      const issuerTextSize = '14px'; // Kleiner lettertype voor de issuer
+      const iconMarginBottom = '10px';
+
+      // Controleer of er een afbeeldingspad is opgegeven in plaats van een icoon
+      let iconHtml = '';
+      if (styles.imagePath) {
+        iconHtml = `<img src="${styles.imagePath}" alt="${cred.name} logo" style="width: ${iconSize}; height: ${iconSize}; margin-bottom: ${iconMarginBottom};">`;
+      } else {
+        iconHtml = `<i class="${styles.iconClass}" style="color: ${styles.iconColor}; font-size: ${iconSize}; margin-bottom: ${iconMarginBottom};"></i>`;
+      }
+
+      // Voeg de HTML voor het kaartje toe
+      card.innerHTML = `
+        ${iconHtml}
+        <div class="card-text" style="font-size: ${textSize};">
+          <h3 style="color: ${styles.textColor}; margin: 0;">${cred.name}</h3>
+          ${cred.issuedBy ? `<p style="font-size: ${issuerTextSize}; color: #555; margin: 5px 0 0 0;">${cred.issuedBy}</p>` : ''}
+        </div>
+      `;
+
+      // Voeg event listener toe voor het bekijken van kaartdetails
+      card.addEventListener('click', () => showDetails(cred, index));
+
+      // Voeg de kaart toe aan het wallet-grid
+      walletGrid.appendChild(card);
+    }
+  });
+}
+
+
+// Functie om standaard kaartjes toe te voegen
+function loadDefaultCredentials() {
+  const defaultCards = [
+    { name: 'Persoonlijke data', issuedBy: 'Nederlandse overheid', isShareAction: false },
+    { name: 'Woonadres', issuedBy: 'Nederlandse overheid', isShareAction: false }
+  ];
+  defaultCards.forEach(defaultCard => {
+    const exists = credentials.some(cred => cred.name === defaultCard.name);
+    if (!exists) {
+      credentials.push(defaultCard);
+    }
+  });
+}
+
 // Functie om opgeslagen kaartjes te laden
 function loadCredentials() {
   const storedCredentials = localStorage.getItem('credentials');
@@ -255,25 +412,10 @@ function loadCredentials() {
   }
 }
 
+
 // Functie om opgeslagen kaartjes te bewaren
 function saveCredentials() {
   localStorage.setItem('credentials', JSON.stringify(credentials));
-}
-
-// Functie om kaartjes van issuers in de wallet weer te geven en kaartjes van verifiers niet weer te geven
-function displayCredentials() {
-  walletGrid.innerHTML = ''; // Maak de wallet leeg
-  credentials.forEach((cred, index) => {
-    // Controleer of het een deelactie is (verifier-kaartje)
-    if (!cred.isShareAction) {
-      const card = document.createElement('div');
-      card.className = 'card';
-      card.innerHTML = `<h3>${cred.name}</h3>
-      <button class="view-card">Bekijk <span class="arrow">→</span></button>`;
-      card.addEventListener('click', () => showDetails(cred, index)); // Klik op kaartje toont details
-      walletGrid.appendChild(card);
-    }
-  });
 }
 
 // Event listener voor de standaardkaartjes
@@ -387,6 +529,13 @@ function showDetails(credential, index) {
   };
 }
 
+
+// Bij het laden van de pagina
+loadCredentials();
+loadDefaultCredentials();
+displayCredentials();
+
+
 // Functie om de QR-code scanner te starten
 function startQrScan() {
   document.querySelector('.scan-container').style.display = 'none'; // Verberg scan-knop en tekst
@@ -409,8 +558,22 @@ function startQrScan() {
               const data = JSON.parse(decodedText);
               const timestamp = new Date().toLocaleString();
 
-              // Stap 1: Controleer of het een verifier QR-code is (rdfcv)
-              if (data.rdfcv && data.requester && data.reason) {
+              // Stap 1: Controleer of het een verifier QR-code is (csas)
+              if (data.type === "verifier" && data.csas) {
+                console.log("CSAS QR-code herkend.");
+            
+                // Sla de CSAS data op voor later gebruik
+                window.currentCsasData = data;
+            
+                // Vul de modal met de gegevens van het CSAS-verzoek
+                populateCsasModal(data);
+            
+                // Toon de CSAS modal
+                csasModal.style.display = 'flex';     
+            
+
+              // Stap 2: Controleer of het een verifier QR-code is (rdfcv)
+              } else if (data.rdfcv && data.requester && data.reason) {
                   console.log("Verifier QR-code met rdfcv herkend.");
 
                   // Vul de rdfcv modal met de juiste gegevens
@@ -435,53 +598,52 @@ function startQrScan() {
                         goToVerifierSuccessScreen(data);  // Toon het verifier success-scherm
                         pinConfirmationScreenVerifier.style.display = 'none';  // Sluit het pincode bevestigingsscherm
                       };
-                    
+
                       rdfcvModal.style.display = 'none';  // Verberg het rdfcv vraagscherm
-                    };
+                  };
 
                   rdfcvStopButton.onclick = () => {
                       rdfcvModal.style.display = 'none';
                       resetQrScanner();
                   };
 
-              // Stap 2: Controleer of het een issuer QR-code is (rdfci)
+              // Stap 3: Controleer of het een issuer QR-code is (rdfci)
               } else if (data.issuedBy && data.name) {
                   console.log("Issuer QR-code herkend.");
 
-                  // Stap 2: Controleer op 'rdfci' in issuer QR-code
                   if (data.rdfci) {
-                    console.log("Issuer QR-code met rdfci herkend.");
-                
-                    // Vul de modal met de nieuwe functie
-                    populateRdfciModal(data);
-                
-                    // Toon het extra vraagscherm
-                    rdfciModal.style.display = 'flex';
-                
-                    rdfciAcceptButton.onclick = () => {
-                        // Voeg hier functionaliteit toe om de issuer-kaartje op te slaan
-                        credentials.push({
-                            name: data.name || 'Onbekend kaartje',
-                            issuedBy: data.issuedBy || 'Onbekende uitgever',
-                            actionTimestamp: timestamp,
-                            isShareAction: false,
-                            data: data // Bewaar alle details van het kaartje
-                        });
-                
-                        saveCredentials();
-                
-                        // Toon het issuer success-scherm
-                        goToIssuerSuccessScreen(data.name, data.issuedBy);
-                
-                        // Sluit het extra vraagscherm
-                        rdfciModal.style.display = 'none';
-                    };
-                
-                    rdfciStopButton.onclick = () => {
-                        rdfciModal.style.display = 'none';
-                        resetQrScanner();
-                    };
-                
+                      console.log("Issuer QR-code met rdfci herkend.");
+
+                      // Vul de modal met de nieuwe functie
+                      populateRdfciModal(data);
+
+                      // Toon het extra vraagscherm
+                      rdfciModal.style.display = 'flex';
+
+                      rdfciAcceptButton.onclick = () => {
+                          // Voeg hier functionaliteit toe om de issuer-kaartje op te slaan
+                          credentials.push({
+                              name: data.name || 'Onbekend kaartje',
+                              issuedBy: data.issuedBy || 'Onbekende uitgever',
+                              actionTimestamp: timestamp,
+                              isShareAction: false,
+                              data: data // Bewaar alle details van het kaartje
+                          });
+
+                          saveCredentials();
+
+                          // Toon het issuer success-scherm
+                          goToIssuerSuccessScreen(data.name, data.issuedBy);
+
+                          // Sluit het extra vraagscherm
+                          rdfciModal.style.display = 'none';
+                      };
+
+                      rdfciStopButton.onclick = () => {
+                          rdfciModal.style.display = 'none';
+                          resetQrScanner();
+                      };
+
                   } else {
                       // Toon de bestaande issuer modal
                       issuerQuestionModal.style.display = 'flex';
@@ -543,6 +705,7 @@ function startQrScan() {
 }
 
 
+
 // Sluit de scanner handmatig wanneer op "Scannen afsluiten" wordt geklikt
 closeScanButton.addEventListener('click', () => {
   if (html5QrCode) {
@@ -600,7 +763,6 @@ function resetPinInputs() {
 }
 
 
-// Issuer successscherm
 function goToIssuerSuccessScreen(cardName, issuedBy) {
   issuerSuccessScreen.style.display = 'block';
 
@@ -610,7 +772,29 @@ function goToIssuerSuccessScreen(cardName, issuedBy) {
 
   // Toon een kaartje met de gegevens
   const successCard = document.getElementById('issuer-success-card');
-  successCard.innerHTML = `<h3>${cardName}</h3>`;
+
+  // Haal stijlen op basis van kaartnaam
+  const nameLower = cardName.toLowerCase();
+  const styles = cardStyles[nameLower] || {
+    iconClass: 'far fa-id-badge',
+    iconColor: '#333',
+    textColor: '#333'
+  };
+
+  // Definieer grootte en marges
+  const iconSize = '30px';
+  const textSize = '18px';
+  const iconMarginBottom = '10px';
+
+  // Voeg FA-icoon en tekst toe aan de kaart met dynamische kleur en inline styles
+  successCard.innerHTML = `
+    <i class="${styles.iconClass}" 
+        style="color: ${styles.iconColor}; font-size: ${iconSize}; margin-bottom: ${iconMarginBottom};">
+    </i>
+    <div class="card-text" style="font-size: ${textSize};">
+      <h3 style="color: ${styles.textColor};">${cardName}</h3>
+    </div>
+  `;
   successCard.classList.add('card'); // Voeg de kaartstijl toe
 }
 
@@ -618,16 +802,23 @@ function goToIssuerSuccessScreen(cardName, issuedBy) {
 closeIssuerSuccessBtn.addEventListener('click', () => {
   issuerSuccessScreen.style.display = 'none';
   displayCredentials(); // Zorg dat het nieuwe kaartje wordt weergegeven
+
+  // Verberg het add-card scherm
+  addCardScreen.style.display = 'none';
+
+  // Toon het wallet-screen opnieuw
+  walletScreen.style.display = 'block';
+  bottomNav.style.display = 'flex'; // Toon de navbar onderaan opnieuw
 });
 
 // Functie om een waarde op te halen uit het "Personal data" kaartje of local storage
 function getFieldValue(field) {
   // Mapping van veldnamen naar specifieke waarden in de HTML van het "Personal data" kaartje
   const fieldMappings = {
-      gn: "First name",
-      sn: "Last name",
-      bd: "Date of birth",
-      bsn: "Citizen service number (BSN)"
+      gn: "Voornaam",
+      sn: "Achternaam",
+      bd: "Geboortedatum",
+      bsn: "Burgerservicenummer (BSN)"
   };
 
   // Haal de waarde uit het "Personal data" kaartje (HTML)
@@ -661,8 +852,8 @@ function getFieldValue(field) {
   return 'Niet gevonden';
 }
 
-// rdfci vullen
 
+// rdfci vullen
 function populateRdfciModal(data) {
   // Fill in the fixed parts
   document.getElementById('rdfci-name').innerText = data.name || 'Onbekend kaartje';
@@ -745,12 +936,9 @@ function populateRdfciModal(data) {
       case 'Organisatiemachtiging VOG':
         cardHeader.style.backgroundColor = '#5A50ED'; 
         break;
-      // Add more cases as needed
       default:
         cardHeader.style.backgroundColor = '#0072C6'; // Default color
     }
-    // Optionally set the header color based on the card name or type
-    // cardHeader.style.backgroundColor = '#0072C6'; // Adjust as needed
 
     // Create card content container
     const cardContent = document.createElement('div');
@@ -766,12 +954,26 @@ function populateRdfciModal(data) {
     cardDetails.className = 'card-details';
 
     if (cardInfo.type === 'localStorage') {
-      // Add all details from local storage card
+      // Add all details from local storage card using structured divs for alignment
       for (let key in cardInfo.data.data) {
         if (cardInfo.data.data.hasOwnProperty(key)) {
-          const detailElement = document.createElement('p');
-          detailElement.textContent = `${key}: ${cardInfo.data.data[key]}`;
-          cardDetails.appendChild(detailElement);
+          const detailRow = document.createElement('div');
+          detailRow.className = 'detail-row'; // Class for styling
+
+          const labelDiv = document.createElement('div');
+          labelDiv.className = 'label';
+          labelDiv.textContent = `${key}:`;
+
+          const valueDiv = document.createElement('div');
+          valueDiv.className = 'value';
+          valueDiv.textContent = cardInfo.data.data[key];
+
+          // Append label and value divs to the detail row
+          detailRow.appendChild(labelDiv);
+          detailRow.appendChild(valueDiv);
+
+          // Append the row to the card details
+          cardDetails.appendChild(detailRow);
         }
       }
     } else if (cardInfo.type === 'standardCard') {
@@ -780,10 +982,23 @@ function populateRdfciModal(data) {
       elements.forEach(element => {
         const fieldLabel = element.innerText.split(':')[0];
         if (!cardInfo.fields || cardInfo.fields.includes(fieldLabel)) {
-          const detailElement = document.createElement('p');
-          // Remove bold formatting by using textContent
-          detailElement.textContent = element.textContent;
-          cardDetails.appendChild(detailElement);
+          const detailRow = document.createElement('div');
+          detailRow.className = 'detail-row'; // Class for styling
+
+          const labelDiv = document.createElement('div');
+          labelDiv.className = 'label';
+          labelDiv.textContent = `${fieldLabel}:`;
+
+          const valueDiv = document.createElement('div');
+          valueDiv.className = 'value';
+          valueDiv.textContent = element.innerText.split(':')[1].trim();
+
+          // Append label and value divs to the detail row
+          detailRow.appendChild(labelDiv);
+          detailRow.appendChild(valueDiv);
+
+          // Append the row to the card details
+          cardDetails.appendChild(detailRow);
         }
       });
     }
@@ -802,12 +1017,15 @@ function populateRdfciModal(data) {
 
   // Agreement processing (always add under the heading "Overeenkomst")
   if (data.a) {
+    console.log('Data.a:', data.a);  // Controleer de waarde van data.a
+    console.log('Mapped value:', fieldMapping.a[data.a]);  // Controleer de gemapte waarde
     const agreementFields = data.a.split(', ').map(agreement => fieldMapping.a[agreement] || agreement).join(', ');
     document.getElementById('rdfci-agreement').innerText = agreementFields;
   } else {
     document.getElementById('rdfci-agreement').innerText = 'Geen overeenkomst gevonden.';
   }
 }
+
 
 // RFCV vraagscherm vullen
 // RFCV vraagscherm vullen
@@ -906,12 +1124,26 @@ function populateRdfcvModal(data) {
     cardDetails.className = 'card-details';
 
     if (cardInfo.type === 'localStorage') {
-      // Voeg alle details van het kaartje toe uit local storage
+      // Voeg alle details van het kaartje toe uit local storage met gestructureerde divs voor uitlijning
       for (let key in cardInfo.data.data) {
         if (cardInfo.data.data.hasOwnProperty(key)) {
-          const detailElement = document.createElement('p');
-          detailElement.textContent = `${key}: ${cardInfo.data.data[key]}`;
-          cardDetails.appendChild(detailElement);
+          const detailRow = document.createElement('div');
+          detailRow.className = 'detail-row'; // Class for styling
+
+          const labelDiv = document.createElement('div');
+          labelDiv.className = 'label';
+          labelDiv.textContent = `${key}:`;
+
+          const valueDiv = document.createElement('div');
+          valueDiv.className = 'value';
+          valueDiv.textContent = cardInfo.data.data[key];
+
+          // Voeg label en waarde toe aan de rij
+          detailRow.appendChild(labelDiv);
+          detailRow.appendChild(valueDiv);
+
+          // Voeg de rij toe aan de kaartdetails
+          cardDetails.appendChild(detailRow);
         }
       }
     } else if (cardInfo.type === 'standardCard') {
@@ -920,9 +1152,23 @@ function populateRdfcvModal(data) {
       elements.forEach(element => {
         const fieldLabel = element.innerText.split(':')[0];
         if (!cardInfo.fields || cardInfo.fields.includes(fieldLabel)) {
-          const detailElement = document.createElement('p');
-          detailElement.textContent = element.textContent;
-          cardDetails.appendChild(detailElement);
+          const detailRow = document.createElement('div');
+          detailRow.className = 'detail-row'; // Class for styling
+
+          const labelDiv = document.createElement('div');
+          labelDiv.className = 'label';
+          labelDiv.textContent = `${fieldLabel}:`;
+
+          const valueDiv = document.createElement('div');
+          valueDiv.className = 'value';
+          valueDiv.textContent = element.innerText.split(':')[1].trim();
+
+          // Voeg label en waarde toe aan de rij
+          detailRow.appendChild(labelDiv);
+          detailRow.appendChild(valueDiv);
+
+          // Voeg de rij toe aan de kaartdetails
+          cardDetails.appendChild(detailRow);
         }
       });
     }
@@ -938,6 +1184,8 @@ function populateRdfcvModal(data) {
 
   // Agreement verwerken
   if (data.a) {
+    console.log('Data.a:', data.a);  // Controleer de waarde van data.a
+    console.log('Mapped value:', fieldMapping.a[data.a]);  // Controleer de gemapte waarde
     const agreementFields = data.a.split(', ').map(agreement => fieldMapping.a[agreement] || agreement).join(', ');
     document.getElementById('rdfcv-agreement').innerText = agreementFields;
   } else {
@@ -969,7 +1217,9 @@ function goToVerifierSuccessScreen(data) {
       console.log("Zie Activiteit knop ingedrukt. Wallet-scherm verbergen, activiteiten-scherm tonen.");
 
       successScreen.style.display = 'none'; // Verberg het succes-scherm
+      addCardScreen.style.display = 'none'; // Verberg het add-card scherm
       walletScreen.style.display = 'none';  // Verberg het wallet-scherm
+      bottomNav.style.display = 'flex'; // Toon de navbar onderaan opnieuw
       activityScreen.style.display = 'block'; // Toon het activiteiten-scherm
       showActivities(); // Toon de activiteitenlijst
 
@@ -985,6 +1235,8 @@ function goToVerifierSuccessScreen(data) {
       console.log("Sluiten knop ingedrukt. Terug naar het wallet-scherm.");
 
       successScreen.style.display = 'none'; // Verberg het succes-scherm
+      addCardScreen.style.display = 'none'; // Verberg het add-card scherm
+      bottomNav.style.display = 'flex'; // Toon de navbar onderaan opnieuw
       walletScreen.style.display = 'block'; // Terug naar het wallet-scherm
       resetPinInputs(); // Reset de pincode-invoer
 
@@ -1010,3 +1262,408 @@ function saveSharedData(data) {
   saveCredentials();
 }
 
+// Zwevende knop opent alleen het add-card scherm
+floatingQrButton.addEventListener('click', () => {
+  // Verberg de wallet-screen en de navbar
+  walletScreen.style.display = 'none';
+  bottomNav.style.display = 'none';
+
+  // Toon het add-card scherm (nog zonder de scanner)
+  addCardScreen.style.display = 'flex';
+});
+
+// Logica voor het sluiten van het add-card scherm
+const closeAddCardBtn = document.getElementById('close-add-card');
+
+if (closeAddCardBtn) {
+  closeAddCardBtn.onclick = () => {
+    // Verberg het add-card scherm
+    addCardScreen.style.display = 'none';
+
+    // Toon het wallet-screen opnieuw
+    walletScreen.style.display = 'block';
+    bottomNav.style.display = 'flex'; // Toon de navbar onderaan opnieuw
+  };
+}
+
+
+document.addEventListener('DOMContentLoaded', function () {
+  const toggleButton = document.getElementById('toggle-view-button');
+  const buttonList = document.querySelector('.button-list');
+  const sectionHeaders = document.getElementById('section-organisation-headers');
+
+  // Start logica: button-list zichtbaar, section-organisation-headers verborgen
+  toggleButton.addEventListener('click', function () {
+      const icon = toggleButton.querySelector('i');
+
+      if (buttonList.style.display === 'none') {
+          // Toon button-list, verberg de headers
+          buttonList.style.display = 'block';
+          sectionHeaders.style.display = 'none';
+          icon.className = 'fas fa-building';
+          toggleButton.innerHTML = '<i class="fas fa-building"></i> Weergave per organisatie';
+      } else {
+          // Verberg button-list, toon de headers
+          buttonList.style.display = 'none';
+          sectionHeaders.style.display = 'block';
+          icon.className = 'fas fa-list';
+          toggleButton.innerHTML = '<i class="fas fa-list"></i> Weergave per attribuut';
+      }
+  });
+});
+
+
+document.addEventListener('DOMContentLoaded', function () {
+  const headers = document.querySelectorAll('.header-bar');
+
+  headers.forEach(header => {
+    header.addEventListener('click', function () {
+      const formButtons = header.nextElementSibling;
+
+      // Wissel de zichtbaarheid van de form-buttons
+      if (formButtons.style.display === 'none' || formButtons.style.display === '') {
+        formButtons.style.display = 'block';
+        header.querySelector('.fa-chevron-down').classList.remove('fa-chevron-down');
+        header.querySelector('.header-right i').classList.add('fa-chevron-up');
+      } else {
+        formButtons.style.display = 'none';
+        header.querySelector('.header-right i').classList.remove('fa-chevron-up');
+        header.querySelector('.header-right i').classList.add('fa-chevron-down');
+      }
+    });
+  });
+});
+
+// Functie om de CSAS Modal te vullen met de juiste gegevens uit de QR-code
+function populateCsasModal(data) {
+  // Sla de CSAS data op voor later gebruik
+  window.currentCsasData = data;
+
+  // Toon de naam van de verifier
+  csasRequester.textContent = data.requester;
+
+  // Leeg de details-container zodat oude gegevens worden verwijderd
+  csasDetailsContainer.innerHTML = '';
+
+  // Toon de reden waarom de gegevens worden opgevraagd, indien aanwezig
+  const reasonElement = document.getElementById('csas-reason');
+  if (data.reason) {
+    reasonElement.textContent = `Reden: ${data.reason}`;
+  } else {
+    reasonElement.textContent = '';
+  }
+
+  // Vul de details-container met de gegevens die opgevraagd worden
+  data.csas.forEach(item => {
+    // Controleer of zowel `issuedBy` als `name` aanwezig zijn
+    if (item.issuedBy && item.name) {
+      const issuerName = fieldMapping[item.issuedBy] || item.issuedBy;  // Gebruik fieldmapping voor leesbare namen van de uitgever
+      const cardName = fieldMapping[item.name] || item.name;  // Gebruik fieldmapping voor de kaartnaam
+
+      // Maak een element aan om de informatie weer te geven
+      const detail = document.createElement('div');
+      detail.className = 'csas-detail';
+
+      // Voeg een gestructureerde weergave toe van de uitgever en het kaartje
+      detail.innerHTML = `
+        <p>Uitgegeven door:</p>
+        <p><strong>${issuerName}</strong></p>
+        <p>Gegevens:</p>
+        <p><strong>${cardName}</strong></p>
+      `;
+
+      // Voeg een divider toe voor nette scheiding
+      const divider = document.createElement('div');
+      divider.className = 'divider';
+      divider.style.borderTop = '1px solid #ccc';
+      divider.style.margin = '10px 0';
+
+      // Voeg het detail en de divider toe aan de details-container
+      csasDetailsContainer.appendChild(detail);
+      csasDetailsContainer.appendChild(divider);
+    } else {
+      console.error('CSAS item ontbreekt belangrijke gegevens: ', item);
+    }
+  });
+
+  // Vul de overeenkomst informatie (bijv. opslagduur)
+  if (data.a && fieldMapping.a[data.a]) {
+    csasAgreement.textContent = fieldMapping.a[data.a];
+  } else {
+    csasAgreement.textContent = 'Geen overeenkomst gevonden.';
+  }
+}
+
+function saveCsasCredentials(data) {
+  data.csas.forEach(item => {
+    // Gebruik fieldMapping om leesbare namen te verkrijgen
+    const issuerName = fieldMapping[item.issuedBy] || item.issuedBy;
+    const cardName = fieldMapping[item.name.toLowerCase()] || item.name;
+
+    // Controleer of het om de VOG gaat
+    if (issuerName === 'Justis' && cardName === 'Verklaring Omtrent Gedrag (VOG)') {
+      // Voeg de gedetailleerde VOG-gegevens toe
+      const newCredential = {
+        name: 'Verklaring Omtrent Gedrag (VOG)',
+        issuedBy: 'Justis',
+        actionTimestamp: new Date().toLocaleString(),
+        isShareAction: false,
+        data: {
+          "Issuer": true,
+          "name": "Verklaring Omtrent Gedrag (VOG)",
+          "issuedBy": "Justis",
+          "LEID": "NL_KVK_27378698",
+          "Issued_Date": "2023-09-17",
+          "Issued_to_subject": "Willeke Liselotte de Bruijn",
+          "Algemeen_profiel": "4,5,6,7",
+          "Specifiek_profiel": "55",
+          "Attestation_Trust_Type": "QEAA",
+          "rdfci": ["gn", "sn", "bd", "bsn"],
+          "a": "12t",
+          "t": "w"
+        }
+      };
+      credentials.push(newCredential);
+    } else {
+      // Bestaande code voor andere credentials
+      const newCredential = {
+        name: cardName,
+        issuedBy: issuerName,
+        actionTimestamp: new Date().toLocaleString(),
+        isShareAction: false,
+        data: {
+          issuedBy: issuerName,
+          cardName: cardName
+        }
+      };
+      credentials.push(newCredential);
+    }
+  });
+
+  // Sla de credentials op in de local storage
+  saveCredentials();
+
+  // Werk de weergave van de wallet bij
+  displayCredentials();
+
+    // Optioneel: Log de credentials voor debugging
+    console.log("Credentials na opslaan:", credentials);
+}
+
+// Aangepaste pincode bevestigingslogica voor CSAS
+document.addEventListener('DOMContentLoaded', function() {
+  const confirmPinCsas = document.getElementById('confirm-pin-csas');
+  
+  if (confirmPinCsas) {
+    confirmPinCsas.onclick = () => {
+      // Bevestig de pincode en sla gegevens op
+      if (window.currentCsasData) {
+        saveCsasCredentials(window.currentCsasData); // Sla de nieuwe kaartjes op
+        saveCsasShareAction(window.currentCsasData); // Sla de deelactie op
+        console.log("Credentials en deelactie opgeslagen:", credentials);
+      } else {
+        console.error("Er is geen CSAS data beschikbaar om op te slaan.");
+        return;
+      }
+ 
+      goToCsasSuccessScreen();
+ 
+      // Sluit het pincode bevestigingsscherm
+      csasPinConfirmationScreen.style.display = 'none';
+ 
+      // Stop de QR-code scanner
+      if (html5QrCode) {
+        console.log("Stopping QR scanner after CSAS confirmation...");
+        html5QrCode.stop().then(() => {
+          console.log("QR scanner stopped after CSAS confirmation.");
+          readerDiv.style.display = 'none';
+          closeScanButton.style.display = 'none';
+          document.querySelector('.scan-container').style.display = 'flex';
+        }).catch(err => {
+          console.error("Failed to stop QR scanner: ", err);
+        });
+      }
+    };
+  } else {
+    console.error("Element 'confirm-pin-csas' niet gevonden.");
+  }
+});
+
+
+// Functie om het CSAS successcherm te tonen
+function goToCsasSuccessScreen() {
+  // Toon de naam van de verifier in het successcherm
+  csasSuccessRequester.textContent = csasRequester.textContent;
+
+  // Leeg de container voor de kaartjes zodat oude gegevens worden verwijderd
+  csasSuccessCardContainer.innerHTML = '';
+
+  // Voeg de nieuwe kaartjes toe aan het successcherm
+  currentCsasData.csas.forEach(item => {
+    const card = document.createElement('div');
+    card.className = 'card';
+
+    // Haal stijlen op basis van kaartnaam
+    const nameLower = item.name.toLowerCase();
+    const styles = cardStyles[nameLower] || {
+      imagePath: null,
+      iconColor: '#333',
+      textColor: '#333'
+    };
+
+    // Gebruik fieldMapping voor de leesbare issuer en kaartnaam
+    const issuerName = fieldMapping[item.issuedBy] || item.issuedBy;
+    const cardName = fieldMapping[item.name.toLowerCase()] || item.name;
+
+    // Creëer een logo element als er een logo beschikbaar is
+    let logoElement = '';
+    if (styles.imagePath) {
+      logoElement = `<img src="${styles.imagePath}" alt="${cardName}" class="card-logo" style="width: 30px; height: 30px; margin-bottom: 10px;">`;
+    }
+
+    // Voeg de HTML voor de kaart toe, inclusief logo indien beschikbaar
+    card.innerHTML = `
+      ${logoElement}
+      <div class="card-text" style="color: ${styles.textColor};">
+        <h3>${cardName}</h3>
+        <p style="font-size: 14px; color: #555; margin: 5px 0 0 0;">${issuerName}</p>
+      </div>
+    `;
+
+    // Voeg de kaart toe aan de success card container
+    csasSuccessCardContainer.appendChild(card);
+  });
+
+  // Toon het CSAS successcherm
+  csasSuccessScreen.style.display = 'flex';
+
+  // Verberg het add-card scherm
+  addCardScreen.style.display = 'none';
+
+  // Close knop logica voor het sluiten van het successcherm
+closeCsasSuccessBtn.onclick = () => {
+  csasSuccessScreen.style.display = 'none'; // Verberg het successcherm
+  addCardScreen.style.display = 'none'; // Verberg het add-card scherm
+  walletScreen.style.display = 'block'; // Toon het wallet-scherm
+  bottomNav.style.display = 'flex'; // Toon de navigatiebalk onderaan opnieuw
+
+  // **Laad de credentials opnieuw en werk de weergave bij**
+  loadCredentials(); // Laad credentials uit de local storage
+  displayCredentials(); // Werk de wallet-weergave bij
+};
+}
+
+
+
+
+
+// Event listener voor de "Doorgaan"-knop in de CSAS-modal
+csasAcceptButton.onclick = () => {
+  console.log("CSAS Accept Button clicked.");
+  csasPinConfirmationScreen.style.display = 'flex'; // Ga naar pincode bevestigingsscherm
+  csasModal.style.display = 'none'; // Verberg de CSAS-modal
+};
+
+// Event listener voor de "Stoppen"-knop in de CSAS-modal
+csasStopButton.onclick = () => {
+  console.log("CSAS Stop Button clicked.");
+  // Verberg de CSAS-modal
+  csasModal.style.display = 'none';
+  addCardScreen.style.display = 'none';
+  
+  // Toon het wallet-scherm
+  walletScreen.style.display = 'block';
+  bottomNav.style.display = 'flex'; // Toon de navigatiebalk onderaan opnieuw
+  
+  // Stop de QR-code scanner
+  if (html5QrCode) {
+    console.log("Stopping QR scanner after stopping CSAS...");
+    html5QrCode.stop().then(() => {
+      console.log("QR scanner stopped after CSAS cancellation.");
+      readerDiv.style.display = 'none';
+      closeScanButton.style.display = 'none';
+      document.querySelector('.scan-container').style.display = 'flex';
+    }).catch(err => {
+      console.error("Failed to stop QR scanner: ", err);
+    });
+  }
+};
+
+function saveCsasShareAction(data) {
+  const timestamp = new Date().toLocaleString();
+  credentials.push({
+    name: data.requester || 'Onbekende partij',
+    reason: data.reason || 'Geen reden opgegeven',
+    sharedData: data.csas.map(item => {
+      return {
+        issuedBy: fieldMapping[item.issuedBy] || item.issuedBy,
+        name: fieldMapping[item.name] || item.name
+      };
+    }),
+    agreement: data.a ? (fieldMapping.a[data.a] || data.a) : 'Geen overeenkomst',
+    actionTimestamp: timestamp,
+    isShareAction: true // Markeer als deelactie
+  });
+  saveCredentials();
+}
+
+
+// in de add card catalogus een vog ophalen
+document.addEventListener('DOMContentLoaded', function () {
+  const cardButtons = document.querySelectorAll('.card-button');
+
+  cardButtons.forEach(button => {
+    const buttonTextElement = button.querySelector('.button-text');
+    if (buttonTextElement && buttonTextElement.textContent.includes("VOG")) {
+      button.addEventListener('click', function () {
+        // VOG gegevens ophalen alsof deze via QR-code zijn gescand
+        const vogData = {
+          "Issuer": true,
+          "name": "Verklaring Omtrent Gedrag (VOG)",
+          "issuedBy": "Justis",
+          "LEID": "NL_KVK_27378698",
+          "Issued_Date": "2023-09-17",
+          "Issued_to_subject": "Willeke Liselotte de Bruijn",
+          "Algemeen_profiel": "4,5,6,7",
+          "Specifiek_profiel": "55",
+          "Attestation_Trust_Type": "QEAA",
+          "rdfci": ["gn", "sn", "bd", "bsn"],
+          "a": "12t",
+          "t": "w"
+        };
+
+        // Vul het RDFCI modal met de gegevens
+        populateRdfciModal(vogData);
+
+        // Toon het RDFCI modal
+        rdfciModal.style.display = 'flex';
+
+        rdfciAcceptButton.onclick = () => {
+          // Voeg de VOG gegevens toe aan de wallet
+          const timestamp = new Date().toLocaleString();
+
+          credentials.push({
+            name: vogData.name,
+            issuedBy: vogData.issuedBy,
+            actionTimestamp: timestamp,
+            isShareAction: false,
+            data: vogData
+          });
+
+          saveCredentials();
+
+          // Toon het issuer success-scherm
+          goToIssuerSuccessScreen(vogData.name, vogData.issuedBy);
+
+          // Sluit het RDFCI modal
+          rdfciModal.style.display = 'none';
+        };
+
+        rdfciStopButton.onclick = () => {
+          // Sluit het RDFCI modal
+          rdfciModal.style.display = 'none';
+        };
+      });
+    }
+  });
+});
