@@ -1417,7 +1417,7 @@ function saveCsasCredentials(data) {
           "Issued_to_subject": "Willeke Liselotte de Bruijn",
           "Algemeen_profiel": "4,5,6,7",
           "Specifiek_profiel": "55",
-          "Attestation_Trust_Type": "QEAA",
+          "Attestation_Trust_Type": "PuB-EAA",
           "rdfci": ["gn", "sn", "bd", "bsn"],
           "a": "12t",
           "t": "w"
