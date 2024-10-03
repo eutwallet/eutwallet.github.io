@@ -967,7 +967,7 @@ p {
 .floating-qr-button {
     position: fixed;
     bottom: 80px; /* 100px van de onderkant om ruimte te houden voor de navbar */
-    right: 15px; /* 5px van de linkerzijde */
+    right: calc((100% - 400px) / 2 + 20px); /* Positioneer binnen de containerbreedte */
     width: 110px;
     height: 60px;
     background-color: #2681cc; /* Kleur van de knop */
@@ -982,6 +982,7 @@ p {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Verhoogde schaduw voor duidelijk zwevend effect */
     cursor: pointer;
     z-index: 1000; /* Zorg ervoor dat de knop boven alles ligt */
+    
 }
 
 .floating-qr-button i {
@@ -991,7 +992,8 @@ p {
 /* Stijl voor het scan-scherm */
 .add-card-screen {
     top: 0;
-    left: 0;
+    position: fixed;
+    max-width: 400px;
     width: 100%;
     height: 100%;
     background-color: white;
@@ -1002,6 +1004,8 @@ p {
     display: none; /* Het scherm wordt pas getoond bij activatie */
     flex-direction: column;
     flex-grow: 1; /* Zorg dat de sectie zich uitbreidt */
+    overflow-y: auto;
+    margin: 0 auto;
 }
 
 
@@ -1335,4 +1339,228 @@ p {
     font-size: 16px;
     cursor: pointer;
     margin-top: 20px;
+}
+
+
+/* *** Mandate Modal Stijlen *** */
+#mandate-modal .modal-content {
+    /* Hergebruik bestaande modal-content stijlen */
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 500px;
+    width: 90%;
+}
+
+#mandate-modal h2 {
+    font-size: 24px;
+    color: #152A62;
+    margin-bottom: 10px;
+}
+
+#mandate-modal .mandate-content p {
+    font-size: 16px;
+    color: #152A62;
+}
+
+#mandate-modal .mandate-content .divider {
+    margin: 10px 0;
+    border-top: 1px solid #ccc;
+}
+
+#mandate-modal .button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+#mandate-modal .stop-button {
+    background-color: white;
+    border: 2px solid #2681cc;
+    color: #2681cc;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 45%;
+}
+
+#mandate-modal .stop-button:hover {
+    background-color: #f0f0f0;
+}
+
+#mandate-modal .share-button {
+    background-color: #2681cc;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    width: 45%;
+}
+
+#mandate-modal .share-button:hover {
+    background-color: #1e3a82;
+}
+
+/* *** Mandate Pin Confirmation Screen Stijlen *** */
+#mandate-pin-confirmation-screen {
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    z-index: 1000;
+    box-sizing: border-box;
+    justify-content: flex-start;
+    overflow-y: auto;
+    flex-direction: column;
+}
+
+
+#mandate-pin-confirmation-screen h2 {
+    font-size: 24px;
+    color: #152A62;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#mandate-pin-confirmation-screen .pin-input {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+#mandate-pin-confirmation-screen .pin-input input {
+    text-align: center;
+    font-size: 24px;
+    padding: 10px;
+    width: 50px;
+    height: 60px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#confirm-pin-mandate {
+    background-color: #2681cc; /* Oranje kleur zoals .orange-btn */
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    min-width: 250px;
+    text-align: center;
+    margin: 0 auto;
+    display: block;
+}
+
+#confirm-pin-mandate:hover {
+    background-color: #2681cc;
+}
+
+/* *** Mandate Success Screen Stijlen *** */
+#mandate-success-screen {
+    flex-direction: column;
+    justify-content: start;
+
+}
+
+
+#mandate-success-screen h2 {
+    font-size: 24px;
+    color: #152A62;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+#mandate-success-screen p {
+    font-size: 16px;
+    color: #152A62;
+    text-align: center;
+}
+
+#mandate-success-screen .button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+#mandate-success-screen .stop-button {
+    background-color: #2681cc;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    width: 45%;
+}
+
+#mandate-success-screen .stop-button:hover {
+    background-color: #1e3a82;
+}
+
+#mandate-success-screen .share-button {
+    background-color: #2681cc;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    width: 45%;
+}
+
+#mandate-success-screen .share-button:hover {
+    background-color: #1e3a82;
+}
+
+/* *** Mandate Content Stijlen *** */
+.mandate-content p strong {
+    color: #152A62;
+}
+
+#mandate-data-container p {
+    font-size: 14px;
+    color: #555;
+    margin: 5px 0;
+}
+
+#mandate-agreement {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+#mandate-requester-agreement {
+    color: #152A62;
+}
+
+
+/* *** Machtiging Sectie Stijlen *** */
+#machtiging-section h3 {
+    margin-bottom: 20px;
+    color: #152A62;
+}
+
+#machtiging-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+#machtiging-section .card {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+#machtiging-section .card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
