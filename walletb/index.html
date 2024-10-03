@@ -493,11 +493,29 @@
 </div>
 
 <!-- *** machtigingen Sectie *** -->
-<div id="machtiging-section" class="machtiging-section" style="display: none;"> 
-  <h3>Machtigingen</h3> 
+<section id="machtiging-section" class="machtiging-section" style="display: none;">
+  <h3>Machtigingen</h3>
   <div class="title-divider"></div>
-<p> Deze pagina volgt later </p>
+  <div id="machtiging-grid">
+      <!-- Machtiging kaartjes worden hier toegevoegd -->
+  </div>
+
+
+</section>
+
+
+<!-- *** Machtiging Details Weergave *** -->
+<div id="mandate-details" style="display: none;">
+  <div class="details-mandate-header">
+    <button class="close-btn" id="close-details-mandate">
+      <i class="fas fa-arrow-left"></i>
+    </button>
+  </div>
+  <h3 id="mandate-details-title">Machtiging Details</h3>
+  <div class="divider"></div>
+  <div id="mandate-details-content"></div>
 </div>
+
 
 <!-- *** Instellingen Sectie *** -->
 <div id="instellingen-section" class="instellingen-section" style="display: none;">
@@ -712,6 +730,76 @@
   <button id="close-csas-success-btn" class="orange-btn">Sluiten</button>
   <!-- Knop om het successcherm te sluiten en terug te keren naar het wallet-scherm -->
 </div>
+
+
+<!-- *** Mandate Modal *** -->
+<section id="mandate-modal" class="modal" style="display: none;">
+  <div class="modal-content">
+    <h2>Vraag machtiging om gegevens op te halen</h2>
+    <div class="divider"></div>
+    
+    <div class="mandate-content">
+      <p>Wilt u <strong id="mandate-requester">[requester]</strong> machtigen om namens u onderstaande gegevens op te halen?</p>
+      <div class="divider"></div>
+      
+      <p><strong>Reden verzoek:</strong></p>
+      <p id="mandate-reason">[reason]</p>
+      <div class="divider"></div>
+      
+      <p><strong>Gegevens:</strong></p>
+      <div id="mandate-data-container">
+        <!-- Dynamisch ingevulde gegevens uit de QR-code -->
+      </div>
+      <div class="divider"></div>
+      
+      <p><strong>Benodigde gegevens om deze gegevens bij de uitgever(s) op te halen:</strong></p>
+      <p>Naam: Willeke Liselotte</p>
+      <p>Achternaam: de Bruijn</p>
+      <p>Geboortedatum: </p>
+      <p>BSN: </p>
+      <div class="divider"></div>
+      
+      <p><strong>Overeenkomst:</strong></p>
+      <p id="mandate-agreement">[a]</p>
+      <div class="divider"></div>
+      
+      <p>Gaat u akkoord met deze machtiging aan <strong id="mandate-requester-agreement">[requester]</strong>?</p>
+      <div class="divider"></div>
+      
+      <!-- Knoppen -->
+      <div class="button-container">
+        <button id="mandate-stop-button" class="stop-button">Stoppen</button>
+        <button id="mandate-accept-button" class="share-button">Akkoord</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- *** Mandate Pincode Bevestigings-scherm *** -->
+<section id="mandate-pin-confirmation-screen" class="modal" style="display: none;">
+  <h2>Voer uw pincode in om de machtiging te bevestigen</h2>
+  <div class="pin-input">
+    <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
+    <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
+    <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
+    <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
+    <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
+    <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
+  </div>
+  <button id="confirm-pin-mandate" class="orange-btn confirm-pin">Bevestigen</button>
+</section>
+
+<!-- *** Mandate Success Screen *** -->
+<section id="mandate-success-screen" class="modal" style="display: none;">
+  <h2>Succes!</h2>
+  <div class="divider"></div>
+  <p>Je hebt <strong id="mandate-success-requester">[requester]</strong> gemachtigd om jouw gegevens op te halen.</p>
+  <div class="button-container">
+    <button id="view-mandate-button" class="stop-button">Bekijk Machtiging</button>
+    <button id="close-mandate-success-button" class="share-button">Sluiten</button>
+  </div>
+</section>
+
 
   <!-- *** Scripts *** -->
   <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
