@@ -24,6 +24,7 @@ const bottomNav = document.querySelector('.bottom-nav');
 const machtigingNavbarItem = document.getElementById('machtigingen-navbar-item'); 
 const instellingenNavbarItem = document.getElementById('instellingen-navbar-item');
 const instellingenSection = document.getElementById('instellingen-section');
+const machtigingSection = document.getElementById('machtiging-section');
 
 // *** Activiteiten Elementen ***
 const activitiesOption = document.getElementById('activities-option');
@@ -88,6 +89,25 @@ const csasSuccessScreen = document.getElementById('csas-success-screen');
 const csasSuccessRequester = document.getElementById('csas-success-requester');
 const csasSuccessCardContainer = document.getElementById('csas-success-card-container');
 const closeCsasSuccessBtn = document.getElementById('close-csas-success-btn');
+
+
+// *** Mandate Elementen ***
+const mandateModal = document.getElementById('mandate-modal');
+const mandateRequester = document.getElementById('mandate-requester');
+const mandateReason = document.getElementById('mandate-reason');
+const mandateDataContainer = document.getElementById('mandate-data-container');
+const mandateAgreement = document.getElementById('mandate-agreement');
+const mandateRequesterAgreement = document.getElementById('mandate-requester-agreement');
+const mandateStopButton = document.getElementById('mandate-stop-button');
+const mandateAcceptButton = document.getElementById('mandate-accept-button');
+
+const mandatePinConfirmationScreen = document.getElementById('mandate-pin-confirmation-screen');
+const confirmPinMandateBtn = document.getElementById('confirm-pin-mandate');
+
+const mandateSuccessScreen = document.getElementById('mandate-success-screen');
+const mandateSuccessRequester = document.getElementById('mandate-success-requester');
+const viewMandateButton = document.getElementById('view-mandate-button');
+const closeMandateSuccessButton = document.getElementById('close-mandate-success-button');
 
 
 const fieldMapping = {
@@ -224,42 +244,63 @@ function convertToStandardDate(dateString) {
 function showActivities() {
   activitiesList.innerHTML = ''; // Leeg de lijst
 
-  // Filter activiteiten met geldige tijdstempels
-  const filteredCredentials = credentials.filter(cred => cred.actionTimestamp);
-  
+  // Filter credentials voor activiteiten:
+  // - Share actions (isShareAction: true)
+  // - Mandate activities (isActivity: true)
+  // - Issuer actions (cred.issuedBy aanwezig en type niet 'mandate')
+  const filteredActivities = credentials.filter(cred => {
+      if (!cred.actionTimestamp) return false;
+
+      // Share actions en Mandate activiteiten
+      if (cred.isShareAction || cred.isActivity) return true;
+
+      // Issuer acties: heeft 'issuedBy' en is geen 'mandate'
+      if (cred.issuedBy && cred.type !== 'mandate') return true;
+
+      return false;
+  });
+
   // Sorteer de activiteiten op datum en tijd (meest recente eerst)
-  filteredCredentials.sort((a, b) => {
-    let dateA = Date.parse(convertToStandardDate(a.actionTimestamp));
-    let dateB = Date.parse(convertToStandardDate(b.actionTimestamp));
-    return dateB - dateA;
+  filteredActivities.sort((a, b) => {
+      let dateA = Date.parse(convertToStandardDate(a.actionTimestamp));
+      let dateB = Date.parse(convertToStandardDate(b.actionTimestamp));
+      return dateB - dateA;
   });
 
   // Voeg activiteiten toe aan de lijst
-  filteredCredentials.forEach((cred) => {
-    let activityItem = document.createElement('li');
-    if (cred.isShareAction) {
-      // Verifier-actie
-      activityItem.innerHTML = `
-        <strong style="color: #152A62;">${cred.name}</strong><br>
-        <span style="color: #152A62;">Gegevens gedeeld</span><br>
-        <span style="color: #152A62;">${cred.actionTimestamp}</span>
-      `;
-    } else {
-      // Issuer-actie
-      const issuerInfo = cred.issuedBy ? cred.issuedBy : "Onbekende uitgever";
-      activityItem.innerHTML = `
-        <strong style="color: #152A62;">${issuerInfo}</strong><br>
-        <span style="color: #152A62;">${cred.name} opgehaald</span><br>
-        <span style="color: #152A62;">${cred.actionTimestamp}</span>
-      `;
-    }
+  filteredActivities.forEach((cred) => {
+      let activityItem = document.createElement('li');
 
-    // Voeg scheidingslijn toe
-    const divider = document.createElement('div');
-    divider.className = 'activity-divider';
+      if (cred.isShareAction) {
+          // Verifier-actie
+          activityItem.innerHTML = `
+              <strong style="color: #152A62;">${cred.name}</strong><br>
+              <span style="color: #152A62;">Gegevens gedeeld</span><br>
+              <span style="color: #152A62;">${cred.actionTimestamp}</span>
+          `;
+      } else if (cred.isActivity) {
+          // Machtiging-actie
+          activityItem.innerHTML = `
+              <strong style="color: #152A62;">Machtiging aan ${cred.requester}</strong><br>
+              <span style="color: #152A62;">Reden: ${cred.reason}</span><br>
+              <span style="color: #152A62;">${cred.actionTimestamp}</span>
+          `;
+      } else if (cred.issuedBy && cred.type !== 'mandate') {
+          // Issuer-actie
+          const issuerInfo = cred.issuedBy ? cred.issuedBy : "Onbekende uitgever";
+          activityItem.innerHTML = `
+              <strong style="color: #152A62;">${issuerInfo}</strong><br>
+              <span style="color: #152A62;">${cred.name} opgehaald</span><br>
+              <span style="color: #152A62;">${cred.actionTimestamp}</span>
+          `;
+      }
 
-    activitiesList.appendChild(activityItem);
-    activitiesList.appendChild(divider);
+      // Voeg scheidingslijn toe
+      const divider = document.createElement('div');
+      divider.className = 'activity-divider';
+
+      activitiesList.appendChild(activityItem);
+      activitiesList.appendChild(divider);
   });
 }
 
@@ -340,52 +381,61 @@ function applyStylesToCards() {
 // **Roep de functie hier aan**
 applyStylesToCards();
 
-// Functie om kaartjes van issuers in de wallet weer te geven en kaartjes van verifiers niet weer te geven
 function displayCredentials() {
   walletGrid.innerHTML = ''; // Maak de wallet leeg
 
   credentials.forEach((cred, index) => {
-    if (!cred.isShareAction) {
-      const card = document.createElement('div');
-      card.className = 'card';
-
-      // Haal stijlen op basis van kaartnaam
-      const nameLower = cred.name.toLowerCase();
-      const styles = cardStyles[nameLower] || {
-        iconClass: 'far fa-id-badge',
-        iconColor: '#333',
-        textColor: '#333'
-      };
-
-      // Definieer grootte en marges
-      const iconSize = '30px';
-      const textSize = '18px';
-      const issuerTextSize = '14px'; // Kleiner lettertype voor de issuer
-      const iconMarginBottom = '10px';
-
-      // Controleer of er een afbeeldingspad is opgegeven in plaats van een icoon
-      let iconHtml = '';
-      if (styles.imagePath) {
-        iconHtml = `<img src="${styles.imagePath}" alt="${cred.name} logo" style="width: ${iconSize}; height: ${iconSize}; margin-bottom: ${iconMarginBottom};">`;
-      } else {
-        iconHtml = `<i class="${styles.iconClass}" style="color: ${styles.iconColor}; font-size: ${iconSize}; margin-bottom: ${iconMarginBottom};"></i>`;
-      }
-
-      // Voeg de HTML voor het kaartje toe
-      card.innerHTML = `
-        ${iconHtml}
-        <div class="card-text" style="font-size: ${textSize};">
-          <h3 style="color: ${styles.textColor}; margin: 0;">${cred.name}</h3>
-          ${cred.issuedBy ? `<p style="font-size: ${issuerTextSize}; color: #555; margin: 5px 0 0 0;">${cred.issuedBy}</p>` : ''}
-        </div>
-      `;
-
-      // Voeg event listener toe voor het bekijken van kaartdetails
-      card.addEventListener('click', () => showDetails(cred, index));
-
-      // Voeg de kaart toe aan het wallet-grid
-      walletGrid.appendChild(card);
+    // Sla share actions, activiteiten en mandates over in de wallet-weergave
+    if (cred.isShareAction || cred.isActivity || cred.type === 'mandate') {
+      console.log(`Credential at index ${index} has type:`, cred.type);
+      return;
     }
+
+    // Controleer of cred.name bestaat en is een string
+    if (typeof cred.name !== 'string') {
+    //  console.warn(`Credential at index ${index} ontbreekt 'name' property:`, cred);
+      return; // Sla deze credential over
+    }
+
+    const card = document.createElement('div');
+    card.className = 'card';
+
+    // Haal stijlen op basis van kaartnaam
+    const nameLower = cred.name.toLowerCase();
+    const styles = cardStyles[nameLower] || {
+      iconClass: 'far fa-id-badge',
+      iconColor: '#333',
+      textColor: '#333'
+    };
+
+    // Definieer grootte en marges
+    const iconSize = '30px';
+    const textSize = '18px';
+    const issuerTextSize = '14px'; // Kleiner lettertype voor de issuer
+    const iconMarginBottom = '10px';
+
+    // Controleer of er een afbeeldingspad is opgegeven in plaats van een icoon
+    let iconHtml = '';
+    if (styles.imagePath) {
+      iconHtml = `<img src="${styles.imagePath}" alt="${cred.name} logo" style="width: ${iconSize}; height: ${iconSize}; margin-bottom: ${iconMarginBottom};">`;
+    } else {
+      iconHtml = `<i class="${styles.iconClass}" style="color: ${styles.iconColor}; font-size: ${iconSize}; margin-bottom: ${iconMarginBottom};"></i>`;
+    }
+
+    // Voeg de HTML voor het kaartje toe
+    card.innerHTML = `
+      ${iconHtml}
+      <div class="card-text" style="font-size: ${textSize};">
+        <h3 style="color: ${styles.textColor}; margin: 0;">${cred.name}</h3>
+        ${cred.issuedBy ? `<p style="font-size: ${issuerTextSize}; color: #555; margin: 5px 0 0 0;">${cred.issuedBy}</p>` : ''}
+      </div>
+    `;
+
+    // Voeg event listener toe voor het bekijken van kaartdetails
+    card.addEventListener('click', () => showDetails(cred, index));
+
+    // Voeg de kaart toe aan het wallet-grid
+    walletGrid.appendChild(card);
   });
 }
 
@@ -534,6 +584,7 @@ function showDetails(credential, index) {
 loadCredentials();
 loadDefaultCredentials();
 displayCredentials();
+displayMachtigingen();
 
 
 // Functie om de QR-code scanner te starten
@@ -558,8 +609,15 @@ function startQrScan() {
               const data = JSON.parse(decodedText);
               const timestamp = new Date().toLocaleString();
 
+
+            // Stap 1: Controleer het type QR-code
+            if (data.type === "mandate") {
+              console.log("Mandate QR-code herkend.");
+              handleMandateQR(data, timestamp);
+          }
+
               // Stap 1: Controleer of het een verifier QR-code is (csas)
-              if (data.type === "verifier" && data.csas) {
+             else if (data.type === "verifier" && data.csas) {
                 console.log("CSAS QR-code herkend.");
             
                 // Sla de CSAS data op voor later gebruik
@@ -1667,3 +1725,402 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 });
+
+
+
+
+// Functie om "mandate" QR-code te verwerken
+function handleMandateQR(data, timestamp) {
+  // Controleer of de benodigde velden aanwezig zijn
+  if (!data.requester || !data.reason || !Array.isArray(data.mandate)) {
+      console.error("Mandate QR-code mist noodzakelijke velden:", data);
+      return;
+  }
+
+  // Vul de mandate-modal met gegevens uit de QR-code
+  populateMandateModal(data);
+}
+
+function populateMandateModal(data) {
+  console.log('populateMandateModal aangeroepen met data:', data); // Debugging log
+
+  // Sla de Mandate data op voor later gebruik
+  window.currentMandateData = data;
+
+  // Toon de naam van de requester
+  const requesterElement = document.getElementById('mandate-requester');
+  console.log('Updating mandate-requester:', data.requester || 'Onbekende requester');
+  requesterElement.textContent = data.requester || 'Onbekende requester';
+
+  // Toon de reden van het verzoek
+  const reasonElement = document.getElementById('mandate-reason');
+  if (data.reason) {
+    reasonElement.textContent = data.reason;
+    console.log('Updating mandate-reason:', data.reason);
+  } else {
+    reasonElement.textContent = 'Geen reden opgegeven.';
+    console.log('Updating mandate-reason: Geen reden opgegeven.');
+  }
+
+  // Vul de gegevens-container met de opgehaalde gegevens
+  const mandateDataContainer = document.getElementById('mandate-data-container');
+  mandateDataContainer.innerHTML = ''; // Maak de container leeg
+
+  data.mandate.forEach((item, idx) => {
+    // Gebruik fieldMapping om leesbare namen te verkrijgen
+    const mappedIssuedBy = fieldMapping[item.issuedBy] || item.issuedBy;
+    const mappedName = fieldMapping[item.name.toLowerCase()] || item.name;
+
+    console.log(`Adding mandate detail for item ${idx}: IssuedBy=${mappedIssuedBy}, Name=${mappedName}`);
+
+    // Maak een element aan om de informatie weer te geven
+    const detail = document.createElement('div');
+    detail.className = 'mandate-detail';
+
+    // Voeg een gestructureerde weergave toe van de uitgever en het kaartje
+    detail.innerHTML = `
+      <p><strong>Naam uitgever:</strong> ${mappedIssuedBy}</p>
+      <p><strong>Gegevens:</strong> ${mappedName}</p>
+    `;
+
+    // Voeg een divider toe voor nette scheiding, behalve na de laatste item
+    if (idx < data.mandate.length - 1) {
+      const hr = document.createElement('hr');
+      detail.appendChild(hr);
+    }
+
+    // Voeg het detail toe aan de container
+    mandateDataContainer.appendChild(detail);
+  });
+
+  // Vul de overeenkomst informatie (bijv. opslagduur) met fieldMapping
+  const agreementElement = document.getElementById('mandate-agreement');
+  if (data.a && fieldMapping.a && fieldMapping.a[data.a]) {
+    agreementElement.textContent = fieldMapping.a[data.a];
+    console.log('Updating mandate-agreement:', fieldMapping.a[data.a]);
+  } else {
+    agreementElement.textContent = fieldMapping.a ? 'Geen overeenkomst gevonden.' : data.a || 'Geen overeenkomst opgegeven.';
+    console.log('Updating mandate-agreement:', fieldMapping.a ? 'Geen overeenkomst gevonden.' : data.a || 'Geen overeenkomst opgegeven.');
+  }
+
+
+  //vul requester in
+  const mandateRequesterAgreement = document.getElementById('mandate-requester-agreement');
+  mandateRequesterAgreement.textContent = data.requester
+
+
+  // Toon de Mandate Modal
+  document.getElementById('mandate-modal').style.display = 'flex';
+}
+
+// Event listener voor de "Stoppen" knop in de mandate-modal
+document.getElementById('mandate-stop-button').addEventListener('click', () => {
+  console.log("Mandate Stop Button clicked.");
+
+  // Verberg de mandate-modal
+  document.getElementById('mandate-modal').style.display = 'none';
+
+  // Herstel de scanner en interface
+  resetQrScanner();
+
+  // Toon het wallet-screen, verberg add-card screen, toon bottom-nav
+  walletScreen.style.display = 'block';
+  addCardScreen.style.display = 'none';
+  bottomNav.style.display = 'flex';
+});
+
+// Event listener voor de "Akkoord" knop in de mandate-modal
+document.getElementById('mandate-accept-button').addEventListener('click', () => {
+  console.log("Mandate Accept Button clicked.");
+
+  // Verberg de mandate-modal
+  document.getElementById('mandate-modal').style.display = 'none';
+
+  // Toon het pincode bevestigingsscherm
+  document.getElementById('mandate-pin-confirmation-screen').style.display = 'flex';
+});
+
+
+// Event listener voor de "Bevestigen" knop in het mandate-pin-confirmation-screen
+document.getElementById('confirm-pin-mandate').addEventListener('click', () => {
+  console.log("Mandate Confirm Pin Button clicked.");
+
+  // Hier zou je pincode-validatie kunnen toevoegen
+  // Voor nu gaan we ervan uit dat de pincode correct is ingevoerd
+
+  // Haal de gegevens uit de currentMandateData
+  const currentData = window.currentMandateData;
+  if (!currentData) {
+      console.error("Er is geen Mandate data beschikbaar om op te slaan.");
+      return;
+  }
+
+  // Sla de Mandate credentials op
+  processMandate(currentData);
+
+
+  // Toon het mandate-success-screen
+  document.getElementById('mandate-success-screen').style.display = 'flex';
+
+  // Verberg het pincode bevestigingsscherm
+  document.getElementById('mandate-pin-confirmation-screen').style.display = 'none';
+
+  // Reset de pincode invoervelden
+  resetPinInputs();
+});
+
+
+function processMandate(data) {
+  const timestamp = new Date().toLocaleString();
+
+  // Creëer een machtiging kaartje voor de machtigingen-sectie
+  const machtigingCard = {
+      type: 'mandate',
+      requester: data.requester || 'Onbekende requester',
+      reason: data.reason || 'Geen reden opgegeven',
+      mandate: data.mandate.map(item => ({
+          issuedBy: fieldMapping[item.issuedBy] || item.issuedBy,
+          name: fieldMapping[item.name.toLowerCase()] || item.name
+      })),
+      a: fieldMapping.a[data.a] || data.a,
+      actionTimestamp: timestamp,
+      isShareAction: false,
+      name: `Machtiging - ${data.requester}` // Nodig voor displayCredentials indien nodig
+  };
+
+  credentials.push(machtigingCard);
+  saveCredentials();
+  displayMachtigingen(); // Functie om machtigingen weer te geven in de machtigingen-section
+
+  // Log de activiteit voor het activiteiten-scherm
+  const activity = {
+      type: 'mandate', // Type activiteittype: 'machtiging', // Type activiteit
+      name: 'Machtiging',
+      requester: data.requester || 'Onbekende requester',
+      reason: data.reason || 'Geen reden opgegeven',
+      actionTimestamp: timestamp, // Gebruik 'actionTimestamp' consistent
+      isActivity: true // Markeer als activiteit
+  };
+
+  credentials.push(activity);
+  saveCredentials();
+
+  // Toon het mandate-success-screen
+  showMandateSuccessScreen(data.requester, timestamp);
+}
+
+
+
+// Functie om machtigingen weer te geven in de machtiging-section
+function displayMachtigingen() {
+  const machtigingSection = document.getElementById('machtiging-section');
+  const machtigingGrid = document.getElementById('machtiging-grid'); // Zorg ervoor dat er een container is voor machtigingen
+
+  // Leeg de grid
+  machtigingGrid.innerHTML = '';
+
+  // Filter en toon alleen machtiging kaartjes
+  const machtigingen = credentials.filter(cred => cred.type === 'mandate');
+
+  machtigingen.forEach((mandate, index) => {
+      const card = document.createElement('div');
+      card.className = 'card';
+
+      // Voeg inhoud toe aan het kaartje
+      card.innerHTML = `
+          <div class="card-text">
+              <h3>${mandate.requester}</h3>
+              <p>Reden: ${mandate.reason}</p>
+              <p>Datum: ${mandate.actionTimestamp}</p>
+          </div>
+      `;
+
+      // Voeg event listener toe voor details
+      card.addEventListener('click', () => showMachtigingDetails(mandate, index));
+
+      // Voeg kaart toe aan de grid
+      machtigingGrid.appendChild(card);
+  });
+}
+
+
+
+
+// Functie om een activiteit te loggen
+function logActivity(type, requester, timestamp) {
+  const activity = {
+      type: type, // 'machtiging' of 'share'
+      requester: requester,
+      timestamp: timestamp,
+      isActivity: true // Markeer als activiteit
+  };
+  // Voeg de activiteit toe aan credentials
+  credentials.push(activity);
+  saveCredentials();
+}
+
+// Functie om het mandate-success-screen te tonen
+function showMandateSuccessScreen(requester, timestamp) {
+  // Vul de requester naam in het success-screen
+  document.getElementById('mandate-success-requester').innerText = requester || 'Onbekende requester';
+
+  // Toon het mandate-success-screen
+  document.getElementById('mandate-success-screen').style.display = 'flex';
+}
+
+// Event listener voor de "Bekijk Machtiging" knop in het mandate-success-screen
+document.getElementById('view-mandate-button').addEventListener('click', () => {
+  console.log("Bekijk Machtiging Button clicked.");
+
+  // Verberg het mandate-success-screen
+  document.getElementById('mandate-success-screen').style.display = 'none';
+
+  // Verberg het add-card screen
+  addCardScreen.style.display = 'none';
+
+   // Toon het wallet-screen
+   walletScreen.style.display = 'none';
+
+  // Toon de bottom-nav
+  bottomNav.style.display = 'flex';
+
+  // Toon de machtiging-section
+  document.getElementById('machtiging-section').style.display = 'flex';
+
+  // Activeer het machtigingen navbar-item
+  document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+  machtigingNavbarItem.classList.add('active');
+
+  console.log("Machtiging-section getoond en navbar-item geactiveerd.");
+});
+
+
+// Event listener voor de "Sluiten" knop in het mandate-success-screen
+document.getElementById('close-mandate-success-button').addEventListener('click', () => {
+  console.log("Sluiten Button clicked.");
+
+  // Verberg het mandate-success-screen
+  document.getElementById('mandate-success-screen').style.display = 'none';
+
+  // Verberg het add-card screen
+  addCardScreen.style.display = 'none';
+
+  // Toon de bottom-nav
+  bottomNav.style.display = 'flex';
+
+  // Toon het wallet-screen
+  walletScreen.style.display = 'block';
+
+  console.log("Terug naar wallet-screen.");
+});
+
+
+// Functie om een mock QR-code te verwerken
+function scanMockQRCode(mockData) {
+  try {
+      const data = JSON.parse(mockData);
+      const timestamp = new Date().toLocaleString();
+
+      // Stap 1: Controleer het type QR-code
+      if (data.type === "mandate") {
+          console.log("Mandate Mock QR-code herkend.");
+          handleMandateQR(data, timestamp);
+      }
+      // Bestaande condities voor andere types (CSAS, RDFCV, RDFCI, Issuer)
+      else if (data.type === "verifier" && data.csas) {
+          // ... bestaande RDFCV en CSAS handling ...
+      }
+      else if (data.issuedBy && data.name) {
+          // ... bestaande Issuer handling ...
+      } else {
+          console.log("Onbekende QR-code structuur.");
+      }
+
+  } catch (error) {
+      console.error("Mock QR-code parse error: ", error);
+  }
+}
+
+// Voeg een event listener toe voor het tonen van machtiging details
+function showMandateDetails(mandate) {
+  displayMachtigingen(); // Zorg ervoor dat machtigingen worden bijgewerkt indien nodig
+
+  // Verberg andere secties
+  document.getElementById('wallet-screen').style.display = 'none';
+  machtigingSection.style.display = 'none';
+
+  // Toon de machtigingsdetails
+  const mandateDetailsView = document.getElementById('mandate-details');
+  mandateDetailsView.style.display = 'block';
+
+  // Vul de titel en de content
+  document.getElementById('mandate-details-title').textContent = `Machtiging aan ${mandate.requester}`;
+  
+  let detailsHTML = `
+    <p><strong>Aanvrager:</strong> ${mandate.requester}</p>
+    <p><strong>Machtiging afgegeven op:</strong> ${mandate.actionTimestamp}</p> <!-- Voeg datum en tijd toe -->
+    <p><strong>Reden verzoek:</strong> ${mandate.reason}</p>
+    <div class="divider"></div>
+    <p><strong>Gegevens die ${mandate.requester} mag ophalen:</strong></p>
+    <hr>
+  `;
+
+  mandate.mandate.forEach(item => {
+    detailsHTML += `
+      <p><strong>Naam uitgever:</strong> ${fieldMapping[item.issuedBy] || item.issuedBy}</p>
+      <p><strong>Gegevens:</strong> ${fieldMapping[item.name.toLowerCase()] || item.name}</p>
+      <hr>
+    `;
+  });
+
+  // Voeg gevraagde gegevens toe onder een nieuw kopje
+  detailsHTML += `
+    <div class="divider"></div>
+    <p><strong>Gevraagde gegevens voor ophalen:</strong></p>
+    <p><strong>Voornaam:</strong> Willeke Liselotte</p>
+    <p><strong>Achternaam:</strong> De Bruijn</p>
+    <p><strong>Geboortedatum:</strong> March 10, 1997</p>
+    <p><strong>Burgerservicenummer (BSN):</strong> 938391772</p>
+    <div class="divider"></div>
+  `;
+
+  detailsHTML += `
+    <div class="divider"></div>
+    <p><strong>Overeenkomst:</strong></p>
+    <p>${fieldMapping.a[mandate.a] || mandate.a}</p>
+  `;
+
+  document.getElementById('mandate-details-content').innerHTML = detailsHTML;
+
+  // Voeg de functionaliteit toe voor de terugknop
+  document.getElementById('close-details-mandate').onclick = () => {
+    mandateDetailsView.style.display = 'none';
+    machtigingSection.style.display = 'flex'; // Ga terug naar de machtigingensectie
+  };
+}
+
+
+// Pas de displayMachtigingen functie aan om de details te tonen bij klikken
+function displayMachtigingen() {
+  const machtigingGrid = document.getElementById('machtiging-grid');
+  machtigingGrid.innerHTML = '';
+
+ // Filter en toon alleen machtiging kaartjes
+ const machtigingen = credentials.filter(cred => cred.type === 'mandate' && !cred.isActivity);
+  machtigingen.forEach((mandate, index) => {
+    const card = document.createElement('div');
+    card.className = 'card';
+
+    card.innerHTML = `
+      <div class="card-text">
+        <h3>${mandate.requester}</h3>
+        <p>Reden: ${mandate.reason}</p>
+        <p>Datum: ${mandate.actionTimestamp}</p>
+      </div>
+    `;
+
+    card.addEventListener('click', () => showMandateDetails(mandate));
+
+    machtigingGrid.appendChild(card);
+  });
+}
