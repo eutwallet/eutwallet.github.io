@@ -5,232 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Europese Test Wallet</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <style>
-    /* Algemene styling voor de body */
-    body {
-      font-family: 'Helvetica', sans-serif;
-      color: #555;
-      background-color: #ffffff;
-      margin: 0;
-      padding: 20px;
-      line-height: 1.6;
-    }
-
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: #fff;
-      border-radius: 10px;
-    }
-
-    h1, h2, h3, h4 {
-      color: #555;
-    }
-
-    h2 {
-      font-size: 24px;
-      margin-bottom: 10px;
-    }
-
-    h4 {
-      margin-bottom: 0px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-    }
-
-    h4 i {
-      margin-left: auto;
-      transition: transform 0.3s;
-    }
-
-    p {
-      font-size: 16px;
-      color: #555;
-      margin-top: 0px;
-      margin-bottom: 20px;
-    }
-
-    ul li {
-      margin-bottom: 10px;
-      text-align: left;
-      color: #555;
-    }
-
-    .accordion-header{
-      background-color: #fefeff;
-    }
-
-    /* Algemene knop styling */
-    a {
-      font-size: 16px;
-      color: #385168; /* Donkerblauwe tekstkleur */
-      text-decoration: none;
-      background-color: #F0F4F8; /* Achtergrondkleur van de knoppen */
-      padding: 12px 20px; /* Ruimte voor meer klikoppervlak */
-      border-radius: 8px; /* Afgeronde hoeken voor een moderne look */
-      display: inline-block;
-      text-align: left; /* Links uitlijnen */
-      font-weight: bold; /* Vetgedrukte tekst */
-      transition: all 0.3s ease;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Schaduw voor diepte */
-      margin-bottom: 15px;
-      min-width: 500px; /* Minimale breedte voor consistente uitstraling */
-    }
-
-    a:hover {
-      background-color: #e0e7ed; /* Iets donkerdere tint bij hover */
-      transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    a i {
-      margin-right: 8px; /* Ruimte tussen icoon en tekst */
-    }
-
-    /* Styling voor secties */
-    .sectie {
-      padding: 20px;
-      border-radius: 8px;
-      background-color: #fefeff; /* Bijna witte achtergrondkleur */
-      margin-bottom: 30px;
-      display: flex;
-      flex-direction: column;
-      border: 1px solid #ccc; /* Voeg een duidelijke 1px omlijning toe */
-    }
-
-    .sectie h2, .sectie h3 {
-      color: #385168;
-      margin-bottom: 5px;
-    }
-
-    .sectie p {
-      margin-top: 0px;
-    }
-
-    .sectie ul {
-      padding-left: 0;
-      list-style-type: none;
-    }
-
-    .sectie ul li {
-      margin-bottom: 10px;
-      text-align: left;
-    }
-
-    hr {
-      border: 0;
-      height: 1px;
-      background: #ccc;
-      margin-bottom: 20px;
-    }
-
-    strong {
-      font-weight: bold;
-    }
-
-    /* Verborgen inhoud voor accordeon */
-    .accordion-content {
-      display: none;
-      overflow: hidden;
-    }
-
-    .accordion-content.expanded {
-      display: block;
-    }
-
-    /* Rotatie van chevron bij uitklappen */
-    .accordion-header i.rotate {
-      transform: rotate(180deg);
-    }
-
-    /* Verborgen inhoud voor collapsible sectie */
-    .collapsible-content {
-      display: none;
-      overflow: hidden;
-      transition: max-height 0.5s ease;
-    }
-
-    .collapsible-content.expanded {
-      display: block;
-    }
-
-    /* Uitklapknop rechts uitlijnen */
-    .toggle-btn {
-      width: auto;
-      text-align: center;
-      float: right;
-      padding: 10px 20px;
-      background-color: #87a2bb;
-      color: #fff;
-      border-radius: 5px;
-      cursor: pointer;
-      display: inline-block;
-      margin-top: 10px;
-      width: fit-content;
-      align-self: flex-end;
-      min-width: unset; 
-    }
-
-    .toggle-btn:hover {
-      background-color: #6f8ea2;
-    }
-
-    /* Inklapknop onderin de sectie */
-    .toggle-btn-bottom {
-      width: auto;
-      text-align: center;
-      float: right;
-      padding: 10px 20px;
-      background-color: #87a2bb;
-      color: #fff;
-      border-radius: 5px;
-      cursor: pointer;
-      display: inline-block;
-      margin-top: 10px;
-      width: fit-content;
-      min-width: unset; 
-    }
-
-    .toggle-btn-bottom:hover {
-      background-color: #6f8ea2;
-    }
-
-    @media (max-width: 768px) {
-      /* Maak de container breder op kleinere schermen */
-      .container {
-        padding: 10px;
-        max-width: 100%;
-      }
-
-      /* Knoppen moeten de volledige breedte hebben op mobiele schermen */
-      a {
-        min-width: unset;
-        width: -webkit-fill-available;
-        width: -moz-available;
-        width: fill-available;
-        width: 100%;
-        box-sizing: border-box;
-        display: block;
-        text-align: left;
-      }
-
-      /* Specifieke styling voor toggle buttons op mobiel */
-      .toggle-btn, .toggle-btn-bottom {
-        width: fit-content;
-        text-align: center;
-      }
-
-      /* Zorg ervoor dat de sectie goed zichtbaar is op mobiel */
-      .sectie {
-        padding: 15px;
-        border-radius: 5px;
-        margin-bottom: 20px;
-      }
-    }
-
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
@@ -281,7 +56,7 @@
       </p>
      
       <!-- Uitklapknop rechts uitgelijnd -->
-      <a class="toggle-btn" onclick="toggleSection()">Klap uit <i class="fas fa-chevron-down"></i></a>
+      <a class="toggle-btn" onclick="toggleSection(this)">Klap uit <i class="fas fa-chevron-down"></i></a>
       
       <!-- Plaats de inhoud die je wilt verbergen binnen deze div -->
       <div class="collapsible-content">
@@ -301,11 +76,44 @@
         </ul>
 
          <!-- Inklapknop onderin rechts uitgelijnd -->
-         <a class="toggle-btn-bottom" onclick="toggleSection()">Klap in <i class="fas fa-chevron-up"></i></a>
+         <a class="toggle-btn-bottom" onclick="toggleSection(this)">Klap in <i class="fas fa-chevron-up"></i></a>
 
       </div>
     </section>
     <!-- Einde sectie -->
+
+
+
+    <section class="sectie">
+      <h2>Interactie Patronen Attributen ophalen</h2>
+      <p>Om digitale bewijzen op te halen en te delen zijn er meerdere interactie patronen mogelijk. 
+        Om deze inzichtelijk te maken, volgen hieronder een aantal interactie patronen.
+      </p>
+     
+      <!-- Uitklapknop rechts uitgelijnd -->
+      <a class="toggle-btn" onclick="toggleSection(this)">Klap uit <i class="fas fa-chevron-down"></i></a>
+      
+      <!-- Plaats de inhoud die je wilt verbergen binnen deze div -->
+      <div class="collapsible-content">
+        <ul>
+          <li>i.o <a href="/ipa/1/index.html" target="_blank"><i class="fas fa-play"></i>IPA-1 | Attribuut via QR handmatig scannen per stap</a></li>
+          <li>i.o <a href="/ipa/2/index.html" target="_blank"><i class="fas fa-play"></i>IPA-2 | Attribuut via in-app trusted attribute catalogue</a></li>
+          <li>i.o. <a href="/ipa/3/index.html" target="_blank"><i class="fas fa-play"></i>IPA-3 |Attribuut wordt in 1 stap gevraagd, direct opgehaald, opgeslagen en gedeeld</a></li>
+          <li>i.o. <a href="/ipa/4/index.html" target="_blank"><i class="fas fa-play"></i>IPA-4 |Attribuut wordt door relying party zelf opgehaald via machtiging (ask, authorize, collect)</a></li>
+          <li>i.o. <a href="/ipa/5/index.html" target="_blank"><i class="fas fa-play"></i>IPA-5 |Attribuut wordt via in-app trusted contacts gevraagd via bericht en opgehaald via IPA-2 </a></li>
+          <li>i.o. <a href="/ipa/6/index.html" target="_blank"><i class="fas fa-play"></i>IPA-6 |Attribuut wordt via in-app trusted contacts gevraagd via bericht en opgehaald via IPA-3</a></li>
+          <li>i.o. <a href="/ipa/7/index.html" target="_blank"><i class="fas fa-play"></i>IPA-7 |Attribuut wordt via in-app trusted contacts gevraagd via bericht en opgehaald via IPA-4 </a></li>
+      
+        </ul>
+        
+         <!-- Inklapknop onderin rechts uitgelijnd -->
+         <a class="toggle-btn-bottom" onclick="toggleSection(this)">Klap in <i class="fas fa-chevron-up"></i></a>
+
+      </div>
+    </section>
+    <!-- Einde sectie -->
+
+
 
     <section class="sectie">
       <h2>Hypotheek aanvragen</h2>
@@ -334,32 +142,49 @@
 
   </div>
   <script>
-    // Functie voor het uitklappen van de collapsible sectie
-    function toggleSection() {
-      const content = document.querySelector('.collapsible-content');
-      const button = document.querySelector('.toggle-btn');
-      const bottomButton = document.querySelector('.toggle-btn-bottom');
-      
-      if (content.classList.contains('expanded')) {
-        content.classList.remove('expanded');
-        button.style.display = 'inline-block'; // Toon de "Klap uit" knop
-        bottomButton.style.display = 'none';   // Verberg de "Klap in" knop
-      } else {
-        content.classList.add('expanded');
-        button.style.display = 'none';         // Verberg de "Klap uit" knop
-        bottomButton.style.display = 'inline-block'; // Toon de "Klap in" knop
-      }
-    }
 
-    // JavaScript voor de accordeon
-    document.querySelectorAll('.accordion-header').forEach(header => {
-      header.addEventListener('click', () => {
-        const accordionContent = header.nextElementSibling;
-        const icon = header.querySelector('i');
-        accordionContent.classList.toggle('expanded');
-        icon.classList.toggle('rotate');
-      });
-    });
+function toggleSection(button) {
+  let content;
+
+  if (button.classList.contains('toggle-btn')) {
+    // "Klap uit" knop is geklikt, vind het volgende element
+    content = button.nextElementSibling;
+  } else if (button.classList.contains('toggle-btn-bottom')) {
+    // "Klap in" knop is geklikt, vind het dichtstbijzijnde ouder-element met de klasse 'collapsible-content'
+    content = button.closest('.collapsible-content');
+  }
+
+  if (content && content.classList.contains('collapsible-content')) {
+    if (content.classList.contains('expanded')) {
+      // Sectie is al uitgeklapt, dus we gaan deze nu inklappen
+      content.classList.remove('expanded');
+
+      // Toon de "Klap uit" knop
+      const toggleBtn = content.previousElementSibling;
+      if (toggleBtn && toggleBtn.classList.contains('toggle-btn')) {
+        toggleBtn.style.display = 'inline-block';
+      }
+
+      // Verberg de "Klap in" knop
+      const bottomButton = content.querySelector('.toggle-btn-bottom');
+      if (bottomButton) bottomButton.style.display = 'none';
+    } else {
+      // Sectie is ingeklapt, dus we gaan deze nu uitklappen
+      content.classList.add('expanded');
+
+      // Verberg de "Klap uit" knop
+      const toggleBtn = content.previousElementSibling;
+      if (toggleBtn && toggleBtn.classList.contains('toggle-btn')) {
+        toggleBtn.style.display = 'none';
+      }
+
+      // Toon de "Klap in" knop
+      const bottomButton = content.querySelector('.toggle-btn-bottom');
+      if (bottomButton) bottomButton.style.display = 'inline-block';
+    }
+  }
+}
+
   </script>
 
 </body>
