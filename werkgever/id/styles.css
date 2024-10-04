@@ -88,18 +88,24 @@ button.prev:hover, button.next:hover {
 
 
 
-#logo-container-innovatiemakers  {
-    display: flex;
-    align-items: center;
-    margin-bottom: 30px;
-  }
+#logo-container-innovatiemakers {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
 
-#logo-container-innovatiemakers img {
-    max-width: 100px; /* Verklein het logo zodat het netjes naast de titel past */
-  }
+#logo-container-innovatiemakers i {
+  font-size: 48px; /* Grootte van het icoon */
+  color: #d35400; /* Kleur van het icoon passend bij de tekstkleur */
+}
 
+#logo-container-innovatiemakers h1 {
+  font-size: 28px;
+  color: #d35400; /* Donkeroranje kleur voor de titel */
+  margin-left: 20px;
+}
 
-  #step-2 #logo-container-innovatiemakers  h1 {
+#step-2 #logo-container-innovatiemakers  h1 {
     font-size: 28px;
     color: #d35400; /* Donkeroranje kleur voor de titel */
     margin-left: 20px;
