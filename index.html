@@ -185,6 +185,17 @@ function toggleSection(button) {
   }
 }
 
+
+ // JavaScript voor de accordeon
+ document.querySelectorAll('.accordion-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const accordionContent = header.nextElementSibling;
+        const icon = header.querySelector('i');
+        accordionContent.classList.toggle('expanded');
+        icon.classList.toggle('rotate');
+      });
+    });
+
   </script>
 
 </body>
