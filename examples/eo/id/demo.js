@@ -81,12 +81,12 @@ function toggleButtons() {
         }
 
         // Controleer of de knoppen al bestaan voordat je ze toevoegt
-        if (!document.querySelector('.close-tab') && !document.querySelector('.go-home')) {
+        if (!document.querySelector('.go-example') && !document.querySelector('.go-home')) {
             // Voeg de 'Sluiten tabblad'-knop toe met Font Awesome icoon
-            const closeButton = document.createElement('button');
-            closeButton.innerHTML = '<i class="fas fa-window-close"></i> Sluit tabblad';
-            closeButton.className = 'close-tab';
-            closeButton.onclick = () => window.close(); // Sluit het tabblad
+            const exampleButton = document.createElement('button');
+            exampleButton.innerHTML = '<i class="fas fa-flask"></i> Naar voorbeelden';
+            exampleButton.className = 'go-example';
+            exampleButton.onclick = ()=> window.location.href = 'https://www.eutw.nl/examples'; // Ga naar www.eutw.nl
 
             // Voeg de 'Terug naar hoofdwebsite'-knop toe met Font Awesome icoon
             const homeButton = document.createElement('button');
@@ -95,7 +95,7 @@ function toggleButtons() {
             homeButton.onclick = () => window.location.href = 'https://www.eutw.nl'; // Ga naar www.eutw.nl
 
             // Voeg de knoppen toe aan de button-container
-            buttonContainer.appendChild(closeButton);
+            buttonContainer.appendChild(exampleButton);
             buttonContainer.appendChild(homeButton);
         }
 

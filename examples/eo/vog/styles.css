@@ -112,7 +112,7 @@ button.prev:hover, button.next:hover {
     color: #333;
 }
 
-button.close-tab, button.go-home {
+button.go-example, button.go-home {
     font-size: 16px;
     color: #385168;
     background-color: #F0F4F8;
@@ -124,7 +124,7 @@ button.close-tab, button.go-home {
     transition: all 0.3s ease;
 }
 
-button.close-tab:hover, button.go-home:hover {
+button.go-example:hover, button.go-home:hover {
     background-color: #e0e7ed;
     transform: translateY(-2px);
 }
