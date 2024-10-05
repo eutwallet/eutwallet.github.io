@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aan de slag bij een werkgever</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="main-container">
+  <nav>
+    <button class="home"><a href="/" class="home-link"><i class="fas fa-home"></i> Home</a></button>
+  </nav>
+<hr>
+  <div id="breadcrumbs"></div>
+  
+  <section class="sectie">
+    <h2>Aan de slag bij een nieuwe werkgever</h2>
+    <p>Willeke gaat aan de slag bij een nieuwe werkgever en daarbij komt nogal wat administratie kijken. Gelukkig biedt haar nieuwe werkgever de mogelijkheid om 
+      de identiteits-wallet te gebruiken om deze zaken te regelen.
+      In plaats van een kopie paspoort aanleveren, handtekeningen inscannen, digitale bewijzen mailen en handmatig valideren, pdf-formulieren handmatig bewerken en invullen 
+      met kans op fouten bij overtypen van gegevens 
+      kan ze nu met hoge betrouwbaarheid, gemak en efficiëntie het proces doorlopen 
+      omdat het proces gestandaardiseerd is, via veilige kanalen verloopt, handmatig overtypen niet meer nodig is en bewijzen automatisch worden gevalideerd.
+    </p>
+    <ul>
+        <li>
+          <button class="button-demolist">
+            <a href="/werkgever/id/index.html" target="_blank"><i class="fas fa-play"></i>Identificatie van de werknemer door de werkgever</a>
+          </button>
+        </li>
+        <li>
+          <button class="button-demolist">
+            <a href="/werkgever/vog/index.html" target="_blank"><i class="fas fa-play"></i>Verklaring Omtrent Gedrag ophalen en delen met de werkgever</a>
+          </button>
+        </li>
+        <li>
+          <button class="button-demolist">
+            <a href="/werkgever/formulier-loonheffing/index.html" target="_blank"><i class="fas fa-play"></i>Formulier loonheffing invullen en ondertekenen</a>
+          </button>
+        </li>
+        <li>
+          <button class="button-demolist">
+            <a href="/werkgever/diploma/index.html" target="_blank"><i class="fas fa-play"></i>Diploma ophalen en delen met de werkgever</a>
+          </button>
+        </li>
+        <li>
+          <button class="button-demolist">
+            <a href="/werkgever/arbeidsovereenkomst/index.html" target="_blank"><i class="fas fa-play"></i>Ondertekenen arbeidsovereenkomst</a>
+          </button>
+        </li>
+      </ul>
+      
+      <h3>Na indiensttreding</h3>
+      <p>Na je indiensttreding kun je met de wallet ook andere zaken regelen:</p>
+      <ul>
+        <li>
+          <button class="button-demolist">
+            <a href="/werkgever/toegangspas/index.html" target="_blank"><i class="fas fa-play"></i>Ontvangen van een toegangspas</a>
+          </button>
+        </li>
+        <li>
+          <button class="button-demolist">
+            <a href="/werkgever/parkeerkosten/index.html" target="_blank"><i class="fas fa-play"></i>Declareren van parkeerkosten</a>
+          </button>
+        </li>
+      </ul>
+  </section>
+
+
+   <!-- einde main-container website -->
+</div>
+
+  <script>
+document.addEventListener("DOMContentLoaded", function() {
+  const urlMappings = {
+    "eo": "werkgever",
+    // Voeg hier andere mappings toe indien nodig
+  };
+  
+  const urlPath = window.location.pathname.split('/').filter(segment => segment);
+  const breadcrumbsContainer = document.getElementById('breadcrumbs');
+  
+  let breadcrumbHTML = '<a href="/">Home</a>';
+  let currentPath = '';
+  
+  urlPath.forEach((segment, index) => {
+    currentPath += `/${segment}`;
+    let displayName = urlMappings[segment] || decodeURIComponent(segment);
+    
+    // Voor de laatste segment gebruiken we de titel van de pagina
+    if (index === urlPath.length - 1 && segment === "index.html") {
+      displayName = document.title;  // Gebruik de titel van de huidige pagina
+    }
+
+    if (index < urlPath.length - 1) {
+      breadcrumbHTML += ` > <a href="${currentPath}">${displayName}</a>`;
+    } else {
+      breadcrumbHTML += ` > ${displayName}`;
+    }
+  });
+  
+  breadcrumbsContainer.innerHTML = breadcrumbHTML;
+});
+
+  </script>
+
+
+</body>
+</html>
