@@ -109,6 +109,21 @@ const mandateSuccessRequester = document.getElementById('mandate-success-request
 const viewMandateButton = document.getElementById('view-mandate-button');
 const closeMandateSuccessButton = document.getElementById('close-mandate-success-button');
 
+// *** Trusted Contacts Elementen ***
+const contactsNavbarItem = document.getElementById('contacts-navbar-item');
+const trustedContactsSection = document.getElementById('trusted-contacts-section');
+const messagesGrid = document.getElementById('messages-grid');
+const backTrustedContactsBtn = document.getElementById('back-trusted-contacts');
+
+// Elementen voor het bericht details scherm
+const messageDetailsScreen = document.getElementById('message-details-screen');
+const closeMessageDetailsBtn = document.getElementById('close-message-details');
+const contactNameElement = document.getElementById('contact-name');
+const messageDatetimeElement = document.getElementById('message-datetime');
+const messageTextElement = document.getElementById('message-text');
+
+// Elementen voor het notificatiebolletje
+const notificationBadge = document.getElementById('notification-badge');
 
 const fieldMapping = {
   gn: 'Voornaam',
@@ -2124,3 +2139,139 @@ function displayMachtigingen() {
     machtigingGrid.appendChild(card);
   });
 }
+
+
+// Event listener voor het klikken op de overzicht-knop in de navbar
+overviewNavbarItem.addEventListener('click', () => {
+  // Verberg andere secties
+  walletScreen.style.display = 'block';
+  activitiesSection.style.display = 'none';
+  trustedContactsSection.style.display = 'none';
+  instellingenSection.style.display = 'none';
+  machtigingSection.style.display = 'none';
+
+  // Zorg ervoor dat de andere navbar-items niet meer actief zijn
+  document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+
+  // Zet het overzicht-item actief in de navbar
+  overviewNavbarItem.classList.add('active');
+});
+
+// Event listener voor het klikken op de activiteiten-knop in de navbar
+activitiesNavbarItem.addEventListener('click', () => {
+  // Verberg andere secties
+  walletScreen.style.display = 'none';
+  activitiesSection.style.display = 'flex';
+  trustedContactsSection.style.display = 'none';
+  instellingenSection.style.display = 'none';
+  machtigingSection.style.display = 'none';
+
+  // Zorg ervoor dat de andere navbar-items niet meer actief zijn
+  document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+
+  // Zet het activiteiten-item actief in de navbar
+  activitiesNavbarItem.classList.add('active');
+});
+
+// Event listener voor het klikken op de contacten-knop in de navbar
+contactsNavbarItem.addEventListener('click', () => {
+  // Verberg andere secties
+  walletScreen.style.display = 'none';
+  activitiesSection.style.display = 'none';
+  instellingenSection.style.display = 'none';
+  machtigingSection.style.display = 'none';
+
+  // Toon het trusted contacts scherm
+  trustedContactsSection.style.display = 'block';
+
+  // Zorg ervoor dat de andere navbar-items niet meer actief zijn
+  document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+
+  // Zet het contacten-item actief in de navbar
+  contactsNavbarItem.classList.add('active');
+});
+
+// Event listener voor het klikken op de machtigingen-knop in de navbar
+machtigingNavbarItem.addEventListener('click', () => {
+  // Verberg andere secties
+  walletScreen.style.display = 'none';
+  activitiesSection.style.display = 'none';
+  trustedContactsSection.style.display = 'none';
+  instellingenSection.style.display = 'none';
+
+  // Toon het machtigingen-scherm
+  machtigingSection.style.display = 'flex';
+
+  // Zorg ervoor dat de andere navbar-items niet meer actief zijn
+  document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+
+  // Zet het machtigingen-item actief in de navbar
+  machtigingNavbarItem.classList.add('active');
+});
+
+// Event listener voor het klikken op de instellingen-knop in de navbar
+instellingenNavbarItem.addEventListener('click', () => {
+  // Verberg andere secties
+  walletScreen.style.display = 'none';
+  activitiesSection.style.display = 'none';
+  trustedContactsSection.style.display = 'none';
+  machtigingSection.style.display = 'none';
+
+  // Toon het instellingen-scherm
+  instellingenSection.style.display = 'flex';
+
+  // Zorg ervoor dat de andere navbar-items niet meer actief zijn
+  document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+
+  // Zet het instellingen-item actief in de navbar
+  instellingenNavbarItem.classList.add('active');
+});
+
+
+// Functie om een bericht te openen
+function openMessageDetails(sender, message, datetime) {
+  // Vul de gegevens in het detailscherm
+  contactNameElement.textContent = sender;
+  messageDatetimeElement.textContent = datetime;
+  messageTextElement.textContent = message;
+
+  // Verberg de Trusted Contacts sectie en toon het bericht details scherm
+  trustedContactsSection.style.display = 'none';
+  messageDetailsScreen.style.display = 'block';
+}
+
+// Functie om een mock-bericht toe te voegen en klikbare details toe te voegen
+function addMockMessageToTrustedContacts(sender, message) {
+  const messagesGrid = document.getElementById('messages-grid');
+  if (messagesGrid) {
+    const datetime = new Date().toLocaleString(); // Voeg datum en tijd toe aan het bericht
+    const messageItem = document.createElement('li');
+    messageItem.innerHTML = `<strong>${sender}:</strong> ${message}`;
+    messagesGrid.appendChild(messageItem);
+
+    // Toon het notificatiebolletje
+    notificationBadge.style.display = 'flex';
+    notificationBadge.textContent = '1'; // Aantal berichten, je kunt dit aanpassen om meerdere te tellen
+
+    // Voeg event listener toe aan het bericht om details te openen
+    messageItem.addEventListener('click', () => {
+      openMessageDetails(sender, message, datetime);
+    });
+
+    console.log(`Bericht van ${sender} toegevoegd: "${message}"`);
+  } else {
+    console.error("Trusted Contacts sectie niet gevonden.");
+} 
+}
+
+// Event listener voor het sluiten van het berichtdetailscherm
+closeMessageDetailsBtn.addEventListener('click', () => {
+  messageDetailsScreen.style.display = 'none';
+  trustedContactsSection.style.display = 'block'; // Keer terug naar de Trusted Contacts sectie
+
+  // Verberg het notificatiebolletje zodra het bericht in detail is bekeken
+  notificationBadge.style.display = 'none';
+});
+
+// Voorbeeld van een mock bericht (voeg dit toe via de console om te testen)
+addMockMessageToTrustedContacts('Demo Contact', 'Dit is een voorbeeldbericht.');

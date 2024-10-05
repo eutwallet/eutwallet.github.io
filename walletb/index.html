@@ -475,9 +475,11 @@
     <i class="fas fa-exchange-alt"></i>
     <span>Activiteiten</span>
   </a>
-   <div id="contacts-navbar-item" class="nav-item">
+  <a href="#" class="nav-item" id="contacts-navbar-item">
     <i class="fas fa-building"></i>
     <span>Contacten</span>
+    <span id="notification-badge" class="notification-badge" style="display: none;"></span>
+  </a>
   <a href="#" class="nav-item" id="machtigingen-navbar-item">
     <i class="fas fa-key"></i>
     <span>Machtigingen</span>
@@ -487,6 +489,33 @@
     <span>Instellingen</span>
   </a>
 </nav>
+
+<!-- Nieuwe Trusted Contacts sectie -->
+<section id="trusted-contacts-section" style="display: none;">
+ 
+  <div class="trusted-contacts-header">
+    <h3>Trusted Contacts</h3>
+    <div class="title-divider"></div>
+  </div>
+  <ul id="messages-grid" class="messages-grid">
+    <!-- Berichten zullen hier worden toegevoegd -->
+  </ul>
+</section>
+
+<!-- Bericht Details Scherm -->
+<section id="message-details-screen" style="display: none;">
+  <div class="details-header">
+    <button class="close-btn" id="close-message-details">
+      <i class="fas fa-arrow-left"></i>
+    </button>
+  </div>
+  <div id="details-content">
+    <h3 id="contact-name"></h3>
+    <p id="message-datetime"></p>
+    <div class="divider"></div>
+    <p id="message-text"></p>
+  </div>
+</section>
 
 
 <!-- *** Activiteiten Sectie *** -->

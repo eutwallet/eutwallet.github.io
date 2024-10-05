@@ -200,7 +200,7 @@ header {
 
 
 /* *** Details Sectie Stijlen *** */
-#details, #personal-data-details, #address-details {
+#details, #personal-data-details, #address-details, #message-details-screen {
     display: none;
     position: fixed;
     top: 0;
@@ -892,10 +892,10 @@ p {
 .bottom-nav {
     position: fixed;
     bottom: 0;
-    left: 50%; /* Begin in het midden van het scherm */
-    transform: translateX(-50%); /* Centreer de navbar door 50% van de breedte terug te schuiven */
-    width: 100%; /* Zorg dat de navbar zich volledig aanpast aan kleinere schermen */
-    max-width: 500px; /* Maximaal 500px breedte zoals de rest van de content */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 400px; /* Terug naar maximale breedte van 400px */
     height: 60px;
     background-color: #FFFFFF;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
@@ -937,6 +937,7 @@ p {
 .nav-item:hover {
     color: #646464;
 }
+
 
 
 /* CSS weergave kaartjes velden in vraagscherm rdfci rdfcv */
@@ -1563,4 +1564,56 @@ p {
 
 #machtiging-section .card:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+/* *** Trusted Contacts Stijlen *** */
+.trusted-contacts-header {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .messages-grid {
+    list-style: none;
+    padding: 20px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .messages-grid li {
+    padding: 15px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    color: #333;
+  }
+
+
+#message-details-screen h3 {
+    margin-top: 40px;
+    color: #152A62;
+}
+
+#contacts-navbar-item{
+    position: relative;
+}
+
+.notification-badge {
+    position: absolute;
+    top: -8px; /* Plaats het iets boven het "Contacten"-icoon */
+    right: 10px; /* Plaats het aan de rechterkant van het icoon */
+    background-color: #ff3b30; /* Rood voor notificaties */
+    color: white;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+    font-weight: bold;
+    z-index: 10; /* Zorg dat het bolletje boven de andere elementen staat */
 }
