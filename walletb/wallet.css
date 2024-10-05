@@ -430,8 +430,8 @@ p {
     border-radius: 5px;
     cursor: pointer;
     width: 100%;
-    max-width: 300px;
-    position: absolute;
+    width: 300px;
+    position: relative;
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
@@ -1600,7 +1600,7 @@ p {
   }
   
   .messages-grid li {
-    padding: 25px;
+    padding: 21px;
     background-color: #f0f0f0;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -1612,6 +1612,12 @@ p {
 #message-details-screen h3 {
     margin-top: 40px;
     color: #152A62;
+}
+
+#message-datetime {
+    font-size: 12px;
+    color: grey;
+    margin-top: 5px;
 }
 
 #contacts-navbar-item{
@@ -1661,19 +1667,66 @@ p {
     margin-top: 20px;
 }
 
-.logo-icon {
-    width: 25px; /* Pas de grootte aan naar wens */
-    height: 25px;
-    margin-right: 5px; /* Voeg ruimte toe tussen het logo en de naam */
-    vertical-align: middle; /* Zorg ervoor dat het logo in lijn is met de tekst */
-}
 
-.message-item{
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+
+
+
+
+.message-item {
+    display: flex;
+    align-items: flex-start;
     padding: 10px;
-    border-bottom: 1px solid #ccc; /* Voeg een scheiding toe voor overzichtelijkheid */
+    border-bottom: 1px solid #ccc; /* Scheiding tussen berichten */
     cursor: pointer;
 }
+
+.message-item-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.message-logo {
+    flex: 0 0 50px; /* Zorg dat het logo een vaste breedte heeft */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.message-logo img {
+    width: 50px; /* Zorg dat de afbeelding zich aanpast aan de containergrootte */
+    height: 50px;
+    margin-right: 5px; /* Voeg ruimte toe tussen het logo en de tekst */
+}
+
+.message-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 10px;
+}
+
+.message-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.message-sender {
+    font-weight: bold;
+    color: #152A62;
+}
+
+.message-datetime {
+    font-size: 12px;
+    color: grey;
+}
+
+.message-body {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #555;
+}
+
 

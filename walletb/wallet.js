@@ -2233,10 +2233,22 @@ function addMockMessageToTrustedContacts(sender, message) {
       // Beperk de lengte van het bericht en voeg "..." toe als het langer is
       const truncatedMessage = message.length > 50 ? message.substring(0, 50) + '...' : message;
 
-      // Stel de HTML van het bericht samen met logo, afzender en bericht
+      // Stel de HTML van het bericht samen
       messageItem.innerHTML = `
-          ${logoHTML}
-          <strong>${sender}:</strong> ${truncatedMessage}
+          <div class="message-item-container">
+              <div class="message-logo">
+                  ${logoHTML}
+              </div>
+              <div class="message-content">
+                  <div class="message-header">
+                      <strong class="message-sender">${sender}</strong>
+                      <span class="message-datetime">${datetime}</span>
+                  </div>
+                  <div class="message-body">
+                      <span>${truncatedMessage}</span>
+                  </div>
+              </div>
+          </div>
       `;
 
       messagesGrid.appendChild(messageItem);
@@ -2248,6 +2260,9 @@ function addMockMessageToTrustedContacts(sender, message) {
       // Voeg event listener toe aan het bericht om details te openen
       messageItem.addEventListener('click', () => {
           openMessageDetails(sender, message, datetime); // Open het volledige bericht in details
+          
+          // Verberg het notificatiebolletje zodra op het bericht wordt geklikt
+          notificationBadge.style.display = 'none';
       });
 
       console.log(`Bericht van ${sender} toegevoegd: "${message}"`);
@@ -2256,13 +2271,14 @@ function addMockMessageToTrustedContacts(sender, message) {
   }
 }
 
+
+
 // Event listener voor het sluiten van het berichtdetailscherm
 closeMessageDetailsBtn.addEventListener('click', () => {
   messageDetailsScreen.style.display = 'none';
   trustedContactsSection.style.display = 'block'; // Keer terug naar de Trusted Contacts sectie
 
-  // Verberg het notificatiebolletje zodra het bericht in detail is bekeken
-  notificationBadge.style.display = 'none';
+
 });
 
 const demoMessageButton = document.getElementById('demo-message-button');
