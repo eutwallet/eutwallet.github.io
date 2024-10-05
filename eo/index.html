@@ -6,11 +6,12 @@
   <title>Aan de slag bij een werkgever</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="../style.css">
+
 </head>
 <body>
     <div class="main-container">
   <nav>
-    <button class="home"><a href="/" class="home-link"><i class="fas fa-home"></i> Home</a></button>
+    <button class="home" onclick="location.href= '/';"><i class="fas fa-home"></i> Home</button>
   </nav>
 <hr>
   <div id="breadcrumbs"></div>
@@ -25,84 +26,54 @@
       omdat het proces gestandaardiseerd is, via veilige kanalen verloopt, handmatig overtypen niet meer nodig is en bewijzen automatisch worden gevalideerd.
     </p>
     <ul>
-        <li>
-          <button class="button-demolist">
-            <a href="/eo/id/index.html" target="_blank"><i class="fas fa-play"></i>Identificatie van de werknemer door de werkgever</a>
+      <li>
+          <button class="button-demolist" onclick="window.location.href='/eo/id/index.html';">
+              <i class="fas fa-play"></i> Identificatie van de werknemer door de werkgever
           </button>
-        </li>
-        <li>
-          <button class="button-demolist">
-            <a href="/eo/vog/index.html" target="_blank"><i class="fas fa-play"></i>Verklaring Omtrent Gedrag ophalen en delen met de werkgever</a>
+      </li>
+      <li>
+          <button class="button-demolist" onclick="window.location.href='/eo/vog/index.html';">
+              <i class="fas fa-play"></i> Verklaring Omtrent Gedrag ophalen en delen 
           </button>
-        </li>
-        <li>
-          <button class="button-demolist">
-            <a href="/eo/formulier-loonheffing/index.html" target="_blank"><i class="fas fa-play"></i>Formulier loonheffing invullen en ondertekenen</a>
+      </li>
+      <li>
+         i.o. <button class="button-demolist" onclick="window.location.href='/eo/formulier-loonheffing/index.html';">
+              <i class="fas fa-play"></i> Formulier loonheffing invullen en ondertekenen
           </button>
-        </li>
-        <li>
-          <button class="button-demolist">
-            <a href="/eo/diploma/index.html" target="_blank"><i class="fas fa-play"></i>Diploma ophalen en delen met de werkgever</a>
+      </li>
+      <li>
+        i.o.  <button class="button-demolist" onclick="window.location.href='/eo/diploma/index.html';">
+              <i class="fas fa-play"></i> Diploma ophalen en delen met de werkgever
           </button>
-        </li>
-        <li>
-          <button class="button-demolist">
-            <a href="/eo/arbeidsovereenkomst-ondertekenen/index.html" target="_blank"><i class="fas fa-play"></i>Ondertekenen arbeidsovereenkomst</a>
+      </li>
+      <li>
+        i.o.  <button class="button-demolist" onclick="window.location.href='/eo/arbeidsovereenkomst-ondertekenen/index.html';">
+              <i class="fas fa-play"></i> Ondertekenen arbeidsovereenkomst
           </button>
-        </li>
-      </ul>
-      
-      <h3>Na indiensttreding</h3>
-      <p>Na je indiensttreding kun je met de wallet ook andere zaken regelen:</p>
-      <ul>
-        <li>
-          <button class="button-demolist">
-            <a href="/eo/toegangspas/index.html" target="_blank"><i class="fas fa-play"></i>Ontvangen van een toegangspas</a>
+      </li>
+  </ul>
+  
+  <h3>Na indiensttreding</h3>
+  <p>Na je indiensttreding kun je met de wallet ook andere zaken regelen:</p>
+  <ul>
+      <li>
+        i.o.  <button class="button-demolist" onclick="window.location.href='/eo/toegangspas/index.html';">
+              <i class="fas fa-play"></i> Ontvangen van een toegangspas
           </button>
-        </li>
-        <li>
-          <button class="button-demolist">
-            <a href="/eo/parkeerkosten/index.html" target="_blank"><i class="fas fa-play"></i>Declareren van parkeerkosten</a>
+      </li>
+      <li>
+        i.o.  <button class="button-demolist" onclick="window.location.href='/eo/parkeerkosten/index.html';">
+              <i class="fas fa-play"></i> Declareren van parkeerkosten
           </button>
-        </li>
-      </ul>
+      </li>
+  </ul>
   </section>
 
 
    <!-- einde main-container website -->
 </div>
 
-  <script>
-document.addEventListener("DOMContentLoaded", function() {
-  const urlMappings = {
-    "eo": "Aan de slag bij een werkgever", // Direct de titel van de pagina als mapping
-    // Voeg hier andere mappings toe indien nodig
-  };
-  
-  const urlPath = window.location.pathname.split('/').filter(segment => segment !== "" && segment !== "index.html");
-  const breadcrumbsContainer = document.getElementById('breadcrumbs');
-  
-  let breadcrumbHTML = '<a href="/">Home</a>';
-  let currentPath = '';
-
-  urlPath.forEach((segment, index) => {
-    currentPath += `/${segment}`;
-    let displayName = urlMappings[segment] || decodeURIComponent(segment);
-    
-    // Alleen een link maken voor tussenliggende segmenten, en laatste segment zonder link
-    if (index < urlPath.length - 1) {
-      breadcrumbHTML += ` > <a href="${currentPath}">${displayName}</a>`;
-    } else {
-      breadcrumbHTML += ` > ${displayName}`;
-    }
-  });
-  
-  breadcrumbsContainer.innerHTML = breadcrumbHTML;
-});
-
-
-  </script>
-
+<script src="../breadcrumbs.js"></script>
 
 </body>
 </html>

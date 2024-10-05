@@ -131,12 +131,12 @@ button.read-more:hover {
   text-align: left;
   font-weight: bold;
   min-width: 500px;
+  font-size: 16px; /* Tekstgrootte toegevoegd */
+  color: #385168; /* Tekstkleur toegevoegd */
 }
 
-.button-demolist a {
-  font-size: 16px;
-  color: #385168;
-  text-decoration: none;
+.button-demolist i {
+  margin-right: 8px; /* Icoon marges toegevoegd */
 }
 
 .button-demolist:hover {
@@ -144,11 +144,6 @@ button.read-more:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-
-.button-demolist a i {
-  margin-right: 8px;
-}
-
 
  
   /* Styling voor secties */
