@@ -25,7 +25,7 @@ h2 {
   margin-bottom: 10px;
 }
 
-#main-intro h4 {
+#main-intro {
   margin-bottom: 0px;
 }
 
@@ -104,7 +104,6 @@ h2 {
   display: none;
   overflow: hidden;
   padding: 15px 20px;
-  border: 1px solid #ccc;
   border-top: none; /* Geen dubbele rand met de header */
   border-radius: 0 0 8px 8px;
 }
@@ -358,4 +357,39 @@ strong {
   position: absolute;
   left: 5px; /* Plaats de iconen netjes bij het nummer */
   top: 5px; /* Zorg dat het icoon goed gecentreerd staat */
+}
+
+/* Styling voor de navigatiebalk */
+.main-nav {
+  padding: 15px;
+}
+
+.main-nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  padding-left: 0;
+  margin: 0;
+}
+
+.main-nav li {
+  display: inline;
+}
+
+/* Styling voor navigatielinks */
+.nav-link {
+  color: #a0a0a0; /* Grijze kleur voor niet-actieve links */
+  font-weight: normal;
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.3s;
+}
+
+.nav-link:hover {
+  color: #385168; /* Donkere kleur bij hover voor alle links */
+}
+
+.nav-link.active {
+  color: #385168; /* De huidige kleur voor de actieve link */
+  font-weight: bold; /* Eventueel vetgedrukt om de actieve link extra te accentueren */
 }

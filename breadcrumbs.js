@@ -1,7 +1,9 @@
 document.addEventListener("DOMContentLoaded", function() {
     const urlMappings = {
+      "examples": "Voorbeelden",
+      "research": "Onderzoek",
       "eo": "Aan de slag bij een werkgever",
-      "ipa": "Interactie Patronen Attributen ophalen",
+      "ipa": "Interactiepatronen attributen",
       // Voeg hier andere mappings toe indien nodig
     };
     

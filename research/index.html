@@ -9,11 +9,9 @@
 </head>
 <body>
   <div class="main-container">
-    <nav>
-        <a href="/" class="home-button" aria-label="Ga naar de homepagina">
-            <i class="fas fa-home"></i> Home
-        </a>
-    </nav>
+    <nav id="main-nav" class="main-nav">
+        
+      </nav>
     <hr>
     <div id="breadcrumbs"></div>
 
@@ -97,50 +95,60 @@
     </div>
 
 
+    <h3 id="IPA2" class="accordion-header" aria-expanded="false" aria-controls="IPA2-content"> 
+        Attribuut via in-app trusted attribute catalogue [IPA-2] 
+        <i class="fas fa-chevron-down"></i>
+      </h3>
+      <div id="IPA2-content" class="accordion-content" aria-hidden="true">
+        test tekst
+      </div>
+      
+      <h3 id="IPA3" class="accordion-header" aria-expanded="false" aria-controls="IPA3-content"> 
+        Attribuut wordt in 1 stap gevraagd, direct opgehaald, opgeslagen en gedeeld [IPA-3] 
+        <i class="fas fa-chevron-down"></i>
+      </h3>
+      <div id="IPA3-content" class="accordion-content" aria-hidden="true">
+        test tekst
+      </div>
+      
+      <h3 id="IPA4" class="accordion-header" aria-expanded="false" aria-controls="IPA4-content"> 
+        Attribuut wordt door relying party zelf opgehaald via machtiging (ask, authorize, collect) [IPA-4] 
+        <i class="fas fa-chevron-down"></i>
+      </h3>
+      <div id="IPA4-content" class="accordion-content" aria-hidden="true">
+        test tekst
+      </div>
+      
+      <h3 id="IPA5" class="accordion-header" aria-expanded="false" aria-controls="IPA5-content"> 
+        Attribuut wordt via in-app trusted contacts gevraagd via bericht en opgehaald via IPA-2 [IPA-5] 
+        <i class="fas fa-chevron-down"></i>
+      </h3>
+      <div id="IPA5-content" class="accordion-content" aria-hidden="true">
+        test tekst
+      </div>
+      
+      <h3 id="IPA6" class="accordion-header" aria-expanded="false" aria-controls="IPA6-content"> 
+        Attribuut wordt via in-app trusted contacts gevraagd via bericht en opgehaald via IPA-3 [IPA-6] 
+        <i class="fas fa-chevron-down"></i>
+      </h3>
+      <div id="IPA6-content" class="accordion-content" aria-hidden="true">
+        test tekst
+      </div>
+      
+      <h3 id="IPA7" class="accordion-header" aria-expanded="false" aria-controls="IPA7-content"> 
+        Attribuut wordt via in-app trusted contacts gevraagd via bericht en opgehaald via IPA-4 [IPA-7] 
+        <i class="fas fa-chevron-down"></i>
+      </h3>
+      <div id="IPA7-content" class="accordion-content" aria-hidden="true">
+        test tekst
+      </div>
 
-
-      <ul>
-        <li>
-          <a class="button-demolist" href="/ipa/1/index.html" target="_blank" aria-label="Open IPA-1: Attribuut via QR handmatig scannen per stap">
-            <i class="fas fa-play"></i> IPA-1 | Attribuut via QR handmatig scannen per stap
-          </a>
-        </li>
-        <li>
-          <a class="button-demolist" href="/ipa/2/index.html" target="_blank" aria-label="Open IPA-2: Attribuut via in-app trusted attribute catalogue">
-            <i class="fas fa-play"></i> IPA-2 | Attribuut via in-app trusted attribute catalogue
-          </a>
-        </li>
-        <li>
-          <a class="button-demolist" href="/ipa/3/index.html" target="_blank" aria-label="Open IPA-3: Attribuut wordt in 1 stap gevraagd, direct opgehaald, opgeslagen en gedeeld">
-            <i class="fas fa-play"></i> IPA-3 | Attribuut wordt in 1 stap gevraagd, direct opgehaald, opgeslagen en gedeeld
-          </a>
-        </li>
-        <li>
-          <a class="button-demolist" href="/ipa/4/index.html" target="_blank" aria-label="Open IPA-4: Attribuut wordt door relying party zelf opgehaald via machtiging">
-            <i class="fas fa-play"></i> IPA-4 | Attribuut wordt door relying party zelf opgehaald via machtiging (ask, authorize, collect)
-          </a>
-        </li>
-        <li>
-          <a class="button-demolist" href="/ipa/5/index.html" target="_blank" aria-label="Open IPA-5: Attribuut wordt via in-app trusted contacts gevraagd en opgehaald via IPA-2">
-            <i class="fas fa-play"></i> IPA-5 | Attribuut wordt via in-app trusted contacts gevraagd via bericht en opgehaald via IPA-2
-          </a>
-        </li>
-        <li>
-          <a class="button-demolist" href="/ipa/6/index.html" target="_blank" aria-label="Open IPA-6: Attribuut wordt via in-app trusted contacts gevraagd en opgehaald via IPA-3">
-            <i class="fas fa-play"></i> IPA-6 | Attribuut wordt via in-app trusted contacts gevraagd via bericht en opgehaald via IPA-3
-          </a>
-        </li>
-        <li>
-          <a class="button-demolist" href="/ipa/7/index.html" target="_blank" aria-label="Open IPA-7: Attribuut wordt via in-app trusted contacts gevraagd en opgehaald via IPA-4">
-            <i class="fas fa-play"></i> IPA-7 | Attribuut wordt via in-app trusted contacts gevraagd via bericht en opgehaald via IPA-4
-          </a>
-        </li>
-      </ul>
     </section>
   </div>
 
   <!-- Verwijzing naar de JavaScript voor breadcrumbs -->
   <script src="../breadcrumbs.js"></script>
   <script src="../accordeon.js"></script>
+  <script src="../navbar.js"></script>
 </body>
 </html>
