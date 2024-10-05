@@ -40,8 +40,13 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log("Navigatie toegevoegd aan de DOM.");
     
         // Activeer de huidige pagina
-        const currentPath = window.location.pathname;
+        let currentPath = window.location.pathname;
         console.log("Huidig pad:", currentPath);
+
+        // Controleer of het een directory is zonder expliciete index.html en voeg een slash toe als het mist
+        if (currentPath.endsWith('/')) {
+            currentPath += "index.html";
+        }
 
         // Markeer de actieve link
         document.querySelectorAll(".nav-link").forEach(link => {
