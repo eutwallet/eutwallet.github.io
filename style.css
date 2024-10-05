@@ -8,7 +8,7 @@ body {
     line-height: 1.6;
   }
   
-  .container {
+  .main-container {
     max-width: 900px;
     margin: 0 auto;
     padding: 20px;
@@ -36,12 +36,22 @@ body {
     margin-left: auto;
     transition: transform 0.3s;
   }
+
   
   p {
     font-size: 16px;
     color: #555;
     margin-top: 0px;
     margin-bottom: 20px;
+  }
+
+  #breadcrumbs a {
+    color: #385168;
+    text-decoration: none;
+  }
+  
+  #breadcrumbs a:hover {
+    text-decoration: underline;  /* Optioneel: voeg een onderstreping toe bij hover */
   }
   
   ul li {
@@ -53,43 +63,103 @@ body {
   .accordion-header {
     background-color: #fefeff;
   }
+
+button.home {
+  font-size: 16px;
+  color: #385168;
+  background-color: #F0F4F8;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  border: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+ 
+}
+
+button.home i {
+  margin-right: 8px;
+}
+
+button.home a {
+  font-size: 16px;
+  color: #385168;
+  text-decoration: none;
+}
   
-  /* Algemene knop styling */
-  a {
+button.read-more {
     font-size: 16px;
     color: #385168;
     text-decoration: none;
     background-color: #F0F4F8;
-    padding: 12px 20px;
+    padding: 20px;
     border-radius: 8px;
     display: inline-block;
     text-align: left;
     font-weight: bold;
     transition: all 0.3s ease;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    margin-bottom: 15px;
-    min-width: 500px;
+    margin-top: 20px;
+    border: none;
+    cursor: pointer;
   }
-  
-  a:hover {
-    background-color: #e0e7ed;
+button.read-more:hover {
+    background-color: #60ce97;
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
-  
-  a i {
-    margin-right: 8px;
+
+  button.read-more a {
+    font-size: 16px;
+    color: #385168;
+    text-decoration: none;
   }
-  
+
+
+/* Styling voor knoppen in de demo-lijsten */
+.button-demolist {
+  border: none;
+  background-color: #F0F4F8;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  display: inline-block;
+  margin-bottom: 15px;
+  width: fit-content;
+  text-align: left;
+  font-weight: bold;
+  min-width: 500px;
+}
+
+.button-demolist a {
+  font-size: 16px;
+  color: #385168;
+  text-decoration: none;
+}
+
+.button-demolist:hover {
+  background-color: #e0e7ed;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.button-demolist a i {
+  margin-right: 8px;
+}
+
+
+ 
   /* Styling voor secties */
   .sectie {
-    padding: 20px;
+    
     border-radius: 8px;
     background-color: #fefeff;
     margin-bottom: 30px;
     display: flex;
     flex-direction: column;
-    border: 1px solid #ccc;
+  /*  border: 1px solid #ccc;*/
   }
   
   .sectie h2, .sectie h3 {
@@ -191,7 +261,7 @@ body {
   
   @media (max-width: 768px) {
     /* Maak de container breder op kleinere schermen */
-    .container {
+    .main-container {
       padding: 10px;
       max-width: 100%;
     }
