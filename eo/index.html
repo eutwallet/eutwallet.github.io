@@ -75,7 +75,7 @@
   <script>
 document.addEventListener("DOMContentLoaded", function() {
   const urlMappings = {
-    "eo": "werkgever",
+    "eo": "Aan de slag bij een werkgever", // Direct de titel van de pagina als mapping
     // Voeg hier andere mappings toe indien nodig
   };
   
@@ -84,16 +84,12 @@ document.addEventListener("DOMContentLoaded", function() {
   
   let breadcrumbHTML = '<a href="/">Home</a>';
   let currentPath = '';
-  
+
   urlPath.forEach((segment, index) => {
     currentPath += `/${segment}`;
     let displayName = urlMappings[segment] || decodeURIComponent(segment);
     
-    // Voor de laatste segment gebruiken we de titel van de pagina
-    if (index === urlPath.length - 1 && segment === "index.html") {
-      displayName = document.title;  // Gebruik de titel van de huidige pagina
-    }
-
+    // Alleen een link maken voor tussenliggende segmenten, en laatste segment zonder link
     if (index < urlPath.length - 1) {
       breadcrumbHTML += ` > <a href="${currentPath}">${displayName}</a>`;
     } else {
