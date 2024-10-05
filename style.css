@@ -128,9 +128,18 @@ p {
 
 
 /* Styling voor breadcrumbs links */
+
+
+#breadcrumbs  {
+display: flex;
+flex-direction: row;
+}
+
 #breadcrumbs a {
   color: #385168;
   text-decoration: none;
+  width: auto;
+  margin-right: 8px;
 }
 
 #breadcrumbs a:hover {
