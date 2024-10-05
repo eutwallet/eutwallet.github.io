@@ -40,12 +40,14 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log("Navigatie toegevoegd aan de DOM.");
     
         // Activeer de huidige pagina
-        const currentPath = window.location.pathname.split("/").pop();
+        const currentPath = window.location.pathname;
         console.log("Huidig pad:", currentPath);
 
+        // Markeer de actieve link
         document.querySelectorAll(".nav-link").forEach(link => {
-            console.log("Controleren of de link actief moet zijn:", link.href);
-            if (link.getAttribute("href").includes(currentPath)) {
+            const linkPath = new URL(link.href, window.location.origin).pathname;
+            console.log("Controleren of de link actief moet zijn:", linkPath);
+            if (linkPath === currentPath) {
                 link.classList.add("active");
                 console.log(`Actieve link toegevoegd: ${link.href}`);
             }
