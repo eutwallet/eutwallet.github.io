@@ -22,8 +22,6 @@ const activitiesNavbarItem = document.getElementById('activities-navbar-item');
 const overviewNavbarItem = document.getElementById('overview-navbar-item');
 const bottomNav = document.querySelector('.bottom-nav');
 const machtigingNavbarItem = document.getElementById('machtigingen-navbar-item'); 
-const instellingenNavbarItem = document.getElementById('instellingen-navbar-item');
-const instellingenSection = document.getElementById('instellingen-section');
 const machtigingSection = document.getElementById('machtiging-section');
 
 // *** Activiteiten Elementen ***
@@ -124,6 +122,12 @@ const messageTextElement = document.getElementById('message-text');
 
 // Elementen voor het notificatiebolletje
 const notificationBadge = document.getElementById('notification-badge');
+
+// Elementen voor het instellingen knop en scherm
+const settingsButton = document.getElementById('settings-button');
+const instellingenSection = document.getElementById('instellingen-section');
+const closeSettingsBtn = document.getElementById('close-settings');
+
 
 const fieldMapping = {
   gn: 'Voornaam',
@@ -230,23 +234,6 @@ machtigingNavbarItem.addEventListener('click', () => {
 
   // Zet het machtigingen-item actief in de navbar
   machtigingNavbarItem.classList.add('active');
-});
-
-// Voeg de event listener toe voor het klikken op de instellingen-knop in de navbar
-instellingenNavbarItem.addEventListener('click', () => {
-  // Verberg alle andere secties
-  document.getElementById('wallet-screen').style.display = 'none';
-  activitiesSection.style.display = 'none'; // Verberg activiteiten-sectie
-  document.getElementById('machtiging-section').style.display = 'none'; // Verberg machtigingen-sectie
-
-  // Toon het instellingen-scherm
-  instellingenSection.style.display = 'flex';
-
-  // Zorg ervoor dat de andere navbar-items niet meer actief zijn
-  document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-
-  // Zet het instellingen-item actief in de navbar
-  instellingenNavbarItem.classList.add('active');
 });
 
 function convertToStandardDate(dateString) {
@@ -2209,25 +2196,6 @@ machtigingNavbarItem.addEventListener('click', () => {
   machtigingNavbarItem.classList.add('active');
 });
 
-// Event listener voor het klikken op de instellingen-knop in de navbar
-instellingenNavbarItem.addEventListener('click', () => {
-  // Verberg andere secties
-  walletScreen.style.display = 'none';
-  activitiesSection.style.display = 'none';
-  trustedContactsSection.style.display = 'none';
-  machtigingSection.style.display = 'none';
-
-  // Toon het instellingen-scherm
-  instellingenSection.style.display = 'flex';
-
-  // Zorg ervoor dat de andere navbar-items niet meer actief zijn
-  document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-
-  // Zet het instellingen-item actief in de navbar
-  instellingenNavbarItem.classList.add('active');
-});
-
-
 // Functie om een bericht te openen
 function openMessageDetails(sender, message, datetime) {
   // Vul de gegevens in het detailscherm
@@ -2240,28 +2208,52 @@ function openMessageDetails(sender, message, datetime) {
   messageDetailsScreen.style.display = 'block';
 }
 
-// Functie om een mock-bericht toe te voegen en klikbare details toe te voegen
 function addMockMessageToTrustedContacts(sender, message) {
   const messagesGrid = document.getElementById('messages-grid');
   if (messagesGrid) {
-    const datetime = new Date().toLocaleString(); // Voeg datum en tijd toe aan het bericht
-    const messageItem = document.createElement('li');
-    messageItem.innerHTML = `<strong>${sender}:</strong> ${message}`;
-    messagesGrid.appendChild(messageItem);
+      const datetime = new Date().toLocaleString(); // Voeg datum en tijd toe aan het bericht
+      const messageItem = document.createElement('li');
+      messageItem.classList.add('message-item');
 
-    // Toon het notificatiebolletje
-    notificationBadge.style.display = 'flex';
-    notificationBadge.textContent = '1'; // Aantal berichten, je kunt dit aanpassen om meerdere te tellen
+      // Voeg dynamisch het juiste logo toe op basis van de afzender
+      let logoHTML = '';
+      switch (sender.toLowerCase()) {
+          case 'duo':
+              logoHTML = '<img src="duologo.svg" alt="DUO logo" class="logo-icon">';
+              break;
+          case 'belastingdienst':
+              logoHTML = '<img src="belastingdienstlogo.svg" alt="Belastingdienst logo" class="logo-icon">';
+              break;
+          // Voeg hier meer cases toe voor andere afzenders indien nodig
+          default:
+              logoHTML = ''; // Geen logo voor onbekende afzenders
+              break;
+      }
 
-    // Voeg event listener toe aan het bericht om details te openen
-    messageItem.addEventListener('click', () => {
-      openMessageDetails(sender, message, datetime);
-    });
+      // Beperk de lengte van het bericht en voeg "..." toe als het langer is
+      const truncatedMessage = message.length > 50 ? message.substring(0, 50) + '...' : message;
 
-    console.log(`Bericht van ${sender} toegevoegd: "${message}"`);
+      // Stel de HTML van het bericht samen met logo, afzender en bericht
+      messageItem.innerHTML = `
+          ${logoHTML}
+          <strong>${sender}:</strong> ${truncatedMessage}
+      `;
+
+      messagesGrid.appendChild(messageItem);
+
+      // Toon het notificatiebolletje
+      notificationBadge.style.display = 'flex';
+      notificationBadge.textContent = '1'; // Aantal berichten, je kunt dit aanpassen om meerdere te tellen
+
+      // Voeg event listener toe aan het bericht om details te openen
+      messageItem.addEventListener('click', () => {
+          openMessageDetails(sender, message, datetime); // Open het volledige bericht in details
+      });
+
+      console.log(`Bericht van ${sender} toegevoegd: "${message}"`);
   } else {
-    console.error("Trusted Contacts sectie niet gevonden.");
-} 
+      console.error("Trusted Contacts sectie niet gevonden.");
+  }
 }
 
 // Event listener voor het sluiten van het berichtdetailscherm
@@ -2273,5 +2265,31 @@ closeMessageDetailsBtn.addEventListener('click', () => {
   notificationBadge.style.display = 'none';
 });
 
-// Voorbeeld van een mock bericht (voeg dit toe via de console om te testen)
-addMockMessageToTrustedContacts('Demo Contact', 'Dit is een voorbeeldbericht.');
+const demoMessageButton = document.getElementById('demo-message-button');
+
+demoMessageButton.addEventListener('click', () => {
+    // Roep de functie aan die een mock-bericht toevoegt
+    addMockMessageToTrustedContacts('DUO', 'Uw nieuwe diploma staat klaar en u kunt vanaf dit diploma ophalen en in uw wallet opslaan. Met de voglende link doet u dit automatisch.');
+
+    // Verberg het instellingen-scherm
+    instellingenSection.style.display = 'none';
+
+    // Toon het wallet-scherm
+    walletScreen.style.display = 'block';
+});
+
+settingsButton.addEventListener('click', () => {
+  // Verberg het wallet-overzicht
+  walletScreen.style.display = 'none';
+
+  // Toon het instellingen-scherm
+  instellingenSection.style.display = 'flex';
+});
+
+closeSettingsBtn.addEventListener('click', () => {
+  // Verberg het instellingen-scherm
+  instellingenSection.style.display = 'none';
+
+  // Toon het wallet-scherm
+  walletScreen.style.display = 'block';
+});
