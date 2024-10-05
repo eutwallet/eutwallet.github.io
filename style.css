@@ -1,142 +1,195 @@
 /* Algemene styling voor de body */
 body {
-    font-family: 'Helvetica', sans-serif;
-    color: #555;
-    background-color: #ffffff;
-    margin: 0;
-    padding: 20px;
-    line-height: 1.6;
-  }
-  
-  .main-container {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-  }
-  
-  h1, h2, h3, h4 {
-    color: #555;
-  }
-  
-  h2 {
-    font-size: 24px;
-    margin-bottom: 10px;
-  }
-  
-  h4 {
-    margin-bottom: 0px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-  }
-  
-  h4 i {
-    margin-left: auto;
-    transition: transform 0.3s;
-  }
+  font-family: 'Helvetica', sans-serif;
+  color: #555;
+  background-color: #ffffff;
+  margin: 0;
+  padding: 20px;
+  line-height: 1.6;
+}
 
-  
-  p {
-    font-size: 16px;
-    color: #555;
-    margin-top: 0px;
-    margin-bottom: 20px;
-  }
+.main-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+}
 
-  #breadcrumbs a {
-    color: #385168;
-    text-decoration: none;
-  }
-  
-  #breadcrumbs a:hover {
-    text-decoration: underline;  /* Optioneel: voeg een onderstreping toe bij hover */
-  }
-  
-  ul li {
-    margin-bottom: 10px;
-    text-align: left;
-    color: #555;
-  }
-  
-  .accordion-header {
-    background-color: #fefeff;
-  }
+h1, h2, h3, h4 {
+  color: #555;
+}
 
-button.home {
-  font-size: 16px;
-  color: #385168;
+h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+h4 {
+  margin-bottom: 0px;
+}
+
+/* Styling voor de home-button (link) */
+.home-button {
   background-color: #F0F4F8;
-  padding: 12px 20px;
-  border-radius: 8px;
-  font-weight: bold;
+  color: #385168;
   border: none;
-  transition: all 0.3s ease;
+  border-radius: 8px;
+  padding: 12px 20px;
   cursor: pointer;
- 
-}
-
-button.home i {
-  margin-right: 8px;
-}
-
-button.home a {
   font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  display: inline-block;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  margin-bottom: 15px;
+  width: fit-content;
+}
+
+.home-button:hover {
+  background-color: #e0e7ed;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Duidelijke focusstijl voor toetsenbordtoegankelijkheid */
+.home-button:focus {
+  outline: 3px solid #60ce97; /* Groene lijn voor focus */
+  outline-offset: 2px;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+
+/* Specifieke styling voor accordeon headers */
+.accordion-header {
+  margin-bottom: 0px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  background-color: #fefeff;
+  padding: 10px 0px;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+}
+
+.accordion-header:hover {
+  background-color: #e0e7ed;
+}
+
+.accordion-header i {
+  margin-left: auto;
+  transition: transform 0.3s;
+}
+
+/* Verbeterde focusstijl voor toegankelijkheid - alleen zichtbaar bij toetsenbordnavigatie */
+.accordion-header:focus-visible {
+  outline: 3px solid #60ce97;
+  outline-offset: 2px;
+}
+
+/* Verwijder focusstijl bij muisklik */
+.accordion-header:focus {
+  outline: none;
+}
+
+/* Rotatie van chevron bij uitklappen */
+.accordion-header i.rotate {
+  transform: rotate(180deg);
+}
+
+
+/* Algemene styling voor paragrafen */
+p {
+  font-size: 16px;
+  color: #555;
+  margin-top: 0px;
+  margin-bottom: 20px;
+}
+
+#handleiding-content p {
+  font-size: 16px;
+  color: #555;
+  margin-top: 0px;
+  margin-bottom: 20px;
+}
+
+
+/* Styling voor breadcrumbs links */
+#breadcrumbs a {
   color: #385168;
   text-decoration: none;
 }
-  
-button.read-more {
-    font-size: 16px;
-    color: #385168;
-    text-decoration: none;
-    background-color: #F0F4F8;
-    padding: 20px;
-    border-radius: 8px;
-    display: inline-block;
-    text-align: left;
-    font-weight: bold;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    margin-top: 20px;
-    border: none;
-    cursor: pointer;
-  }
-button.read-more:hover {
-    background-color: #60ce97;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
 
-  button.read-more a {
-    font-size: 16px;
-    color: #385168;
-    text-decoration: none;
-  }
+#breadcrumbs a:hover {
+  text-decoration: underline; /* Optioneel: voeg een onderstreping toe bij hover */
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 0;
+}
 
 
-/* Styling voor knoppen in de demo-lijsten */
-.button-demolist {
-  border: none;
+ul li {
+  margin-bottom: 10px;
+  text-align: left;
+  color: #555;
+}
+
+/* Styling voor "Lees meer" knoppen */
+.read-more {
+  font-size: 16px;
+  color: #385168;
+  text-decoration: none;
   background-color: #F0F4F8;
-  padding: 12px 20px;
+  padding: 20px;
   border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   display: inline-block;
-  margin-bottom: 15px;
-  width: fit-content;
   text-align: left;
   font-weight: bold;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+}
+
+.read-more:hover,
+.read-more:focus {
+  background-color: #60ce97;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  outline: none;
+}
+
+.read-more i {
+  margin-right: 8px;
+}
+
+/* Styling voor knoppen in de demo-lijsten die nu links zijn */
+.button-demolist {
+  background-color: #F0F4F8;
+  color: #385168;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: left;
+  display: inline-block;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  margin-bottom: 15px;
+  width: fit-content;
   min-width: 500px;
-  font-size: 16px; /* Tekstgrootte toegevoegd */
-  color: #385168; /* Tekstkleur toegevoegd */
 }
 
 .button-demolist i {
-  margin-right: 8px; /* Icoon marges toegevoegd */
+  margin-right: 8px;
 }
 
 .button-demolist:hover {
@@ -145,145 +198,116 @@ button.read-more:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
- 
-  /* Styling voor secties */
-  .sectie {
-    
-    border-radius: 8px;
-    background-color: #fefeff;
-    margin-bottom: 30px;
-    display: flex;
-    flex-direction: column;
-  /*  border: 1px solid #ccc;*/
+/* Duidelijke focusstijl voor toetsenbordtoegankelijkheid */
+.button-demolist:focus {
+  outline: 3px solid #60ce97; /* Groene lijn voor focus */
+  outline-offset: 2px;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Styling voor secties */
+.sectie {
+  border-radius: 8px;
+  background-color: #fefeff;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sectie h2, .sectie h3 {
+  color: #385168;
+  margin-bottom: 5px;
+}
+
+.sectie p {
+  margin-top: 0px;
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  background: #ccc;
+  margin-bottom: 20px;
+}
+
+strong {
+  font-weight: bold;
+}
+
+/* Verborgen inhoud voor accordeon */
+.accordion-content {
+  display: none;
+  overflow: hidden;
+}
+
+.accordion-content.expanded {
+  display: block;
+}
+
+/* Uitklapknop rechts uitlijnen */
+.toggle-btn {
+  width: auto;
+  text-align: center;
+  float: right;
+  padding: 10px 20px;
+  background-color: #87a2bb;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  display: inline-block;
+  margin-top: 10px;
+  width: fit-content;
+  align-self: flex-end;
+}
+
+.toggle-btn:hover {
+  background-color: #6f8ea2;
+}
+
+.toggle-btn-bottom {
+  width: auto;
+  text-align: center;
+  float: right;
+  padding: 10px 20px;
+  background-color: #87a2bb;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.toggle-btn-bottom:hover {
+  background-color: #6f8ea2;
+}
+
+/* Media query voor responsieve weergave */
+@media (max-width: 768px) {
+  .main-container {
+    padding: 10px;
+    max-width: 100%;
   }
-  
-  .sectie h2, .sectie h3 {
-    color: #385168;
-    margin-bottom: 5px;
-  }
-  
-  .sectie p {
-    margin-top: 0px;
-  }
-  
-  .sectie ul {
-    padding-left: 0;
-    list-style-type: none;
-  }
-  
-  .sectie ul li {
-    margin-bottom: 10px;
+
+  a {
+    min-width: unset;
+    width: -webkit-fill-available;
+    width: -moz-available;
+    width: fill-available;
+    width: 100%;
+    box-sizing: border-box;
+    display: block;
     text-align: left;
   }
-  
-  hr {
-    border: 0;
-    height: 1px;
-    background: #ccc;
+
+  .toggle-btn, .toggle-btn-bottom {
+    width: fit-content;
+    text-align: center;
+  }
+
+  .sectie {
+    padding: 15px;
+    border-radius: 5px;
     margin-bottom: 20px;
   }
-  
-  strong {
-    font-weight: bold;
-  }
-  
-  /* Verborgen inhoud voor accordeon */
-  .accordion-content {
-    display: none;
-    overflow: hidden;
-  }
-  
-  .accordion-content.expanded {
-    display: block;
-  }
-  
-  /* Rotatie van chevron bij uitklappen */
-  .accordion-header i.rotate {
-    transform: rotate(180deg);
-  }
-  
-  /* Verborgen inhoud voor collapsible sectie */
-  .collapsible-content {
-    display: none;
-    overflow: hidden;
-    transition: max-height 0.5s ease;
-  }
-  
-  .collapsible-content.expanded {
-    display: block;
-  }
-  
-  /* Uitklapknop rechts uitlijnen */
-  .toggle-btn {
-    width: auto;
-    text-align: center;
-    float: right;
-    padding: 10px 20px;
-    background-color: #87a2bb;
-    color: #fff;
-    border-radius: 5px;
-    cursor: pointer;
-    display: inline-block;
-    margin-top: 10px;
-    width: fit-content;
-    align-self: flex-end;
-    min-width: unset;
-  }
-  
-  .toggle-btn:hover {
-    background-color: #6f8ea2;
-  }
-  
-  /* Inklapknop onderin de sectie */
-  .toggle-btn-bottom {
-    width: auto;
-    text-align: center;
-    float: right;
-    padding: 10px 20px;
-    background-color: #87a2bb;
-    color: #fff;
-    border-radius: 5px;
-    cursor: pointer;
-    display: inline-block;
-    margin-top: 10px;
-    width: fit-content;
-    min-width: unset;
-  }
-  
-  .toggle-btn-bottom:hover {
-    background-color: #6f8ea2;
-  }
-  
-  @media (max-width: 768px) {
-    /* Maak de container breder op kleinere schermen */
-    .main-container {
-      padding: 10px;
-      max-width: 100%;
-    }
-  
-    /* Knoppen moeten de volledige breedte hebben op mobiele schermen */
-    a {
-      min-width: unset;
-      width: -webkit-fill-available;
-      width: -moz-available;
-      width: fill-available;
-      width: 100%;
-      box-sizing: border-box;
-      display: block;
-      text-align: left;
-    }
-  
-    /* Specifieke styling voor toggle buttons op mobiel */
-    .toggle-btn, .toggle-btn-bottom {
-      width: fit-content;
-      text-align: center;
-    }
-  
-    /* Zorg ervoor dat de sectie goed zichtbaar is op mobiel */
-    .sectie {
-      padding: 15px;
-      border-radius: 5px;
-      margin-bottom: 20px;
-    }
-  }
-  
+}

@@ -6,74 +6,72 @@
   <title>Aan de slag bij een werkgever</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="../style.css">
-
 </head>
 <body>
-    <div class="main-container">
-  <nav>
-    <button class="home" onclick="location.href= '/';"><i class="fas fa-home"></i> Home</button>
-  </nav>
-<hr>
-  <div id="breadcrumbs"></div>
-  
-  <section class="sectie">
-    <h2>Aan de slag bij een nieuwe werkgever</h2>
-    <p>Willeke gaat aan de slag bij een nieuwe werkgever en daarbij komt nogal wat administratie kijken. Gelukkig biedt haar nieuwe werkgever de mogelijkheid om 
-      de identiteits-wallet te gebruiken om deze zaken te regelen.
-      In plaats van een kopie paspoort aanleveren, handtekeningen inscannen, digitale bewijzen mailen en handmatig valideren, pdf-formulieren handmatig bewerken en invullen 
-      met kans op fouten bij overtypen van gegevens 
-      kan ze nu met hoge betrouwbaarheid, gemak en efficiëntie het proces doorlopen 
-      omdat het proces gestandaardiseerd is, via veilige kanalen verloopt, handmatig overtypen niet meer nodig is en bewijzen automatisch worden gevalideerd.
-    </p>
-    <ul>
-      <li>
-          <button class="button-demolist" onclick="window.location.href='/eo/id/index.html';">
-              <i class="fas fa-play"></i> Identificatie van de werknemer door de werkgever
-          </button>
-      </li>
-      <li>
-          <button class="button-demolist" onclick="window.location.href='/eo/vog/index.html';">
-              <i class="fas fa-play"></i> Verklaring Omtrent Gedrag ophalen en delen 
-          </button>
-      </li>
-      <li>
-         i.o. <button class="button-demolist" onclick="window.location.href='/eo/formulier-loonheffing/index.html';">
-              <i class="fas fa-play"></i> Formulier loonheffing invullen en ondertekenen
-          </button>
-      </li>
-      <li>
-        i.o.  <button class="button-demolist" onclick="window.location.href='/eo/diploma/index.html';">
-              <i class="fas fa-play"></i> Diploma ophalen en delen met de werkgever
-          </button>
-      </li>
-      <li>
-        i.o.  <button class="button-demolist" onclick="window.location.href='/eo/arbeidsovereenkomst-ondertekenen/index.html';">
-              <i class="fas fa-play"></i> Ondertekenen arbeidsovereenkomst
-          </button>
-      </li>
-  </ul>
-  
-  <h3>Na indiensttreding</h3>
-  <p>Na je indiensttreding kun je met de wallet ook andere zaken regelen:</p>
-  <ul>
-      <li>
-        i.o.  <button class="button-demolist" onclick="window.location.href='/eo/toegangspas/index.html';">
-              <i class="fas fa-play"></i> Ontvangen van een toegangspas
-          </button>
-      </li>
-      <li>
-        i.o.  <button class="button-demolist" onclick="window.location.href='/eo/parkeerkosten/index.html';">
-              <i class="fas fa-play"></i> Declareren van parkeerkosten
-          </button>
-      </li>
-  </ul>
-  </section>
+  <div class="main-container">
+    <nav>
+      <a href="/" class="home-button" aria-label="Ga naar de homepagina">
+        <i class="fas fa-home"></i> Home
+      </a>
+    </nav>
+    <hr>
+    <div id="breadcrumbs"></div>
 
+    <section class="sectie">
+      <h2>Aan de slag bij een nieuwe werkgever</h2>
+      <p>Willeke gaat aan de slag bij een nieuwe werkgever en daarbij komt nogal wat administratie kijken. Gelukkig biedt haar nieuwe werkgever de mogelijkheid om 
+        de identiteits-wallet te gebruiken om deze zaken te regelen.
+        In plaats van een kopie paspoort aanleveren, handtekeningen inscannen, digitale bewijzen mailen en handmatig valideren, pdf-formulieren handmatig bewerken en invullen 
+        met kans op fouten bij overtypen van gegevens 
+        kan ze nu met hoge betrouwbaarheid, gemak en efficiëntie het proces doorlopen 
+        omdat het proces gestandaardiseerd is, via veilige kanalen verloopt, handmatig overtypen niet meer nodig is en bewijzen automatisch worden gevalideerd.
+      </p>
+      <ul>
+        <li>
+          <a class="button-demolist" href="/eo/id/index.html" aria-label="Open identificatie van de werknemer door de werkgever">
+            <i class="fas fa-play"></i> Identificatie van de werknemer door de werkgever
+          </a>
+        </li>
+        <li>
+          <a class="button-demolist" href="/eo/vog/index.html" aria-label="Open verklaring omtrent gedrag ophalen en delen">
+            <i class="fas fa-play"></i> Verklaring Omtrent Gedrag ophalen en delen 
+          </a>
+        </li>
+        <li>
+          i.o. <a class="button-demolist" href="/eo/formulier-loonheffing/index.html" aria-label="Open formulier loonheffing invullen en ondertekenen">
+            <i class="fas fa-play"></i> Formulier loonheffing invullen en ondertekenen
+          </a>
+        </li>
+        <li>
+          i.o. <a class="button-demolist" href="/eo/diploma/index.html" aria-label="Open diploma ophalen en delen met de werkgever">
+            <i class="fas fa-play"></i> Diploma ophalen en delen met de werkgever
+          </a>
+        </li>
+        <li>
+          i.o. <a class="button-demolist" href="/eo/arbeidsovereenkomst-ondertekenen/index.html" aria-label="Open arbeidsovereenkomst ondertekenen">
+            <i class="fas fa-play"></i> Ondertekenen arbeidsovereenkomst
+          </a>
+        </li>
+      </ul>
+      
+      <h3>Na indiensttreding</h3>
+      <p>Na je indiensttreding kun je met de wallet ook andere zaken regelen:</p>
+      <ul>
+        <li>
+          i.o. <a class="button-demolist" href="/eo/toegangspas/index.html" aria-label="Open toegangspas ontvangen">
+            <i class="fas fa-play"></i> Ontvangen van een toegangspas
+          </a>
+        </li>
+        <li>
+          i.o. <a class="button-demolist" href="/eo/parkeerkosten/index.html" aria-label="Open parkeerkosten declareren">
+            <i class="fas fa-play"></i> Declareren van parkeerkosten
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- Einde main-container website -->
+  </div>
 
-   <!-- einde main-container website -->
-</div>
-
-<script src="../breadcrumbs.js"></script>
-
+  <script src="../breadcrumbs.js"></script>
 </body>
 </html>

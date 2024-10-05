@@ -7,40 +7,21 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="style.css">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
-
 </head>
 <body>
   <div class="main-container">
     <h1>Europese Test Wallet (EUTW)</h1>
     <hr>
 
-    <!-- Accordeon voor Doel -->
-    <h4><strong>Doel</strong></h4>
+    <!-- Statische header voor Doel -->
+    <h4>Doel</h4>
     <p>Deze website is bedoeld om een indruk te krijgen van hoe de Europese identiteits wallet zou kunnen werken bij het uitwisselen van digitale bewijzen, en het gesprek over de mogelijkheden, ideeën, ontwikkelpunten en overwegingen te faciliteren. Deze website biedt daarom een lichtgewicht wallet aan met bijbehorende voorbeelden voor test- en demodoeleinden.</p>
 
-    <!-- Accordeon voor Disclaimer -->
-    <div class="accordion-section">
-      <h4 class="accordion-header"><strong>Disclaimer</strong> <i class="fas fa-chevron-down"></i></h4>
-      <div class="accordion-content">
-        <p>In de getoonde wallet en onderdelen ontbreken bepaalde functies en deze wallet representeert dus niet een volledig werkend eindproduct. 
-        Deze lichtgewicht wallet is geen app, heeft geen backend, en is puur voor demonstratiedoeleinden. Digitale bewijzen worden opgeslagen in de lokale browser opslag van je telefoon. 
-        De getoonde websites zijn fictieve websites.</p>
-      </div>
-    </div>
-
-    <!-- Accordeon voor Korte handleiding -->
-    <div class="accordion-section">
-      <h4 class="accordion-header"><strong>Korte handleiding</strong> <i class="fas fa-chevron-down"></i></h4>
-      <div class="accordion-content">
-        <ul style="list-style-type: disc; margin-left: 20px; padding-left: 0; margin-top: 0px;">
-          <li style="margin-bottom: 0px;">In onderstaand voorbeeld wordt je stapsgewijs door de schermen geleid.</li>
-          <li style="margin-bottom: 0px;">Op een gegeven moment wordt aan je gevraagd om de wallet op je telefoon te openen: je krijgt een url om te openen op je telefoon, of je kunt een QR code scannen om naar de url te gaan.</li>
-          <li style="margin-bottom: 0px;">De wallet is al geactiveerd voor Willeke de Bruijn (fictieve burger op het voorbeeldpaspoort) en bevat twee 'kaartjes' met haar fictieve gegevens. Nieuwe opgeslagen kaartjes worden onder deze 2 bestaande kaartjes weergegeven.</li>
-          <li style="margin-bottom: 0px;">De pincode kun je zelf verzinnen of klikken op doorgaan zonder invoer van pincode.</li>
-          <li style="margin-bottom: 0px;">In het menu van de wallet kun je de acties die je onderneemt terugvinden onder activiteiten.</li>
-        </ul>
-      </div>
-    </div>
+    <!-- Disclaimer zonder accordeon -->
+    <h4>Disclaimer</h4>
+    <p>In de getoonde wallet en onderdelen ontbreken bepaalde functies en deze wallet representeert dus niet een volledig werkend eindproduct. 
+    Deze lichtgewicht wallet is geen app, heeft geen backend, en is puur voor demonstratiedoeleinden. Digitale bewijzen worden opgeslagen in de lokale browser opslag van je telefoon. 
+    De getoonde websites zijn fictieve websites.</p>
 
     <h4><strong>Voorbeelden</strong></h4>
     <p>In onderstaande voorbeelden kun je het gebruik van de wallet testen in verschillende fictieve situaties.<br>
@@ -57,29 +38,29 @@
         kan ze nu met hoge betrouwbaarheid, gemak en efficiëntie het proces doorlopen 
         omdat het proces gestandaardiseerd is, via veilige kanalen verloopt, handmatig overtypen niet meer nodig is en bewijzen automatisch worden gevalideerd.
       </p>
-      <button class="read-more" onclick="location.href='eo/index.html';">Lees meer</button>
+      <a class="read-more" href="eo/index.html" aria-label="Lees meer over aan de slag bij een nieuwe werkgever">Lees meer</a>
     </section>
     <!-- Einde sectie -->
 
-<hr>
+    <hr>
 
     <section class="sectie">
       <h2>Interactie Patronen Attributen</h2>
       <p>Om digitale bewijzen op te halen en te delen zijn er meerdere interactie patronen mogelijk. 
         Om deze inzichtelijk te maken, volgen op de volgende pagina een aantal interactie patronen.
       </p>
-      <button class="read-more" onclick="location.href='ipa/index.html';">Lees meer</button>
+      <a class="read-more" href="ipa/index.html" aria-label="Lees meer over interactie patronen attributen">Lees meer</a>
     </section>
     <!-- Einde sectie -->
 
-<hr>
+    <hr>
 
     <section class="sectie">
       <h2>Hypotheek aanvragen</h2>
       <p>Volgt later.</p>
     </section>
 
-  <hr>
+    <hr>
 
     <section class="sectie">
       <h2>Toegang met kwalificatie tot registers</h2>
@@ -92,74 +73,26 @@
       <h2>Logistiek en mobiliteit</h2>
       <p>Volgt later.</p>
     </section>
-<hr>
+
+    <hr>
+
     <section class="sectie">
       <h2>Dienstverlening gemeentes</h2>
       <p>Volgt later.</p>
     </section>
+
     <hr>
+
     <section class="sectie">
       <h2>WMO indicatie</h2>
       <p>Volgt later.</p>
     </section>
+
     <hr>
   </div>
-  <script>
 
-function toggleSection(button) {
-  let content;
-
-  if (button.classList.contains('toggle-btn')) {
-    // "Klap uit" knop is geklikt, vind het volgende element
-    content = button.nextElementSibling;
-  } else if (button.classList.contains('toggle-btn-bottom')) {
-    // "Klap in" knop is geklikt, vind het dichtstbijzijnde ouder-element met de klasse 'collapsible-content'
-    content = button.closest('.collapsible-content');
-  }
-
-  if (content && content.classList.contains('collapsible-content')) {
-    if (content.classList.contains('expanded')) {
-      // Sectie is al uitgeklapt, dus we gaan deze nu inklappen
-      content.classList.remove('expanded');
-
-      // Toon de "Klap uit" knop
-      const toggleBtn = content.previousElementSibling;
-      if (toggleBtn && toggleBtn.classList.contains('toggle-btn')) {
-        toggleBtn.style.display = 'inline-block';
-      }
-
-      // Verberg de "Klap in" knop
-      const bottomButton = content.querySelector('.toggle-btn-bottom');
-      if (bottomButton) bottomButton.style.display = 'none';
-    } else {
-      // Sectie is ingeklapt, dus we gaan deze nu uitklappen
-      content.classList.add('expanded');
-
-      // Verberg de "Klap uit" knop
-      const toggleBtn = content.previousElementSibling;
-      if (toggleBtn && toggleBtn.classList.contains('toggle-btn')) {
-        toggleBtn.style.display = 'none';
-      }
-
-      // Toon de "Klap in" knop
-      const bottomButton = content.querySelector('.toggle-btn-bottom');
-      if (bottomButton) bottomButton.style.display = 'inline-block';
-    }
-  }
-}
-
-
- // JavaScript voor de accordeon
- document.querySelectorAll('.accordion-header').forEach(header => {
-      header.addEventListener('click', () => {
-        const accordionContent = header.nextElementSibling;
-        const icon = header.querySelector('i');
-        accordionContent.classList.toggle('expanded');
-        icon.classList.toggle('rotate');
-      });
-    });
-
-  </script>
+  <!-- Verwijzing naar een JavaScript-bestand voor eventuele resterende functionaliteit -->
+  <script src="accordeon.js"></script>
 
 </body>
 </html>
