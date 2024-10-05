@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Voeg hier andere mappings toe indien nodig
   };
   
-  const urlPath = window.location.pathname.split('/').filter(segment => segment);
+  const urlPath = window.location.pathname.split('/').filter(segment => segment !== "" && segment !== "index.html");
   const breadcrumbsContainer = document.getElementById('breadcrumbs');
   
   let breadcrumbHTML = '<a href="/">Home</a>';
@@ -99,6 +99,7 @@ document.addEventListener("DOMContentLoaded", function() {
   
   breadcrumbsContainer.innerHTML = breadcrumbHTML;
 });
+
 
   </script>
 
