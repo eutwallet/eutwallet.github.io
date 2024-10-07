@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Randvoorwaarden</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <div class="main-container" id="main-container-requirements">
+    <nav id="main-nav" class="main-nav">
+        
+      </nav>
+    <hr>
+    <div id="breadcrumbs"></div>
+    <h2>Randvoorwaarden</h2>
+    <p>
+        Een veilig en functionerend ecosysteem heeft naast technische en juridische kaders ook andere randvoorwaardes nodig.<br>
+        Het is het belangrijk om alle cruciale randvoorwaarden 
+        voor een veilig ecosysteem mee te nemen zoals <br>
+        gebruikerservaring, economische, ethische, organisatorische, functionele en operationele aspecten.<br>
+        Onderstaand een inventarisatie (in ontwikkeling) van relevante randvoorwaarden. 
+    </p>
+    <hr>
+    <!-- Voeg dit gedeelte toe aan je HTML-bestand onder de <hr> -->
+<div id="search-container" style="margin-bottom: 20px;">
+    <input type="text" id="search-input" placeholder=" Zoek in de tabel..." style="font-family: Arial, FontAwesome;">
+  </div>
+  <table id="data-table">
+    <thead>
+      <tr>
+        <!-- De kolom 'Nr' wordt hier niet weergegeven -->
+        <th>Randvoorwaarde</th>
+        <th>Strategisch</th>
+        <th>Tactisch</th>
+        <th>Operationeel</th>
+        <th>Relatie met</th>
+        <th>Tags</th>
+      </tr>
+    </thead>
+    <tbody id="table-body">
+      <!-- Dynamische rijen worden hier ingevoegd -->
+    </tbody>
+  </table>
+  
+  <script>
+// Laad de JSON-gegevens van een extern bestand
+fetch('data.json')
+  .then(response => response.json())
+  .then(data => {
+    populateTable(data);
+
+    // Zoekfunctie om de tabel doorzoekbaar te maken
+    document.getElementById("search-input").addEventListener("input", function() {
+      const searchTerm = this.value.toLowerCase();
+      const filteredData = data.filter(row => {
+        return Object.values(row).some(value =>
+          value && value.toString().toLowerCase().includes(searchTerm)
+        );
+      });
+      populateTable(filteredData);
+    });
+  })
+  .catch(error => console.error('Fout bij het laden van de JSON:', error));
+
+// Functie om de tabel te vullen
+function populateTable(data) {
+  const tableBody = document.getElementById("table-body");
+  tableBody.innerHTML = ""; // Verwijder bestaande rijen
+
+  data.forEach(row => {
+    const tr = document.createElement("tr");
+
+    // Dynamisch elke kolom vullen, behalve de 'nr' kolom
+    Object.keys(row).forEach(key => {
+      if (key !== "nr") {  // Sla de 'nr' kolom over
+        const td = document.createElement("td");
+        let value = row[key];
+
+        if (value && key === "Relatie met") {
+          // Maak links klikbaar voor de kolom 'Relatie met'
+          value = value.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>');
+          td.innerHTML = value;
+        } else if (value && key === "Tags") {
+          // Verwerk de tags om ze een mooie styling te geven
+          const tagsArray = value.split(',').map(tag => tag.trim());
+          tagsArray.forEach(tag => {
+            const span = document.createElement("span");
+            span.className = "tag";
+            span.textContent = tag;
+            td.appendChild(span);
+          });
+        } else {
+          td.textContent = value !== null ? value : "";
+        }
+
+        tr.appendChild(td);
+      }
+    });
+
+    tableBody.appendChild(tr);
+  });
+}
+
+
+  </script>
+  
+  
+
+
+
+
+
+  </div>
+
+  <!-- Verwijzing naar de JavaScript voor breadcrumbs -->
+  <script src="../breadcrumbs.js"></script>
+  <script src="../accordeon.js"></script>
+  <script src="../navbar.js"></script>
+</body>
+</html>

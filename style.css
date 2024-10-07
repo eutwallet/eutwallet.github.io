@@ -16,6 +16,10 @@ body {
   border-radius: 10px;
 }
 
+#main-container-requirements{
+  max-width: 100%;
+}
+
 h1, h2, h3, h4 {
   color: #555;
 }
@@ -401,4 +405,78 @@ strong {
 .nav-link.active {
   color: #385168; /* De huidige kleur voor de actieve link */
   font-weight: bold; /* Eventueel vetgedrukt om de actieve link extra te accentueren */
+}
+
+
+
+/* data tabel reuirements */
+
+#search-input {
+  width: 300px;          /* Breedte van de zoekbalk */
+  height: 40px;          /* Hoogte van de zoekbalk */
+  padding: 10px;         /* Binnenruimte voor de tekst */
+  font-size: 16px;       /* Grotere tekstgrootte */
+  border: 1px solid #ccc;
+  border-radius: 5px;    /* Afgeronde hoeken voor de zoekbalk */
+  margin-bottom: 20px;   /* Witruimte tussen zoekbalk en tabel */
+}
+
+#data-table {
+  width: 100%;
+  table-layout: fixed;    /* Vaste breedte van de kolommen */
+  border-collapse: collapse;
+}
+
+#data-table th, #data-table td {
+  border: 1px solid #ccc;      /* Lichtgrijze lijnen voor rijen en kolommen */
+  padding: 10px;
+  text-align: left;            /* Links uitlijnen van de tekst */
+  vertical-align: top;         /* Tekst altijd bovenin de cel beginnen */
+  white-space: pre-wrap;       /* Nieuwe regels binnen een cel weergeven */
+  word-wrap: break-word;       /* Lange woorden afbreken zodat ze in de cel passen */
+}
+
+#data-table th {
+  background-color: #f9f9f9;   /* Optioneel: achtergrondkleur voor koppen */
+}
+
+/* Stijl voor de eerste kolom om deze breder te maken */
+#data-table th:first-child, 
+#data-table td:first-child {
+  width: 20%;                 /* Maak de eerste kolom breder (bijv. 20%) */
+}
+
+#data-table th {
+  background-color: #f9f9f9;  /* Optioneel: achtergrondkleur voor koppen */
+}
+
+#data-table th:first-child,
+#data-table td:first-child {
+  border-right: 3px solid #999; /* Maak de rechterrand van de eerste kolom dikker */
+}
+
+#data-table th:last-child,
+#data-table td:last-child {
+  width: 10%;            /* Maak de laatste kolom 20% smaller */
+}
+
+.tag {
+  display: inline-block;
+  background-color: #e0e0e0;   /* Lichtgrijze achtergrondkleur voor tags */
+  color: #333;                 /* Tekstkleur van de tag */
+  padding: 5px 10px;           /* Binnenruimte voor de tags */
+  margin: 3px;                 /* Ruimte tussen de tags */
+  border-radius: 10px;         /* Afgeronde hoeken */
+  font-size: 10px;             /* Kleinere tekstgrootte voor tags */
+  white-space: nowrap;         /* Tags blijven op één regel */
+}
+
+#data-table a {
+  font-size: 14px;             /* Maak de tekst van de links kleiner */
+  color: #4a90e2;              /* Gebruik een zachtere grijsblauwe kleur voor de links */
+  text-decoration: none;       /* Verwijder de standaard onderstreping van de links */
+}
+
+#data-table a:hover {
+  text-decoration: underline;  /* Voeg een onderstreping toe wanneer je met de muis over de link gaat */
 }
