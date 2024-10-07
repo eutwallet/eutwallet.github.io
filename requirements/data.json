@@ -1,39 +1,110 @@
 [
-    {
-      "nr": 1,
-      "Randvoorwaarde": "Interactiepartronen uitwisseling data (UX)",
-      "Strategisch": "Visie op UX data delen en inzage\nvanuit mens, gebruiker, burger centraal \nook in relatie tot\nvalideren.nl, justid, mijn gegevens app e.d.",
-      "Tactisch": "UX-onderzoek interactiepatronen",
-      "Operationeel": "Proces terugkoppeling \naan werkgroep techniek",
-      "Relatie met": "Onderzoek Interactiepatronen attributen\nhttps://www.eutw.nl/research/ipa/index.html",
-      "Tags": "UX, techniek, social engineering"
-    },
-    {
-      "nr": 2,
-      "Randvoorwaarde": "Afleverlocatie berichten datadeling van private partijen ",
-      "Strategisch": null,
-      "Tactisch": null,
-      "Operationeel": null,
-      "Relatie met": "Onderzoek \nhttps://www.eutw.nl/research/",
-      "Tags": "UX, techniek, social engineering"
-    },
-    {
-      "nr": 3,
-      "Randvoorwaarde": "Mechanisme burger gratis gekwalificeerde elektronische handtekening",
-      "Strategisch": null,
-      "Tactisch": null,
-      "Operationeel": null,
-      "Relatie met": null,
-      "Tags": "Economisch, ethisch, framework"
-    },
-    {
-      "nr": 4,
-      "Randvoorwaarde": "Valideren attributen en handtekeningen ",
-      "Strategisch": null,
-      "Tactisch": null,
-      "Operationeel": null,
-      "Relatie met": null,
-      "Tags": "UX, techniek, social engineering"
-    }
-  ]
-  
+  {
+    "nr": null,
+    "Randvoorwaarde": "Inventarisatie afhankelijkheden techniek in relatie tot interactiepartronen uitwisseling data (UX) in verband met standaardisatie en path dependence",
+    "Strategisch": "Visie op UX data delen en inzage\nvanuit mens, gebruiker, burger centraal \nook in relatie tot\nvalideren.nl, justid, mijn gegevens app e.d.",
+    "Tactisch": "UX-onderzoek interactiepatronen",
+    "Operationeel": "Proces terugkoppeling \naan werkgroep techniek",
+    "Relatie met": "Onderzoek Interactiepatronen attributen\nhttps://www.eutw.nl/research/ipa/index.html",
+    "Tags": "UX, techniek, social engineering"
+  },
+  {
+    "nr": null,
+    "Randvoorwaarde": "Interactiepartonen attributen ophalen",
+    "Strategisch": null,
+    "Tactisch": null,
+    "Operationeel": null,
+    "Relatie met": "Onderzoek Interactiepatronen attributen\nhttps://www.eutw.nl/research/ipa/index.html",
+    "Tags": "UX, techniek, social engineering"
+  },
+  {
+    "nr": null,
+    "Randvoorwaarde": "Interactiepartoon: Afleverlocatie berichten over datadeling van private partijen \n",
+    "Strategisch": null,
+    "Tactisch": null,
+    "Operationeel": null,
+    "Relatie met": "Onderzoek \nhttps://www.eutw.nl/research/",
+    "Tags": "UX, techniek, social engineering"
+  },
+  {
+    "nr": null,
+    "Randvoorwaarde": "Interactiepatroon: Doorverwijzing natuurlijk persoon naar aanbieder attribuut",
+    "Strategisch": null,
+    "Tactisch": null,
+    "Operationeel": null,
+    "Relatie met": null,
+    "Tags": "UX, techniek, social engineering"
+  },
+  {
+    "nr": null,
+    "Randvoorwaarde": "Interactiepatroon: Toestemming voor gegevensdeling",
+    "Strategisch": null,
+    "Tactisch": null,
+    "Operationeel": null,
+    "Relatie met": null,
+    "Tags": "UX, techniek, social engineering"
+  },
+  {
+    "nr": null,
+    "Randvoorwaarde": "Interactiepatroon: Uitgestelde uitgifte attributen",
+    "Strategisch": null,
+    "Tactisch": null,
+    "Operationeel": null,
+    "Relatie met": null,
+    "Tags": "UX, techniek, social engineering"
+  },
+  {
+    "nr": null,
+    "Randvoorwaarde": "Standaardisatie ontsluiting authenthieke bronnen",
+    "Strategisch": null,
+    "Tactisch": null,
+    "Operationeel": null,
+    "Relatie met": null,
+    "Tags": "techniek"
+  },
+  {
+    "nr": null,
+    "Randvoorwaarde": "Mechanisme om burger gratis gekwalificeerde elektronische handtekeningen te verstrekken",
+    "Strategisch": null,
+    "Tactisch": null,
+    "Operationeel": null,
+    "Relatie met": null,
+    "Tags": "economisch, ethisch, framework"
+  },
+  {
+    "nr": null,
+    "Randvoorwaarde": "Valideren attributen en handtekeningen ",
+    "Strategisch": null,
+    "Tactisch": null,
+    "Operationeel": null,
+    "Relatie met": null,
+    "Tags": "UX, techniek, social engineering"
+  },
+  {
+    "nr": null,
+    "Randvoorwaarde": "Definities termen",
+    "Strategisch": null,
+    "Tactisch": null,
+    "Operationeel": null,
+    "Relatie met": null,
+    "Tags": "techniek, trust framework"
+  },
+  {
+    "nr": null,
+    "Randvoorwaarde": "Attribute catalogue",
+    "Strategisch": null,
+    "Tactisch": null,
+    "Operationeel": null,
+    "Relatie met": null,
+    "Tags": "techniek"
+  },
+  {
+    "nr": null,
+    "Randvoorwaarde": "Toetsingskader",
+    "Strategisch": null,
+    "Tactisch": null,
+    "Operationeel": null,
+    "Relatie met": null,
+    "Tags": "techniek, trust framework"
+  }
+]

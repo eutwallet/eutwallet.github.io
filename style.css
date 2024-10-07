@@ -446,7 +446,7 @@ strong {
 /* Stijl voor de eerste kolom om deze breder te maken */
 #data-table th:first-child, 
 #data-table td:first-child {
-  width: 20%;                 /* Maak de eerste kolom breder (bijv. 20%) */
+  width: 60%;                 /* Maak de eerste kolom breder (bijv. 20%) */
 }
 
 #data-table th {
@@ -483,3 +483,4 @@ strong {
 #data-table a:hover {
   text-decoration: underline;  /* Voeg een onderstreping toe wanneer je met de muis over de link gaat */
 }
+

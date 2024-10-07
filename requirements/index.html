@@ -28,16 +28,8 @@
     <input type="text" id="search-input" placeholder=" Zoek in de tabel..." style="font-family: Arial, FontAwesome;">
   </div>
   <table id="data-table">
-    <thead>
-      <tr>
-        <!-- De kolom 'Nr' wordt hier niet weergegeven -->
-        <th>Randvoorwaarde</th>
-        <th>Strategisch</th>
-        <th>Tactisch</th>
-        <th>Operationeel</th>
-        <th>Relatie met</th>
-        <th>Tags</th>
-      </tr>
+    <thead id="table-head">
+      <!-- Koppen worden hier dynamisch toegevoegd -->
     </thead>
     <tbody id="table-body">
       <!-- Dynamische rijen worden hier ingevoegd -->
@@ -64,23 +56,41 @@ fetch('data.json')
   })
   .catch(error => console.error('Fout bij het laden van de JSON:', error));
 
+
 // Functie om de tabel te vullen
 function populateTable(data) {
+  const tableHead = document.getElementById("table-head");
   const tableBody = document.getElementById("table-body");
+
+  tableHead.innerHTML = ""; // Verwijder bestaande koppen
   tableBody.innerHTML = ""; // Verwijder bestaande rijen
 
+  // Kolommen die we willen uitsluiten
+  const excludedColumns = ["nr", "Strategisch", "Tactisch", "Operationeel"];
+
+  // Genereer de koppen van de tabel (thead)
+  const headerRow = document.createElement("tr");
+  Object.keys(data[0]).forEach(key => {
+    if (!excludedColumns.includes(key)) {
+      const th = document.createElement("th");
+      th.textContent = key;
+      headerRow.appendChild(th);
+    }
+  });
+  tableHead.appendChild(headerRow);
+
+  // Genereer de rijen van de tabel (tbody)
   data.forEach(row => {
     const tr = document.createElement("tr");
 
-    // Dynamisch elke kolom vullen, behalve de 'nr' kolom
     Object.keys(row).forEach(key => {
-      if (key !== "nr") {  // Sla de 'nr' kolom over
+      if (!excludedColumns.includes(key)) {
         const td = document.createElement("td");
         let value = row[key];
 
         if (value && key === "Relatie met") {
           // Maak links klikbaar voor de kolom 'Relatie met'
-          value = value.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>');
+          value = value.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" style="font-size: 14px; color: #4a90e2;">$1</a>');
           td.innerHTML = value;
         } else if (value && key === "Tags") {
           // Verwerk de tags om ze een mooie styling te geven
@@ -102,7 +112,6 @@ function populateTable(data) {
     tableBody.appendChild(tr);
   });
 }
-
 
   </script>
   
