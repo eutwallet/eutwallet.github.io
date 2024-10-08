@@ -2351,9 +2351,9 @@ closeMessageDetailsBtn.addEventListener('click', () => {
 
 const messageTexts = {
   ipa5: 'IPA-5 Deel uw diploma met ons voor het aanmeldingsproces. Haal uw diploma op bij DUO.',
-  ipa6: 'IPA-6 Wij willen graag dat u uw diploma met ons deelt voor het aanmeldingsproces. Klik op de volgende link: <a href="#" id="share-link">Diploma ophalen</a> om uw diploma op te halen',
+  ipa6: 'IPA-6 Wij willen graag dat u uw diploma met ons deelt voor het aanmeldingsproces. Klik op de volgende link: <a href="#" id="share-link">Diploma ophalen</a> om uw diploma op te halen in de catalogus van de wallet',
   ipa7: 'IPA-7 Deel uw diploma met ons voor het aanmeldingsproces. Klik op de volgende link: <a href="#" id="ipa7-share-link">Diploma delen</a>',
-  ipa8: 'IPA-8 Woningcorporatie Leijendakje heeft een mandaat aangevraagd voor een financiële check. Klik op de volgende link: <a href="#" id="ipa8-mandate-link">Mandaat goedkeuren</a>'
+  ipa8: 'IPA-8 Woningcorporatie Leijendakje heeft een machtiging aangevraagd om namens u gegevens éénmalig op te halen voor een financiële check. Klik op de volgende link: <a href="#" id="ipa8-mandate-link">Eénmalige machtiging ophalen gegevens bekijken</a>'
 };
 
 
@@ -2459,7 +2459,7 @@ function openMessageDetails(sender, message, datetime, messageType) {
               trustedContactsSection.style.display = 'none';
               const mockVerifierData = {
                   type: "verifier",
-                  requester: "Werkgever",
+                  requester: "Werkgever IPA-7",
                   reason: "Diploma delen voor aanmeldingsproces",
                   csas: [{ issuedBy: "DUO", name: "Diploma Verpleegkunde" }],
                   a: "12t"
