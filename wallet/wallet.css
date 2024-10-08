@@ -378,6 +378,10 @@ p {
     background-color: #1e3a82;
 }
 
+#rdfcv-modal {
+    margin-bottom: 40px;
+}
+
 /* *** Welkomstscherm Stijlen *** */
 #welcome-screen {
     display: flex;
