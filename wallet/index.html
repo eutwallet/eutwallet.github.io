@@ -13,7 +13,7 @@
   <section id="welcome-screen">
     <div class="welcome-text">
         <h1>Welkom bij EUTW</h1>
-        <p>Een demonstratiewallet om de kracht van digitale bewijzen voor betrouwbaarheid gemak en efficiëntie in het digitale verkeer te demonstreren</p>
+        <p>Een demonstratiewallet om de kracht van digitale bewijzen voor betrouwbaarheid, gemak en efficiëntie in het digitale verkeer te demonstreren</p>
     </div>
     <div class="welcome-content">
         <div class="welcome-background">
@@ -27,7 +27,7 @@
 
   <!-- *** Pincode-inlog-scherm *** -->
   <section id="pin-inlog-screen" style="display: none;">
-    <h2>Voer je 6-cijferige pincode in</h2>
+    <h2>Voer je toegangscode in</h2>
     <div class="pin-input">
         <input type="password" maxlength="1" class="pin-box" inputmode="numeric" pattern="[0-9]*">
         <input type="password" maxlength="1" class="pin-box" inputmode="numeric" pattern="[0-9]*">
@@ -357,6 +357,10 @@
   <i class="fas fa-plus"></i>
 </button>
 
+<button id="settings-button" class="settings-button">
+  <i class="fas fa-ellipsis-v"></i>
+</button>
+
 <section class="wallet-header">
   <h3>Mijn digitale bewijzen</h3>
   <div class="title-divider"></div>
@@ -475,15 +479,43 @@
     <i class="fas fa-exchange-alt"></i>
     <span>Activiteiten</span>
   </a>
+  <a href="#" class="nav-item" id="contacts-navbar-item">
+    <i class="fas fa-comments"></i>
+    <span>Berichten</span>
+    <span id="notification-badge" class="notification-badge" style="display: none;"></span>
+  </a>
   <a href="#" class="nav-item" id="machtigingen-navbar-item">
     <i class="fas fa-key"></i>
     <span>Machtigingen</span>
   </a>
-  <a href="#" class="nav-item" id="instellingen-navbar-item">
-    <i class="fas fa-sliders-h"></i>
-    <span>Instellingen</span>
-  </a>
 </nav>
+
+<!-- Nieuwe Trusted Contacts sectie -->
+<section id="trusted-contacts-section" style="display: none;">
+ 
+  <div class="trusted-contacts-header">
+    <h3>Contact</h3>
+    <div class="title-divider"></div>
+  </div>
+  <ul id="messages-grid" class="messages-grid">
+    <!-- Berichten zullen hier worden toegevoegd -->
+  </ul>
+</section>
+
+<!-- Bericht Details Scherm -->
+<section id="message-details-screen" style="display: none;">
+  <div class="details-header">
+    <button class="close-btn" id="close-message-details">
+      <i class="fas fa-arrow-left"></i>
+    </button>
+  </div>
+  <div id="details-content">
+    <h3 id="contact-name"></h3>
+    <p id="message-datetime"></p>
+    <div class="divider"></div>
+    <p id="message-text"></p>
+  </div>
+</section>
 
 
 <!-- *** Activiteiten Sectie *** -->
@@ -494,17 +526,42 @@
 </div>
 
 <!-- *** machtigingen Sectie *** -->
-<div id="machtiging-section" class="machtiging-section" style="display: none;"> 
-  <h3>Machtigingen</h3> 
+<section id="machtiging-section" class="machtiging-section" style="display: none;">
+  <h3>Machtigingen</h3>
   <div class="title-divider"></div>
-<p> Deze pagina volgt later </p>
+  <div id="machtiging-grid">
+      <!-- Machtiging kaartjes worden hier toegevoegd -->
+  </div>
+
+
+</section>
+
+
+<!-- *** Machtiging Details Weergave *** -->
+<div id="mandate-details" style="display: none;">
+  <div class="details-mandate-header">
+    <button class="close-btn" id="close-details-mandate">
+      <i class="fas fa-arrow-left"></i>
+    </button>
+  </div>
+  <h3 id="mandate-details-title">Machtiging Details</h3>
+  <div class="divider"></div>
+  <div id="mandate-details-content"></div>
 </div>
+
 
 <!-- *** Instellingen Sectie *** -->
 <div id="instellingen-section" class="instellingen-section" style="display: none;">
+  <div class="details-header">
+    <button class="close-btn" id="close-settings">
+      <i class="fas fa-arrow-left"></i>
+    </button>
+  </div>
   <h3>Instellingen</h3>
   <div class="title-divider"></div>
-  <p>Deze pagina volgt later</p>
+  <p>Deze pagina is in ontwikkeling</p>
+  <button id="demo-message-button" class="demo-button">Ontvang demo bericht via contacten</button>
+  
 </div>
 
 
@@ -713,6 +770,76 @@
   <button id="close-csas-success-btn" class="orange-btn">Sluiten</button>
   <!-- Knop om het successcherm te sluiten en terug te keren naar het wallet-scherm -->
 </div>
+
+
+<!-- *** Mandate Modal *** -->
+<section id="mandate-modal" class="modal" style="display: none;">
+  <div class="modal-content">
+    <h2>Machtiging om gegevens op te halen</h2>
+    <div class="divider"></div>
+    
+    <div class="mandate-content">
+      <p>Wilt u <strong id="mandate-requester">[requester]</strong> machtigen om namens u onderstaande gegevens op te halen?</p>
+      <div class="divider"></div>
+      
+      <p><strong>Reden verzoek:</strong></p>
+      <p id="mandate-reason">[reason]</p>
+      <div class="divider"></div>
+      
+      <p><strong>Gegevens:</strong></p>
+      <div id="mandate-data-container">
+        <!-- Dynamisch ingevulde gegevens uit de QR-code -->
+      </div>
+      <div class="divider"></div>
+      
+      <p><strong>Benodigde gegevens om deze gegevens bij de uitgever(s) op te halen:</strong></p>
+      <p>Naam: Willeke Liselotte</p>
+      <p>Achternaam: de Bruijn</p>
+      <p>Geboortedatum: 10 maart 1997 </p>
+      <p>BSN: 938391772</p>
+      <div class="divider"></div>
+      
+      <p><strong>Overeenkomst:</strong></p>
+      <p id="mandate-agreement">[a]</p>
+      <div class="divider"></div>
+      
+      <p>Gaat u akkoord met deze machtiging aan <strong id="mandate-requester-agreement">[requester]</strong>?</p>
+      <div class="divider"></div>
+      
+      <!-- Knoppen -->
+      <div class="button-container">
+        <button id="mandate-stop-button" class="stop-button">Stoppen</button>
+        <button id="mandate-accept-button" class="share-button">Akkoord</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- *** Mandate Pincode Bevestigings-scherm *** -->
+<section id="mandate-pin-confirmation-screen" class="modal" style="display: none;">
+  <h2>Voer uw pincode in om de machtiging te bevestigen</h2>
+  <div class="pin-input">
+    <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
+    <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
+    <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
+    <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
+    <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
+    <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
+  </div>
+  <button id="confirm-pin-mandate" class="orange-btn confirm-pin">Bevestigen</button>
+</section>
+
+<!-- *** Mandate Success Screen *** -->
+<section id="mandate-success-screen" class="modal" style="display: none;">
+  <h2>Succes!</h2>
+  <div class="divider"></div>
+  <p>Je hebt <strong id="mandate-success-requester">[requester]</strong> gemachtigd om jouw gegevens op te halen.</p>
+  <div class="button-container">
+    <button id="view-mandate-button" class="stop-button">Bekijk Machtiging</button>
+    <button id="close-mandate-success-button" class="share-button">Sluiten</button>
+  </div>
+</section>
+
 
   <!-- *** Scripts *** -->
   <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>

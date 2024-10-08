@@ -355,6 +355,13 @@ const cardStyles = {
     iconColor: null,
     textColor: '#00588E'
   },
+
+  'diploma verpleegkunde': {
+  imagePath: 'duologo.svg',  // Path naar je diploma-afbeelding
+  iconColor: null,
+  textColor: '#333'
+  },
+
   // Voeg meer kaartstijlen toe indien nodig
 };
 
@@ -1728,6 +1735,68 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
+// In de add card catalogus een diploma ophalen
+document.addEventListener('DOMContentLoaded', function () {
+  const cardButtons = document.querySelectorAll('.card-button');
+
+  cardButtons.forEach(button => {
+    const buttonTextElement = button.querySelector('.button-text');
+    if (buttonTextElement && buttonTextElement.textContent.includes("Diploma")) {
+      button.addEventListener('click', function () {
+        // Diploma gegevens ophalen alsof deze via QR-code zijn gescand
+        const diplomaData = {
+          "Issuer": true,
+          "name": "Diploma Verpleegkunde",
+          "issuedBy": "DUO",
+          "LEID": "NL_KVK_27378698",
+          "Issued_Date": "2023-06-15",
+          "Issued_to_subject": "Willeke Liselotte de Bruijn",
+          "Diploma_Type": "Bachelor",
+          "Institution": "Hogeschool Rotterdam",
+          "rdfci": ["gn", "sn", "bd", "bsn"],
+          "a": "12t",
+          "t": "w"
+        };
+
+        // Vul het RDFCI modal met de gegevens
+        populateRdfciModal(diplomaData);
+
+        // Toon het RDFCI modal
+        rdfciModal.style.display = 'flex';
+
+        rdfciAcceptButton.onclick = () => {
+          // Voeg de diploma gegevens toe aan de wallet
+          const timestamp = new Date().toLocaleString();
+
+          credentials.push({
+            name: diplomaData.name,
+            issuedBy: diplomaData.issuedBy,
+            actionTimestamp: timestamp,
+            isShareAction: false,
+            data: diplomaData
+          });
+
+          saveCredentials();
+
+          // Toon het issuer success-scherm
+          goToIssuerSuccessScreen(diplomaData.name, diplomaData.issuedBy);
+
+          // Sluit het RDFCI modal
+          rdfciModal.style.display = 'none';
+        };
+
+        rdfciStopButton.onclick = () => {
+          // Sluit het RDFCI modal
+          rdfciModal.style.display = 'none';
+        };
+      });
+    }
+  });
+});
+
+
+
+
 
 
 
@@ -1781,8 +1850,8 @@ function populateMandateModal(data) {
 
     // Voeg een gestructureerde weergave toe van de uitgever en het kaartje
     detail.innerHTML = `
-      <p><strong>Naam uitgever:</strong> ${mappedIssuedBy}</p>
-      <p><strong>Gegevens:</strong> ${mappedName}</p>
+      <p>Naam uitgever: ${mappedIssuedBy} </p>
+      <p>Gegevens: ${mappedName}</p>
     `;
 
     // Voeg een divider toe voor nette scheiding, behalve na de laatste item
@@ -2050,6 +2119,8 @@ function showMandateDetails(mandate) {
   // Verberg andere secties
   document.getElementById('wallet-screen').style.display = 'none';
   machtigingSection.style.display = 'none';
+   // Verberg de bottom-nav
+   bottomNav.style.display = 'none';
 
   // Toon de machtigingsdetails
   const mandateDetailsView = document.getElementById('mandate-details');
@@ -2069,8 +2140,8 @@ function showMandateDetails(mandate) {
 
   mandate.mandate.forEach(item => {
     detailsHTML += `
-      <p><strong>Naam uitgever:</strong> ${fieldMapping[item.issuedBy] || item.issuedBy}</p>
-      <p><strong>Gegevens:</strong> ${fieldMapping[item.name.toLowerCase()] || item.name}</p>
+      <p>Naam uitgever: ${fieldMapping[item.issuedBy] || item.issuedBy}</p>
+      <p>Gegevens: ${fieldMapping[item.name.toLowerCase()] || item.name}</p>
       <hr>
     `;
   });
@@ -2079,10 +2150,10 @@ function showMandateDetails(mandate) {
   detailsHTML += `
     <div class="divider"></div>
     <p><strong>Gevraagde gegevens voor ophalen:</strong></p>
-    <p><strong>Voornaam:</strong> Willeke Liselotte</p>
-    <p><strong>Achternaam:</strong> De Bruijn</p>
-    <p><strong>Geboortedatum:</strong> March 10, 1997</p>
-    <p><strong>Burgerservicenummer (BSN):</strong> 938391772</p>
+    <p>Voornaam: Willeke Liselotte</p>
+    <p>Achternaam: De Bruijn</p>
+    <p>Geboortedatum: 10 maart 1997</p>
+    <p>Burgerservicenummer (BSN): 938391772</p>
     <div class="divider"></div>
   `;
 
@@ -2098,6 +2169,7 @@ function showMandateDetails(mandate) {
   document.getElementById('close-details-mandate').onclick = () => {
     mandateDetailsView.style.display = 'none';
     machtigingSection.style.display = 'flex'; // Ga terug naar de machtigingensectie
+    bottomNav.style.display = 'flex'; // Toon de bottom-nav weer
   };
 }
 
@@ -2205,6 +2277,8 @@ function openMessageDetails(sender, message, datetime) {
 
   // Verberg de Trusted Contacts sectie en toon het bericht details scherm
   trustedContactsSection.style.display = 'none';
+   // Verberg de bottom-nav
+   bottomNav.style.display = 'none';
   messageDetailsScreen.style.display = 'block';
 }
 
@@ -2276,6 +2350,7 @@ function addMockMessageToTrustedContacts(sender, message) {
 // Event listener voor het sluiten van het berichtdetailscherm
 closeMessageDetailsBtn.addEventListener('click', () => {
   messageDetailsScreen.style.display = 'none';
+  bottomNav.style.display = 'flex'; // Toon de bottom-nav weer
   trustedContactsSection.style.display = 'block'; // Keer terug naar de Trusted Contacts sectie
 
 
@@ -2285,7 +2360,7 @@ const demoMessageButton = document.getElementById('demo-message-button');
 
 demoMessageButton.addEventListener('click', () => {
     // Roep de functie aan die een mock-bericht toevoegt
-    addMockMessageToTrustedContacts('DUO', 'Uw nieuwe diploma staat klaar en u kunt vanaf dit diploma ophalen en in uw wallet opslaan. Met de voglende link doet u dit automatisch.');
+    addMockMessageToTrustedContacts('DUO', 'Uw nieuwe diploma staat klaar en u kunt vanaf dit diploma ophalen en in uw wallet opslaan. Met de volgende link doet u dit automatisch.');
 
     // Verberg het instellingen-scherm
     instellingenSection.style.display = 'none';

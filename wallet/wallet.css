@@ -56,12 +56,12 @@ header {
 
 /* Sectie met de titel 'Mijn Digitale Bewijzen' */
 .wallet-header {
-    text-align: center; /* Centreer de tekst */
+    text-align: left; /* Centreer de tekst */
     margin-bottom: 20px; /* Voeg wat ruimte toe onder de titel */
 }
 
 .wallet-header h3 {
-    font-size: 24px; /* Grootte van de titel */
+    font-size: 20px; /* Grootte van de titel */
     color: #152A62;
     margin: 0;
     padding: 20px 0; /* Wat ruimte boven en onder de tekst */
@@ -200,7 +200,7 @@ header {
 
 
 /* *** Details Sectie Stijlen *** */
-#details, #personal-data-details, #address-details {
+#details, #personal-data-details, #address-details, #message-details-screen {
     display: none;
     position: fixed;
     top: 0;
@@ -387,7 +387,7 @@ p {
     flex-direction: column;
     align-items: center;
     width: 100%;
-    min-height: 80%;
+
 }
 
 .welcome-text {
@@ -430,8 +430,8 @@ p {
     border-radius: 5px;
     cursor: pointer;
     width: 100%;
-    max-width: 300px;
-    position: absolute;
+    width: 300px;
+    position: relative;
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
@@ -621,6 +621,7 @@ p {
 }
 
 .activities-section h3 {
+    margin-top: 20px;
     margin-bottom: 20px;
     color: #152A62;
 }
@@ -629,7 +630,7 @@ p {
     width: 100%;
     height: 1px;
     background-color: #152A62;
-    margin-bottom: 10px;
+    margin-bottom: 25px;
 }
 
 .activities-section ul {
@@ -670,7 +671,7 @@ p {
     width: 100%;
     height: 1px;
     background-color: #152A62;
-    margin-bottom: 10px;
+    margin-bottom: 25px;
 }
 
 .machtiging-section {
@@ -690,6 +691,7 @@ p {
 }
 
 .machtiging-section h3 {
+    margin-top: 20px;
     margin-bottom: 20px;
     color: #152A62;
 }
@@ -709,14 +711,18 @@ p {
     flex-direction: column;
     flex-grow: 1;
     margin-bottom: 80px;
+    position: relative;
 }
 
 .instellingen-section h3 {
+    margin-top: 60px;
     margin-bottom: 20px;
     color: #152A62;
 }
 
-
+.instellingen-section .details-header {
+    left: 10px;
+}
 
 /* *** Success-scherm Stijlen *** */
 #success-screen {
@@ -892,15 +898,15 @@ p {
 .bottom-nav {
     position: fixed;
     bottom: 0;
-    left: 50%; /* Begin in het midden van het scherm */
-    transform: translateX(-50%); /* Centreer de navbar door 50% van de breedte terug te schuiven */
-    width: 100%; /* Zorg dat de navbar zich volledig aanpast aan kleinere schermen */
-    max-width: 500px; /* Maximaal 500px breedte zoals de rest van de content */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 400px; /* Terug naar maximale breedte van 400px */
     height: 60px;
     background-color: #FFFFFF;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
     border-top: 1px solid #e0e0e0;
     z-index: 1000;
@@ -939,6 +945,7 @@ p {
 }
 
 
+
 /* CSS weergave kaartjes velden in vraagscherm rdfci rdfcv */
 .detail-row {
     display: grid;
@@ -967,7 +974,7 @@ p {
 .floating-qr-button {
     position: fixed;
     bottom: 80px; /* 100px van de onderkant om ruimte te houden voor de navbar */
-    right: 15px; /* 5px van de linkerzijde */
+    right: calc((100% - 400px) / 2 + 20px); /* Positioneer binnen de containerbreedte */
     width: 110px;
     height: 60px;
     background-color: #2681cc; /* Kleur van de knop */
@@ -982,6 +989,7 @@ p {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Verhoogde schaduw voor duidelijk zwevend effect */
     cursor: pointer;
     z-index: 1000; /* Zorg ervoor dat de knop boven alles ligt */
+    
 }
 
 .floating-qr-button i {
@@ -991,7 +999,8 @@ p {
 /* Stijl voor het scan-scherm */
 .add-card-screen {
     top: 0;
-    left: 0;
+    position: fixed;
+    max-width: 400px;
     width: 100%;
     height: 100%;
     background-color: white;
@@ -1002,6 +1011,8 @@ p {
     display: none; /* Het scherm wordt pas getoond bij activatie */
     flex-direction: column;
     flex-grow: 1; /* Zorg dat de sectie zich uitbreidt */
+    overflow-y: auto;
+    margin: 0 auto;
 }
 
 
@@ -1336,3 +1347,404 @@ p {
     cursor: pointer;
     margin-top: 20px;
 }
+
+
+/* *** Mandate Modal Stijlen *** */
+#mandate-modal .modal-content {
+    /* Hergebruik bestaande modal-content stijlen */
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 500px;
+    width: 90%;
+}
+
+#mandate-modal h2 {
+    font-size: 24px;
+    color: #152A62;
+    margin-bottom: 10px;
+}
+
+#mandate-modal .mandate-content p {
+    font-size: 16px;
+    color: #152A62;
+}
+
+#mandate-modal .mandate-content .divider {
+    margin: 10px 0;
+    border-top: 1px solid #ccc;
+}
+
+#mandate-modal .button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+}
+
+#mandate-modal .stop-button {
+    background-color: white;
+    border: 2px solid #2681cc;
+    color: #2681cc;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 45%;
+}
+
+#mandate-modal .stop-button:hover {
+    background-color: #f0f0f0;
+}
+
+#mandate-modal .share-button {
+    background-color: #2681cc;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    width: 45%;
+}
+
+#mandate-modal .share-button:hover {
+    background-color: #1e3a82;
+}
+
+/* *** Mandate Pin Confirmation Screen Stijlen *** */
+#mandate-pin-confirmation-screen {
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin-top: 20px;
+    background-color: white;
+    z-index: 1000;
+    box-sizing: border-box;
+    justify-content: flex-start;
+    overflow-y: auto;
+    flex-direction: column;
+}
+
+
+#mandate-pin-confirmation-screen h2 {
+    font-size: 24px;
+    color: #152A62;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#mandate-pin-confirmation-screen .pin-input {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+#mandate-pin-confirmation-screen .pin-input input {
+    text-align: center;
+    font-size: 24px;
+    padding: 10px;
+    width: 50px;
+    height: 60px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#confirm-pin-mandate {
+    background-color: #2681cc; /* Oranje kleur zoals .orange-btn */
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    min-width: 250px;
+    text-align: center;
+    margin: 0 auto;
+    display: block;
+}
+
+#confirm-pin-mandate:hover {
+    background-color: #2681cc;
+}
+
+/* *** Mandate Success Screen Stijlen *** */
+#mandate-success-screen {
+    flex-direction: column;
+    justify-content: start;
+    padding: 10px;
+}
+
+
+#mandate-success-screen h2 {
+    font-size: 24px;
+    color: #152A62;
+    margin-bottom: 10px;
+    text-align: center;
+    margin-top: 30px;
+}
+
+#mandate-success-screen p {
+    font-size: 16px;
+    color: #152A62;
+    text-align: center;
+}
+
+#mandate-success-screen .button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+}
+
+#mandate-success-screen .stop-button {
+    background-color: #2681cc;
+    color: white;
+    padding: 12px 15px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    width: 45%;
+}
+
+#mandate-success-screen .stop-button:hover {
+    background-color: #1e3a82;
+}
+
+#mandate-success-screen .share-button {
+    background-color: #2681cc;
+    color: white;
+    padding: 12px 15px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    width: 45%;
+}
+
+#mandate-success-screen .share-button:hover {
+    background-color: #1e3a82;
+}
+
+/* *** Mandate Content Stijlen *** */
+.mandate-content p strong {
+    color: #152A62;
+}
+
+#mandate-data-container p {
+    font-size: 14px;
+    color: #555;
+    margin: 5px 0;
+}
+
+#mandate-agreement {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+#mandate-requester-agreement {
+    color: #152A62;
+}
+
+
+/* *** Machtiging Sectie Stijlen *** */
+#machtiging-section h3 {
+    margin-bottom: 20px;
+    color: #152A62;
+}
+
+#machtiging-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+#machtiging-section .card {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+#machtiging-section .card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+/* *** Mandate details *** */
+#mandate-details{
+    padding: 5px;
+
+}
+
+.details-mandate-header {
+    
+    margin-bottom: 10px;
+}
+
+#mandate-details-content hr{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/* *** Trusted Contacts Stijlen *** */
+
+#trusted-contacts-section{
+    padding: 5px;
+}
+
+.trusted-contacts-header {
+    text-align: left;
+    
+  }
+
+  .trusted-contacts-header h3 {
+    text-align: left;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .messages-grid {
+    list-style: none;
+    padding: 5px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .messages-grid li {
+    padding: 21px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    color: #333;
+  }
+
+
+#message-details-screen h3 {
+    margin-top: 40px;
+    color: #152A62;
+}
+
+#message-datetime {
+    font-size: 12px;
+    color: grey;
+    margin-top: 5px;
+}
+
+#contacts-navbar-item{
+    position: relative;
+}
+
+.notification-badge {
+    position: absolute;
+    top: -8px; /* Plaats het iets boven het "Contacten"-icoon */
+    right: 15px; /* Plaats het aan de rechterkant van het icoon */
+    background-color: #ff3b30; /* Rood voor notificaties */
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+    font-weight: bold;
+    z-index: 10; /* Zorg dat het bolletje boven de andere elementen staat */
+}
+
+.nav-item.active .notification-badge {
+    color: white; /* Behoud de oorspronkelijke kleur */
+}
+
+.settings-button {
+    position: absolute;
+    right: calc((100% - 400px) / 2 + 20px);
+    top: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: grey;
+    cursor: pointer;
+    z-index: 100;
+}
+
+.demo-button {
+    background-color: #2681cc;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+
+
+
+
+
+.message-item {
+    display: flex;
+    align-items: flex-start;
+    padding: 10px;
+    border-bottom: 1px solid #ccc; /* Scheiding tussen berichten */
+    cursor: pointer;
+}
+
+.message-item-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.message-logo {
+    flex: 0 0 50px; /* Zorg dat het logo een vaste breedte heeft */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.message-logo img {
+    width: 50px; /* Zorg dat de afbeelding zich aanpast aan de containergrootte */
+    height: 50px;
+    margin-right: 5px; /* Voeg ruimte toe tussen het logo en de tekst */
+}
+
+.message-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 10px;
+}
+
+.message-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.message-sender {
+    font-weight: bold;
+    color: #152A62;
+}
+
+.message-datetime {
+    font-size: 12px;
+    color: grey;
+}
+
+.message-body {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #555;
+}
+
+
