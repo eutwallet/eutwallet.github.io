@@ -484,3 +484,19 @@ strong {
   text-decoration: underline;  /* Voeg een onderstreping toe wanneer je met de muis over de link gaat */
 }
 
+
+/* image containers for research/IPA/index.html */
+.image-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.image-container img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 20px; /* Voegt ruimte toe tussen de afbeeldingen */
+}
