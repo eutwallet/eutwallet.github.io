@@ -73,7 +73,7 @@
   <div class="button-content">
     <i class="fas fa-id-card icon-left"></i>
     <div class="button-text">
-      <span>National ID</span>
+      <span>Persoonlijke data</span>
       <div class="button-text-sub">Rijksoverheid</div>
     </div>
     <i class="fas fa-check icon-right"></i>
@@ -109,7 +109,7 @@
   <div class="button-content">
     <i class="fas fa-graduation-cap icon-left"></i>
     <div class="button-text">
-      <span>Diploma's</span>
+      <span>Diploma</span>
       <div class="button-text-sub">DUO</div>
     </div>
     <i class="fas fa-plus icon-right"></i>
@@ -173,7 +173,7 @@
     <button class="card-button">
       <div class="button-content">
         <i class="fas fa-file-contract icon-left"></i>
-        <span class="button-text">Diploma('s)</span>
+        <span class="button-text">Diploma</span>
         <i class="fas fa-plus icon-right"></i>
       </div>
     </button>
@@ -361,7 +361,7 @@
   <i class="fas fa-ellipsis-v"></i>
 </button>
 
-<section class="wallet-header">
+<section id="wallet-header" class="header-screen">
   <h3>Mijn digitale bewijzen</h3>
   <div class="title-divider"></div>
 </section>
@@ -439,13 +439,13 @@
     <!-- Hardcoded data voor het personal data kaartje -->
     <p><strong>Voornaam:</strong> Willeke Liselotte</p>
     <p><strong>Achternaam:</strong> De Bruijn</p>
-    <p><strong>Geboortedatum:</strong> March 10, 1997</p>
+    <p><strong>Geboortedatum:</strong> 10 maart, 1997</p>
     <p><strong>Geboorteplaats:</strong> Delft</p>
     <p><strong>Geboorteland:</strong> Nederland</p>
     <p><strong>Geslacht:</strong> Vrouw</p>
     <p><strong>Burgerservicenummer (BSN):</strong> 938391772</p>
     <p><strong>Nationaliteit:</strong> Nederlands</p>
-    <p><strong>Geldigheid paspoort:</strong> March 11, 2027</p>
+    <p><strong>Geldigheid paspoort:</strong> 11 maart, 2027</p>
     <p><strong>Older than 18:</strong> Yes</p>
   </div>
 </div>
@@ -493,10 +493,10 @@
 <!-- Nieuwe Trusted Contacts sectie -->
 <section id="trusted-contacts-section" style="display: none;">
  
-  <div class="trusted-contacts-header">
-    <h3>Contact</h3>
+  <section class="header-screen">
+    <h3>Mijn berichten</h3>
     <div class="title-divider"></div>
-  </div>
+  </section>
   <ul id="messages-grid" class="messages-grid">
     <!-- Berichten zullen hier worden toegevoegd -->
   </ul>
@@ -520,15 +520,19 @@
 
 <!-- *** Activiteiten Sectie *** -->
 <div id="activities-section" class="activities-section" style="display: none;">
-  <h3>Activiteiten</h3>
-  <div class="title-divider"></div>
+  <section class="header-screen">
+    <h3>Mijn activiteiten</h3>
+    <div class="title-divider"></div>
+  </section>
   <ul id="activities-list"></ul>
 </div>
 
 <!-- *** machtigingen Sectie *** -->
 <section id="machtiging-section" class="machtiging-section" style="display: none;">
-  <h3>Machtigingen</h3>
-  <div class="title-divider"></div>
+  <section class="header-screen">
+    <h3>Mijn machtigingen</h3>
+    <div class="title-divider"></div>
+  </section>
   <div id="machtiging-grid">
       <!-- Machtiging kaartjes worden hier toegevoegd -->
   </div>
@@ -560,8 +564,10 @@
   <h3>Instellingen</h3>
   <div class="title-divider"></div>
   <p>Deze pagina is in ontwikkeling</p>
-  <button id="demo-message-button" class="demo-button">Ontvang demo bericht via contacten</button>
-  
+  <button id="IPA-5-message-button" class="demo-button">IPA-5: Ontvang demo bericht via contacten</button>
+  <button id="IPA-6-message-button" class="demo-button">IPA-6: Ontvang demo bericht via contacten</button>
+  <button id="IPA-7-message-button" class="demo-button">IPA-7: Ontvang demo bericht via contacten</button>
+  <button id="IPA-8-message-button" class="demo-button">IPA-8: Ontvang demo bericht via contacten</button>
 </div>
 
 
@@ -714,10 +720,10 @@
 
  <!-- *** CSAS Modal Scherm voor Gegevens Ophalen, Opslaan en Delen *** -->
 <div id="csas-modal" class="modal" style="display: none;">
-  <h2 style="text-align: left;">Wilt u onderstaande gegevens<br>
+  <p><strong>Wilt u onderstaande gegevens<br>
     ophalen bij de uitgever,<br> 
     opslaan in uw wallet en <br>
-    delen met <span id="csas-requester"></span>?</h2>
+    delen met <span id="csas-requester"></span>?</strong></p>
   <div class="divider"></div>
   <!-- Hier wordt de naam van de verifier (requester) weergegeven -->
   <div id="csas-details-container"></div>
@@ -726,13 +732,20 @@
   <!-- Een scheidingslijn voor duidelijkheid tussen secties -->
 
   <!-- Reden voor verzoek, links uitgelijnd -->
-  <p class="left-aligned"><strong>Reden voor dit verzoek:</strong></p>
-  <p id="csas-reason" class="left-aligned"></p>
+  <p><strong>Reden voor dit verzoek:</strong></p>
+  <p id="csas-reason" ></p>
+  <div class="divider"></div>
+
+  <p><strong>Benodigde gegevens om deze gegevens bij de uitgever(s) op te halen:</strong></p>
+  <p>Naam: Willeke Liselotte</p>
+  <p>Achternaam: de Bruijn</p>
+  <p>Geboortedatum: 10 maart 1997 </p>
+  <p>BSN: 938391772</p>
   <div class="divider"></div>
 
   <!-- Overeenkomst, links uitgelijnd -->
-  <p class="left-aligned"><strong>Overeenkomst</strong></p>
-  <p id="csas-agreement" class="left-aligned"></p>
+  <p><strong>Overeenkomst</strong></p>
+  <p id="csas-agreement" ></p>
   <div class="divider"></div>
 
   <!-- Knoppen voor stop en doorgaan -->
@@ -763,7 +776,9 @@
 
 <!-- *** CSAS Success-scherm na Ophalen, Opslaan en Delen van Gegevens (CSAS) *** -->
 <div id="csas-success-screen" class="modal" style="display: none;">
-  <h2>Succes! U heeft de gegevens gedeeld met <span id="csas-success-requester"></span> en onderstaande gegevens in uw wallet opgeslagen:</h2>
+  <h2>Succes! </h2><br>
+    <p>U heeft de gegevens gedeeld met <span id="csas-success-requester"></span> en onderstaande gegevens in uw wallet opgeslagen:</p>
+    <div class="divider"></div>
   <!-- Hier wordt de naam van de verifier weergegeven, gevolgd door een overzicht van de opgeslagen gegevens -->
   <div id="csas-success-card-container"></div>
   <!-- Container waar de kaartjes worden getoond die succesvol zijn opgehaald en opgeslagen -->

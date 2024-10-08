@@ -49,23 +49,32 @@ header {
     right: 30px;
 }
 
-/* *** Wallet screen *** */
-#wallet-screen {
-    padding-bottom: 80px; /* Voeg voldoende ruimte toe, afhankelijk van de hoogte van de bottom nav */
-}
-
-/* Sectie met de titel 'Mijn Digitale Bewijzen' */
-.wallet-header {
+/* *** screen headers *** */
+.header-screen {
     text-align: left; /* Centreer de tekst */
     margin-bottom: 20px; /* Voeg wat ruimte toe onder de titel */
 }
 
-.wallet-header h3 {
-    font-size: 20px; /* Grootte van de titel */
-    color: #152A62;
-    margin: 0;
-    padding: 20px 0; /* Wat ruimte boven en onder de tekst */
-    font-weight: bold; /* Maak de tekst vetgedrukt */
+.header-screen h3{
+font-size: 20px; /* Grootte van de titel */
+color: #152A62;
+margin: 0;
+padding: 20px 0; /* Wat ruimte boven en onder de tekst */
+font-weight: bold; /* Maak de tekst vetgedrukt */
+}
+
+/* *** Wallet screen *** */
+#wallet-screen {
+    padding: 5px;
+    padding-bottom: 80px; /* Voeg voldoende ruimte toe, afhankelijk van de hoogte van de bottom nav */
+}
+
+/* Sectie met de titel 'Mijn Digitale Bewijzen' */
+#wallet-header {
+   
+}
+
+#wallet-header h3 {
 }
 
 
@@ -621,9 +630,7 @@ p {
 }
 
 .activities-section h3 {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    color: #152A62;
+
 }
 
 .activities-section .title-divider {
@@ -691,9 +698,6 @@ p {
 }
 
 .machtiging-section h3 {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    color: #152A62;
 }
 
 /* *** Instellingen sectie stijlen *** */
@@ -825,8 +829,10 @@ p {
 }
 
 #close-issuer-success-btn:hover {
-    background-color: #1e3a82;
+    background-color: #2681cc;
+    color: white;
 }
+
 
 /* *** RDFCI Modal Stijlen *** */
 #rdfci-modal #rdfcv-modal{
@@ -852,7 +858,7 @@ p {
 #rdfci-modal .button-container {
     display: flex;
     justify-content: space-between;
-    margin-top: 20px;
+    margin-top: 40px;
 }
 
 #rdfci-modal p strong {
@@ -1079,7 +1085,7 @@ p {
   }
   
   .card-button .icon-right {
-    color: #333; /* Kleur voor het plusje */
+    color: #2681cc; /* Kleur voor het plusje */
   }
 /* Stijl voor de subtekst van de knoppen */
 .button-text-sub {
@@ -1176,9 +1182,9 @@ p {
 }
 
   .get-direct-attribute-title {
-    font-size: 14px;
+    font-size: 15px;
     margin: 20px auto;
-    font-weight: bold;
+   
     color: #878787;
   }
 
@@ -1195,7 +1201,7 @@ p {
     z-index: 1000;
     display: flex;
     justify-content: flex-start;
-    align-items: center;
+    align-items: flex-start;
     flex-direction: column;
     padding: 20px;
     box-sizing: border-box;
@@ -1208,11 +1214,13 @@ p {
     color: #152A62;
 }
 
-.left-aligned {
+#csas-modal p {
     text-align: left;
-    margin-top: 5px;
-    color: #555;  /* Of een andere kleur naar wens */
-  }
+    font-size: 16px;
+    color: #152A62;
+}
+
+
 
 #csas-details-container {
     margin-bottom: 20px;
@@ -1551,8 +1559,6 @@ p {
 
 /* *** Machtiging Sectie Stijlen *** */
 #machtiging-section h3 {
-    margin-bottom: 20px;
-    color: #152A62;
 }
 
 #machtiging-grid {

@@ -355,6 +355,13 @@ const cardStyles = {
     iconColor: null,
     textColor: '#00588E'
   },
+
+  'diploma verpleegkunde': {
+  imagePath: 'duologo.svg',  // Path naar je diploma-afbeelding
+  iconColor: null,
+  textColor: '#333'
+  },
+
   // Voeg meer kaartstijlen toe indien nodig
 };
 
@@ -1408,7 +1415,7 @@ function populateCsasModal(data) {
   // Toon de reden waarom de gegevens worden opgevraagd, indien aanwezig
   const reasonElement = document.getElementById('csas-reason');
   if (data.reason) {
-    reasonElement.textContent = `Reden: ${data.reason}`;
+    reasonElement.textContent = ` ${data.reason}`;
   } else {
     reasonElement.textContent = '';
   }
@@ -1455,10 +1462,13 @@ function populateCsasModal(data) {
 }
 
 function saveCsasCredentials(data) {
+  console.log("Start met opslaan van CSAS credentials...");
   data.csas.forEach(item => {
     // Gebruik fieldMapping om leesbare namen te verkrijgen
     const issuerName = fieldMapping[item.issuedBy] || item.issuedBy;
     const cardName = fieldMapping[item.name.toLowerCase()] || item.name;
+
+    console.log(`Opslaan van credential: Issuer: ${issuerName}, Card: ${cardName}`);
 
     // Controleer of het om de VOG gaat
     if (issuerName === 'Justis' && cardName === 'Verklaring Omtrent Gedrag (VOG)') {
@@ -1497,14 +1507,19 @@ function saveCsasCredentials(data) {
         }
       };
       credentials.push(newCredential);
+
+      console.log("Nieuw credential toegevoegd aan lijst:", newCredential);
     }
   });
 
   // Sla de credentials op in de local storage
   saveCredentials();
+  console.log("Credentials opgeslagen in local storage.");
+
 
   // Werk de weergave van de wallet bij
   displayCredentials();
+  console.log("Weergave van wallet bijgewerkt met nieuwe credentials.");
 
     // Optioneel: Log de credentials voor debugging
     console.log("Credentials na opslaan:", credentials);
@@ -1728,6 +1743,68 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
+// In de add card catalogus een diploma ophalen
+document.addEventListener('DOMContentLoaded', function () {
+  const cardButtons = document.querySelectorAll('.card-button');
+
+  cardButtons.forEach(button => {
+    const buttonTextElement = button.querySelector('.button-text');
+    if (buttonTextElement && buttonTextElement.textContent.includes("Diploma")) {
+      button.addEventListener('click', function () {
+        // Diploma gegevens ophalen alsof deze via QR-code zijn gescand
+        const diplomaData = {
+          "Issuer": true,
+          "name": "Diploma Verpleegkunde",
+          "issuedBy": "DUO",
+          "LEID": "NL_KVK_27378698",
+          "Issued_Date": "2023-06-15",
+          "Issued_to_subject": "Willeke Liselotte de Bruijn",
+          "Diploma_Type": "Bachelor",
+          "Institution": "Hogeschool Rotterdam",
+          "rdfci": ["gn", "sn", "bd", "bsn"],
+          "a": "12t",
+          "t": "w"
+        };
+
+        // Vul het RDFCI modal met de gegevens
+        populateRdfciModal(diplomaData);
+
+        // Toon het RDFCI modal
+        rdfciModal.style.display = 'flex';
+
+        rdfciAcceptButton.onclick = () => {
+          // Voeg de diploma gegevens toe aan de wallet
+          const timestamp = new Date().toLocaleString();
+
+          credentials.push({
+            name: diplomaData.name,
+            issuedBy: diplomaData.issuedBy,
+            actionTimestamp: timestamp,
+            isShareAction: false,
+            data: diplomaData
+          });
+
+          saveCredentials();
+
+          // Toon het issuer success-scherm
+          goToIssuerSuccessScreen(diplomaData.name, diplomaData.issuedBy);
+
+          // Sluit het RDFCI modal
+          rdfciModal.style.display = 'none';
+        };
+
+        rdfciStopButton.onclick = () => {
+          // Sluit het RDFCI modal
+          rdfciModal.style.display = 'none';
+        };
+      });
+    }
+  });
+});
+
+
+
+
 
 
 
@@ -1822,6 +1899,15 @@ document.getElementById('mandate-stop-button').addEventListener('click', () => {
   // Verberg de mandate-modal
   document.getElementById('mandate-modal').style.display = 'none';
 
+  // Controleer of de QR-code scanner actief is en stop deze indien nodig
+  if (html5QrCode) {
+    html5QrCode.stop().then(() => {
+      console.log("QR scanner stopped.");
+    }).catch(err => {
+      console.error("Failed to stop scanner: ", err);
+    });
+  }
+
   // Herstel de scanner en interface
   resetQrScanner();
 
@@ -1830,6 +1916,24 @@ document.getElementById('mandate-stop-button').addEventListener('click', () => {
   addCardScreen.style.display = 'none';
   bottomNav.style.display = 'flex';
 });
+
+function resetQrScanner() {
+  console.log("Resetting QR scanner...");
+
+  // Verberg de camera- en sluitknoppen
+  if (html5QrCode) {
+    html5QrCode.stop().then(() => {
+      console.log("QR scanner stopped.");
+    }).catch(err => {
+      console.error("Failed to stop scanning: ", err);
+    });
+  }
+  
+  // Verberg de camera en toon de scan-knop weer
+  readerDiv.style.display = 'none';
+  closeScanButton.style.display = 'none';
+  document.querySelector('.scan-container').style.display = 'flex'; // Toon scan-knop en tekst
+}
 
 // Event listener voor de "Akkoord" knop in de mandate-modal
 document.getElementById('mandate-accept-button').addEventListener('click', () => {
@@ -2199,106 +2303,7 @@ machtigingNavbarItem.addEventListener('click', () => {
   machtigingNavbarItem.classList.add('active');
 });
 
-// Functie om een bericht te openen
-function openMessageDetails(sender, message, datetime) {
-  // Vul de gegevens in het detailscherm
-  contactNameElement.textContent = sender;
-  messageDatetimeElement.textContent = datetime;
-  messageTextElement.textContent = message;
 
-  // Verberg de Trusted Contacts sectie en toon het bericht details scherm
-  trustedContactsSection.style.display = 'none';
-   // Verberg de bottom-nav
-   bottomNav.style.display = 'none';
-  messageDetailsScreen.style.display = 'block';
-}
-
-function addMockMessageToTrustedContacts(sender, message) {
-  const messagesGrid = document.getElementById('messages-grid');
-  if (messagesGrid) {
-      const datetime = new Date().toLocaleString(); // Voeg datum en tijd toe aan het bericht
-      const messageItem = document.createElement('li');
-      messageItem.classList.add('message-item');
-
-      // Voeg dynamisch het juiste logo toe op basis van de afzender
-      let logoHTML = '';
-      switch (sender.toLowerCase()) {
-          case 'duo':
-              logoHTML = '<img src="duologo.svg" alt="DUO logo" class="logo-icon">';
-              break;
-          case 'belastingdienst':
-              logoHTML = '<img src="belastingdienstlogo.svg" alt="Belastingdienst logo" class="logo-icon">';
-              break;
-          // Voeg hier meer cases toe voor andere afzenders indien nodig
-          default:
-              logoHTML = ''; // Geen logo voor onbekende afzenders
-              break;
-      }
-
-      // Beperk de lengte van het bericht en voeg "..." toe als het langer is
-      const truncatedMessage = message.length > 50 ? message.substring(0, 50) + '...' : message;
-
-      // Stel de HTML van het bericht samen
-      messageItem.innerHTML = `
-          <div class="message-item-container">
-              <div class="message-logo">
-                  ${logoHTML}
-              </div>
-              <div class="message-content">
-                  <div class="message-header">
-                      <strong class="message-sender">${sender}</strong>
-                      <span class="message-datetime">${datetime}</span>
-                  </div>
-                  <div class="message-body">
-                      <span>${truncatedMessage}</span>
-                  </div>
-              </div>
-          </div>
-      `;
-
-      messagesGrid.appendChild(messageItem);
-
-      // Toon het notificatiebolletje
-      notificationBadge.style.display = 'flex';
-      notificationBadge.textContent = '1'; // Aantal berichten, je kunt dit aanpassen om meerdere te tellen
-
-      // Voeg event listener toe aan het bericht om details te openen
-      messageItem.addEventListener('click', () => {
-          openMessageDetails(sender, message, datetime); // Open het volledige bericht in details
-          
-          // Verberg het notificatiebolletje zodra op het bericht wordt geklikt
-          notificationBadge.style.display = 'none';
-      });
-
-      console.log(`Bericht van ${sender} toegevoegd: "${message}"`);
-  } else {
-      console.error("Trusted Contacts sectie niet gevonden.");
-  }
-}
-
-
-
-// Event listener voor het sluiten van het berichtdetailscherm
-closeMessageDetailsBtn.addEventListener('click', () => {
-  messageDetailsScreen.style.display = 'none';
-  bottomNav.style.display = 'flex'; // Toon de bottom-nav weer
-  trustedContactsSection.style.display = 'block'; // Keer terug naar de Trusted Contacts sectie
-
-
-});
-
-const demoMessageButton = document.getElementById('demo-message-button');
-
-demoMessageButton.addEventListener('click', () => {
-    // Roep de functie aan die een mock-bericht toevoegt
-    addMockMessageToTrustedContacts('DUO', 'Uw nieuwe diploma staat klaar en u kunt vanaf dit diploma ophalen en in uw wallet opslaan. Met de volgende link doet u dit automatisch.');
-
-    // Verberg het instellingen-scherm
-    instellingenSection.style.display = 'none';
-
-    // Toon het wallet-scherm
-    walletScreen.style.display = 'block';
-});
 
 settingsButton.addEventListener('click', () => {
   // Verberg het wallet-overzicht
@@ -2315,3 +2320,272 @@ closeSettingsBtn.addEventListener('click', () => {
   // Toon het wallet-scherm
   walletScreen.style.display = 'block';
 });
+
+
+
+// Functie om een bericht te openen
+function openMessageDetails(sender, message, datetime) {
+  // Vul de gegevens in het detailscherm
+  contactNameElement.textContent = sender;
+  messageDatetimeElement.textContent = datetime;
+  messageTextElement.textContent = message;
+
+  // Verberg de Trusted Contacts sectie en toon het bericht details scherm
+  trustedContactsSection.style.display = 'none';
+   // Verberg de bottom-nav
+   bottomNav.style.display = 'none';
+  messageDetailsScreen.style.display = 'block';
+}
+
+
+
+
+// Event listener voor het sluiten van het berichtdetailscherm
+closeMessageDetailsBtn.addEventListener('click', () => {
+  messageDetailsScreen.style.display = 'none';
+  bottomNav.style.display = 'flex'; // Toon de bottom-nav weer
+  trustedContactsSection.style.display = 'block'; // Keer terug naar de Trusted Contacts sectie
+
+
+});
+
+const messageTexts = {
+  ipa5: 'IPA-5 Deel uw diploma met ons voor het aanmeldingsproces. Haal uw diploma op bij DUO.',
+  ipa6: 'IPA-6 Wij willen graag dat u uw diploma met ons deelt voor het aanmeldingsproces. Klik op de volgende link: <a href="#" id="share-link">Diploma ophalen</a> om uw diploma op te halen',
+  ipa7: 'IPA-7 Deel uw diploma met ons voor het aanmeldingsproces. Klik op de volgende link: <a href="#" id="ipa7-share-link">Diploma delen</a>',
+  ipa8: 'IPA-8 Woningcorporatie Leijendakje heeft een mandaat aangevraagd voor een financiële check. Klik op de volgende link: <a href="#" id="ipa8-mandate-link">Mandaat goedkeuren</a>'
+};
+
+
+const IPA5MessageButton = document.getElementById('IPA-5-message-button');
+
+IPA5MessageButton.addEventListener('click', () => {
+    // Voeg het mock-bericht toe en gebruik de tekst vanuit het object
+    addMockMessageToTrustedContacts('Werkgever IPA 5', messageTexts.ipa5, 'ipa5'); 
+
+    // Verberg het instellingen-scherm
+    instellingenSection.style.display = 'none';
+
+    // Toon het wallet-scherm
+    walletScreen.style.display = 'block';
+});
+
+const IPA6MessageButton = document.getElementById('IPA-6-message-button');
+
+IPA6MessageButton.addEventListener('click', () => {
+    // Voeg het mock-bericht toe en gebruik de tekst vanuit het object
+    addMockMessageToTrustedContacts('Werkgever IPA 6', messageTexts.ipa6, 'ipa6'); 
+
+    // Verberg het instellingen-scherm
+    instellingenSection.style.display = 'none';
+
+ // Toon de bottom-nav weer
+ bottomNav.style.display = 'flex';
+
+    // Toon het wallet-scherm
+    walletScreen.style.display = 'block';
+});
+
+const IPA7MessageButton = document.getElementById('IPA-7-message-button');
+
+IPA7MessageButton.addEventListener('click', () => {
+    // Voeg het mock-bericht toe en gebruik de tekst vanuit het object
+    addMockMessageToTrustedContacts('Werkgever IPA 7', messageTexts.ipa7, 'ipa7'); 
+
+    // Verberg het instellingen-scherm
+    instellingenSection.style.display = 'none';
+
+ // Toon de bottom-nav weer
+ bottomNav.style.display = 'flex';
+
+    // Toon het wallet-scherm
+    walletScreen.style.display = 'block';
+});
+
+
+const IPA8MessageButton = document.getElementById('IPA-8-message-button');
+
+IPA8MessageButton.addEventListener('click', () => {
+    // Voeg het mock-bericht toe en gebruik de tekst vanuit het object
+    addMockMessageToTrustedContacts('Woningcorporatie Leijendakje', messageTexts.ipa8, 'ipa8'); 
+
+    // Verberg het instellingen-scherm
+    instellingenSection.style.display = 'none';
+
+    // Toon de bottom-nav weer
+    bottomNav.style.display = 'flex';
+
+    // Toon het wallet-scherm
+    walletScreen.style.display = 'block';
+});
+
+function openMessageDetails(sender, message, datetime, messageType) {
+
+  bottomNav.style.display = 'none';  // Dit zorgt ervoor dat de bottom navigation wordt verborgen
+  // Zet het overzicht-item actief in de navbar
+  
+  const messageDetailsScreen = document.getElementById('message-details-screen');
+  messageDetailsScreen.style.display = 'block';
+
+  const messageSenderElement = document.getElementById('contact-name');
+  const messageDatetimeElement = document.getElementById('message-datetime');
+  const messageTextElement = document.getElementById('message-text');
+
+  messageSenderElement.textContent = sender;
+  messageDatetimeElement.textContent = datetime;
+  messageTextElement.innerHTML = message;
+
+  // Voeg de juiste event listener toe voor de link, afhankelijk van het berichttype
+  if (messageType === 'ipa6') {
+      const shareLink = document.getElementById('share-link');
+      if (shareLink) {
+          shareLink.addEventListener('click', function(e) {
+              e.preventDefault();
+              messageDetailsScreen.style.display = 'none';
+              trustedContactsSection.style.display = 'none';
+              addCardScreen.style.display = 'flex';
+               // Zorg ervoor dat de andere navbar-items niet meer actief zijn
+  document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+              // Zet het overzicht-item actief in de navbar
+  overviewNavbarItem.classList.add('active');
+          });
+      }
+  } else if (messageType === 'ipa7') {
+      const shareLink = document.getElementById('ipa7-share-link');
+      if (shareLink) {
+          shareLink.addEventListener('click', function(e) {
+              e.preventDefault();
+              messageDetailsScreen.style.display = 'none';
+              trustedContactsSection.style.display = 'none';
+              const mockVerifierData = {
+                  type: "verifier",
+                  requester: "Werkgever",
+                  reason: "Diploma delen voor aanmeldingsproces",
+                  csas: [{ issuedBy: "DUO", name: "Diploma Verpleegkunde" }],
+                  a: "12t"
+              };
+              window.currentCsasData = mockVerifierData;
+              populateCsasModal(mockVerifierData);
+              csasModal.style.display = 'flex';
+               // Zorg ervoor dat de andere navbar-items niet meer actief zijn
+  document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+              // Zet het overzicht-item actief in de navbar
+  overviewNavbarItem.classList.add('active');
+          });
+      }
+  } else if (messageType === 'ipa8') {
+      const mandateLink = document.getElementById('ipa8-mandate-link');
+      if (mandateLink) {
+          mandateLink.addEventListener('click', function(e) {
+              e.preventDefault();
+              messageDetailsScreen.style.display = 'none';
+              trustedContactsSection.style.display = 'none';
+
+              // Mock mandate QR data
+              const mockMandateData = {
+                  type: "mandate",
+                  requester: "Woningcorporatie Leijendakje",
+                  reason: "financiële check",
+                  mandate: [{ issuedBy: "BD", name: "Inkomensverklaring" }],
+                  a: "12t"
+              };
+
+              // Simuleer de invoer van de mock mandate QR-code
+              handleMandateQR(mockMandateData, new Date().toLocaleString());
+              mandateModal.style.display = 'flex';
+               // Zorg ervoor dat de andere navbar-items niet meer actief zijn
+  document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+              // Zet het overzicht-item actief in de navbar
+  overviewNavbarItem.classList.add('active');
+          });
+      }
+  }
+}
+
+
+
+function addMockMessageToTrustedContacts(sender, message, messageType) {
+  const messagesGrid = document.getElementById('messages-grid');
+  if (messagesGrid) {
+      const datetime = new Date().toLocaleString(); // Voeg datum en tijd toe aan het bericht
+      const messageItem = document.createElement('li');
+      messageItem.classList.add('message-item');
+
+      // Truncate afzendernaam tot 10 tekens
+      const truncatedSender = sender.length > 10 ? sender.substring(0, 10) + '...' : sender;
+    
+      // Voeg dynamisch het juiste logo toe op basis van de afzender
+      let logoHTML = '';
+      switch (sender.toLowerCase()) {
+          case 'duo':
+              logoHTML = '<img src="duologo.svg" alt="DUO logo" class="logo-icon">';
+              break;
+          case 'belastingdienst':
+              logoHTML = '<img src="belastingdienstlogo.svg" alt="Belastingdienst logo" class="logo-icon">';
+              break;
+        
+           case 'woningcorporatie leijendakje':
+              logoHTML = '<img src="woningcorporatielogo.svg" alt="Leijendakje logo" class="logo-icon">';
+              break;
+        
+          case 'werkgever ipa 5':
+            logoHTML = '<img src="ipa5logo.svg" alt="ipa logo" class="logo-icon">';
+            break;
+            
+          case 'werkgever ipa 6':
+            logoHTML = '<img src="ipa6logo.svg" alt="ipa logo" class="logo-icon">';
+            break;
+            
+          case 'werkgever ipa 7':
+            logoHTML = '<img src="ipa7logo.svg" alt="ipa logo" class="logo-icon">';
+            break;
+
+          // Voeg meer afzenders toe indien nodig
+          default:
+              logoHTML = '';
+              break;
+      }
+
+      // Beperk de lengte van het bericht en voeg "..." toe als het langer is
+      const truncatedMessage = message.length > 50 ? message.substring(0, 50) + '...' : message;
+
+      // Stel de HTML van het bericht samen
+      messageItem.innerHTML = `
+          <div class="message-item-container">
+              <div class="message-logo">
+                  ${logoHTML}
+              </div>
+              <div class="message-content">
+                  <div class="message-header">
+                     <strong class="message-sender">${truncatedSender}</strong>
+                      <span class="message-datetime">${datetime}</span>
+                  </div>
+                  <div class="message-body">
+                      <span>${truncatedMessage}</span>
+                  </div>
+              </div>
+          </div>
+      `;
+
+      messagesGrid.appendChild(messageItem);
+
+      // Toon het notificatiebolletje
+      const notificationBadge = document.getElementById('notification-badge');
+      notificationBadge.style.display = 'flex';
+      notificationBadge.textContent = '1'; // Aantal berichten, je kunt dit aanpassen om meerdere te tellen
+
+      // Voeg event listener toe aan het bericht om details te openen
+      messageItem.addEventListener('click', () => {
+          openMessageDetails(sender, message, datetime, messageType); // Open het volledige bericht in details
+
+          // Verberg het notificatiebolletje zodra op het bericht wordt geklikt
+          notificationBadge.style.display = 'none';
+
+          
+      });
+
+      console.log(`Bericht van ${sender} toegevoegd: "${message}"`);
+  } else {
+      console.error("Trusted Contacts sectie niet gevonden.");
+  }
+}
