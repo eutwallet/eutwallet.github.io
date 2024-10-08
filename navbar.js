@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
       { href: "/index.html", icon: "fas fa-home", text: "Home", ariaLabel: "Home" },
       { href: "/examples/index.html", icon: "fas fa-lightbulb", text: "Voorbeelden", ariaLabel: "Voorbeelden" },
       { href: "/research/index.html", icon: "fas fa-flask", text: "Onderzoek", ariaLabel: "Onderzoek" },
-      { href: "/requirements/index.html", icon: "fas fa-tasks", text: "Randvoorwaarden", ariaLabel: "Randvoowaarden" },
+    /*   { href: "/requirements/index.html", icon: "fas fa-tasks", text: "Randvoorwaarden", ariaLabel: "Randvoowaarden" }, */
     ];
     
     console.log("Navigatielinks gedefinieerd:", navLinks);
