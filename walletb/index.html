@@ -439,13 +439,13 @@
     <!-- Hardcoded data voor het personal data kaartje -->
     <p><strong>Voornaam:</strong> Willeke Liselotte</p>
     <p><strong>Achternaam:</strong> De Bruijn</p>
-    <p><strong>Geboortedatum:</strong> March 10, 1997</p>
+    <p><strong>Geboortedatum:</strong> 10 maart, 1997</p>
     <p><strong>Geboorteplaats:</strong> Delft</p>
     <p><strong>Geboorteland:</strong> Nederland</p>
     <p><strong>Geslacht:</strong> Vrouw</p>
     <p><strong>Burgerservicenummer (BSN):</strong> 938391772</p>
     <p><strong>Nationaliteit:</strong> Nederlands</p>
-    <p><strong>Geldigheid paspoort:</strong> March 11, 2027</p>
+    <p><strong>Geldigheid paspoort:</strong> 11 maart, 2027</p>
     <p><strong>Older than 18:</strong> Yes</p>
   </div>
 </div>
@@ -564,8 +564,10 @@
   <h3>Instellingen</h3>
   <div class="title-divider"></div>
   <p>Deze pagina is in ontwikkeling</p>
-  <button id="demo-message-button" class="demo-button">Ontvang demo bericht via contacten</button>
-  
+  <button id="IPA-5-message-button" class="demo-button">IPA-5: Ontvang demo bericht via contacten</button>
+  <button id="IPA-6-message-button" class="demo-button">IPA-6: Ontvang demo bericht via contacten</button>
+  <button id="IPA-7-message-button" class="demo-button">IPA-7: Ontvang demo bericht via contacten</button>
+  <button id="IPA-8-message-button" class="demo-button">IPA-8: Ontvang demo bericht via contacten</button>
 </div>
 
 
@@ -734,6 +736,13 @@
   <p id="csas-reason" ></p>
   <div class="divider"></div>
 
+  <p><strong>Benodigde gegevens om deze gegevens bij de uitgever(s) op te halen:</strong></p>
+  <p>Naam: Willeke Liselotte</p>
+  <p>Achternaam: de Bruijn</p>
+  <p>Geboortedatum: 10 maart 1997 </p>
+  <p>BSN: 938391772</p>
+  <div class="divider"></div>
+
   <!-- Overeenkomst, links uitgelijnd -->
   <p><strong>Overeenkomst</strong></p>
   <p id="csas-agreement" ></p>
@@ -767,7 +776,9 @@
 
 <!-- *** CSAS Success-scherm na Ophalen, Opslaan en Delen van Gegevens (CSAS) *** -->
 <div id="csas-success-screen" class="modal" style="display: none;">
-  <h2>Succes! U heeft de gegevens gedeeld met <span id="csas-success-requester"></span> en onderstaande gegevens in uw wallet opgeslagen:</h2>
+  <h2>Succes! </h2><br>
+    <p>U heeft de gegevens gedeeld met <span id="csas-success-requester"></span> en onderstaande gegevens in uw wallet opgeslagen:</p>
+    <div class="divider"></div>
   <!-- Hier wordt de naam van de verifier weergegeven, gevolgd door een overzicht van de opgeslagen gegevens -->
   <div id="csas-success-card-container"></div>
   <!-- Container waar de kaartjes worden getoond die succesvol zijn opgehaald en opgeslagen -->
