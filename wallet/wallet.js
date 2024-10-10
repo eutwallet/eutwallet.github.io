@@ -545,7 +545,7 @@ function showDetails(credential, index) {
   bottomNav.style.display = 'none';
 
   // Controleer of het een standaardkaartje is
-  if (credential.name === "Personal data") {
+  if (credential.name === "Persoonlijke data") {
     showPersonalDataDetails();
     return;
   } else if (credential.name === "Woonadres") {
