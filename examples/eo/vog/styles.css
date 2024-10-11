@@ -155,3 +155,21 @@ button.close-tab i, button.go-home i {
     color: #000;
     margin: 0;
   }
+
+  
+/* image containers for research/IPA/index.html */
+.image-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .image-container img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px; /* Voegt ruimte toe tussen de afbeeldingen */
+  }
+  

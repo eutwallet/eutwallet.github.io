@@ -137,3 +137,21 @@ button.go-example:hover, button.go-home:hover {
 button.close-tab i, button.go-home i {
     margin-right: 8px; /* Voeg wat ruimte toe tussen het icoon en de tekst */
 }
+
+
+/* image containers for research/IPA/index.html */
+.image-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .image-container img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px; /* Voegt ruimte toe tussen de afbeeldingen */
+  }
+  
