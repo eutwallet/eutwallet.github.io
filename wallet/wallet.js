@@ -32,8 +32,6 @@ const backActivitiesBtn = document.getElementById('back-activities-btn');
 const activityScreen = document.getElementById('activities-section');
 
 // *** Pincode Bevestiging Elementen ***
-const pinConfirmationScreen = document.getElementById('pin-confirmation-screen');
-const confirmPinBtn = document.getElementById('confirm-pin');
 const pinConfirmationScreenVerifier = document.getElementById('pin-confirmation-screen-verifier');
 const confirmPinBtnVerifier = document.getElementById('confirm-pin-verifier');
 
@@ -65,6 +63,8 @@ const rdfciAgreement = document.getElementById('rdfci-agreement');
 const rdfciData = document.getElementById('rdfci-data');
 const rdfciAcceptButton = document.getElementById('rdfci-accept-button');
 const rdfciStopButton = document.getElementById('rdfci-stop-button');
+const confirmPinIssuerBtn = document.getElementById('confirm-pin-issuer');
+const pinConfirmationScreenIssuer = document.getElementById('pin-confirmation-screen-issuer');
 
 // *** RDFCV Modal Elementen ***
 const rdfcvModal = document.getElementById('rdfcv-modal');
@@ -142,6 +142,12 @@ const fieldMapping = {
   BKR: 'Bureau Krediet Registratie (BKR)',
   BD: 'Belastingdienst',
   SVB: 'Sociale Verzekeringsbank (SVB)',
+  LEID: 'Legal entity nummer',
+  Issued_Date: 'Uitgiftedatum',
+  Issued_to_subject: 'Uitgegeven aan',
+  Algemeen_profiel: 'Algemeen profiel',
+  Specifiek_profiel: 'Specifiek profiel',
+  Attestation_Trust_Type: 'Type attestatie',
   a: {
     '12t': 'opslag: 12 maanden, gedeeld met derden: nee',
     '60t': 'opslag: 60 maanden, gedeeld met derden: nee',
@@ -356,6 +362,12 @@ const cardStyles = {
     textColor: '#00588E'
   },
 
+  'rijbewijs': {
+    iconClass: 'fas fa-car',
+    iconColor: '#e4b6c3',
+    textColor: '#52202e'
+  },
+
   'diploma verpleegkunde': {
   imagePath: 'duologo.svg',  // Path naar je diploma-afbeelding
   iconColor: null,
@@ -366,29 +378,9 @@ const cardStyles = {
 };
 
 
-function applyStylesToCards() {
-  document.querySelectorAll('.default-card').forEach((card) => {
-    const cardName = card.querySelector('.card-text h3').textContent.trim().toLowerCase();
-    const styles = cardStyles[cardName] || {
-      iconClass: 'far fa-id-badge',
-      iconColor: '#333',
-      textColor: '#333'
-    };
 
-    const iconElement = card.querySelector('i');
-    const h3Element = card.querySelector('.card-text h3');
 
-    // Update de icon class
-    iconElement.className = styles.iconClass;
 
-    // Pas de kleuren toe
-    iconElement.style.color = styles.iconColor;
-    h3Element.style.color = styles.textColor;
-  });
-}
-
-// **Roep de functie hier aan**
-applyStylesToCards();
 
 function displayCredentials() {
   walletGrid.innerHTML = ''; // Maak de wallet leeg
@@ -452,16 +444,48 @@ function displayCredentials() {
 // Functie om standaard kaartjes toe te voegen
 function loadDefaultCredentials() {
   const defaultCards = [
-    { name: 'Persoonlijke data', issuedBy: 'Nederlandse overheid', isShareAction: false },
-    { name: 'Woonadres', issuedBy: 'Nederlandse overheid', isShareAction: false }
+    {
+      name: 'Persoonlijke data',
+      issuedBy: 'Nederlandse overheid',
+      isShareAction: false,
+      data: {
+        'Voornaam': 'Willeke Liselotte',
+        'Achternaam': 'De Bruijn',
+        'Geboortedatum': '10 maart, 1997',
+        'Geboorteplaats': 'Delft',
+        'Geboorteland': 'Nederland',
+        'Geslacht': 'Vrouw',
+        'Burgerservicenummer (BSN)': '938391772',
+        'Nationaliteit': 'Nederlands',
+        'Geldigheid paspoort': '11 maart, 2027',
+        'Ouder dan 18': 'Ja'
+      }
+    },
+    {
+      name: 'Woonadres',
+      issuedBy: 'Nederlandse overheid',
+      isShareAction: false,
+      data: {
+        'Straat': 'Wilhelmina van Pruisenweg',
+        'Huisnummer': '52',
+        'Postcode': '2595 AN',
+        'Plaatsnaam': 'Den Haag'
+      }
+    }
   ];
+
   defaultCards.forEach(defaultCard => {
-    const exists = credentials.some(cred => cred.name === defaultCard.name);
-    if (!exists) {
+    const index = credentials.findIndex(cred => cred.name === defaultCard.name);
+    if (index !== -1) {
+      // Update het bestaande kaartje
+      credentials[index] = defaultCard;
+    } else {
       credentials.push(defaultCard);
     }
   });
 }
+
+
 
 // Functie om opgeslagen kaartjes te laden
 function loadCredentials() {
@@ -477,121 +501,63 @@ function saveCredentials() {
   localStorage.setItem('credentials', JSON.stringify(credentials));
 }
 
-// Event listener voor de standaardkaartjes
-document.querySelectorAll('.default-card').forEach((card) => {
-  card.addEventListener('click', () => {
-    if (card.classList.contains('light-card')) {
-      showPersonalDataDetails();
-    } else if (card.classList.contains('dark-card')) {
-      showAddressDetails();
-    }
-  });
-});
 
 
-// Functie om details van het personal data kaartje te tonen
-function showPersonalDataDetails() {
-  const detailsView = document.getElementById('personal-data-details');
-  if (detailsView) {
-    detailsView.style.display = 'block';
-
-    // Verberg het wallet-scherm
-    document.getElementById('wallet-screen').style.display = 'none';
-
-    // Verberg de bottom-nav
-    bottomNav.style.display = 'none';
-
-    // Sluit details weergave (Terug-knop)
-    const closeDetailsBtn = document.getElementById('close-details-personal');
-    if (closeDetailsBtn) {
-      closeDetailsBtn.onclick = () => {
-        detailsView.style.display = 'none';
-        document.getElementById('wallet-screen').style.display = 'block'; // Toon het wallet-scherm opnieuw
-        bottomNav.style.display = 'flex'; // Toon de bottom-nav weer
-      };
-    }
-  }
-}
-
-// Functie om details van het tweede kaartje ("Woonadres") te tonen
-function showAddressDetails() {
-  const addressDetailsView = document.getElementById('address-details');
-  if (addressDetailsView) {
-    addressDetailsView.style.display = 'block';
-
-    // Verberg het wallet-scherm
-    document.getElementById('wallet-screen').style.display = 'none';
-
-    // Verberg de bottom-nav
-    bottomNav.style.display = 'none';
-
-    // Sluit details weergave (Terug-knop)
-    const closeDetailsBtn = document.getElementById('close-details-address');
-    if (closeDetailsBtn) {
-      closeDetailsBtn.onclick = () => {
-        addressDetailsView.style.display = 'none';
-        document.getElementById('wallet-screen').style.display = 'block'; // Toon het wallet-scherm opnieuw
-        bottomNav.style.display = 'flex'; // Toon de bottom-nav weer
-      };
-    }
-  }
-}
 
 function showDetails(credential, index) {
   // Verberg het wallet-scherm
   document.getElementById('wallet-screen').style.display = 'none';
-
-  // Verberg de bottom-nav
   bottomNav.style.display = 'none';
 
-  // Controleer of het een standaardkaartje is
-  if (credential.name === "Persoonlijke data") {
-    showPersonalDataDetails();
-    return;
-  } else if (credential.name === "Woonadres") {
-    showAddressDetails();
-    return;
-  }
-
-  // Als het geen standaardkaartje is, toon de details van het kaartje
-  detailsTitle.textContent = credential.name;
-  let detailsHTML = '';
-
-  // Vul de details van het kaartje, deze zijn altijd aanwezig
-  for (const key in credential.data) {
-    if (credential.data.hasOwnProperty(key)) {
-      detailsHTML += `<p><strong>${key}:</strong> ${credential.data[key]}</p>`;
-    }
-  }
-
-  detailsContent.innerHTML = detailsHTML;
-
-  // Toon de juiste details container voor niet-standaard kaartjes
+  // Toon de detailsweergave
   const detailsView = document.getElementById('details');
   detailsView.style.display = 'block';
+
+  // Vul de titel met de naam van het kaartje
+  detailsTitle.textContent = credential.name;
+
+  // Leeg de inhoud en vul deze met de gegevens van het kaartje
+  detailsContent.innerHTML = '';
+
+  // Controleer of er data aanwezig is in het credential
+  if (credential.data) {
+    for (const key in credential.data) {
+      if (credential.data.hasOwnProperty(key)) {
+        detailsContent.innerHTML += `<p><strong>${key}:</strong> ${credential.data[key]}</p>`;
+      }
+    }
+  } else {
+    detailsContent.innerHTML = '<p>Geen details beschikbaar.</p>';
+  }
 
   // Sluit details weergave (Terug-knop)
   closeDetailsBtn.onclick = () => {
     detailsView.style.display = 'none';
-    document.getElementById('wallet-screen').style.display = 'block'; // Toon het wallet-scherm opnieuw
-    bottomNav.style.display = 'flex'; // Toon de bottom-nav weer
+    document.getElementById('wallet-screen').style.display = 'block';
+    bottomNav.style.display = 'flex';
   };
 
-  // Verwijder het kaartje (Verwijderen-knop)
-  deleteDetailsBtn.onclick = () => {
-    credentials.splice(index, 1); // Verwijder het kaartje uit de lijst
-    saveCredentials(); // Sla de wijzigingen op
-    displayCredentials(); // Werk de weergave van kaartjes bij
-    detailsView.style.display = 'none';
-    document.getElementById('wallet-screen').style.display = 'block'; // Toon het wallet-scherm opnieuw
-    bottomNav.style.display = 'flex'; // Toon de bottom-nav weer
-  };
+  // Verwijderknop tonen of verbergen op basis van het type kaartje
+  if (credential.name !== 'Persoonlijke data' && credential.name !== 'Woonadres') {
+    deleteDetailsBtn.style.display = 'block';
+    deleteDetailsBtn.onclick = () => {
+      credentials.splice(index, 1);
+      saveCredentials();
+      displayCredentials();
+      detailsView.style.display = 'none';
+      document.getElementById('wallet-screen').style.display = 'block';
+      bottomNav.style.display = 'flex';
+    };
+  } else {
+    deleteDetailsBtn.style.display = 'none';
+  }
 }
 
 
 // Bij het laden van de pagina
 loadCredentials();
 loadDefaultCredentials();
+saveCredentials(); // Sla de bijgewerkte credentials op
 displayCredentials();
 displayMachtigingen();
 
@@ -638,44 +604,41 @@ function startQrScan() {
                 // Toon de CSAS modal
                 csasModal.style.display = 'flex';     
             
-
+              }
               // Stap 2: Controleer of het een verifier QR-code is (rdfcv)
-              } else if (data.rdfcv && data.requester && data.reason) {
-                  console.log("Verifier QR-code met rdfcv herkend.");
-
-                  // Vul de rdfcv modal met de juiste gegevens
-                  populateRdfcvModal(data);
-
-                  // Toon het rdfcv vraagscherm
-                  rdfcvModal.style.display = 'flex';
-
-                  rdfcvAcceptButton.onclick = () => {
-                      // Toon eerst het pincode-bevestigingsscherm
-                      goToPinConfirmationVerifier();
-
-                      confirmPinBtnVerifier.onclick = () => {  // Gebruik de specifieke verifier-knop
-                        credentials.push({
-                          name: data.requester || 'Onbekende verifier',  // Verifier naam opslaan
-                          reason: data.reason || 'Geen reden opgegeven',  // Reden opslaan
-                          sharedData: data.rdfcv.map(field => fieldMapping[field] || field),  // Gegevens opslaan volgens fieldmapping
-                          actionTimestamp: timestamp,
-                          isShareAction: true  // Markeer als deelactie, zodat het niet in de wallet verschijnt
-                        });
-                        saveCredentials();
-                        goToVerifierSuccessScreen(data);  // Toon het verifier success-scherm
-                        pinConfirmationScreenVerifier.style.display = 'none';  // Sluit het pincode bevestigingsscherm
-                      };
-
-                      rdfcvModal.style.display = 'none';  // Verberg het rdfcv vraagscherm
+              else if (data.issuedBy && data.name) {
+                console.log("Issuer QR-code herkend.");
+              
+                if (data.rdfci) {
+                  console.log("Issuer QR-code met rdfci herkend.");
+              
+                  // Sla de data op voor later gebruik
+                  window.currentRdfciData = data;
+              
+                  // Vul de modal met de nieuwe functie
+                  populateRdfciModal(data);
+              
+                  // Toon het extra vraagscherm
+                  rdfciModal.style.display = 'flex';
+              
+                  rdfciAcceptButton.onclick = () => {
+                    // Toon het pincode bevestigingsscherm
+                    pinConfirmationScreenIssuer.style.display = 'flex';
+                    // Verberg de RDFCI-modal
+                    rdfciModal.style.display = 'none';
+                    // Reset de pincode-invoer
+                    resetPinInputs();
                   };
-
-                  rdfcvStopButton.onclick = () => {
-                      rdfcvModal.style.display = 'none';
-                      resetQrScanner();
+              
+                  rdfciStopButton.onclick = () => {
+                    rdfciModal.style.display = 'none';
+                    resetQrScanner();
                   };
+                }
+              }
 
               // Stap 3: Controleer of het een issuer QR-code is (rdfci)
-              } else if (data.issuedBy && data.name) {
+               else if (data.issuedBy && data.name) {
                   console.log("Issuer QR-code herkend.");
 
                   if (data.rdfci) {
@@ -688,17 +651,41 @@ function startQrScan() {
                       rdfciModal.style.display = 'flex';
 
                       rdfciAcceptButton.onclick = () => {
-                          // Voeg hier functionaliteit toe om de issuer-kaartje op te slaan
-                          credentials.push({
-                              name: data.name || 'Onbekend kaartje',
-                              issuedBy: data.issuedBy || 'Onbekende uitgever',
-                              actionTimestamp: timestamp,
-                              isShareAction: false,
-                              data: data // Bewaar alle details van het kaartje
-                          });
-
-                          saveCredentials();
-
+                        const timestamp = new Date().toLocaleString();
+                      
+                        // Maak een nieuw object voor de gemapte data
+                        const mappedData = {};
+                      
+                        // Itereer over de keys in 'data' en map de veldnamen
+                        for (let key in data) {
+                          if (
+                            data.hasOwnProperty(key) &&
+                            key !== 'rdfci' &&
+                            key !== 'a' &&
+                            key !== 't' &&
+                            key !== 'name' &&
+                            key !== 'reason' &&
+                            key !== 'verifier' &&
+                            key !== 'issuer' &&
+                            key !== 'type' &&
+                            key !== 'requester'
+                          ) {
+                            const fieldName = fieldMapping[key] || key;
+                            mappedData[fieldName] = data[key];
+                          }
+                        }
+                      
+                        // Sla het kaartje op met de gemapte data
+                        credentials.push({
+                          name: data.name || 'Onbekend kaartje',
+                          issuedBy: data.issuedBy || 'Onbekende uitgever',
+                          actionTimestamp: timestamp,
+                          isShareAction: false,
+                          data: mappedData // Gebruik de gemapte data
+                        });
+                      
+                        saveCredentials();
+                      
                           // Toon het issuer success-scherm
                           goToIssuerSuccessScreen(data.name, data.issuedBy);
 
@@ -797,9 +784,6 @@ scanButton.addEventListener('click', () => {
 
 
 
-// Laad bestaande kaartjes bij het opstarten
-loadCredentials();
-displayCredentials();
 
 // Voeg pincode-invoerfunctionaliteit toe
 const pinInputs = document.querySelectorAll('.pin-box');
@@ -814,11 +798,6 @@ pinInputs.forEach((box, index) => {
 
 
 
-
-// Verwerk de bevestiging van de pincode
-confirmPinBtn.addEventListener('click', () => {
-  goToSuccessScreen(currentVerifierName);
-});
 
 // Reset pincode-scherm na gebruik
 function resetPinInputs() {
@@ -920,182 +899,239 @@ function getFieldValue(field) {
 }
 
 
-// rdfci vullen
 function populateRdfciModal(data) {
-  // Fill in the fixed parts
-  document.getElementById('rdfci-name').innerText = data.name || 'Onbekend kaartje';
+  // Vul de vaste delen in
   document.getElementById('rdfci-issuedBy').innerText = data.issuedBy || 'Onbekende uitgever';
 
-  // "Wilt u de volgende gegevens delen met" moet dikgedrukt zijn
+  // "Wilt u de volgende gegevens delen met" moet dikgedrukt zijn en de naam van de uitgever bevatten
   document.getElementById('rdfci-share-with').innerHTML = `<strong>Wilt u de volgende gegevens delen met ${data.issuedBy}:</strong>`;
 
-  // Process the requested rdfci data
-  const detailsContainer = document.getElementById('rdfci-details-container');
-  detailsContainer.innerHTML = ''; // Clear the container before adding new content
+  // Verwijder de oude inhoud van 'rdfci-name' en voeg de nieuw uit te geven kaart toe
+  const rdfciNameElement = document.getElementById('rdfci-name');
+  rdfciNameElement.innerHTML = ''; // Leeg de inhoud
 
-  // Group fields by card
+  // **Nieuw uit te geven kaart tonen op de plaats van 'rdfci-name'**
+  // Maak kaart container aan voor de nieuw uit te geven kaart
+  const newCardContainer = document.createElement('div');
+  newCardContainer.className = 'card-container';
+
+  // Maak kaart header aan
+  const newCardHeader = document.createElement('div');
+  newCardHeader.className = 'card-header';
+  newCardHeader.style.backgroundColor = '#5A50ED'; // Stel een kleur in voor de nieuwe kaart
+
+  // Voeg de header toe aan de kaartcontainer
+  newCardContainer.appendChild(newCardHeader);
+
+  // Maak kaart content aan
+  const newCardContent = document.createElement('div');
+  newCardContent.className = 'card-content';
+
+  // Voeg kaart titel toe
+  const newCardTitleElement = document.createElement('div');
+  newCardTitleElement.className = 'card-title';
+  newCardTitleElement.textContent = data.name || 'Onbekend kaartje';
+  newCardContent.appendChild(newCardTitleElement);
+
+  // Voeg de details van de uit te geven kaart toe
+  const newCardDetails = document.createElement('div');
+  newCardDetails.className = 'card-details';
+
+  for (let key in data) {
+    if (
+      data.hasOwnProperty(key) &&
+      key !== 'rdfci' &&
+      key !== 'a' &&
+      key !== 't' &&
+      key !== 'issuedBy' &&
+      key !== 'name' &&
+      key !== 'reason' &&
+      key !== 'verifier' &&
+      key !== 'issuer' &&
+      key !== 'type' &&
+      key !== 'requester'
+    ) {
+      const fieldName = fieldMapping[key] || key;
+      const value = data[key];
+
+      const detailRow = document.createElement('div');
+      detailRow.className = 'detail-row';
+
+      const labelDiv = document.createElement('div');
+      labelDiv.className = 'label';
+      labelDiv.textContent = `${fieldName}:`;
+
+      const valueDiv = document.createElement('div');
+      valueDiv.className = 'value';
+      valueDiv.textContent = value;
+
+      detailRow.appendChild(labelDiv);
+      detailRow.appendChild(valueDiv);
+
+      newCardDetails.appendChild(detailRow);
+    }
+  }
+
+  newCardContent.appendChild(newCardDetails);
+  newCardContainer.appendChild(newCardContent);
+
+  // Voeg de nieuw uit te geven kaart toe aan 'rdfci-name' element
+  rdfciNameElement.appendChild(newCardContainer);
+
+  // Verwerk de gevraagde rdfci data (gegevens om te delen)
+  const detailsContainer = document.getElementById('rdfci-details-container');
+  detailsContainer.innerHTML = ''; // Leeg de container
+
+  // Groepeer velden per kaart
   let fieldsByCard = {};
 
-  // Mapping of standard cards to their selectors
-  const standardCards = {
-    'Persoonsgegevens': '#personal-data-details',
-    'Woonadres': '#address-details'
-  };
-
   data.rdfci.forEach((field) => {
-    const fieldName = fieldMapping[field] || field; // Map to readable name
+    const fieldName = fieldMapping[field] || field; // Map naar leesbare naam
 
-    // Check if the field belongs to a card in local storage
-    const localStorageCard = credentials.find(credential => credential.name === fieldName);
-    if (localStorageCard) {
-      if (!fieldsByCard[fieldName]) {
-        fieldsByCard[fieldName] = { type: 'localStorage', data: localStorageCard };
+    // Zoek het bijbehorende kaartje in 'credentials'
+    const matchingCard = credentials.find(cred => {
+      return cred.data && cred.data.hasOwnProperty(fieldName);
+    });
+
+    if (matchingCard) {
+      if (!fieldsByCard[matchingCard.name]) {
+        fieldsByCard[matchingCard.name] = { data: matchingCard.data, fields: [] };
       }
-    } else if (standardCards[fieldName]) {
-      if (!fieldsByCard[fieldName]) {
-        fieldsByCard[fieldName] = { type: 'standardCard', selector: standardCards[fieldName] };
-      }
+      fieldsByCard[matchingCard.name].fields.push(fieldName);
     } else {
-      // Fields that are specific details from standard cards
-      const matchingCardName = Object.keys(standardCards).find(cardName => {
-        const cardElement = document.querySelector(standardCards[cardName]);
-        if (cardElement) {
-          const paragraphs = cardElement.querySelectorAll('p');
-          return Array.from(paragraphs).some(p => p.textContent.includes(fieldName));
-        }
-        return false;
-      });
-
-      if (matchingCardName) {
-        if (!fieldsByCard[matchingCardName]) {
-          fieldsByCard[matchingCardName] = { type: 'standardCard', selector: standardCards[matchingCardName], fields: [] };
-        }
-        if (fieldsByCard[matchingCardName].fields) {
-          fieldsByCard[matchingCardName].fields.push(fieldName);
-        } else {
-          fieldsByCard[matchingCardName].fields = [fieldName];
-        }
-      }
+      console.warn(`Veld '${fieldName}' niet gevonden in de credentials.`);
     }
   });
 
-  // Now iterate over each card and create the card elements
-  const cardNames = Object.keys(fieldsByCard);
-  cardNames.forEach((cardName) => {
+  // Itereer over elk kaartje en maak de kaart elementen aan
+  Object.keys(fieldsByCard).forEach((cardName) => {
     const cardInfo = fieldsByCard[cardName];
 
-    // Create card container
+    // Maak kaart container aan
     const cardContainer = document.createElement('div');
     cardContainer.className = 'card-container';
 
-    // Create card header
+    // Maak kaart header aan
     const cardHeader = document.createElement('div');
     cardHeader.className = 'card-header';
 
-    // Example: Set header color based on card name
+    // Stel de achtergrondkleur in op basis van de kaartnaam indien gewenst
     switch (cardName) {
-      case 'Persoonsgegevens':
+      case 'Persoonlijke data':
         cardHeader.style.backgroundColor = '#B9E4E2';   
         break;
       case 'Woonadres':
         cardHeader.style.backgroundColor = '#445580'; 
         break;
-      case 'Organisatiemachtiging VOG':
-        cardHeader.style.backgroundColor = '#5A50ED'; 
-        break;
       default:
-        cardHeader.style.backgroundColor = '#0072C6'; // Default color
+        cardHeader.style.backgroundColor = '#0072C6'; // Default kleur
     }
 
-    // Create card content container
+    // Voeg de header toe aan de kaartcontainer
+    cardContainer.appendChild(cardHeader);
+
+    // Maak kaart content aan
     const cardContent = document.createElement('div');
     cardContent.className = 'card-content';
 
-    // Create card title
+    // Voeg kaart titel toe
     const cardTitleElement = document.createElement('div');
     cardTitleElement.className = 'card-title';
     cardTitleElement.textContent = cardName;
+    cardContent.appendChild(cardTitleElement);
 
-    // Create card details container
+    // Voeg de gevraagde velden toe
     const cardDetails = document.createElement('div');
     cardDetails.className = 'card-details';
 
-    if (cardInfo.type === 'localStorage') {
-      // Add all details from local storage card using structured divs for alignment
-      for (let key in cardInfo.data.data) {
-        if (cardInfo.data.data.hasOwnProperty(key)) {
-          const detailRow = document.createElement('div');
-          detailRow.className = 'detail-row'; // Class for styling
+    cardInfo.fields.forEach(fieldName => {
+      const value = cardInfo.data[fieldName];
 
-          const labelDiv = document.createElement('div');
-          labelDiv.className = 'label';
-          labelDiv.textContent = `${key}:`;
+      const detailRow = document.createElement('div');
+      detailRow.className = 'detail-row';
 
-          const valueDiv = document.createElement('div');
-          valueDiv.className = 'value';
-          valueDiv.textContent = cardInfo.data.data[key];
+      const labelDiv = document.createElement('div');
+      labelDiv.className = 'label';
+      labelDiv.textContent = `${fieldName}:`;
 
-          // Append label and value divs to the detail row
-          detailRow.appendChild(labelDiv);
-          detailRow.appendChild(valueDiv);
+      const valueDiv = document.createElement('div');
+      valueDiv.className = 'value';
+      valueDiv.textContent = value;
 
-          // Append the row to the card details
-          cardDetails.appendChild(detailRow);
-        }
-      }
-    } else if (cardInfo.type === 'standardCard') {
-      // Add specified details or all details from standard card
-      const elements = document.querySelectorAll(`${cardInfo.selector} p`);
-      elements.forEach(element => {
-        const fieldLabel = element.innerText.split(':')[0];
-        if (!cardInfo.fields || cardInfo.fields.includes(fieldLabel)) {
-          const detailRow = document.createElement('div');
-          detailRow.className = 'detail-row'; // Class for styling
+      detailRow.appendChild(labelDiv);
+      detailRow.appendChild(valueDiv);
 
-          const labelDiv = document.createElement('div');
-          labelDiv.className = 'label';
-          labelDiv.textContent = `${fieldLabel}:`;
+      cardDetails.appendChild(detailRow);
+    });
 
-          const valueDiv = document.createElement('div');
-          valueDiv.className = 'value';
-          valueDiv.textContent = element.innerText.split(':')[1].trim();
-
-          // Append label and value divs to the detail row
-          detailRow.appendChild(labelDiv);
-          detailRow.appendChild(valueDiv);
-
-          // Append the row to the card details
-          cardDetails.appendChild(detailRow);
-        }
-      });
-    }
-
-    // Assemble card content
-    cardContent.appendChild(cardTitleElement);
     cardContent.appendChild(cardDetails);
-
-    // Assemble card container
-    cardContainer.appendChild(cardHeader);
     cardContainer.appendChild(cardContent);
 
-    // Append card to the details container
+    // Voeg de kaart toe aan de detailsContainer
     detailsContainer.appendChild(cardContainer);
   });
 
-  // Agreement processing (always add under the heading "Overeenkomst")
+  // Verwerk de overeenkomst informatie
   if (data.a) {
-    console.log('Data.a:', data.a);  // Controleer de waarde van data.a
-    console.log('Mapped value:', fieldMapping.a[data.a]);  // Controleer de gemapte waarde
-    const agreementFields = data.a.split(', ').map(agreement => fieldMapping.a[agreement] || agreement).join(', ');
+    const agreementFields = fieldMapping.a[data.a] || data.a;
     document.getElementById('rdfci-agreement').innerText = agreementFields;
   } else {
     document.getElementById('rdfci-agreement').innerText = 'Geen overeenkomst gevonden.';
   }
 }
 
+// rdfci pinconfirmation
+confirmPinIssuerBtn.onclick = () => {
+  const data = window.currentRdfciData;
+  const timestamp = new Date().toLocaleString();
 
-// RFCV vraagscherm vullen
-// RFCV vraagscherm vullen
+  // Maak een nieuw object voor de gemapte data
+  const mappedData = {};
+
+  // Itereer over de keys in 'data' en map de veldnamen
+  for (let key in data) {
+    if (
+      data.hasOwnProperty(key) &&
+      key !== 'rdfci' &&
+      key !== 'a' &&
+      key !== 't' &&
+      key !== 'name' &&
+    
+      key !== 'reason' &&
+      key !== 'verifier' &&
+      key !== 'issuer' &&
+      key !== 'type' &&
+      key !== 'requester'
+    ) {
+      const fieldName = fieldMapping[key] || key;
+      mappedData[fieldName] = data[key];
+    }
+  }
+
+  // Sla het kaartje op met de gemapte data
+  credentials.push({
+    name: data.name || 'Onbekend kaartje',
+    issuedBy: data.issuedBy || 'Onbekende uitgever',
+    actionTimestamp: timestamp,
+    isShareAction: false,
+    data: mappedData // Gebruik de gemapte data
+  });
+
+  saveCredentials();
+
+  // Toon het issuer success-scherm
+  goToIssuerSuccessScreen(data.name, data.issuedBy);
+
+  // Sluit het pincode bevestigingsscherm
+  pinConfirmationScreenIssuer.style.display = 'none';
+
+  // Reset de QR scanner als deze actief is
+  resetQrScanner();
+};
+
+
+
+// RDFCV vraagscherm vullen
 function populateRdfcvModal(data) {
   // Vul de reden
   document.getElementById('rdfcv-reason').innerText = data.reason || 'Geen reden opgegeven.';
@@ -1107,50 +1143,44 @@ function populateRdfcvModal(data) {
   const detailsContainer = document.getElementById('rdfcv-details-container');
   detailsContainer.innerHTML = ''; // Leeg de container
 
-  // Mapping van standaardkaartjes naar selectors
-  const standardCards = {
-      'Persoonsgegevens': '#personal-data-details',
-      'Woonadres': '#address-details',
-      'Verklaring Omtrent het Gedrag (VOG)': '#vog-details' // Voeg VOG-kaartje toe
-  };
-
   // Groepeer de velden en toon ze in kaartjes
   let fieldsByCard = {};
 
   data.rdfcv.forEach((field) => {
     const fieldName = fieldMapping[field] || field; // Gebruik field mapping
 
-    // Zoek of het veld hoort bij een standaardkaartje
-    const matchingCardName = Object.keys(standardCards).find(cardName => {
-      const cardElement = document.querySelector(standardCards[cardName]);
-      if (cardElement) {
-          const paragraphs = cardElement.querySelectorAll('p');
-          return Array.from(paragraphs).some(p => p.textContent.includes(fieldName));
-      }
-      return false;
+    // Zoek of het veld hoort bij een kaartje in credentials
+    let matchingCard = credentials.find(cred => {
+      // Zoek in cred.data of het veld bestaat
+      return cred.data && cred.data.hasOwnProperty(fieldName);
     });
 
-    if (matchingCardName) {
-        if (!fieldsByCard[matchingCardName]) {
-            fieldsByCard[matchingCardName] = { type: 'standardCard', selector: standardCards[matchingCardName], fields: [] };
-        }
-        if (fieldsByCard[matchingCardName].fields) {
-            fieldsByCard[matchingCardName].fields.push(fieldName);
-        } else {
-            fieldsByCard[matchingCardName].fields = [fieldName];
-        }
+    if (!matchingCard) {
+      // Als niet gevonden, controleer of er een kaartje is waarvan de naam overeenkomt met fieldName
+      matchingCard = credentials.find(cred => cred.name === fieldName);
+    }
+
+    if (matchingCard) {
+      const cardName = matchingCard.name;
+
+      if (!fieldsByCard[cardName]) {
+        fieldsByCard[cardName] = { data: matchingCard.data, fields: [], showAllFields: false };
+      }
+
+      if (matchingCard.name === fieldName) {
+        // Als het veld overeenkomt met de kaartnaam, tonen we alle details
+        fieldsByCard[cardName].showAllFields = true;
+      } else {
+        // Voeg het specifieke veld toe
+        fieldsByCard[cardName].fields.push(fieldName);
+      }
     } else {
-        // Zoek of het veld hoort bij een kaartje in localStorage (bijv. voor VOG)
-        const localStorageCard = credentials.find(credential => credential.name === fieldName);
-        if (localStorageCard) {
-            fieldsByCard[fieldName] = { type: 'localStorage', data: localStorageCard };
-        }
+      console.warn(`Veld of kaartje '${fieldName}' niet gevonden in de credentials.`);
     }
   });
 
   // Itereer over elk kaartje en maak de kaart elementen aan
-  const cardNames = Object.keys(fieldsByCard);
-  cardNames.forEach((cardName) => {
+  Object.keys(fieldsByCard).forEach((cardName) => {
     const cardInfo = fieldsByCard[cardName];
 
     // Maak kaart container aan
@@ -1163,13 +1193,13 @@ function populateRdfcvModal(data) {
 
     // Stel de achtergrondkleur in op basis van de kaartnaam
     switch (cardName) {
-      case 'Persoonsgegevens':
+      case 'Persoonlijke data':
         cardHeader.style.backgroundColor = '#B9E4E2';   
         break;
       case 'Woonadres':
         cardHeader.style.backgroundColor = '#445580'; 
         break;
-      case 'Verklaring Omtrent het Gedrag (VOG)':
+      case 'Verklaring Omtrent Gedrag (VOG)':
         cardHeader.style.backgroundColor = '#5A50ED'; 
         break;
       default:
@@ -1179,6 +1209,10 @@ function populateRdfcvModal(data) {
     // Maak kaart content container aan
     const cardContent = document.createElement('div');
     cardContent.className = 'card-content';
+
+    // Voeg de header en content toe aan de kaartcontainer
+    cardContainer.appendChild(cardHeader);
+    cardContainer.appendChild(cardContent);
 
     // Maak kaart titel aan
     const cardTitleElement = document.createElement('div');
@@ -1190,10 +1224,10 @@ function populateRdfcvModal(data) {
     const cardDetails = document.createElement('div');
     cardDetails.className = 'card-details';
 
-    if (cardInfo.type === 'localStorage') {
-      // Voeg alle details van het kaartje toe uit local storage met gestructureerde divs voor uitlijning
-      for (let key in cardInfo.data.data) {
-        if (cardInfo.data.data.hasOwnProperty(key)) {
+    if (cardInfo.showAllFields) {
+      // Voeg alle details van het kaartje toe uit cred.data
+      for (let key in cardInfo.data) {
+        if (cardInfo.data.hasOwnProperty(key)) {
           const detailRow = document.createElement('div');
           detailRow.className = 'detail-row'; // Class for styling
 
@@ -1203,7 +1237,7 @@ function populateRdfcvModal(data) {
 
           const valueDiv = document.createElement('div');
           valueDiv.className = 'value';
-          valueDiv.textContent = cardInfo.data.data[key];
+          valueDiv.textContent = cardInfo.data[key];
 
           // Voeg label en waarde toe aan de rij
           detailRow.appendChild(labelDiv);
@@ -1213,37 +1247,33 @@ function populateRdfcvModal(data) {
           cardDetails.appendChild(detailRow);
         }
       }
-    } else if (cardInfo.type === 'standardCard') {
-      // Voeg de specifieke details toe of alle details van het standaardkaartje
-      const elements = document.querySelectorAll(`${cardInfo.selector} p`);
-      elements.forEach(element => {
-        const fieldLabel = element.innerText.split(':')[0];
-        if (!cardInfo.fields || cardInfo.fields.includes(fieldLabel)) {
-          const detailRow = document.createElement('div');
-          detailRow.className = 'detail-row'; // Class for styling
+    } else {
+      // Voeg alleen de specifieke gevraagde velden toe
+      cardInfo.fields.forEach(fieldName => {
+        const value = cardInfo.data[fieldName];
 
-          const labelDiv = document.createElement('div');
-          labelDiv.className = 'label';
-          labelDiv.textContent = `${fieldLabel}:`;
+        const detailRow = document.createElement('div');
+        detailRow.className = 'detail-row';
 
-          const valueDiv = document.createElement('div');
-          valueDiv.className = 'value';
-          valueDiv.textContent = element.innerText.split(':')[1].trim();
+        const labelDiv = document.createElement('div');
+        labelDiv.className = 'label';
+        labelDiv.textContent = `${fieldName}:`;
 
-          // Voeg label en waarde toe aan de rij
-          detailRow.appendChild(labelDiv);
-          detailRow.appendChild(valueDiv);
+        const valueDiv = document.createElement('div');
+        valueDiv.className = 'value';
+        valueDiv.textContent = value || 'Niet beschikbaar';
 
-          // Voeg de rij toe aan de kaartdetails
-          cardDetails.appendChild(detailRow);
-        }
+        // Voeg label en waarde toe aan de rij
+        detailRow.appendChild(labelDiv);
+        detailRow.appendChild(valueDiv);
+
+        // Voeg de rij toe aan de kaartdetails
+        cardDetails.appendChild(detailRow);
       });
     }
 
-    // Voeg de kaart content en details samen
+    // Voeg de kaart details toe aan de kaart content
     cardContent.appendChild(cardDetails);
-    cardContainer.appendChild(cardHeader);
-    cardContainer.appendChild(cardContent);
 
     // Voeg de kaart toe aan de container
     detailsContainer.appendChild(cardContainer);
@@ -1253,8 +1283,8 @@ function populateRdfcvModal(data) {
   if (data.a) {
     console.log('Data.a:', data.a);  // Controleer de waarde van data.a
     console.log('Mapped value:', fieldMapping.a[data.a]);  // Controleer de gemapte waarde
-    const agreementFields = data.a.split(', ').map(agreement => fieldMapping.a[agreement] || agreement).join(', ');
-    document.getElementById('rdfcv-agreement').innerText = agreementFields;
+    const agreementText = fieldMapping.a[data.a] || data.a;
+    document.getElementById('rdfcv-agreement').innerText = agreementText;
   } else {
     document.getElementById('rdfcv-agreement').innerText = 'Geen overeenkomst gevonden.';
   }
@@ -1262,7 +1292,8 @@ function populateRdfcvModal(data) {
 
 
 
-// Functie om het pincode bevestigingsscherm te tonen
+
+// Functie om het pincode bevestigingsscherm verifier te tonen
 function goToPinConfirmationVerifier() {
   console.log("Navigating to pin confirmation screen...");
   rdfcvModal.style.display = 'none'; // Verberg de vraagmodal
@@ -1682,8 +1713,7 @@ function saveCsasShareAction(data) {
   saveCredentials();
 }
 
-
-// in de add card catalogus een vog ophalen
+// In de add card catalogus een vog ophalen
 document.addEventListener('DOMContentLoaded', function () {
   const cardButtons = document.querySelectorAll('.card-button');
 
@@ -1707,31 +1737,23 @@ document.addEventListener('DOMContentLoaded', function () {
           "t": "w"
         };
 
+        // Sla de data op voor later gebruik
+        window.currentRdfciData = vogData;
+
         // Vul het RDFCI modal met de gegevens
         populateRdfciModal(vogData);
 
         // Toon het RDFCI modal
         rdfciModal.style.display = 'flex';
 
+        // Pas rdfciAcceptButton.onclick aan
         rdfciAcceptButton.onclick = () => {
-          // Voeg de VOG gegevens toe aan de wallet
-          const timestamp = new Date().toLocaleString();
-
-          credentials.push({
-            name: vogData.name,
-            issuedBy: vogData.issuedBy,
-            actionTimestamp: timestamp,
-            isShareAction: false,
-            data: vogData
-          });
-
-          saveCredentials();
-
-          // Toon het issuer success-scherm
-          goToIssuerSuccessScreen(vogData.name, vogData.issuedBy);
-
-          // Sluit het RDFCI modal
+          // Toon het pincode bevestigingsscherm
+          pinConfirmationScreenIssuer.style.display = 'flex';
+          // Verberg de RDFCI-modal
           rdfciModal.style.display = 'none';
+          // Reset de pincode-invoer
+          resetPinInputs();
         };
 
         rdfciStopButton.onclick = () => {
@@ -1742,6 +1764,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 });
+
 
 // In de add card catalogus een diploma ophalen
 document.addEventListener('DOMContentLoaded', function () {
@@ -1766,31 +1789,73 @@ document.addEventListener('DOMContentLoaded', function () {
           "t": "w"
         };
 
+        // Sla de data op voor later gebruik
+        window.currentRdfciData = diplomaData;
+
         // Vul het RDFCI modal met de gegevens
         populateRdfciModal(diplomaData);
 
         // Toon het RDFCI modal
         rdfciModal.style.display = 'flex';
 
+        // Pas rdfciAcceptButton.onclick aan
         rdfciAcceptButton.onclick = () => {
-          // Voeg de diploma gegevens toe aan de wallet
-          const timestamp = new Date().toLocaleString();
+          // Toon het pincode bevestigingsscherm
+          pinConfirmationScreenIssuer.style.display = 'flex';
+          // Verberg de RDFCI-modal
+          rdfciModal.style.display = 'none';
+          // Reset de pincode-invoer
+          resetPinInputs();
+        };
 
-          credentials.push({
-            name: diplomaData.name,
-            issuedBy: diplomaData.issuedBy,
-            actionTimestamp: timestamp,
-            isShareAction: false,
-            data: diplomaData
-          });
-
-          saveCredentials();
-
-          // Toon het issuer success-scherm
-          goToIssuerSuccessScreen(diplomaData.name, diplomaData.issuedBy);
-
+        rdfciStopButton.onclick = () => {
           // Sluit het RDFCI modal
           rdfciModal.style.display = 'none';
+        };
+      });
+    }
+  });
+});
+
+// In de add card catalogus een diploma ophalen
+document.addEventListener('DOMContentLoaded', function () {
+  const cardButtons = document.querySelectorAll('.card-button');
+
+  cardButtons.forEach(button => {
+    const buttonTextElement = button.querySelector('.button-text');
+    if (buttonTextElement && buttonTextElement.textContent.includes("Rijbewijs")) {
+      button.addEventListener('click', function () {
+        // Diploma gegevens ophalen alsof deze via QR-code zijn gescand
+        const diplomaData = {
+          "Issuer": true,
+          "name": "Rijbewijs",
+          "issuedBy": "RDW",
+          "LEID": "NL_KVK_000000",
+          "Issued_Date": "2023-06-15",
+          "Issued_to_subject": "Willeke Liselotte de Bruijn",
+          "Type": "A, B, D1, T",
+          "rdfci": ["gn", "sn", "bd", "bsn"],
+          "a": "12t",
+          "t": "w"
+        };
+
+        // Sla de data op voor later gebruik
+        window.currentRdfciData = diplomaData;
+
+        // Vul het RDFCI modal met de gegevens
+        populateRdfciModal(diplomaData);
+
+        // Toon het RDFCI modal
+        rdfciModal.style.display = 'flex';
+
+        // Pas rdfciAcceptButton.onclick aan
+        rdfciAcceptButton.onclick = () => {
+          // Toon het pincode bevestigingsscherm
+          pinConfirmationScreenIssuer.style.display = 'flex';
+          // Verberg de RDFCI-modal
+          rdfciModal.style.display = 'none';
+          // Reset de pincode-invoer
+          resetPinInputs();
         };
 
         rdfciStopButton.onclick = () => {
@@ -2459,7 +2524,7 @@ function openMessageDetails(sender, message, datetime, messageType) {
               trustedContactsSection.style.display = 'none';
               const mockVerifierData = {
                   type: "verifier",
-                  requester: "Werkgever",
+                  requester: "Werkgever IPA-7",
                   reason: "Diploma delen voor aanmeldingsproces",
                   csas: [{ issuedBy: "DUO", name: "Diploma Verpleegkunde" }],
                   a: "12t"
@@ -2589,3 +2654,4 @@ function addMockMessageToTrustedContacts(sender, message, messageType) {
       console.error("Trusted Contacts sectie niet gevonden.");
   }
 }
+

@@ -504,6 +504,31 @@ p {
 
 
 
+#pin-confirmation-screen-issuer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    z-index: 1000;
+    padding: 20px;
+}
+
+#pin-confirmation-screen-issuer p {
+    text-align: center;
+    max-width: 100%;
+    margin-bottom: 20px;
+    font-weight: normal; /* p heeft een normaal lettergewicht */
+}
+
+
+
+
 
 
 #pin-confirmation-screen {
@@ -762,6 +787,8 @@ p {
     display: flex;
     justify-content: space-between;
     width: 90%;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 #see-activity-btn {
