@@ -249,6 +249,17 @@ function convertToStandardDate(dateString) {
   return `${year}-${month}-${day}T${timePart}`;
 }
 
+
+function parseDate(dateString) {
+  // Verwacht formaat: 'DD/MM/YYYY, HH:mm:ss'
+  let [datePart, timePart] = dateString.split(', ');
+  let [day, month, year] = datePart.split('/').map(Number);
+  let [hours, minutes, seconds] = timePart.split(':').map(Number);
+
+  // In JavaScript is de maand 0-gebaseerd: 0 = januari, 11 = december
+  return new Date(year, month - 1, day, hours, minutes, seconds);
+}
+
 function showActivities() {
   activitiesList.innerHTML = ''; // Leeg de lijst
 
@@ -270,14 +281,14 @@ function showActivities() {
 
   // Sorteer de activiteiten op datum en tijd (meest recente eerst)
   filteredActivities.sort((a, b) => {
-      let dateA = Date.parse(convertToStandardDate(a.actionTimestamp));
-      let dateB = Date.parse(convertToStandardDate(b.actionTimestamp));
-      return dateB - dateA;
+    let dateA = parseDate(a.actionTimestamp);
+    let dateB = parseDate(b.actionTimestamp);
+    return dateB - dateA;
   });
 
   // Voeg activiteiten toe aan de lijst
-  filteredActivities.reverse().forEach((cred) => {
-      let activityItem = document.createElement('li');
+  filteredActivities.forEach((cred) => {
+    let activityItem = document.createElement('li');
 
       if (cred.isShareAction) {
           // Verifier-actie
