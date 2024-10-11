@@ -250,15 +250,7 @@ function convertToStandardDate(dateString) {
 }
 
 
-function parseDate(dateString) {
-  // Verwacht formaat: 'DD/MM/YYYY, HH:mm:ss'
-  let [datePart, timePart] = dateString.split(', ');
-  let [day, month, year] = datePart.split('/').map(Number);
-  let [hours, minutes, seconds] = timePart.split(':').map(Number);
 
-  // In JavaScript is de maand 0-gebaseerd: 0 = januari, 11 = december
-  return new Date(year, month - 1, day, hours, minutes, seconds);
-}
 
 function showActivities() {
   activitiesList.innerHTML = ''; // Leeg de lijst
@@ -281,14 +273,14 @@ function showActivities() {
 
   // Sorteer de activiteiten op datum en tijd (meest recente eerst)
   filteredActivities.sort((a, b) => {
-    let dateA = parseDate(a.actionTimestamp);
-    let dateB = parseDate(b.actionTimestamp);
-    return dateB - dateA;
+      let dateA = Date.parse(convertToStandardDate(a.actionTimestamp));
+      let dateB = Date.parse(convertToStandardDate(b.actionTimestamp));
+      return dateB - dateA;
   });
 
   // Voeg activiteiten toe aan de lijst
-  filteredActivities.forEach((cred) => {
-    let activityItem = document.createElement('li');
+  filteredActivities.reverse().forEach((cred) => {
+      let activityItem = document.createElement('li');
 
       if (cred.isShareAction) {
           // Verifier-actie
@@ -2104,7 +2096,14 @@ function displayMachtigingen() {
   // Filter en toon alleen machtiging kaartjes
   const machtigingen = credentials.filter(cred => cred.type === 'mandate');
 
-  machtigingen.forEach((mandate, index) => {
+  // Sorteer de machtigingen op datum (meest recente eerst)
+  machtigingen.sort((a, b) => {
+    let dateA = Date.parse(convertToStandardDate(a.actionTimestamp));
+    let dateB = Date.parse(convertToStandardDate(b.actionTimestamp));
+    return dateB - dateA;
+});
+
+  machtigingen.reverse().forEach((mandate, index) => {
       const card = document.createElement('div');
       card.className = 'card';
 
@@ -2292,6 +2291,9 @@ function displayMachtigingen() {
 
  // Filter en toon alleen machtiging kaartjes
  const machtigingen = credentials.filter(cred => cred.type === 'mandate' && !cred.isActivity);
+
+
+ 
   machtigingen.forEach((mandate, index) => {
     const card = document.createElement('div');
     card.className = 'card';
