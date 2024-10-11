@@ -276,7 +276,7 @@ function showActivities() {
   });
 
   // Voeg activiteiten toe aan de lijst
-  filteredActivities.forEach((cred) => {
+  filteredActivities.reverse().forEach((cred) => {
       let activityItem = document.createElement('li');
 
       if (cred.isShareAction) {
