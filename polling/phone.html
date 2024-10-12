@@ -13,7 +13,7 @@
   <script>
     document.getElementById('sendMessageBtn').addEventListener('click', function() {
       // Stuur POST-verzoek naar de pc-pagina
-      fetch('https://eutw.nl/polling/pc.html?message=success', {
+      fetch('https://www.eutw.nl/polling/pc.html?message=success', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: 'success' })
