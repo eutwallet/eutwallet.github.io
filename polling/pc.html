@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PC-pagina - Ontvang het bericht</title>
+</head>
+<body>
+  <h1>Welkom op de PC-pagina</h1>
+  <p>We wachten op een bericht van de mobiele telefoon...</p>
+  <div id="messageDisplay"></div>
+
+  <script>
+    // Start polling elke 2 seconden
+    let pollingInterval = setInterval(function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const message = urlParams.get('message');
+
+      if (message === 'success') {
+        document.getElementById('messageDisplay').innerHTML = `
+          <h2>Bericht ontvangen van de mobiele telefoon!</h2>
+          <img src="https://placekitten.com/400/300" alt="Leuk kattenplaatje">
+        `;
+      }
+    }, 2000);
+
+    // Stop polling na 10 minuten (600.000 milliseconden)
+    setTimeout(function() {
+      clearInterval(pollingInterval);
+      console.log("Polling is gestopt na 10 minuten.");
+    }, 600000);  // 10 minuten in milliseconden
+  </script>
+</body>
+</html>

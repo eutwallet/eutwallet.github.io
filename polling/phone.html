@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mobiele Telefoon - Verzend een bericht</title>
+</head>
+<body>
+  <h1>Welkom op de mobiele pagina</h1>
+  <p>Klik op de knop om een bericht te sturen naar de pc-pagina.</p>
+  <button id="sendMessageBtn">Stuur bericht naar PC</button>
+
+  <script>
+    document.getElementById('sendMessageBtn').addEventListener('click', function() {
+      // Stuur POST-verzoek naar de pc-pagina
+      fetch('https://example.com/pc-page?message=success', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: 'success' })
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log("Bericht verzonden: ", data);
+      });
+    });
+  </script>
+</body>
+</html>
