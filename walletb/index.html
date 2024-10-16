@@ -64,9 +64,29 @@
   </div>
 
   <hr>
-  <div class="get-direct-attribute-title">Haal bewijzen direct op bij organisaties zonder QR</div>
+ </section>
 
-  <!-- Toegevoegde knoppen onder de QR-code knop -->
+
+ <!-- *** Card Catalogue Sectie *** -->
+<section id="card-catalogue" style="display: none;">
+  <div class="details-header">
+    <!-- Terug-knop linksbovenin -->
+    <button class="close-btn" id="close-card-catalogue">
+      <i class="fas fa-arrow-left"></i>
+    </button>
+  </div>
+
+  <!-- Titel van de sectie -->
+  <div id="catalogue-title">
+    <h3>Catalogus ophalen digitale bewijzen</h3>
+  </div>
+  <div class="divider"></div>
+<!-- Toggle knop voor weergave-wisseling -->
+<button id="toggle-view-button" class="toggle-view-button">
+  <i class="fas fa-building"></i> Weergave per organisatie
+</button>
+
+  <!-- Button list voor de kaarten -->  
   <div class="button-list">
 <!-- Eerste knop: National ID -->
 <button class="card-button checked">
@@ -129,13 +149,6 @@
 </button>
 
 </div>
-
-<!-- Toggle knop voor weergave-wisseling -->
-<button id="toggle-view-button" class="toggle-view-button">
-  <i class="fas fa-building"></i> Weergave per organisatie
-</button>
-
-
 
 <div id="section-organisation-headers" class="section-organisation-headers" style="display: none;">
 
@@ -343,39 +356,54 @@
 
 
 </div>
-
-
 </section>
 
 
   <!-- *** Wallet-scherm *** -->
-  <section id="wallet-screen" style="display: none;">
-
- 
-<!-- Zwevende QR-scan/onderteken knop -->
-<button class="floating-qr-button" id="floating-qr-button">
-  <i class="fas fa-plus"></i>
-</button>
+<section id="wallet-screen" style="display: none;">
 
 <button id="settings-button" class="settings-button">
   <i class="fas fa-ellipsis-v"></i>
 </button>
 
 <section id="wallet-header" class="header-screen">
-  <h3>Mijn digitale bewijzen</h3>
+  <h3>Mijn overzicht</h3>
   <div class="title-divider"></div>
-</section>
 
+<!-- Container voor knoppen naast elkaar -->
+<div class="top-button-container-start-screen">
+  <!-- Klikbare catalogus sectie -->
+  <a href="#" id="open-card-catalogue" class="catalogue-btn">
+    <div class="circle-btn">
+      <i class="far fa-folder-open"></i> <!-- FontAwesome map-icoon -->
+    </div>
+    <span class="catalogue-text">Catalogus</span>
+  </a>
 
-<!-- *** Standaard Kaartjes *** -->
-<section class="default-cards">
+  
+  <!-- QR-scan knop -->
+  <a href="#" id="qr-scan-button" class="catalogue-btn">
+    <div class="circle-btn">
+      <i class="fas fa-qrcode"></i> <!-- QR-code icoon -->
+    </div>
+    <span class="catalogue-text">QR-scan</span>
+  </a>
+</div>
+  
+<div id="open-current-cards" class="clickable-section">
+  <i class="fas fa-wallet"></i> <!-- FA-icoon voor een wallet -->
+  <h3>Mijn digitale bewijzen</h3>
+</div>
 
- 
-</section>
+<div id="open-current-cards" class="clickable-section">
+  <i class="fas fa-comments"></i>
+  <h3>Mijn berichten</h3>
+</div>
 
-<!-- *** Dynamische Kaartjes *** -->
-<section class="wallet-grid" id="wallet-grid">
-  <!-- Dynamische kaartjes zullen hier worden toegevoegd -->
+<div id="open-current-cards" class="clickable-section">
+<i class="fas fa-key"></i>
+  <h3>Mijn machtigingen</h3>
+</div>
 </section>
 
 <!-- *** Menu Scherm *** -->
@@ -392,12 +420,29 @@
   <button id="back-menu-btn" class="back-btn">← Terug</button>
 </div>
 
+</section>
 
+<section id="current-cards" style="display: none;">
+  <div class="details-header">
+    <!-- Terug-knop linksbovenin -->
+    <button class="close-btn" id="close-current-cards"> 
+      <i class="fas fa-arrow-left"></i>
+    </button>
+  </div>
+  <div id="current-cards-title"> 
+    <h3>Mijn digitale bewijzen</h3> 
+  </div>
+  <div class="divider"></div>
+  
+  <!-- Dynamische Kaartjes -->
+  <section class="wallet-grid" id="wallet-grid">
+    <!-- Dynamische kaartjes zullen hier worden toegevoegd -->
+  </section>
 </section>
 
 
-    <!-- *** Details Weergave voor Kaartjes *** -->
-    <div id="details">
+<!-- *** Details Weergave voor Kaartjes *** -->
+<div id="details">
       <div class="details-header">
         <button class="close-btn" id="close-details">
           <i class="fas fa-arrow-left"></i>
@@ -409,7 +454,7 @@
       <h3 id="details-title"></h3>
       <div class="divider"></div>
       <div id="details-content"></div>
-    </div>
+</div>
 
  
 

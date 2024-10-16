@@ -2,7 +2,7 @@
 const scanButton = document.getElementById('scan-button');
 const closeScanButton = document.getElementById('close-scan-button');
 const readerDiv = document.getElementById('reader');
-const floatingQrButton = document.getElementById('floating-qr-button');
+const floatingQrButton = document.getElementById('qr-scan-button');
 const addCardScreen = document.getElementById('add-card-screen');
 
 // *** Wallet Elementen ***
@@ -127,6 +127,18 @@ const notificationBadge = document.getElementById('notification-badge');
 const settingsButton = document.getElementById('settings-button');
 const instellingenSection = document.getElementById('instellingen-section');
 const closeSettingsBtn = document.getElementById('close-settings');
+
+
+// *** Elementen card catalogue ***
+const openCardCatalogueBtn = document.getElementById('open-card-catalogue');
+const cardCatalogue = document.getElementById('card-catalogue');
+const closeCardCatalogueBtn = document.getElementById('close-card-catalogue');
+
+
+// Elementen current cards
+const openCurrentCardsBtn = document.getElementById('open-current-cards');
+const currentCardsSection = document.getElementById('current-cards');
+const closeCurrentCardsBtn = document.getElementById('close-current-cards');
 
 
 const fieldMapping = {
@@ -2668,3 +2680,30 @@ function addMockMessageToTrustedContacts(sender, message, messageType) {
   }
 }
 
+// Functie om de card-catalogue te openen en de wallet te verbergen
+openCardCatalogueBtn.addEventListener('click', () => {
+  walletScreen.style.display = 'none';     // Verberg het wallet-scherm
+  cardCatalogue.style.display = 'block';   // Toon het card-catalogue scherm
+  bottomNav.style.display = 'none';        // Verberg de bottom-nav
+});
+
+// Functie om terug te gaan van card-catalogue naar het wallet-scherm
+closeCardCatalogueBtn.addEventListener('click', () => {
+  cardCatalogue.style.display = 'none';    // Verberg het card-catalogue scherm
+  walletScreen.style.display = 'block';    // Toon het wallet-scherm opnieuw
+  bottomNav.style.display = 'flex';        // Toon de bottom-nav opnieuw
+});
+
+// Event listener om 'Mijn digitale bewijzen' te openen
+openCurrentCardsBtn.addEventListener('click', function() {
+  currentCardsSection.style.display = 'flex';  // Toon 'Mijn digitale bewijzen' sectie
+  walletScreen.style.display = 'none';  // Verberg het wallet-scherm
+  bottomNav.style.display = 'none';  // Verberg de bottom-nav
+});
+
+// Event listener voor de terug-knop
+closeCurrentCardsBtn.addEventListener('click', function() {
+  currentCardsSection.style.display = 'none';  // Verberg de 'Mijn digitale bewijzen' sectie
+  walletScreen.style.display = 'block';  // Toon het wallet-scherm
+  bottomNav.style.display = 'flex';  // Toon de bottom-nav
+});
