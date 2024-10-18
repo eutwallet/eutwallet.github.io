@@ -758,6 +758,16 @@ p {
     left: 10px;
 }
 
+/* Zoekbalk styling */
+.search-bar {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
 /* *** Success-scherm Stijlen *** */
 #success-screen {
     display: none;
@@ -1193,9 +1203,10 @@ p {
 
 /* Stijl voor de weergave-wisselknop */
 .toggle-view-button {
-    background-color: #0072C6;
+    background-color: #4a90e2;;
     color: white;
     border: none;
+    margin-top: 20px;
     padding: 15px;
     border-radius: 5px;
     font-size: 16px;
@@ -1721,6 +1732,7 @@ p {
     border-radius: 5px;
     cursor: pointer;
     margin-top: 20px;
+    text-decoration: none;
 }
 
 
@@ -1804,8 +1816,20 @@ top: 0;
 }
 #catalogue-title {
     margin-top: 60px;
-    /* margin-bottom: 40px; */
-    margin-left: 15px;
+    margin-bottom: 10px;
+    margin-left: 15px; 
+}
+
+#catalogue-title h3 {
+   
+    margin-bottom: 10px;
+}
+
+.button-list {
+    margin-top: 40px;
+}
+#section-organisation-headers {
+margin-top: 40px;
 }
 
 

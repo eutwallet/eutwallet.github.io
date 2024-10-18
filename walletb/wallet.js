@@ -522,6 +522,7 @@ function saveCredentials() {
 function showDetails(credential, index) {
   // Verberg het wallet-scherm
   document.getElementById('wallet-screen').style.display = 'none';
+  currentCardsSection.style.display = 'none';  
   bottomNav.style.display = 'none';
 
   // Toon de detailsweergave
@@ -548,8 +549,8 @@ function showDetails(credential, index) {
   // Sluit details weergave (Terug-knop)
   closeDetailsBtn.onclick = () => {
     detailsView.style.display = 'none';
-    document.getElementById('wallet-screen').style.display = 'block';
-    bottomNav.style.display = 'flex';
+    currentCardsSection.style.display = 'flex';  // Toon 'Mijn digitale bewijzen' sectie
+    
   };
 
   // Verwijderknop tonen of verbergen op basis van het type kaartje
@@ -560,8 +561,8 @@ function showDetails(credential, index) {
       saveCredentials();
       displayCredentials();
       detailsView.style.display = 'none';
-      document.getElementById('wallet-screen').style.display = 'block';
-      bottomNav.style.display = 'flex';
+      currentCardsSection.style.display = 'flex';  // Toon 'Mijn digitale bewijzen' sectie
+      
     };
   } else {
     deleteDetailsBtn.style.display = 'none';
@@ -2744,4 +2745,21 @@ closeCurrentCardsBtn.addEventListener('click', function() {
   currentCardsSection.style.display = 'none';  // Verberg de 'Mijn digitale bewijzen' sectie
   walletScreen.style.display = 'block';  // Toon het wallet-scherm
   bottomNav.style.display = 'flex';  // Toon de bottom-nav
+});
+
+// Zoekbalk functionaliteit bij demostarten
+const searchInput = document.getElementById('search-input');
+const demoLinks = document.querySelectorAll('.demo-button');
+
+searchInput.addEventListener('input', function() {
+  const filter = searchInput.value.toLowerCase();
+
+  demoLinks.forEach(link => {
+    const text = link.textContent.toLowerCase();
+    if (text.includes(filter)) {
+      link.style.display = 'block';
+    } else {
+      link.style.display = 'none';
+    }
+  });
 });
