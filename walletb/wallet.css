@@ -1682,14 +1682,13 @@ p {
 }
 
 .notification-badge {
-    position: absolute;
-    top: -8px; /* Plaats het iets boven het "Contacten"-icoon */
-    right: 15px; /* Plaats het aan de rechterkant van het icoon */
+    position: relative;
+    margin-left: 20px;
     background-color: #ff3b30; /* Rood voor notificaties */
     color: white;
     border-radius: 50%;
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1702,7 +1701,7 @@ p {
     color: white; /* Behoud de oorspronkelijke kleur */
 }
 
-.settings-button {
+/* .settings-button {
     position: absolute;
     right: calc((100% - 400px) / 2 + 20px);
     top: 10px;
@@ -1712,7 +1711,7 @@ p {
     color: grey;
     cursor: pointer;
     z-index: 100;
-}
+} */
 
 .demo-button {
     background-color: #2681cc;

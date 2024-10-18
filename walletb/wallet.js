@@ -2101,6 +2101,7 @@ function processMandate(data) {
 function displayMachtigingen() {
   const machtigingSection = document.getElementById('machtiging-section');
   const machtigingGrid = document.getElementById('machtiging-grid'); // Zorg ervoor dat er een container is voor machtigingen
+ 
 
   // Leeg de grid
   machtigingGrid.innerHTML = '';
@@ -2287,13 +2288,36 @@ function showMandateDetails(mandate) {
 
   document.getElementById('mandate-details-content').innerHTML = detailsHTML;
 
-  // Voeg de functionaliteit toe voor de terugknop
+  // Voeg de functionaliteit toe voor de terugknop van de details
   document.getElementById('close-details-mandate').onclick = () => {
     mandateDetailsView.style.display = 'none';
     machtigingSection.style.display = 'flex'; // Ga terug naar de machtigingensectie
     bottomNav.style.display = 'flex'; // Toon de bottom-nav weer
   };
 }
+
+
+  // Voeg de functionaliteit toe voor de terugknop van de machtiging sectie
+  document.getElementById('close-machtiging-section').onclick = () => {
+   
+    machtigingSection.style.display = 'none'; // 
+    walletScreen.style.display = 'block';
+    bottomNav.style.display = 'flex'; // Toon de bottom-nav weer
+    overviewNavbarItem.classList.add('active');
+  };
+
+
+
+    // Voeg de functionaliteit toe voor de terugknop van de contacten sectie
+    document.getElementById('close-trusted-contacts-section').onclick = () => {
+   
+      trustedContactsSection.style.display = 'none';
+      walletScreen.style.display = 'block';
+      bottomNav.style.display = 'flex'; // Toon de bottom-nav weer
+      overviewNavbarItem.classList.add('active');
+    };
+  
+  
 
 
 // Pas de displayMachtigingen functie aan om de details te tonen bij klikken
@@ -2364,6 +2388,7 @@ contactsNavbarItem.addEventListener('click', () => {
   activitiesSection.style.display = 'none';
   instellingenSection.style.display = 'none';
   machtigingSection.style.display = 'none';
+  bottomNav.style.display = 'none';
 
   // Toon het trusted contacts scherm
   trustedContactsSection.style.display = 'block';
@@ -2385,6 +2410,7 @@ machtigingNavbarItem.addEventListener('click', () => {
 
   // Toon het machtigingen-scherm
   machtigingSection.style.display = 'flex';
+  bottomNav.style.display = 'none';
 
   // Zorg ervoor dat de andere navbar-items niet meer actief zijn
   document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
@@ -2398,6 +2424,10 @@ machtigingNavbarItem.addEventListener('click', () => {
 settingsButton.addEventListener('click', () => {
   // Verberg het wallet-overzicht
   walletScreen.style.display = 'none';
+  bottomNav.style.display = 'none';
+  activitiesSection.style.display = 'none';
+  trustedContactsSection.style.display = 'none';
+  machtigingSection.style.display = 'none';
 
   // Toon het instellingen-scherm
   instellingenSection.style.display = 'flex';
@@ -2406,8 +2436,13 @@ settingsButton.addEventListener('click', () => {
 closeSettingsBtn.addEventListener('click', () => {
   // Verberg het instellingen-scherm
   instellingenSection.style.display = 'none';
+  activitiesSection.style.display = 'none';
+  trustedContactsSection.style.display = 'none';
+  instellingenSection.style.display = 'none';
+  machtigingSection.style.display = 'none';
 
   // Toon het wallet-scherm
+  bottomNav.style.display = 'flex';
   walletScreen.style.display = 'block';
 });
 
@@ -2458,6 +2493,9 @@ IPA5MessageButton.addEventListener('click', () => {
 
     // Toon het wallet-scherm
     walletScreen.style.display = 'block';
+
+     // Toon de bottom-nav weer
+    bottomNav.style.display = 'flex';
 });
 
 const IPA6MessageButton = document.getElementById('IPA-6-message-button');
