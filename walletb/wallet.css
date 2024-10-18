@@ -1643,8 +1643,8 @@ p {
 
   .trusted-contacts-header h3 {
     text-align: left;
-    margin-top: 20px;
-    margin-bottom: 20px;
+   /*  margin-top: 20px;
+    margin-bottom: 20px; */
   }
   
   .messages-grid {
