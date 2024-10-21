@@ -556,7 +556,7 @@ function showDetails(credential, index) {
   // Controleer of het kaartje "Foto" is
   if (credential.name === 'Foto') {
     // Voeg de afbeelding toe
-    detailsContent.innerHTML += `<img src="${credential.data['Afbeelding']}" alt="Pasfoto" style="width: 100%; max-width: 300px; height: auto; margin-bottom: 20px;">`;
+    detailsContent.innerHTML += `<img src="${credential.data['Foto']}" alt="Pasfoto" style="width: 100%; max-width: 300px; height: auto; margin-bottom: 20px;">`;
 
     // Voeg de lengte toe
     detailsContent.innerHTML += `<p><strong>Lengte:</strong> ${credential.data['Lengte']}</p>`;
