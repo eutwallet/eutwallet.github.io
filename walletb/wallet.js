@@ -383,6 +383,12 @@ const cardStyles = {
     textColor: '#52202e'
   },
 
+  'foto': {
+    iconClass: 'fas fa-camera', // Gebruik het gewenste FontAwesome icoon
+    iconColor: '#FFD700', // Gouden kleur voor het icoon
+    textColor: '#333' // Tekstkleur
+  },
+
   'diploma verpleegkunde': {
   imagePath: 'duologo.svg',  // Path naar je diploma-afbeelding
   iconColor: null,
@@ -486,7 +492,17 @@ function loadDefaultCredentials() {
         'Postcode': '2595 AN',
         'Plaatsnaam': 'Den Haag'
       }
-    }
+    },
+      // Nieuw kaartje "Foto" toevoegen
+      {
+        name: 'Foto',
+        issuedBy: 'Nederlandse overheid',
+        isShareAction: false,
+        data: {
+          'Afbeelding': 'pasfoto.jpg', // Zorg dat deze afbeelding beschikbaar is in je projectmap
+          'Lengte': '1,70 m'
+        }
+      }
   ];
 
   defaultCards.forEach(defaultCard => {
@@ -535,8 +551,15 @@ function showDetails(credential, index) {
   // Leeg de inhoud en vul deze met de gegevens van het kaartje
   detailsContent.innerHTML = '';
 
-  // Controleer of er data aanwezig is in het credential
-  if (credential.data) {
+  // Controleer of het kaartje "Foto" is
+  if (credential.name === 'Foto') {
+    // Voeg de afbeelding toe
+    detailsContent.innerHTML += `<img src="${credential.data['Afbeelding']}" alt="Pasfoto" style="width: 100%; max-width: 300px; height: auto; margin-bottom: 20px;">`;
+
+    // Voeg de lengte toe
+    detailsContent.innerHTML += `<p><strong>Lengte:</strong> ${credential.data['Lengte']}</p>`;
+  } else if (credential.data) {
+    // Voor andere kaartjes, toon de gegevens zoals normaal
     for (const key in credential.data) {
       if (credential.data.hasOwnProperty(key)) {
         detailsContent.innerHTML += `<p><strong>${key}:</strong> ${credential.data[key]}</p>`;
@@ -545,6 +568,7 @@ function showDetails(credential, index) {
   } else {
     detailsContent.innerHTML = '<p>Geen details beschikbaar.</p>';
   }
+
 
   // Sluit details weergave (Terug-knop)
   closeDetailsBtn.onclick = () => {
