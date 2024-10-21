@@ -154,6 +154,8 @@ const fieldMapping = {
   BKR: 'Bureau Krediet Registratie (BKR)',
   BD: 'Belastingdienst',
   SVB: 'Sociale Verzekeringsbank (SVB)',
+  ln: 'Lengte',          
+  ph: 'Foto',   
   LEID: 'Legal entity nummer',
   Issued_Date: 'Uitgiftedatum',
   Issued_to_subject: 'Uitgegeven aan',
@@ -499,7 +501,7 @@ function loadDefaultCredentials() {
         issuedBy: 'Nederlandse overheid',
         isShareAction: false,
         data: {
-          'Afbeelding': 'pasfoto.jpg', // Zorg dat deze afbeelding beschikbaar is in je projectmap
+          'Foto': 'pasfoto.jpg', // Zorg dat deze afbeelding beschikbaar is in je projectmap
           'Lengte': '1,70 m'
         }
       }
@@ -1003,7 +1005,17 @@ function populateRdfciModal(data) {
 
       const valueDiv = document.createElement('div');
       valueDiv.className = 'value';
-      valueDiv.textContent = value;
+      if (fieldName === 'Foto') {
+        // Als het veld 'Foto' is, voeg dan de afbeelding toe
+        const img = document.createElement('img');
+        img.src = value;
+        img.alt = 'Foto';
+        img.style.width = '100%'; // Pas de grootte naar wens aan
+        valueDiv.appendChild(img);
+      } else {
+        // Voor andere velden, toon de tekstwaarde
+        valueDiv.textContent = value || 'Niet beschikbaar';
+      }
 
       detailRow.appendChild(labelDiv);
       detailRow.appendChild(valueDiv);
@@ -1096,7 +1108,17 @@ function populateRdfciModal(data) {
 
       const valueDiv = document.createElement('div');
       valueDiv.className = 'value';
-      valueDiv.textContent = value;
+      if (fieldName === 'Foto') {
+        // Als het veld 'Foto' is, voeg dan de afbeelding toe
+        const img = document.createElement('img');
+        img.src = value;
+        img.alt = 'Foto';
+        img.style.width = '100%'; // Pas de grootte naar wens aan
+        valueDiv.appendChild(img);
+      } else {
+        // Voor andere velden, toon de tekstwaarde
+        valueDiv.textContent = value || 'Niet beschikbaar';
+      }
 
       detailRow.appendChild(labelDiv);
       detailRow.appendChild(valueDiv);
@@ -1277,8 +1299,17 @@ function populateRdfcvModal(data) {
 
           const valueDiv = document.createElement('div');
           valueDiv.className = 'value';
-          valueDiv.textContent = cardInfo.data[key];
-
+          if (fieldName === 'Foto') {
+            // Als het veld 'Foto' is, voeg dan de afbeelding toe
+            const img = document.createElement('img');
+            img.src = value;
+            img.alt = 'Foto';
+            img.style.width = '100%'; // Pas de grootte naar wens aan
+            valueDiv.appendChild(img);
+          } else {
+            // Voor andere velden, toon de tekstwaarde
+            valueDiv.textContent = value || 'Niet beschikbaar';
+          }
           // Voeg label en waarde toe aan de rij
           detailRow.appendChild(labelDiv);
           detailRow.appendChild(valueDiv);
@@ -1301,7 +1332,17 @@ function populateRdfcvModal(data) {
 
         const valueDiv = document.createElement('div');
         valueDiv.className = 'value';
-        valueDiv.textContent = value || 'Niet beschikbaar';
+        if (fieldName === 'Foto') {
+          // Als het veld 'Foto' is, voeg dan de afbeelding toe
+          const img = document.createElement('img');
+          img.src = value;
+          img.alt = 'Foto';
+          img.style.width = '100%'; // Pas de grootte naar wens aan
+          valueDiv.appendChild(img);
+        } else {
+          // Voor andere velden, toon de tekstwaarde
+          valueDiv.textContent = value || 'Niet beschikbaar';
+        }
 
         // Voeg label en waarde toe aan de rij
         detailRow.appendChild(labelDiv);
