@@ -9,8 +9,8 @@
 </head>
 <body>
 
-  <!-- *** Welkomstscherm *** -->
-  <section id="welcome-screen">
+<!-- *** Welkomstscherm *** -->
+<section id="welcome-screen">
     <div class="welcome-text">
         <h1>Welkom bij EUTW</h1>
         <p>Een demonstratieomgeving die de inzet van digitale bewijzen voor betrouwbaarheid, gemak en efficiëntie in het digitale verkeer demonstreert</p>
@@ -23,10 +23,10 @@
         </div>
     </div>
     <div><button id="next-welcome">Volgende</button></div>
-  </section>
+</section>
 
-  <!-- *** Pincode-inlog-scherm *** -->
-  <section id="pin-inlog-screen" style="display: none;">
+<!-- *** Pincode-inlog-scherm *** -->
+<section id="pin-inlog-screen" style="display: none;">
     <h2>Voer je toegangscode in</h2>
     <div class="pin-input">
         <input type="password" maxlength="1" class="pin-box" inputmode="numeric" pattern="[0-9]*">
@@ -38,35 +38,110 @@
     </div>
    <p>Vanwege demonstratiedoeleinden is 6 maal een 0 of ontgrendelen zonder invoer ook mogelijk </p>
     <button id="submit-pin">Ontgrendelen</button>
-  </section>
+</section>
 
 
+  <!-- *** Wallet-scherm *** -->
+<section id="wallet-screen" style="display: none;">
+<section id="wallet-header" class="header-screen">
+  <h3>Mijn overzicht</h3>
+  <div class="title-divider"></div>
 
-<!-- Scan scherm wordt pas zichtbaar als de QR-scan knop wordt ingedrukt -->
-<section class="add-card-screen" id="add-card-screen" style="display: none;">
+<!-- Container voor knoppen naast elkaar -->
+<div class="top-button-container-start-screen">
+  <!-- Klikbare catalogus sectie -->
+  <a href="#cardcatalogue" id="open-card-catalogue" class="catalogue-btn">
+    <div class="circle-btn">
+      <i class="far fa-folder-open"></i> <!-- FontAwesome map-icoon -->
+    </div>
+    <span class="catalogue-text">Catalogus</span>
+  </a>
+
+  
+  <!-- QR-scan knop -->
+  <a href="#QR" id="qr-scan-button" class="catalogue-btn">
+    <div class="circle-btn">
+      <i class="fas fa-qrcode"></i> <!-- QR-code icoon -->
+    </div>
+    <span class="catalogue-text">QR-scan</span>
+  </a>
+</div>
+  
+<!-- Clickable Sections -->
+<div href="#currentcards" id="open-current-cards" class="clickable-section">
+  <i class="fas fa-wallet"></i> <!-- FA-icoon voor een wallet -->
+  <h3>Mijn digitale bewijzen</h3>
+</div>
+
+<div href="#messages" id="contacts-navbar-item" class="clickable-section">
+  <i class="fas fa-envelope"></i>
+  <h3>Mijn berichten</h3>
+  <span id="notification-badge" class="notification-badge" style="display: none;"></span>
+</div>
+
+<div href="#mandates" id="machtigingen-navbar-item" class="clickable-section">
+<i class="fas fa-key"></i>
+  <h3>Mijn machtigingen</h3>
+</div>
+</section>
+
+<!-- *** Menu Scherm *** -->
+<div id="menu-screen" class="menu-screen" style="display: none;">
+  <h2>Menu</h2>
+  <ul class="menu-list">
+      <li id="help-option"><i class="fas fa-question-circle"></i> <span>Hulp nodig?</span><span>→</span></li>
+      <li id="activities-option"><i class="fas fa-clock"></i> <span>Activiteiten</span><span>→</span></li>
+      <li id="settings-option"><i class="fas fa-cog"></i> <span>Instellingen</span><span>→</span></li>
+      <li id="feedback-option"><i class="fas fa-comment-dots"></i> <span>Geef feedback</span><span>→</span></li>
+      <li id="about-option"><i class="fas fa-info-circle"></i> <span>Over deze app</span><span>→</span></li>
+  </ul>
+  <button id="logout-btn" class="menu-logout"><i class="fas fa-sign-out-alt"></i> Uitloggen</button>
+  <button id="back-menu-btn" class="back-btn">← Terug</button>
+</div>
+
+</section>
+
+<!-- *** Navigatiebalk onder*** -->
+<nav class="bottom-nav" style="display: none;">
+  <a href="#overview" class="nav-item active" id="overview-navbar-item">
+    <i class="fas fa-home"></i>
+    <span>Overzicht</span>
+  </a>
+  <a href="#activities" class="nav-item" id="activities-navbar-item">
+    <i class="fas fa-exchange-alt"></i>
+    <span>Activiteiten</span>
+  </a>
+
+  <a  href="#demostarters" class="nav-item" id="settings-button" >
+    <i class="fas fa-play"></i>
+    <span>Demo starters</span>
+  </a>
+</nav>
+
+ <!-- *** Card Catalogue Sectie *** -->
+ <section id="card-catalogue" style="display: none;">
   <div class="details-header">
-    <button class="close-btn" id="close-add-card">
+    <!-- Terug-knop linksbovenin -->
+    <button class="close-btn" id="close-card-catalogue">
       <i class="fas fa-arrow-left"></i>
     </button>
+
   </div>
 
-  <div class="scan-section" id="scan-section">
-    <div class="scan-container">
-      <div class="scan-btn-container">
-        <button class="scan-btn" id="scan-button">
-          <i class="fas fa-qrcode qr-logo"></i> <!-- Gebruik bestaand FontAwesome QR-code icoon -->
-        </button>
+      <!-- Titel van de sectie -->
+      <div id="catalogue-title">
+        <h3>Catalogus ophalen digitale bewijzen</h3>
+        <p> In onderstaande catelogus kun je direct digitale bewijzen ophalen bij verschillende organisaties</p>
       </div>
-      <div class="scan-text">Scan QR code</div>
-    </div>
-    <div id="reader" style="display: none;"></div> <!-- Camerascherm -->
-    <button class="close-scan-btn" id="close-scan-button" style="display: none;">Scannen afsluiten</button>
-  </div>
+ 
+ 
+  <!-- Toggle knop voor weergave-wisseling -->
+<button id="toggle-view-button" class="toggle-view-button">
+  <i class="fas fa-building"></i> Weergave per organisatie
+</button>
+<div class="divider"></div>
 
-  <hr>
-  <div class="get-direct-attribute-title">Haal bewijzen direct op bij organisaties zonder QR</div>
-
-  <!-- Toegevoegde knoppen onder de QR-code knop -->
+  <!-- Button list voor de kaarten -->  
   <div class="button-list">
 <!-- Eerste knop: National ID -->
 <button class="card-button checked">
@@ -129,13 +204,6 @@
 </button>
 
 </div>
-
-<!-- Toggle knop voor weergave-wisseling -->
-<button id="toggle-view-button" class="toggle-view-button">
-  <i class="fas fa-building"></i> Weergave per organisatie
-</button>
-
-
 
 <div id="section-organisation-headers" class="section-organisation-headers" style="display: none;">
 
@@ -343,61 +411,55 @@
 
 
 </div>
+</section>
+
+<!-- Scherm QR-scan -->
+<section class="add-card-screen" id="add-card-screen" style="display: none;">
+  <div class="details-header">
+    <button class="close-btn" id="close-add-card">
+      <i class="fas fa-arrow-left"></i>
+    </button>
+  </div>
+
+  <div class="scan-section" id="scan-section">
+    <div class="scan-container">
+      <div class="scan-btn-container">
+        <button class="scan-btn" id="scan-button">
+          <i class="fas fa-qrcode qr-logo"></i> <!-- Gebruik bestaand FontAwesome QR-code icoon -->
+        </button>
+      </div>
+      <div class="scan-text">Scan QR code</div>
+    </div>
+    <div id="reader" style="display: none;"></div> <!-- Camerascherm -->
+    <button class="close-scan-btn" id="close-scan-button" style="display: none;">Scannen afsluiten</button>
+  </div>
+
+  <hr>
+ </section>
 
 
+<!-- *** Mijn digitale bewijzen (kaartjes)-scherm *** -->
+<section id="current-cards" style="display: none;">
+  <div class="details-header">
+    <!-- Terug-knop linksbovenin -->
+    <button class="close-btn" id="close-current-cards"> 
+      <i class="fas fa-arrow-left"></i>
+    </button>
+  </div>
+  <div id="current-cards-title"> 
+    <h3>Mijn digitale bewijzen</h3> 
+  </div>
+  <div class="divider"></div>
+  
+  <!-- Dynamische Kaartjes -->
+  <section class="wallet-grid" id="wallet-grid">
+    <!-- Dynamische kaartjes zullen hier worden toegevoegd -->
+  </section>
 </section>
 
 
-  <!-- *** Wallet-scherm *** -->
-  <section id="wallet-screen" style="display: none;">
-
- 
-<!-- Zwevende QR-scan/onderteken knop -->
-<button class="floating-qr-button" id="floating-qr-button">
-  <i class="fas fa-plus"></i>
-</button>
-
-<button id="settings-button" class="settings-button">
-  <i class="fas fa-ellipsis-v"></i>
-</button>
-
-<section id="wallet-header" class="header-screen">
-  <h3>Mijn digitale bewijzen</h3>
-  <div class="title-divider"></div>
-</section>
-
-
-<!-- *** Standaard Kaartjes *** -->
-<section class="default-cards">
-
- 
-</section>
-
-<!-- *** Dynamische Kaartjes *** -->
-<section class="wallet-grid" id="wallet-grid">
-  <!-- Dynamische kaartjes zullen hier worden toegevoegd -->
-</section>
-
-<!-- *** Menu Scherm *** -->
-<div id="menu-screen" class="menu-screen" style="display: none;">
-  <h2>Menu</h2>
-  <ul class="menu-list">
-      <li id="help-option"><i class="fas fa-question-circle"></i> <span>Hulp nodig?</span><span>→</span></li>
-      <li id="activities-option"><i class="fas fa-clock"></i> <span>Activiteiten</span><span>→</span></li>
-      <li id="settings-option"><i class="fas fa-cog"></i> <span>Instellingen</span><span>→</span></li>
-      <li id="feedback-option"><i class="fas fa-comment-dots"></i> <span>Geef feedback</span><span>→</span></li>
-      <li id="about-option"><i class="fas fa-info-circle"></i> <span>Over deze app</span><span>→</span></li>
-  </ul>
-  <button id="logout-btn" class="menu-logout"><i class="fas fa-sign-out-alt"></i> Uitloggen</button>
-  <button id="back-menu-btn" class="back-btn">← Terug</button>
-</div>
-
-
-</section>
-
-
-    <!-- *** Details Weergave voor Kaartjes *** -->
-    <div id="details">
+<!-- *** Details Weergave voor kaartjes *** -->
+<div id="details">
       <div class="details-header">
         <button class="close-btn" id="close-details">
           <i class="fas fa-arrow-left"></i>
@@ -409,35 +471,15 @@
       <h3 id="details-title"></h3>
       <div class="divider"></div>
       <div id="details-content"></div>
-    </div>
-
- 
+</div>
 
 
-<!-- *** Navigatiebalk *** -->
-<nav class="bottom-nav" style="display: none;">
-  <a href="#" class="nav-item active" id="overview-navbar-item">
-    <i class="fas fa-home"></i>
-    <span>Overzicht</span>
-  </a>
-  <a href="#" class="nav-item" id="activities-navbar-item">
-    <i class="fas fa-exchange-alt"></i>
-    <span>Activiteiten</span>
-  </a>
-  <a href="#" class="nav-item" id="contacts-navbar-item">
-    <i class="fas fa-comments"></i>
-    <span>Berichten</span>
-    <span id="notification-badge" class="notification-badge" style="display: none;"></span>
-  </a>
-  <a href="#" class="nav-item" id="machtigingen-navbar-item">
-    <i class="fas fa-key"></i>
-    <span>Machtigingen</span>
-  </a>
-</nav>
-
-<!-- Nieuwe Trusted Contacts sectie -->
+<!-- Berichten (Trusted Contacts) sectie -->
 <section id="trusted-contacts-section" style="display: none;">
- 
+  <div class="trusted-contacts-header">
+    <button class="close-btn" id="close-trusted-contacts-section">
+      <i class="fas fa-arrow-left"></i>
+    </button>
   <section class="header-screen">
     <h3>Mijn berichten</h3>
     <div class="title-divider"></div>
@@ -475,6 +517,11 @@
 <!-- *** machtigingen Sectie *** -->
 <section id="machtiging-section" class="machtiging-section" style="display: none;">
   <section class="header-screen">
+    <div class="machtiging-header">
+    <button class="close-btn" id="close-machtiging-section">
+      <i class="fas fa-arrow-left"></i>
+    </button>
+  </div>
     <h3>Mijn machtigingen</h3>
     <div class="title-divider"></div>
   </section>
@@ -499,22 +546,25 @@
 </div>
 
 
-<!-- *** Instellingen Sectie *** -->
+<!-- *** Demo starters (Instellingen) Sectie *** -->
 <div id="instellingen-section" class="instellingen-section" style="display: none;">
   <div class="details-header">
     <button class="close-btn" id="close-settings">
       <i class="fas fa-arrow-left"></i>
     </button>
   </div>
-  <h3>Instellingen</h3>
+  <h3>Activeer een demo</h3>
   <div class="title-divider"></div>
-  <p>Deze pagina is in ontwikkeling</p>
-  <button id="IPA-5-message-button" class="demo-button">IPA-5: Ontvang demo bericht via contacten</button>
-  <button id="IPA-6-message-button" class="demo-button">IPA-6: Ontvang demo bericht via contacten</button>
-  <button id="IPA-7-message-button" class="demo-button">IPA-7: Ontvang demo bericht via contacten</button>
-  <button id="IPA-8-message-button" class="demo-button">IPA-8: Ontvang demo bericht via contacten</button>
-</div>
 
+  <!-- Zoekbalk toevoegen -->
+  <input type="text" id="search-input" placeholder="Zoek een demo..." aria-label="Zoek in demo's" class="search-bar">
+
+  <!-- Vervang buttons door links -->
+  <a href="#" id="IPA-5-message-button" class="demo-button">IPA-5: Ontvang demo bericht</a>
+  <a href="#" id="IPA-6-message-button" class="demo-button">IPA-6: Ontvang demo bericht</a>
+  <a href="#" id="IPA-7-message-button" class="demo-button">IPA-7: Ontvang demo bericht</a>
+  <a href="#" id="IPA-8-message-button" class="demo-button">IPA-8: Ontvang demo bericht</a>
+</div>
 
 
   <!-- *** Modals *** -->

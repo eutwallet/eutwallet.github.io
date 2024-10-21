@@ -2,7 +2,7 @@
 const scanButton = document.getElementById('scan-button');
 const closeScanButton = document.getElementById('close-scan-button');
 const readerDiv = document.getElementById('reader');
-const floatingQrButton = document.getElementById('floating-qr-button');
+const floatingQrButton = document.getElementById('qr-scan-button');
 const addCardScreen = document.getElementById('add-card-screen');
 
 // *** Wallet Elementen ***
@@ -129,6 +129,18 @@ const instellingenSection = document.getElementById('instellingen-section');
 const closeSettingsBtn = document.getElementById('close-settings');
 
 
+// *** Elementen card catalogue ***
+const openCardCatalogueBtn = document.getElementById('open-card-catalogue');
+const cardCatalogue = document.getElementById('card-catalogue');
+const closeCardCatalogueBtn = document.getElementById('close-card-catalogue');
+
+
+// Elementen current cards
+const openCurrentCardsBtn = document.getElementById('open-current-cards');
+const currentCardsSection = document.getElementById('current-cards');
+const closeCurrentCardsBtn = document.getElementById('close-current-cards');
+
+
 const fieldMapping = {
   gn: 'Voornaam',
   sn: 'Achternaam',
@@ -249,6 +261,9 @@ function convertToStandardDate(dateString) {
   return `${year}-${month}-${day}T${timePart}`;
 }
 
+
+
+
 function showActivities() {
   activitiesList.innerHTML = ''; // Leeg de lijst
 
@@ -276,7 +291,7 @@ function showActivities() {
   });
 
   // Voeg activiteiten toe aan de lijst
-  filteredActivities.forEach((cred) => {
+  filteredActivities.reverse().forEach((cred) => {
       let activityItem = document.createElement('li');
 
       if (cred.isShareAction) {
@@ -507,6 +522,7 @@ function saveCredentials() {
 function showDetails(credential, index) {
   // Verberg het wallet-scherm
   document.getElementById('wallet-screen').style.display = 'none';
+  currentCardsSection.style.display = 'none';  
   bottomNav.style.display = 'none';
 
   // Toon de detailsweergave
@@ -533,8 +549,8 @@ function showDetails(credential, index) {
   // Sluit details weergave (Terug-knop)
   closeDetailsBtn.onclick = () => {
     detailsView.style.display = 'none';
-    document.getElementById('wallet-screen').style.display = 'block';
-    bottomNav.style.display = 'flex';
+    currentCardsSection.style.display = 'flex';  // Toon 'Mijn digitale bewijzen' sectie
+    
   };
 
   // Verwijderknop tonen of verbergen op basis van het type kaartje
@@ -545,8 +561,8 @@ function showDetails(credential, index) {
       saveCredentials();
       displayCredentials();
       detailsView.style.display = 'none';
-      document.getElementById('wallet-screen').style.display = 'block';
-      bottomNav.style.display = 'flex';
+      currentCardsSection.style.display = 'flex';  // Toon 'Mijn digitale bewijzen' sectie
+      
     };
   } else {
     deleteDetailsBtn.style.display = 'none';
@@ -2086,6 +2102,7 @@ function processMandate(data) {
 function displayMachtigingen() {
   const machtigingSection = document.getElementById('machtiging-section');
   const machtigingGrid = document.getElementById('machtiging-grid'); // Zorg ervoor dat er een container is voor machtigingen
+ 
 
   // Leeg de grid
   machtigingGrid.innerHTML = '';
@@ -2093,7 +2110,14 @@ function displayMachtigingen() {
   // Filter en toon alleen machtiging kaartjes
   const machtigingen = credentials.filter(cred => cred.type === 'mandate');
 
-  machtigingen.forEach((mandate, index) => {
+  // Sorteer de machtigingen op datum (meest recente eerst)
+  machtigingen.sort((a, b) => {
+    let dateA = Date.parse(convertToStandardDate(a.actionTimestamp));
+    let dateB = Date.parse(convertToStandardDate(b.actionTimestamp));
+    return dateB - dateA;
+});
+
+  machtigingen.reverse().forEach((mandate, index) => {
       const card = document.createElement('div');
       card.className = 'card';
 
@@ -2265,13 +2289,36 @@ function showMandateDetails(mandate) {
 
   document.getElementById('mandate-details-content').innerHTML = detailsHTML;
 
-  // Voeg de functionaliteit toe voor de terugknop
+  // Voeg de functionaliteit toe voor de terugknop van de details
   document.getElementById('close-details-mandate').onclick = () => {
     mandateDetailsView.style.display = 'none';
     machtigingSection.style.display = 'flex'; // Ga terug naar de machtigingensectie
     bottomNav.style.display = 'flex'; // Toon de bottom-nav weer
   };
 }
+
+
+  // Voeg de functionaliteit toe voor de terugknop van de machtiging sectie
+  document.getElementById('close-machtiging-section').onclick = () => {
+   
+    machtigingSection.style.display = 'none'; // 
+    walletScreen.style.display = 'block';
+    bottomNav.style.display = 'flex'; // Toon de bottom-nav weer
+    overviewNavbarItem.classList.add('active');
+  };
+
+
+
+    // Voeg de functionaliteit toe voor de terugknop van de contacten sectie
+    document.getElementById('close-trusted-contacts-section').onclick = () => {
+   
+      trustedContactsSection.style.display = 'none';
+      walletScreen.style.display = 'block';
+      bottomNav.style.display = 'flex'; // Toon de bottom-nav weer
+      overviewNavbarItem.classList.add('active');
+    };
+  
+  
 
 
 // Pas de displayMachtigingen functie aan om de details te tonen bij klikken
@@ -2281,6 +2328,9 @@ function displayMachtigingen() {
 
  // Filter en toon alleen machtiging kaartjes
  const machtigingen = credentials.filter(cred => cred.type === 'mandate' && !cred.isActivity);
+
+
+ 
   machtigingen.forEach((mandate, index) => {
     const card = document.createElement('div');
     card.className = 'card';
@@ -2339,6 +2389,7 @@ contactsNavbarItem.addEventListener('click', () => {
   activitiesSection.style.display = 'none';
   instellingenSection.style.display = 'none';
   machtigingSection.style.display = 'none';
+  bottomNav.style.display = 'none';
 
   // Toon het trusted contacts scherm
   trustedContactsSection.style.display = 'block';
@@ -2360,6 +2411,7 @@ machtigingNavbarItem.addEventListener('click', () => {
 
   // Toon het machtigingen-scherm
   machtigingSection.style.display = 'flex';
+  bottomNav.style.display = 'none';
 
   // Zorg ervoor dat de andere navbar-items niet meer actief zijn
   document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
@@ -2373,6 +2425,10 @@ machtigingNavbarItem.addEventListener('click', () => {
 settingsButton.addEventListener('click', () => {
   // Verberg het wallet-overzicht
   walletScreen.style.display = 'none';
+  bottomNav.style.display = 'none';
+  activitiesSection.style.display = 'none';
+  trustedContactsSection.style.display = 'none';
+  machtigingSection.style.display = 'none';
 
   // Toon het instellingen-scherm
   instellingenSection.style.display = 'flex';
@@ -2381,8 +2437,13 @@ settingsButton.addEventListener('click', () => {
 closeSettingsBtn.addEventListener('click', () => {
   // Verberg het instellingen-scherm
   instellingenSection.style.display = 'none';
+  activitiesSection.style.display = 'none';
+  trustedContactsSection.style.display = 'none';
+  instellingenSection.style.display = 'none';
+  machtigingSection.style.display = 'none';
 
   // Toon het wallet-scherm
+  bottomNav.style.display = 'flex';
   walletScreen.style.display = 'block';
 });
 
@@ -2433,6 +2494,9 @@ IPA5MessageButton.addEventListener('click', () => {
 
     // Toon het wallet-scherm
     walletScreen.style.display = 'block';
+
+     // Toon de bottom-nav weer
+    bottomNav.style.display = 'flex';
 });
 
 const IPA6MessageButton = document.getElementById('IPA-6-message-button');
@@ -2655,3 +2719,47 @@ function addMockMessageToTrustedContacts(sender, message, messageType) {
   }
 }
 
+// Functie om de card-catalogue te openen en de wallet te verbergen
+openCardCatalogueBtn.addEventListener('click', () => {
+  walletScreen.style.display = 'none';     // Verberg het wallet-scherm
+  cardCatalogue.style.display = 'block';   // Toon het card-catalogue scherm
+  bottomNav.style.display = 'none';        // Verberg de bottom-nav
+});
+
+// Functie om terug te gaan van card-catalogue naar het wallet-scherm
+closeCardCatalogueBtn.addEventListener('click', () => {
+  cardCatalogue.style.display = 'none';    // Verberg het card-catalogue scherm
+  walletScreen.style.display = 'block';    // Toon het wallet-scherm opnieuw
+  bottomNav.style.display = 'flex';        // Toon de bottom-nav opnieuw
+});
+
+// Event listener om 'Mijn digitale bewijzen' te openen
+openCurrentCardsBtn.addEventListener('click', function() {
+  currentCardsSection.style.display = 'flex';  // Toon 'Mijn digitale bewijzen' sectie
+  walletScreen.style.display = 'none';  // Verberg het wallet-scherm
+  bottomNav.style.display = 'none';  // Verberg de bottom-nav
+});
+
+// Event listener voor de terug-knop
+closeCurrentCardsBtn.addEventListener('click', function() {
+  currentCardsSection.style.display = 'none';  // Verberg de 'Mijn digitale bewijzen' sectie
+  walletScreen.style.display = 'block';  // Toon het wallet-scherm
+  bottomNav.style.display = 'flex';  // Toon de bottom-nav
+});
+
+// Zoekbalk functionaliteit bij demostarten
+const searchInput = document.getElementById('search-input');
+const demoLinks = document.querySelectorAll('.demo-button');
+
+searchInput.addEventListener('input', function() {
+  const filter = searchInput.value.toLowerCase();
+
+  demoLinks.forEach(link => {
+    const text = link.textContent.toLowerCase();
+    if (text.includes(filter)) {
+      link.style.display = 'block';
+    } else {
+      link.style.display = 'none';
+    }
+  });
+});
