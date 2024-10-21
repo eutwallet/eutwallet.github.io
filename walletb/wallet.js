@@ -647,37 +647,30 @@ function startQrScan() {
                 csasModal.style.display = 'flex';     
             
               }
-              // Stap 2: Controleer of het een verifier QR-code is (rdfcv)
-              else if (data.issuedBy && data.name) {
-                console.log("Issuer QR-code herkend.");
-              
-                if (data.rdfci) {
-                  console.log("Issuer QR-code met rdfci herkend.");
-              
-                  // Sla de data op voor later gebruik
-                  window.currentRdfciData = data;
-              
-                  // Vul de modal met de nieuwe functie
-                  populateRdfciModal(data);
-              
-                  // Toon het extra vraagscherm
-                  rdfciModal.style.display = 'flex';
-              
-                  rdfciAcceptButton.onclick = () => {
-                    // Toon het pincode bevestigingsscherm
-                    pinConfirmationScreenIssuer.style.display = 'flex';
-                    // Verberg de RDFCI-modal
-                    rdfciModal.style.display = 'none';
-                    // Reset de pincode-invoer
-                    resetPinInputs();
-                  };
-              
-                  rdfciStopButton.onclick = () => {
-                    rdfciModal.style.display = 'none';
-                    resetQrScanner();
-                  };
-                }
-              }
+                  // ** Stap 2 Nieuw codeblok voor RDFCV**
+                  else if (data.type === "verifier" && data.rdfcv) {
+                    console.log("RDFCV QR-code herkend.");
+
+                    // Sla de RDFCV data op voor later gebruik
+                    window.currentRdfcvData = data;
+
+                    // Vul de modal met de gegevens van het RDFCV-verzoek
+                    populateRdfcvModal(data);
+
+                    // Toon de RDFCV modal
+                    rdfcvModal.style.display = 'flex';
+
+                    // Event handlers voor de RDFCV modal knoppen
+                    rdfcvAcceptButton.onclick = () => {
+                      // Ga naar het pincode bevestigingsscherm
+                      goToPinConfirmationVerifier();
+                    };
+
+                    rdfcvStopButton.onclick = () => {
+                      rdfcvModal.style.display = 'none';
+                      resetQrScanner();
+                    };
+                  }
 
               // Stap 3: Controleer of het een issuer QR-code is (rdfci)
                else if (data.issuedBy && data.name) {
