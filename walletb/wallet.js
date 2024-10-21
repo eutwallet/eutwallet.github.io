@@ -149,7 +149,7 @@ const fieldMapping = {
   omv: 'Organisatiemachtiging VOG',
   vog: 'Verklaring Omtrent Gedrag (VOG)',
   nat: 'Nationaliteit',
-  va: 'Geldigheid paspoort',
+  val: 'Geldigheid paspoort',
   UWV: 'Uitvoeringsinstituut Werknemersverzekeringen (UWV)',
   BKR: 'Bureau Krediet Registratie (BKR)',
   BD: 'Belastingdienst',
@@ -1249,13 +1249,13 @@ function populateRdfcvModal(data) {
     // Stel de achtergrondkleur in op basis van de kaartnaam
     switch (cardName) {
       case 'Persoonlijke data':
-        cardHeader.style.backgroundColor = '#B9E4E2';   
+        cardHeader.style.backgroundColor = '#B9E4E2';
         break;
       case 'Woonadres':
-        cardHeader.style.backgroundColor = '#445580'; 
+        cardHeader.style.backgroundColor = '#445580';
         break;
       case 'Verklaring Omtrent Gedrag (VOG)':
-        cardHeader.style.backgroundColor = '#5A50ED'; 
+        cardHeader.style.backgroundColor = '#5A50ED';
         break;
       default:
         cardHeader.style.backgroundColor = '#0072C6'; // Default kleur
@@ -1292,7 +1292,10 @@ function populateRdfcvModal(data) {
 
           const valueDiv = document.createElement('div');
           valueDiv.className = 'value';
-          if (fieldName === 'Foto') {
+
+          const value = cardInfo.data[key]; // Definieer 'value' hier
+
+          if (key === 'Foto') {
             // Als het veld 'Foto' is, voeg dan de afbeelding toe
             const img = document.createElement('img');
             img.src = value;
@@ -1303,6 +1306,7 @@ function populateRdfcvModal(data) {
             // Voor andere velden, toon de tekstwaarde
             valueDiv.textContent = value || 'Niet beschikbaar';
           }
+
           // Voeg label en waarde toe aan de rij
           detailRow.appendChild(labelDiv);
           detailRow.appendChild(valueDiv);
@@ -1363,7 +1367,6 @@ function populateRdfcvModal(data) {
     document.getElementById('rdfcv-agreement').innerText = 'Geen overeenkomst gevonden.';
   }
 }
-
 
 
 
