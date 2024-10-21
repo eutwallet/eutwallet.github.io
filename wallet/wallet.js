@@ -149,11 +149,13 @@ const fieldMapping = {
   omv: 'Organisatiemachtiging VOG',
   vog: 'Verklaring Omtrent Gedrag (VOG)',
   nat: 'Nationaliteit',
-  va: 'Geldigheid paspoort',
+  val: 'Geldigheid paspoort',
   UWV: 'Uitvoeringsinstituut Werknemersverzekeringen (UWV)',
   BKR: 'Bureau Krediet Registratie (BKR)',
   BD: 'Belastingdienst',
   SVB: 'Sociale Verzekeringsbank (SVB)',
+  ln: 'Lengte',          
+  ph: 'Foto',   
   LEID: 'Legal entity nummer',
   Issued_Date: 'Uitgiftedatum',
   Issued_to_subject: 'Uitgegeven aan',
@@ -383,6 +385,12 @@ const cardStyles = {
     textColor: '#52202e'
   },
 
+  'foto': {
+    iconClass: 'fas fa-camera', // Gebruik het gewenste FontAwesome icoon
+    iconColor: '#FFD700', // Gouden kleur voor het icoon
+    textColor: '#333' // Tekstkleur
+  },
+
   'diploma verpleegkunde': {
   imagePath: 'duologo.svg',  // Path naar je diploma-afbeelding
   iconColor: null,
@@ -486,7 +494,17 @@ function loadDefaultCredentials() {
         'Postcode': '2595 AN',
         'Plaatsnaam': 'Den Haag'
       }
-    }
+    },
+      // Nieuw kaartje "Foto" toevoegen
+      {
+        name: 'Foto',
+        issuedBy: 'Nederlandse overheid',
+        isShareAction: false,
+        data: {
+          'Foto': 'pasfoto.jpg', // Zorg dat deze afbeelding beschikbaar is in je projectmap
+          'Lengte': '1,70 m'
+        }
+      }
   ];
 
   defaultCards.forEach(defaultCard => {
@@ -535,8 +553,15 @@ function showDetails(credential, index) {
   // Leeg de inhoud en vul deze met de gegevens van het kaartje
   detailsContent.innerHTML = '';
 
-  // Controleer of er data aanwezig is in het credential
-  if (credential.data) {
+  // Controleer of het kaartje "Foto" is
+  if (credential.name === 'Foto') {
+    // Voeg de afbeelding toe
+    detailsContent.innerHTML += `<img src="${credential.data['Foto']}" alt="Pasfoto" style="width: 100%; max-width: 300px; height: auto; margin-bottom: 20px;">`;
+
+    // Voeg de lengte toe
+    detailsContent.innerHTML += `<p><strong>Lengte:</strong> ${credential.data['Lengte']}</p>`;
+  } else if (credential.data) {
+    // Voor andere kaartjes, toon de gegevens zoals normaal
     for (const key in credential.data) {
       if (credential.data.hasOwnProperty(key)) {
         detailsContent.innerHTML += `<p><strong>${key}:</strong> ${credential.data[key]}</p>`;
@@ -545,6 +570,7 @@ function showDetails(credential, index) {
   } else {
     detailsContent.innerHTML = '<p>Geen details beschikbaar.</p>';
   }
+
 
   // Sluit details weergave (Terug-knop)
   closeDetailsBtn.onclick = () => {
@@ -621,37 +647,19 @@ function startQrScan() {
                 csasModal.style.display = 'flex';     
             
               }
-              // Stap 2: Controleer of het een verifier QR-code is (rdfcv)
-              else if (data.issuedBy && data.name) {
-                console.log("Issuer QR-code herkend.");
-              
-                if (data.rdfci) {
-                  console.log("Issuer QR-code met rdfci herkend.");
-              
-                  // Sla de data op voor later gebruik
-                  window.currentRdfciData = data;
-              
-                  // Vul de modal met de nieuwe functie
-                  populateRdfciModal(data);
-              
-                  // Toon het extra vraagscherm
-                  rdfciModal.style.display = 'flex';
-              
-                  rdfciAcceptButton.onclick = () => {
-                    // Toon het pincode bevestigingsscherm
-                    pinConfirmationScreenIssuer.style.display = 'flex';
-                    // Verberg de RDFCI-modal
-                    rdfciModal.style.display = 'none';
-                    // Reset de pincode-invoer
-                    resetPinInputs();
-                  };
-              
-                  rdfciStopButton.onclick = () => {
-                    rdfciModal.style.display = 'none';
-                    resetQrScanner();
-                  };
-                }
-              }
+                  // ** Stap 2 codeblok voor RDFCV**
+                  else if (data.type === "verifier" && data.rdfcv) {
+                    console.log("RDFCV QR-code herkend.");
+
+                    // Sla de RDFCV data op voor later gebruik
+                    window.currentRdfcvData = data;
+
+                    // Vul de modal met de gegevens van het RDFCV-verzoek
+                    populateRdfcvModal(data);
+
+                    // Toon de RDFCV modal
+                    rdfcvModal.style.display = 'flex';
+                  }
 
               // Stap 3: Controleer of het een issuer QR-code is (rdfci)
                else if (data.issuedBy && data.name) {
@@ -826,7 +834,7 @@ function resetPinInputs() {
 
 
 function goToIssuerSuccessScreen(cardName, issuedBy) {
-  issuerSuccessScreen.style.display = 'block';
+  issuerSuccessScreen.style.display = 'flex';
 
   // Vul de nieuwe tekstvelden in het successcherm
   document.getElementById('issuer-success-data').innerText = cardName;
@@ -979,7 +987,17 @@ function populateRdfciModal(data) {
 
       const valueDiv = document.createElement('div');
       valueDiv.className = 'value';
-      valueDiv.textContent = value;
+      if (fieldName === 'Foto') {
+        // Als het veld 'Foto' is, voeg dan de afbeelding toe
+        const img = document.createElement('img');
+        img.src = value;
+        img.alt = 'Foto';
+        img.style.width = '100%'; // Pas de grootte naar wens aan
+        valueDiv.appendChild(img);
+      } else {
+        // Voor andere velden, toon de tekstwaarde
+        valueDiv.textContent = value || 'Niet beschikbaar';
+      }
 
       detailRow.appendChild(labelDiv);
       detailRow.appendChild(valueDiv);
@@ -1072,7 +1090,17 @@ function populateRdfciModal(data) {
 
       const valueDiv = document.createElement('div');
       valueDiv.className = 'value';
-      valueDiv.textContent = value;
+      if (fieldName === 'Foto') {
+        // Als het veld 'Foto' is, voeg dan de afbeelding toe
+        const img = document.createElement('img');
+        img.src = value;
+        img.alt = 'Foto';
+        img.style.width = '100%'; // Pas de grootte naar wens aan
+        valueDiv.appendChild(img);
+      } else {
+        // Voor andere velden, toon de tekstwaarde
+        valueDiv.textContent = value || 'Niet beschikbaar';
+      }
 
       detailRow.appendChild(labelDiv);
       detailRow.appendChild(valueDiv);
@@ -1210,13 +1238,13 @@ function populateRdfcvModal(data) {
     // Stel de achtergrondkleur in op basis van de kaartnaam
     switch (cardName) {
       case 'Persoonlijke data':
-        cardHeader.style.backgroundColor = '#B9E4E2';   
+        cardHeader.style.backgroundColor = '#B9E4E2';
         break;
       case 'Woonadres':
-        cardHeader.style.backgroundColor = '#445580'; 
+        cardHeader.style.backgroundColor = '#445580';
         break;
       case 'Verklaring Omtrent Gedrag (VOG)':
-        cardHeader.style.backgroundColor = '#5A50ED'; 
+        cardHeader.style.backgroundColor = '#5A50ED';
         break;
       default:
         cardHeader.style.backgroundColor = '#0072C6'; // Default kleur
@@ -1253,7 +1281,20 @@ function populateRdfcvModal(data) {
 
           const valueDiv = document.createElement('div');
           valueDiv.className = 'value';
-          valueDiv.textContent = cardInfo.data[key];
+
+          const value = cardInfo.data[key]; // Definieer 'value' hier
+
+          if (key === 'Foto') {
+            // Als het veld 'Foto' is, voeg dan de afbeelding toe
+            const img = document.createElement('img');
+            img.src = value;
+            img.alt = 'Foto';
+            img.style.width = '100%'; // Pas de grootte naar wens aan
+            valueDiv.appendChild(img);
+          } else {
+            // Voor andere velden, toon de tekstwaarde
+            valueDiv.textContent = value || 'Niet beschikbaar';
+          }
 
           // Voeg label en waarde toe aan de rij
           detailRow.appendChild(labelDiv);
@@ -1277,7 +1318,17 @@ function populateRdfcvModal(data) {
 
         const valueDiv = document.createElement('div');
         valueDiv.className = 'value';
-        valueDiv.textContent = value || 'Niet beschikbaar';
+        if (fieldName === 'Foto') {
+          // Als het veld 'Foto' is, voeg dan de afbeelding toe
+          const img = document.createElement('img');
+          img.src = value;
+          img.alt = 'Foto';
+          img.style.width = '100%'; // Pas de grootte naar wens aan
+          valueDiv.appendChild(img);
+        } else {
+          // Voor andere velden, toon de tekstwaarde
+          valueDiv.textContent = value || 'Niet beschikbaar';
+        }
 
         // Voeg label en waarde toe aan de rij
         detailRow.appendChild(labelDiv);
@@ -1307,19 +1358,48 @@ function populateRdfcvModal(data) {
 }
 
 
+rdfcvAcceptButton.onclick = () => {
+  const timestamp = new Date().toLocaleString();
+
+  // Verwijder eerdere event handler om duplicatie te voorkomen
+  confirmPinBtnVerifier.onclick = null;
+
+  // Toon eerst het pincode-bevestigingsscherm
+  goToPinConfirmationVerifier();
+
+  confirmPinBtnVerifier.onclick = () => {
+    if (window.currentRdfcvData) {
+      saveSharedData(window.currentRdfcvData, timestamp);
+      goToVerifierSuccessScreen(window.currentRdfcvData);
+    } else {
+      console.error("Geen RDFCV data beschikbaar om op te slaan.");
+    }
+    pinConfirmationScreenVerifier.style.display = 'none';
+    resetPinInputs();
+  };
+
+  rdfcvModal.style.display = 'none';
+};
+
+rdfcvStopButton.onclick = () => {
+  rdfcvModal.style.display = 'none';
+  resetQrScanner();
+};
+
+
 
 
 // Functie om het pincode bevestigingsscherm verifier te tonen
 function goToPinConfirmationVerifier() {
   console.log("Navigating to pin confirmation screen...");
   rdfcvModal.style.display = 'none'; // Verberg de vraagmodal
-  pinConfirmationScreenVerifier.style.display = 'block'; // Toon verifier pin bevestigingsscherm
+  pinConfirmationScreenVerifier.style.display = 'flex'; // Toon verifier pin bevestigingsscherm
   resetPinInputs(); // Reset pincode-invoervelden
 }
 
 // Functie voor het succes-scherm na delen met verifier
 function goToVerifierSuccessScreen(data) {
-  successScreen.style.display = 'block';
+  successScreen.style.display = 'flex';
   successMessage.textContent = "Succes!";
   verifierNameElement.textContent = data.requester || 'Onbekende partij'; // Voeg hier data.requester toe
 
@@ -1366,7 +1446,7 @@ function goToVerifierSuccessScreen(data) {
 function saveSharedData(data) {
   const timestamp = new Date().toLocaleString();
   credentials.push({
-      name: data.name || 'Onbekende partij',
+      name: data.requester || 'Onbekende partij',
       reason: data.reason || 'Geen reden opgegeven',
       sharedData: data.rdfcv.map(field => fieldMapping[field] || field),
       agreement: data.a ? data.a.split(', ').map(agreement => fieldMapping.a[agreement] || agreement) : [],
