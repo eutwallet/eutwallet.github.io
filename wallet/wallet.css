@@ -1912,7 +1912,7 @@ margin-top: 40px;
 
  /*QR-scan text */
  #qr-scan-button .qr-scan-button-text {
-    color: #a5a8a6;; /* Groene achtergrond voor de cirkel */
+    color: #8b8b8b; /* Groene achtergrond voor de cirkel */
     font-size: 14px;
 }
 
