@@ -2669,7 +2669,7 @@ function openMessageDetails(sender, message, datetime, messageType) {
               e.preventDefault();
               messageDetailsScreen.style.display = 'none';
               trustedContactsSection.style.display = 'none';
-              addCardScreen.style.display = 'flex';
+              cardCatalogue.style.display = 'block'; 
                // Zorg ervoor dat de andere navbar-items niet meer actief zijn
   document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
               // Zet het overzicht-item actief in de navbar
