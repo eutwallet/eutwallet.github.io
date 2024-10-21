@@ -474,13 +474,13 @@ function loadDefaultCredentials() {
       data: {
         'Voornaam': 'Willeke Liselotte',
         'Achternaam': 'De Bruijn',
-        'Geboortedatum': '10 maart, 1997',
+        'Geboortedatum': '10 maart, 1980',
         'Geboorteplaats': 'Delft',
         'Geboorteland': 'Nederland',
         'Geslacht': 'Vrouw',
         'Burgerservicenummer (BSN)': '938391772',
         'Nationaliteit': 'Nederlands',
-        'Geldigheid paspoort': '11 maart, 2027',
+        'Geldigheid paspoort': '17 juli 2034',
         'Ouder dan 18': 'Ja'
       }
     },
@@ -501,7 +501,7 @@ function loadDefaultCredentials() {
         issuedBy: 'Nederlandse overheid',
         isShareAction: false,
         data: {
-          'Foto': 'pasfoto.jpg', // Zorg dat deze afbeelding beschikbaar is in je projectmap
+          'Foto': 'pasfoto.png', // Zorg dat deze afbeelding beschikbaar is in je projectmap
           'Lengte': '1,70 m'
         }
       }
@@ -2373,7 +2373,7 @@ function showMandateDetails(mandate) {
     <p><strong>Gevraagde gegevens voor ophalen:</strong></p>
     <p>Voornaam: Willeke Liselotte</p>
     <p>Achternaam: De Bruijn</p>
-    <p>Geboortedatum: 10 maart 1997</p>
+    <p>Geboortedatum: 10 maart 1980</p>
     <p>Burgerservicenummer (BSN): 938391772</p>
     <div class="divider"></div>
   `;
