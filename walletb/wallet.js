@@ -619,7 +619,8 @@ function startQrScan() {
 
   html5QrCode.start(
       { facingMode: "environment" },
-      { fps: 10, qrbox: 250 },
+      { fps: 10, 
+        qrbox: 250 },
       (decodedText) => {
           console.log("QR code scanned: ", decodedText);
           try {
@@ -784,7 +785,7 @@ function startQrScan() {
 
 
 
-// Sluit de scanner handmatig wanneer op "Scannen afsluiten" wordt geklikt
+/* // Sluit de scanner handmatig wanneer op "Scannen afsluiten" wordt geklikt
 closeScanButton.addEventListener('click', () => {
   if (html5QrCode) {
     console.log("Stopping QR scanner...");
@@ -799,7 +800,7 @@ closeScanButton.addEventListener('click', () => {
   } else {
     console.error("Cannot stop scanner as it is not running.");
   }
-});
+}); */
 
 // Event listener voor de bestaande scan-knop, vervangt deze door de nieuwe functie
 scanButton.addEventListener('click', () => {
@@ -1456,21 +1457,37 @@ function saveSharedData(data) {
   saveCredentials();
 }
 
-// Zwevende knop opent alleen het add-card scherm
 floatingQrButton.addEventListener('click', () => {
   // Verberg de wallet-screen en de navbar
   walletScreen.style.display = 'none';
   bottomNav.style.display = 'none';
 
-  // Toon het add-card scherm (nog zonder de scanner)
+  // Toon het add-card scherm
   addCardScreen.style.display = 'flex';
+
+  // Start direct de QR-scanner
+  startQrScan();
 });
 
 // Logica voor het sluiten van het add-card scherm
-const closeAddCardBtn = document.getElementById('close-add-card');
 
-if (closeAddCardBtn) {
-  closeAddCardBtn.onclick = () => {
+
+if (closeScanButton) {
+  closeScanButton.onclick = () => {
+    // Controleer of de QR-scanner actief is
+    if (html5QrCode) {
+      console.log("Stopping QR scanner...");
+      html5QrCode.stop().then(() => {
+        console.log("QR scanner stopped.");
+        readerDiv.style.display = 'none';
+        closeScanButton.style.display = 'none';
+        document.querySelector('.scan-container').style.display = 'flex'; // Toon scan-knop en tekst
+        html5QrCode = null; // Reset de scanner
+      }).catch(err => {
+        console.error("Failed to stop scanning: ", err);
+      });
+    }
+
     // Verberg het add-card scherm
     addCardScreen.style.display = 'none';
 

@@ -1896,10 +1896,12 @@ margin-top: 40px;
   }
   
 
+
+
   /* Stijl voor de klikbare sectie 'Mijn digitale bewijzen' */
 .clickable-section {
     padding: 15px;
-    background-color: #f7f7f7;
+    background-color: #f1f1f1;
     /* border: 1px solid #ddd; */
     cursor: pointer;
     border-radius: 5px;
@@ -1913,15 +1915,21 @@ margin-top: 40px;
   
   .clickable-section i {
     font-size: 20px; /* Grootte van het icoon */
-    color: #c5c5c5; /* Kleur van het icoon */
+    color: #545557; /* Kleur van het icoon */
     margin-right: 20px;
+  }
+
+  .clickable-section p {
+    color: #545557;
+    padding: 20px 0;
+    font-weight: bold;
   }
 
 
   .clickable-section h3 {
     color: #545557;
     font-size: 16px;
-    margin: 0;
+    padding: 20px 0;
   }
 
   #current-cards {
@@ -1949,3 +1957,4 @@ margin-top: 40px;
         margin-left: 15px;
 
   }
+
