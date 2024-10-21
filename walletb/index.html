@@ -599,6 +599,36 @@
   </div>
 </section>
 
+  <!-- *** Pincode Bevestiging-scherm (Verifier) *** -->
+<section id="pin-confirmation-screen-verifier" class="modal" style="display: none;">
+  <div class="modal-content">
+    <h2>Voer je pincode in om gegevens te delen</h2>
+    <div class="pin-input">
+      <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
+      <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
+      <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
+      <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
+      <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
+      <input type="password" class="pin-box" inputmode="numeric">
+    </div>
+    <button class= "confirm-pin"id="confirm-pin-verifier">Bevestig</button>
+  </div>
+</section>
+  
+  <!-- *** Success-scherm na Delen Gegevens (Verifier) *** -->
+<section id="success-screen" class="modal" style="display: none;">
+  <div class="modal-content">
+      <h2 id="success-message">Succes!</h2>
+      <div class="divider"></div>
+      <p>Je hebt de gegevens gedeeld met</p>
+      <p><strong><span id="verifier-name"></span></strong></p>
+      <div class="button-container">
+        <button id="see-activity-btn" class="stop-button">Zie Activiteit</button>
+        <button id="close-success-btn" class="share-button">Sluiten</button>
+      </div>
+    </div>
+</section>
+
   <!-- *** RDFCI Modal *** -->
   <section id="rdfci-modal" class="modal" style="display: none;">
     <div class="modal-content">
@@ -636,23 +666,11 @@
     </div>
   </section>
 
-  <!-- *** Pincode Bevestiging-scherm (Verifier) *** -->
-<section id="pin-confirmation-screen-verifier" style="display: none;">
-  <p>Voer je pincode in om gegevens te delen</p>
-  <div class="pin-input">
-    <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
-    <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
-    <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
-    <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
-    <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
-    <input type="password" class="pin-box" inputmode="numeric">
-  </div>
-  <button class= "confirm-pin"id="confirm-pin-verifier">Bevestig</button>
-</section>
 
 
   <!-- rdfci pin scherm *** -->
-  <section id="pin-confirmation-screen-issuer" style="display: none;">
+  <section id="pin-confirmation-screen-issuer" class="modal" style="display: none;">
+    <div class="modal-content">
     <p>Voer je pincode in om te bevestigen</p>
     <div class="pin-input">
       <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
@@ -664,23 +682,11 @@
   </div>
     
   <button  id="confirm-pin-issuer"  class= "confirm-pin">Bevestig</button> 
-  
-  </section>
-
-  <!-- *** Success-scherm na Delen Gegevens (Verifier) *** -->
-  <section id="success-screen" style="display: none;">
-    <h2 id="success-message">Succes!</h2>
-    <div class="divider"></div>
-    <p>Je hebt de gegevens gedeeld met</p>
-    <p><strong><span id="verifier-name"></span></strong></p>
-    <div class="button-container">
-      <button id="see-activity-btn" class="stop-button">Zie Activiteit</button>
-      <button id="close-success-btn" class="share-button">Sluiten</button>
-    </div>
+</div>
   </section>
 
   <!-- *** Issuer Modal voor Vraag na Scannen *** -->
-  <section id="issuer-question-modal" class="modal">
+  <section id="issuer-question-modal" class="modal" style="display: none;">
     <div class="modal-content">
       <h2 id="issuer-question-message"><strong>Wilt u onderstaande gegevens opslaan in uw wallet?</strong></h2>
       <div class="divider" style="margin: 10px 0;"></div>
@@ -698,8 +704,9 @@
   </section>
 
   <!-- *** Issuer Success-scherm na Opslaan Gegevens (Issuer) *** -->
-  <section id="issuer-success-screen" style="display: none;">
-    <h2 id="issuer-success-message"><strong>Succes!</strong></h2>
+  <section id="issuer-success-screen"  class="modal" style="display: none;">
+    <div class="modal-content">
+    <h2 id="issuer-success-message">Succes!</h2>
     <div class="divider"></div>
     <p style="margin-top: 20px;">De gegevens</p>
     <p><strong id="issuer-success-data"></strong></p>
@@ -711,10 +718,12 @@
     <div class="button-container">
       <button id="close-issuer-success-btn" class="share-button">Sluiten</button>
     </div>
+  </div>
   </section>
 
  <!-- *** CSAS Modal Scherm voor Gegevens Ophalen, Opslaan en Delen *** -->
 <div id="csas-modal" class="modal" style="display: none;">
+  <div class="modal-content">
   <p><strong>Wilt u onderstaande gegevens<br>
     ophalen bij de uitgever,<br> 
     opslaan in uw wallet en <br>
@@ -751,9 +760,11 @@
     <!-- Knop voor de gebruiker om verder te gaan naar het pincode bevestigingsscherm -->
   </div>
 </div>
+</div>
 
 <!-- *** CSAS Pincode Bevestigingsscherm voor Actiebevestiging (CSAS) *** -->
 <div id="csas-pin-confirmation-screen" class="modal" style="display: none;">
+  <div class="modal-content">
   <h2>Voer uw pincode in om de actie te bevestigen</h2>
   <!-- Titel voor het invoeren van de pincode ter bevestiging van de actie -->
   <div class="pin-input">
@@ -768,9 +779,11 @@
   <button id="confirm-pin-csas" class="orange-btn confirm-pin">Bevestigen</button>
   <!-- Knop om de ingevoerde pincode te bevestigen en verder te gaan naar het CSAS successcherm -->
 </div>
+</div>
 
 <!-- *** CSAS Success-scherm na Ophalen, Opslaan en Delen van Gegevens (CSAS) *** -->
 <div id="csas-success-screen" class="modal" style="display: none;">
+  <div class="modal-content">
   <h2>Succes! </h2><br>
     <p>U heeft de gegevens gedeeld met <span id="csas-success-requester"></span> en onderstaande gegevens in uw wallet opgeslagen:</p>
     <div class="divider"></div>
@@ -779,6 +792,7 @@
   <!-- Container waar de kaartjes worden getoond die succesvol zijn opgehaald en opgeslagen -->
   <button id="close-csas-success-btn" class="orange-btn">Sluiten</button>
   <!-- Knop om het successcherm te sluiten en terug te keren naar het wallet-scherm -->
+   </div>
 </div>
 
 
@@ -827,6 +841,7 @@
 
 <!-- *** Mandate Pincode Bevestigings-scherm *** -->
 <section id="mandate-pin-confirmation-screen" class="modal" style="display: none;">
+  <div class="modal-content">
   <h2>Voer uw pincode in om de machtiging te bevestigen</h2>
   <div class="pin-input">
     <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
@@ -837,10 +852,12 @@
     <input type="password" maxlength="1" class="pin-box" inputmode="numeric">
   </div>
   <button id="confirm-pin-mandate" class="orange-btn confirm-pin">Bevestigen</button>
+</div>
 </section>
 
 <!-- *** Mandate Success Screen *** -->
 <section id="mandate-success-screen" class="modal" style="display: none;">
+  <div class="modal-content">
   <h2>Succes!</h2>
   <div class="divider"></div>
   <p>Je hebt <strong id="mandate-success-requester">[requester]</strong> gemachtigd om jouw gegevens op te halen.</p>
@@ -848,6 +865,7 @@
     <button id="view-mandate-button" class="stop-button">Bekijk Machtiging</button>
     <button id="close-mandate-success-button" class="share-button">Sluiten</button>
   </div>
+</div>
 </section>
 
 
