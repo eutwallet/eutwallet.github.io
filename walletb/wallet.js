@@ -720,6 +720,9 @@ function startQrScan() {
 
                       rdfciStopButton.onclick = () => {
                           rdfciModal.style.display = 'none';
+                          addCardScreen.style.display = 'none';
+                          walletScreen.style.display = 'block';
+                          bottomNav.style.display = 'flex';
                           resetQrScanner();
                       };
 
@@ -943,7 +946,7 @@ function populateRdfciModal(data) {
   // Maak kaart header aan
   const newCardHeader = document.createElement('div');
   newCardHeader.className = 'card-header';
-  newCardHeader.style.backgroundColor = '#5A50ED'; // Stel een kleur in voor de nieuwe kaart
+  newCardHeader.style.backgroundColor = '#0061A6'; // Stel een kleur in voor de nieuwe kaart
 
   // Voeg de header toe aan de kaartcontainer
   newCardContainer.appendChild(newCardHeader);
@@ -1053,7 +1056,7 @@ function populateRdfciModal(data) {
     // Stel de achtergrondkleur in op basis van de kaartnaam indien gewenst
     switch (cardName) {
       case 'Persoonlijke data':
-        cardHeader.style.backgroundColor = '#B9E4E2';   
+        cardHeader.style.backgroundColor = '#B5DEF4';   
         break;
       case 'Woonadres':
         cardHeader.style.backgroundColor = '#445580'; 
@@ -1245,7 +1248,7 @@ function populateRdfcvModal(data) {
         cardHeader.style.backgroundColor = '#445580';
         break;
       case 'Verklaring Omtrent Gedrag (VOG)':
-        cardHeader.style.backgroundColor = '#5A50ED';
+        cardHeader.style.backgroundColor = '#0061A6';
         break;
       default:
         cardHeader.style.backgroundColor = '#0072C6'; // Default kleur
@@ -1384,6 +1387,9 @@ rdfcvAcceptButton.onclick = () => {
 
 rdfcvStopButton.onclick = () => {
   rdfcvModal.style.display = 'none';
+  addCardScreen.style.display = 'none';
+  walletScreen.style.display = 'block';
+  bottomNav.style.display = 'flex';
   resetQrScanner();
 };
 
@@ -1789,6 +1795,7 @@ csasStopButton.onclick = () => {
   // Verberg de CSAS-modal
   csasModal.style.display = 'none';
   addCardScreen.style.display = 'none';
+ 
   
   // Toon het wallet-scherm
   walletScreen.style.display = 'block';
@@ -1872,6 +1879,9 @@ document.addEventListener('DOMContentLoaded', function () {
         rdfciStopButton.onclick = () => {
           // Sluit het RDFCI modal
           rdfciModal.style.display = 'none';
+          addCardScreen.style.display = 'none';
+          walletScreen.style.display = 'block';
+          bottomNav.style.display = 'flex';
         };
       });
     }
@@ -1924,6 +1934,9 @@ document.addEventListener('DOMContentLoaded', function () {
         rdfciStopButton.onclick = () => {
           // Sluit het RDFCI modal
           rdfciModal.style.display = 'none';
+          addCardScreen.style.display = 'none';
+          walletScreen.style.display = 'block';
+          bottomNav.style.display = 'flex';
         };
       });
     }
@@ -1974,6 +1987,9 @@ document.addEventListener('DOMContentLoaded', function () {
         rdfciStopButton.onclick = () => {
           // Sluit het RDFCI modal
           rdfciModal.style.display = 'none';
+          addCardScreen.style.display = 'none';
+          walletScreen.style.display = 'block';
+          bottomNav.style.display = 'flex';
         };
       });
     }
@@ -2076,6 +2092,9 @@ document.getElementById('mandate-stop-button').addEventListener('click', () => {
 
   // Verberg de mandate-modal
   document.getElementById('mandate-modal').style.display = 'none';
+  addCardScreen.style.display = 'none';
+  walletScreen.style.display = 'block';
+  bottomNav.style.display = 'flex';
 
   // Controleer of de QR-code scanner actief is en stop deze indien nodig
   if (html5QrCode) {
