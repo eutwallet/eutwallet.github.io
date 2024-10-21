@@ -1870,33 +1870,70 @@ margin-top: 40px;
   
   /* Cirkelvormige knop */
   .circle-btn {
-    background-color: #868b87; /* Groene kleur */
+    background-color: #a5a8a6; /* Groene kleur */
     color: #fff; /* Witte kleur voor het icoon */
-    width: 40px; /* Breedte van de knop */
-    height: 40px; /* Hoogte van de knop */
+    width: 60px; /* Breedte van de knop */
+    height: 60px; /* Hoogte van de knop */
     border-radius: 50%; /* Cirkelvorm */
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 5px; /* Ruimte tussen knop en tekst */
-    font-size: 15px; /* Grootte van het icoon */
+    font-size: 28px; /* Grootte van het icoon */
     transition: background-color 0.3s ease;
   }
   
-  /* Hover-effect voor de knop */
-  .circle-btn:hover {
-    background-color: #218838; /* Donkergroene kleur bij hover */
-  }
+  /* Hover-effect voor de gehele sectie, zodat zowel de cirkel als de tekst reageren op hover */
+#open-card-catalogue:hover .circle-btn {
+    background-color: #218838; /* Groene achtergrond voor de cirkel */
+}
+
+#open-card-catalogue:hover .catalogue-text {
+    color: #218838; /* Groene kleur voor de tekst */
+}
+
+/* Zorg ervoor dat het icoon wit blijft bij hover */
+#open-card-catalogue:hover .circle-btn i {
+    color: white; /* Icoon blijft wit */
+}
   
   /* Stijl voor de tekst onder de knop */
   .catalogue-text {
-    font-size: 10px;
-    color: #859488; /* Groene tekstkleur */
+    font-size: 14px;
+    color: #8b8b8b; /* Groene tekstkleur */
     text-align: center; /* Tekst gecentreerd onder de knop */
+   
   }
-  
+
+ /* QR-scan knop */
+ #qr-scan-button .circle-btn {
+    background-color: #a5a8a6; /* Groene achtergrond voor de cirkel */
+}
+
+ /*QR-scan text */
+ #qr-scan-button .qr-scan-button-text {
+    color: #a5a8a6;; /* Groene achtergrond voor de cirkel */
+    font-size: 14px;
+}
 
 
+  /* Hover-effect voor de gehele QR-scan sectie */
+#qr-scan-button:hover .circle-btn {
+    background-color: #3366b3; /* Groene achtergrond voor de cirkel */
+}
+
+#qr-scan-button:hover .qr-scan-button-text {
+    color: #3366b3; /* Groene kleur voor de tekst */
+}
+
+/* Zorg ervoor dat het QR-icoon wit blijft bij hover */
+#qr-scan-button:hover .circle-btn i {
+    color: white; /* Icoon blijft wit */
+}
+
+.background-clickable-sections {
+    margin-top: 40px;
+}
 
   /* Stijl voor de klikbare sectie 'Mijn digitale bewijzen' */
 .clickable-section {
