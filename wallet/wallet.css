@@ -486,7 +486,7 @@ p {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    height: 100vh;
+    height: 100%;
     padding: 10px;
     width: 100%;
     background-color: white;
