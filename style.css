@@ -33,6 +33,27 @@ h2 {
   margin-bottom: 0px;
 }
 
+#tip-logo {
+  display: block;
+  margin: 0 ; /* Centraal uitlijnen */
+  width: 200px; /* Pas de breedte van het logo aan */
+  height: auto; /* Automatisch de hoogte aanpassen op basis van de breedte */
+  padding-bottom: 10px; /* Ruimte tussen het logo en de titel */
+}
+
+#title-mainpage {
+  margin-bottom: 5px;
+}
+
+#subtitle-mainpage {
+margin-top: 5px;
+font-weight: bolder;
+}
+
+#introtext-mainpage {
+  padding-left: 10px;
+}
+
 /* Styling voor de home-button (link) */
 .home-button {
   background-color: #F0F4F8;
@@ -69,6 +90,26 @@ h2 {
 
 
 /* Styling voor accordeon headers met chevron en omranding */
+
+#hoofdpagina-accordion-header {
+  background-color: #fbfbfb;
+  color: #555;
+  border: 1px solid #fff;
+  font-size: 20px;
+  padding: 10px 10px;
+}
+
+/* Hover-stijl voor de accordeon met id 'hoofdpagina' */
+#hoofdpagina-accordion-header:hover {
+  background-color: #f7f7f7; /* Andere hover-kleur */
+}
+
+#doel-content, #disclaimer-content, #handelingsomgeving-content{
+  padding: 10px 5px;
+}
+
+
+
 .accordion-header {
   margin-bottom: 0px;
   cursor: pointer;
@@ -209,6 +250,29 @@ ul li {
   margin-bottom: 15px;
   width: fit-content;
   min-width: 500px;
+}
+
+#io {
+  background-color: #ffffff; /* Nieuwe kleur */
+  color: #5c5c5c;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: left;
+  display: inline-block;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  margin-bottom: 15px;
+  width: fit-content;
+  min-width: 500px;
+}
+
+#io i{
+  color: #5c5c5c
 }
 
 .button-demolist i {
