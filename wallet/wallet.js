@@ -2384,14 +2384,14 @@ function showMandateDetails(mandate) {
     <p><strong>Reden verzoek:</strong> ${mandate.reason}</p>
     <div class="divider"></div>
     <p><strong>Gegevens die ${mandate.requester} mag ophalen:</strong></p>
-    <hr>
+    
   `;
 
   mandate.mandate.forEach(item => {
     detailsHTML += `
       <p>Naam uitgever: ${fieldMapping[item.issuedBy] || item.issuedBy}</p>
       <p>Gegevens: ${fieldMapping[item.name.toLowerCase()] || item.name}</p>
-      <hr>
+      
     `;
   });
 
@@ -2403,7 +2403,7 @@ function showMandateDetails(mandate) {
     <p>Achternaam: De Bruijn</p>
     <p>Geboortedatum: 10 maart 1980</p>
     <p>Burgerservicenummer (BSN): 938391772</p>
-    <div class="divider"></div>
+   
   `;
 
   detailsHTML += `
