@@ -334,14 +334,25 @@ function showActivities() {
 // Mapping van kaartnamen naar stijlen
 const cardStyles = {
   'persoonlijke data': {
-    iconClass: 'fas fa-id-card',
-    iconColor: '#D6E6F2',
+   /*  iconClass: 'fas fa-id-card',
+    iconColor: '#D6E6F2', */
+    imagePath: 'bdlogo.svg',
+    iconColor: null,
     textColor: '#4A6C85'
   },
   'woonadres': {
-    iconClass: 'fas fa-home',
-    iconColor: '#DAEEDC',
-    textColor: '#5F7F60'
+   /*  iconClass: 'fas fa-home',
+    iconColor: '#DAEEDC', */
+    imagePath: 'bdlogo.svg',
+    iconColor: null,
+    textColor: '#4A6C85'
+  },
+  'foto': {
+/*     iconClass: 'fas fa-camera', // Gebruik het gewenste FontAwesome icoon
+    iconColor: '#FFD700', // Gouden kleur voor het icoon */
+    imagePath: 'bdlogo.svg',
+    iconColor: null,
+    textColor: '#4A6C85' // Tekstkleur
   },
   'organisatiemachtiging vog': {
     iconClass: 'fas fa-file-signature',
@@ -383,12 +394,6 @@ const cardStyles = {
     iconClass: 'fas fa-car',
     iconColor: '#e4b6c3',
     textColor: '#52202e'
-  },
-
-  'foto': {
-    iconClass: 'fas fa-camera', // Gebruik het gewenste FontAwesome icoon
-    iconColor: '#FFD700', // Gouden kleur voor het icoon
-    textColor: '#333' // Tekstkleur
   },
 
   'diploma verpleegkunde': {
@@ -553,18 +558,22 @@ function showDetails(credential, index) {
   // Leeg de inhoud en vul deze met de gegevens van het kaartje
   detailsContent.innerHTML = '';
 
-  // Controleer of het kaartje "Foto" is
-  if (credential.name === 'Foto') {
-    // Voeg de afbeelding toe
+   // Als het kaartje "Foto" is, toon de afbeelding
+   if (credential.name === 'Foto') {
     detailsContent.innerHTML += `<img src="${credential.data['Foto']}" alt="Pasfoto" style="width: 100%; max-width: 300px; height: auto; margin-bottom: 20px;">`;
-
-    // Voeg de lengte toe
-    detailsContent.innerHTML += `<p><strong>Lengte:</strong> ${credential.data['Lengte']}</p>`;
+    detailsContent.innerHTML += `<div class="details-row">
+                                  <div class="details-label">Lengte:</div>
+                                  <div class="details-value">${credential.data['Lengte']}</div>
+                                </div>`;
   } else if (credential.data) {
-    // Voor andere kaartjes, toon de gegevens zoals normaal
+    // Voor elk sleutel-waarde paar maak een nieuwe rij in de details sectie
     for (const key in credential.data) {
       if (credential.data.hasOwnProperty(key)) {
-        detailsContent.innerHTML += `<p><strong>${key}:</strong> ${credential.data[key]}</p>`;
+        detailsContent.innerHTML += `
+          <div class="details-row">
+            <div class="details-label">${key}:</div>
+            <div class="details-value">${credential.data[key]}</div>
+          </div>`;
       }
     }
   } else {

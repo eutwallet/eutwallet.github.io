@@ -163,6 +163,7 @@ font-weight: bold; /* Maak de tekst vetgedrukt */
     width: calc(100% - 40px);
     height: 180px;
     margin: 10px auto;
+    cursor: pointer;
 }
 
 /* Schaduw voor een ingedrukt effect bij hover */
@@ -443,24 +444,40 @@ p {
     align-items: center;
 }
 
-.welcome-image img {
+/* .welcome-image img {
     max-width: 80%;
     height: auto;
 }
+ */
+ .responsive-svg {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
 
-#welcome-screen button {
+ .welcome-image {
+    background-image: url('welcome.svg');
+    background-size: cover; /* Zorgt ervoor dat de afbeelding de hele div vult */
+    background-position: center; /* Centreert de afbeelding binnen de div */
+    width: 100%;   /* Vul de volledige breedte van de container */
+    height: 300px; /* Of pas de hoogte aan zoals gewenst */
+  }
+
+  #welcome-screen a {
+    display: block; /* Maak de knop een blok-element */
     background-color: #2681cc;
     color: white;
     padding: 15px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    width: 100%;
-    width: 300px;
-    position: relative;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
+    width: 300px; /* Bepaal de breedte van de knop */
+    margin: 0 auto; /* Centreer de knop */
+    text-decoration: none;
+    font-size: medium;
+    font-weight: bolder;
+    text-align: center; /* Zorg ervoor dat de tekst in het midden van de knop staat */
 }
 
 /* *** Pincode-inlogscherm Stijlen *** */
@@ -589,6 +606,8 @@ p {
     text-align: center;
     margin: 0 auto;
     display: block;
+    font-size: 14px;
+    font-weight: bold;
 }
 
 
@@ -957,6 +976,36 @@ p {
     margin: 4px 0;
 }
 
+
+/* Container voor elke rij */
+.details-row {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+  }
+  
+/* Linker kolom voor de labels */
+.details-label {
+    flex: 0 0 auto;      /* Zorg dat de breedte automatisch wordt aangepast */
+    min-width: 180px;    /* Minimale breedte voor de labelkolom */
+    max-width: 180px;    /* Maximale breedte voor de labelkolom */
+    font-weight: bold;
+    color: #333;
+    padding-right: 10px;
+    text-align: left;
+    word-wrap: break-word; 
+    overflow: hidden;
+    text-overflow: ellipsis; /* Voeg ellipsis toe als de tekst te lang is */
+    font-size: 14px;
+  }
+
+  /* Rechter kolom voor de waarden */
+  .details-value {
+    flex: 1;  /* Deze kolom neemt de resterende ruimte in */
+    color: #555;
+    text-align: left; /* Zorg dat de waarden links worden uitgelijnd */
+    word-wrap: break-word; 
+  }
 
 /* *** Navigatiebalk Stijlen *** */
 .bottom-nav {
@@ -1870,16 +1919,16 @@ margin-top: 40px;
   
   /* Cirkelvormige knop */
   .circle-btn {
-    background-color: #a5a8a6; /* Groene kleur */
+    background-color:  #4a90e2; /* Groene kleur */
     color: #fff; /* Witte kleur voor het icoon */
-    width: 60px; /* Breedte van de knop */
-    height: 60px; /* Hoogte van de knop */
+    width: 48px; /* Breedte van de knop */
+    height: 48px; /* Hoogte van de knop */
     border-radius: 50%; /* Cirkelvorm */
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 5px; /* Ruimte tussen knop en tekst */
-    font-size: 28px; /* Grootte van het icoon */
+    font-size: 20px; /* Grootte van het icoon */
     transition: background-color 0.3s ease;
   }
   
@@ -1900,19 +1949,16 @@ margin-top: 40px;
   /* Stijl voor de tekst onder de knop */
   .catalogue-text {
     font-size: 14px;
-    color: #8b8b8b; /* Groene tekstkleur */
+    color:  #4a90e2; /* Groene tekstkleur */
     text-align: center; /* Tekst gecentreerd onder de knop */
    
   }
 
- /* QR-scan knop */
- #qr-scan-button .circle-btn {
-    background-color: #a5a8a6; /* Groene achtergrond voor de cirkel */
-}
+
 
  /*QR-scan text */
  #qr-scan-button .qr-scan-button-text {
-    color: #8b8b8b; /* Groene achtergrond voor de cirkel */
+    color:  #4a90e2; /* Groene achtergrond voor de cirkel */
     font-size: 14px;
 }
 
@@ -1938,16 +1984,18 @@ margin-top: 40px;
   /* Stijl voor de klikbare sectie 'Mijn digitale bewijzen' */
 .clickable-section {
     padding: 15px;
-    background-color: #f1f1f1;
-    /* border: 1px solid #ddd; */
+    background-color: #fff;
+    border: 1px solid #ddd;
     cursor: pointer;
     border-radius: 5px;
     margin-top: 20px;
     display: flex;
     flex-direction: row;
-    justify-content:flex-start;
+    justify-content: flex-start;
     align-items: center;
     margin-bottom: 10px;
+    border: 1px solid lightgray;
+    
   }
   
   .clickable-section i {
