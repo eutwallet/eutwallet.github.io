@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Explainer deel 1 - test</title>
+  <style>
+    /* Zorg ervoor dat de body en html de volledige hoogte van het scherm innemen */
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: black; /* Optioneel: zwarte achtergrond om de video te laten opvallen */
+    }
+
+    /* Video vult het volledige scherm op */
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Zorg ervoor dat de video het scherm vult en de verhouding behoudt */
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Video tag zonder autoplay -->
+  <video controls>
+    <source src="explainer.mp4" type="video/mp4"> <!-- Verwijzing naar het videobestand -->
+    Your browser does not support the video tag.
+  </video>
+
+</body>
+</html>
