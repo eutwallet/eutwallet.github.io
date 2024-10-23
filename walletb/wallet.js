@@ -1524,7 +1524,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       if (buttonList.style.display === 'none') {
           // Toon button-list, verberg de headers
-          buttonList.style.display = 'block';
+          buttonList.style.display = 'flex';
           sectionHeaders.style.display = 'none';
           icon.className = 'fas fa-building';
           toggleButton.innerHTML = '<i class="fas fa-building"></i> Weergave per organisatie';
