@@ -2594,7 +2594,7 @@ function openMessageDetails(sender, message, datetime) {
 // Event listener voor het sluiten van het berichtdetailscherm
 closeMessageDetailsBtn.addEventListener('click', () => {
   messageDetailsScreen.style.display = 'none';
-  bottomNav.style.display = 'flex'; // Toon de bottom-nav weer
+  
   trustedContactsSection.style.display = 'block'; // Keer terug naar de Trusted Contacts sectie
 
 
@@ -2680,6 +2680,7 @@ function openMessageDetails(sender, message, datetime, messageType) {
   
   const messageDetailsScreen = document.getElementById('message-details-screen');
   messageDetailsScreen.style.display = 'block';
+  trustedContactsSection.style.display = 'none';
 
   const messageSenderElement = document.getElementById('contact-name');
   const messageDatetimeElement = document.getElementById('message-datetime');
