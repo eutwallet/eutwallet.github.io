@@ -589,7 +589,7 @@ function showDetails(credential, index) {
   };
 
   // Verwijderknop tonen of verbergen op basis van het type kaartje
-  if (credential.name !== 'Persoonlijke data' && credential.name !== 'Woonadres') {
+  if (credential.name !== 'Persoonlijke data' && credential.name !== 'Woonadres'&& credential.name !== 'Foto') {
     deleteDetailsBtn.style.display = 'block';
     deleteDetailsBtn.onclick = () => {
       credentials.splice(index, 1);
