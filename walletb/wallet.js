@@ -1861,7 +1861,7 @@ document.addEventListener('DOMContentLoaded', function () {
           "Algemeen_profiel": "4,5,6,7",
           "Specifiek_profiel": "55",
           "Attestation_Trust_Type": "PUB-EAA",
-          "rdfci": ["gn", "sn", "bd", "bsn"],
+          "rdfci": [/* "gn", "sn", "bd", "bsn" */],
           "a": "12t",
           "t": "w"
         };
@@ -1916,7 +1916,7 @@ document.addEventListener('DOMContentLoaded', function () {
           "Issued_to_subject": "Willeke Liselotte de Bruijn",
           "Diploma_Type": "Bachelor",
           "Institution": "Hogeschool Rotterdam",
-          "rdfci": ["gn", "sn", "bd", "bsn"],
+          "rdfci": [/* "gn", "sn", "bd", "bsn" */],
           "a": "12t",
           "t": "w"
         };
@@ -1969,7 +1969,7 @@ document.addEventListener('DOMContentLoaded', function () {
           "Issued_Date": "2023-06-15",
           "Issued_to_subject": "Willeke Liselotte de Bruijn",
           "Type": "A, B, D1, T",
-          "rdfci": ["gn", "sn", "bd", "bsn"],
+          "rdfci": [/* "gn", "sn", "bd", "bsn" */],
           "a": "12t",
           "t": "w"
         };
