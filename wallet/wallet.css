@@ -341,7 +341,7 @@ font-weight: bold; /* Maak de tekst vetgedrukt */
 
 .modal-content {
     background-color: white;
-    /* padding: 20px; */
+    padding: 5px; 
     border-radius: 10px;
     text-align: left;
     /* width: 90%;
@@ -839,6 +839,11 @@ font-weight: bold;
 #verifier-success-screen .modal-content{
     width: 100%;
 }
+
+#issuer-success-screen .modal-content {
+    width: 100%;
+}
+
 
 .button-container {
     position: absolute;
