@@ -1989,23 +1989,29 @@ margin-top: 40px;
 
  /*QR-scan text */
  #qr-scan-button .qr-scan-button-text {
-    color:  #4a90e2; /* Groene achtergrond voor de cirkel */
+    color:  #4a90e2; 
     font-size: 14px;
 }
 
 
   /* Hover-effect voor de gehele QR-scan sectie */
 #qr-scan-button:hover .circle-btn {
-    background-color: #3366b3; /* Groene achtergrond voor de cirkel */
+    background-color: #3366b3; 
 }
 
 #qr-scan-button:hover .qr-scan-button-text {
-    color: #3366b3; /* Groene kleur voor de tekst */
+    color: #3366b3;
 }
 
 /* Zorg ervoor dat het QR-icoon wit blijft bij hover */
 #qr-scan-button:hover .circle-btn i {
     color: white; /* Icoon blijft wit */
+}
+
+
+#sign-button .sign-button-text{
+    color:  #4a90e2; 
+    font-size: 14px;
 }
 
 .background-clickable-sections {
