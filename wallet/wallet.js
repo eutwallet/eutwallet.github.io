@@ -2889,3 +2889,8 @@ searchInput.addEventListener('input', function() {
     }
   });
 });
+
+
+function showMessage() {
+  alert("Functie wordt later toegevoegd");
+}
