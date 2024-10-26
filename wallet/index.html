@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Test wallet/handelingsomgeving</title>
+  <title>Demonstratie handelingsomgeving</title>
   <link rel="stylesheet" href="wallet.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -575,7 +575,9 @@
   <!-- *** RDFCV Modal *** -->
 <section id="rdfcv-modal" class="modal" style="display: none;">
   <div class="modal-content">
+    <div class="modal-header">
       <p id="rdfcv-question-text"><strong>Wilt u onderstaande gegevens delen?</strong></p>
+    </div>
       <div class="divider"></div>
 
       <!-- Reden sectie -->
@@ -618,7 +620,7 @@
 </section>
   
   <!-- *** Success-scherm na Delen Gegevens (Verifier) *** -->
-<section id="success-screen" class="modal" style="display: none;">
+<section id="verifier-success-screen" class="modal" style="display: none;">
   <div class="modal-content">
       <h2 id="success-message">Succes!</h2>
       <div class="divider"></div>
@@ -634,7 +636,10 @@
   <!-- *** RDFCI Modal *** -->
   <section id="rdfci-modal" class="modal" style="display: none;">
     <div class="modal-content">
-      <p><strong>Om onderstaande gegevens te ontvangen:</strong></p>
+      <div class="modal-header">
+   <!--    <p><strong>Om onderstaande gegevens te ontvangen:</strong></p> -->
+   <p><strong>Wilt u onderstaande gegevens ontvangen:</strong></p>
+    </div>
       <div class="divider"></div>
 
       <!-- Gegevens sectie -->
@@ -648,8 +653,8 @@
       <div class="divider" style="margin-bottom: 15px;"></div>
 
       <!-- Gegevens delen met sectie -->
-      <p id="rdfci-share-with"><strong>Wilt u de volgende gegevens delen met:</strong></p>
-      <div class="divider"></div>
+  <!--     <p id="rdfci-share-with"><strong>Wilt u de volgende gegevens delen met:</strong></p>
+      <div class="divider"></div> -->
 
       <!-- Container voor dynamisch gevraagde kaartjes -->
       <div id="rdfci-details-container"></div>

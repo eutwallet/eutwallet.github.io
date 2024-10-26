@@ -346,8 +346,13 @@ font-weight: bold; /* Maak de tekst vetgedrukt */
     max-width: 400px;
     display: flex;
   flex-direction: column;
+  margin-top: 20px;
 }
 
+.modal-header p {
+    font-weight: bold;
+    margin-top: 20px;
+}
 
 .modal-content h2{
 margin-bottom: 20px;
@@ -401,6 +406,10 @@ p {
 #rdfcv-modal {
     margin-bottom: 40px;
 }
+
+#rdfcv-question-text p{
+    font-weight: bold;
+    }
 
 /* *** Welkomstscherm Stijlen *** */
 #welcome-screen {
@@ -806,7 +815,7 @@ p {
   }
 
 /* *** Success-scherm Stijlen *** */
-#success-screen {
+#verifier-success-screen {
     display: none;
     position: fixed;
     top: 0;
@@ -822,8 +831,12 @@ p {
     padding: 20px;
 }
 
-#success-screen h2 {
+#verifier-success-screen h2 {
     margin-bottom: 20px;
+}
+
+#verifier-success-screen .modal-content{
+    width: 100%;
 }
 
 .button-container {

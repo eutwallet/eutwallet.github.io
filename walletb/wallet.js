@@ -36,7 +36,7 @@ const pinConfirmationScreenVerifier = document.getElementById('pin-confirmation-
 const confirmPinBtnVerifier = document.getElementById('confirm-pin-verifier');
 
 // *** Successcherm Elementen ***
-const successScreen = document.getElementById('success-screen');
+const successScreen = document.getElementById('verifier-success-screen');
 const successMessage = document.getElementById('success-message');
 const verifierNameElement = document.getElementById('verifier-name');
 const seeActivityBtn = document.getElementById('see-activity-btn');
@@ -941,7 +941,7 @@ function populateRdfciModal(data) {
   document.getElementById('rdfci-issuedBy').innerText = data.issuedBy || 'Onbekende uitgever';
 
   // "Wilt u de volgende gegevens delen met" moet dikgedrukt zijn en de naam van de uitgever bevatten
-  document.getElementById('rdfci-share-with').innerHTML = `<strong>Wilt u de volgende gegevens delen met ${data.issuedBy}:</strong>`;
+ /*  document.getElementById('rdfci-share-with').innerHTML = `<strong>Wilt u de volgende gegevens delen met ${data.issuedBy}:</strong>`; */
 
   // Verwijder de oude inhoud van 'rdfci-name' en voeg de nieuw uit te geven kaart toe
   const rdfciNameElement = document.getElementById('rdfci-name');
@@ -1860,7 +1860,7 @@ document.addEventListener('DOMContentLoaded', function () {
           "Issued_to_subject": "Willeke Liselotte de Bruijn",
           "Algemeen_profiel": "4,5,6,7",
           "Specifiek_profiel": "55",
-          "Attestation_Trust_Type": "QEAA",
+          "Attestation_Trust_Type": "PUB-EAA",
           "rdfci": ["gn", "sn", "bd", "bsn"],
           "a": "12t",
           "t": "w"
