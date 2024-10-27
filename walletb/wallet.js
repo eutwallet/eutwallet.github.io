@@ -262,12 +262,11 @@ machtigingNavbarItem.addEventListener('click', () => {
 });
 
 function convertToStandardDate(dateString) {
-  // Converteer 'DD/MM/YYYY, HH:mm:ss' naar 'YYYY-MM-DDTHH:mm:ss'
+  // Converteer 'DD-MM-YYYY, HH:mm:ss' naar 'YYYY-MM-DDTHH:mm:ss'
   let [datePart, timePart] = dateString.split(', ');
-  let [day, month, year] = datePart.split('/');
+  let [day, month, year] = datePart.split('-'); // Gebruik '-' als scheidingsteken
   return `${year}-${month}-${day}T${timePart}`;
 }
-
 
 
 
@@ -298,7 +297,7 @@ function showActivities() {
   });
 
   // Voeg activiteiten toe aan de lijst
-  filteredActivities.reverse().forEach((cred) => {
+  filteredActivities.forEach((cred) => {
       let activityItem = document.createElement('li');
 
       if (cred.isShareAction) {
@@ -2434,7 +2433,7 @@ function displayMachtigingen() {
   console.log("Gesorteerde machtigingen:", machtigingen);
 
   // Doorloop de gesorteerde machtigingen en voeg ze toe aan de weergave
-  machtigingen.reverse().forEach((mandate, index) => {
+  machtigingen.forEach((mandate, index) => {
     const card = document.createElement('div');
     card.className = 'card';
 
@@ -2505,24 +2504,6 @@ contactsNavbarItem.addEventListener('click', () => {
   contactsNavbarItem.classList.add('active');
 });
 
-/* // Event listener voor het klikken op de machtigingen-knop in de navbar
-machtigingNavbarItem.addEventListener('click', () => {
-  // Verberg andere secties
-  walletScreen.style.display = 'none';
-  activitiesSection.style.display = 'none';
-  trustedContactsSection.style.display = 'none';
-  instellingenSection.style.display = 'none';
-
-  // Toon het machtigingen-scherm
-  machtigingSection.style.display = 'flex';
-  bottomNav.style.display = 'none';
-
-  // Zorg ervoor dat de andere navbar-items niet meer actief zijn
-  document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-
-  // Zet het machtigingen-item actief in de navbar
-  machtigingNavbarItem.classList.add('active');
-}); */
 
 
 
@@ -2747,7 +2728,7 @@ function addMockMessageToTrustedContacts(sender, message, messageType) {
 
       // Truncate afzendernaam tot 10 tekens
       const truncatedSender = sender.length > 10 ? sender.substring(0, 10) + '...' : sender;
-    
+
       // Voeg dynamisch het juiste logo toe op basis van de afzender
       let logoHTML = '';
       switch (sender.toLowerCase()) {
@@ -2757,24 +2738,18 @@ function addMockMessageToTrustedContacts(sender, message, messageType) {
           case 'belastingdienst':
               logoHTML = '<img src="belastingdienstlogo.svg" alt="Belastingdienst logo" class="logo-icon">';
               break;
-        
-           case 'woningcorporatie leijendakje':
+          case 'woningcorporatie leijendakje':
               logoHTML = '<img src="woningcorporatielogo.svg" alt="Leijendakje logo" class="logo-icon">';
               break;
-        
           case 'werkgever ipa 5':
-            logoHTML = '<img src="ipa5logo.svg" alt="ipa logo" class="logo-icon">';
-            break;
-            
+              logoHTML = '<img src="ipa5logo.svg" alt="IPA 5 logo" class="logo-icon">';
+              break;
           case 'werkgever ipa 6':
-            logoHTML = '<img src="ipa6logo.svg" alt="ipa logo" class="logo-icon">';
-            break;
-            
+              logoHTML = '<img src="ipa6logo.svg" alt="IPA 6 logo" class="logo-icon">';
+              break;
           case 'werkgever ipa 7':
-            logoHTML = '<img src="ipa7logo.svg" alt="ipa logo" class="logo-icon">';
-            break;
-
-          // Voeg meer afzenders toe indien nodig
+              logoHTML = '<img src="ipa7logo.svg" alt="IPA 7 logo" class="logo-icon">';
+              break;
           default:
               logoHTML = '';
               break;
@@ -2791,7 +2766,7 @@ function addMockMessageToTrustedContacts(sender, message, messageType) {
               </div>
               <div class="message-content">
                   <div class="message-header">
-                     <strong class="message-sender">${truncatedSender}</strong>
+                      <strong class="message-sender">${truncatedSender}</strong>
                       <span class="message-datetime">${datetime}</span>
                   </div>
                   <div class="message-body">
@@ -2801,28 +2776,53 @@ function addMockMessageToTrustedContacts(sender, message, messageType) {
           </div>
       `;
 
+      // Voeg event listener toe aan het bericht om details te openen
+      messageItem.addEventListener('click', () => {
+          openMessageDetails(sender, message, datetime, messageType);
+
+          // Verberg het notificatiebolletje zodra op het bericht wordt geklikt
+          const notificationBadge = document.getElementById('notification-badge');
+          if (notificationBadge) {
+              notificationBadge.style.display = 'none';
+          }
+      });
+
+      // Voeg het nieuwe bericht toe aan het grid
       messagesGrid.appendChild(messageItem);
+
+      // Voeg loggings toe om de datums te controleren tijdens sorteren
+   /*    console.log("Berichten voor sortering:", Array.from(messagesGrid.children).map(msg => msg.querySelector('.message-datetime').textContent));
+
+       */
+// Sorteer de berichten in `messages-grid` op datum in aflopende volgorde (nieuwste eerst)
+const sortedMessages = Array.from(messagesGrid.children)
+    .sort((a, b) => {
+        const dateStrA = a.querySelector('.message-datetime').textContent;
+        const dateStrB = b.querySelector('.message-datetime').textContent;
+       /*  console.log("Oorspronkelijke datum A:", dateStrA, "Geconverteerde datum A:", convertToStandardDate(dateStrA));
+        console.log("Oorspronkelijke datum B:", dateStrB, "Geconverteerde datum B:", convertToStandardDate(dateStrB));
+ */
+        const dateA = new Date(convertToStandardDate(dateStrA));
+        const dateB = new Date(convertToStandardDate(dateStrB));
+        return dateB - dateA; // Aflopende volgorde (nieuwste eerst)
+    });
+
+/* console.log("Berichten na sortering:", sortedMessages.map(msg => msg.querySelector('.message-datetime').textContent));
+ */
+
+      // Leeg het grid en voeg de gesorteerde berichten toe zonder reverse
+      messagesGrid.innerHTML = '';
+      sortedMessages.forEach(msg => messagesGrid.appendChild(msg));
 
       // Toon het notificatiebolletje
       const notificationBadge = document.getElementById('notification-badge');
       notificationBadge.style.display = 'flex';
-      notificationBadge.textContent = '1'; // Aantal berichten, je kunt dit aanpassen om meerdere te tellen
-
-      // Voeg event listener toe aan het bericht om details te openen
-      messageItem.addEventListener('click', () => {
-          openMessageDetails(sender, message, datetime, messageType); // Open het volledige bericht in details
-
-          // Verberg het notificatiebolletje zodra op het bericht wordt geklikt
-          notificationBadge.style.display = 'none';
-
-          
-      });
-
-      console.log(`Bericht van ${sender} toegevoegd: "${message}"`);
+      notificationBadge.textContent = '1'; // Aantal berichten, kan worden aangepast
   } else {
       console.error("Trusted Contacts sectie niet gevonden.");
   }
 }
+
 
 // Functie om de card-catalogue te openen en de wallet te verbergen
 openCardCatalogueBtn.addEventListener('click', () => {
@@ -2868,6 +2868,9 @@ searchInput.addEventListener('input', function() {
     }
   });
 });
+
+
+
 
 
 function showMessage() {
