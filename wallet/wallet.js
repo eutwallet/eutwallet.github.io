@@ -254,11 +254,11 @@ machtigingNavbarItem.addEventListener('click', () => {
 
   // Zet het machtigingen-item actief in de navbar
   machtigingNavbarItem.classList.add('active');
-
+  console.log("Machtiging-section getoond");
    // Roep de functie aan om de machtigingen weer te geven
    displayMachtigingen();
 
-   console.log("Machtiging-section getoond en displayMachtigingen aangeroepen.");
+   
 });
 
 function convertToStandardDate(dateString) {
@@ -2331,7 +2331,7 @@ function scanMockQRCode(mockData) {
 
 // Voeg een event listener toe voor het tonen van machtiging details
 function showMandateDetails(mandate) {
-  displayMachtigingen(); // Zorg ervoor dat machtigingen worden bijgewerkt indien nodig
+ 
 
   // Verberg andere secties
   document.getElementById('wallet-screen').style.display = 'none';
@@ -2423,7 +2423,7 @@ function displayMachtigingen() {
 
   // Filter en toon alleen machtiging kaartjes die geen activiteit zijn
   const machtigingen = credentials.filter(cred => cred.type === 'mandate' && !cred.isActivity);
-  console.log("Gefilterde machtigingen:", machtigingen);
+
 
   // Sorteer de machtigingen op datum (meest recente eerst)
   machtigingen.sort((a, b) => {
