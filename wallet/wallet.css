@@ -66,7 +66,7 @@ font-weight: bold; /* Maak de tekst vetgedrukt */
 /* *** Wallet screen *** */
 #wallet-screen {
     padding: 5px;
-    padding-bottom: 80px; /* Voeg voldoende ruimte toe, afhankelijk van de hoogte van de bottom nav */
+    padding-bottom: 80px;
 }
 
 /* Sectie met de titel 'Mijn Digitale Bewijzen' */
@@ -2021,6 +2021,7 @@ margin-top: 40px;
 
 .background-clickable-sections {
     margin-top: 40px;
+    
 }
 
   /* Stijl voor de klikbare sectie 'Mijn digitale bewijzen' */

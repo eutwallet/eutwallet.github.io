@@ -254,6 +254,11 @@ machtigingNavbarItem.addEventListener('click', () => {
 
   // Zet het machtigingen-item actief in de navbar
   machtigingNavbarItem.classList.add('active');
+
+   // Roep de functie aan om de machtigingen weer te geven
+   displayMachtigingen();
+
+   console.log("Machtiging-section getoond en displayMachtigingen aangeroepen.");
 });
 
 function convertToStandardDate(dateString) {
@@ -589,7 +594,7 @@ function showDetails(credential, index) {
   };
 
   // Verwijderknop tonen of verbergen op basis van het type kaartje
-  if (credential.name !== 'Persoonlijke data' && credential.name !== 'Woonadres'&& credential.name !== 'Foto') {
+  if (credential.name !== 'Persoonlijke data' && credential.name !== 'Woonadres'  && credential.name !== 'Foto') {
     deleteDetailsBtn.style.display = 'block';
     deleteDetailsBtn.onclick = () => {
       credentials.splice(index, 1);
@@ -2157,8 +2162,6 @@ document.getElementById('mandate-accept-button').addEventListener('click', () =>
 document.getElementById('confirm-pin-mandate').addEventListener('click', () => {
   console.log("Mandate Confirm Pin Button clicked.");
 
-  // Hier zou je pincode-validatie kunnen toevoegen
-  // Voor nu gaan we ervan uit dat de pincode correct is ingevoerd
 
   // Haal de gegevens uit de currentMandateData
   const currentData = window.currentMandateData;
@@ -2184,6 +2187,7 @@ document.getElementById('confirm-pin-mandate').addEventListener('click', () => {
 
 function processMandate(data) {
   const timestamp = new Date().toLocaleString();
+  console.log("processMandate functie aangeroepen met data:", data);
 
   // Creëer een machtiging kaartje voor de machtigingen-sectie
   const machtigingCard = {
@@ -2222,46 +2226,6 @@ function processMandate(data) {
 }
 
 
-
-// Functie om machtigingen weer te geven in de machtiging-section
-function displayMachtigingen() {
-  const machtigingSection = document.getElementById('machtiging-section');
-  const machtigingGrid = document.getElementById('machtiging-grid'); // Zorg ervoor dat er een container is voor machtigingen
- 
-
-  // Leeg de grid
-  machtigingGrid.innerHTML = '';
-
-  // Filter en toon alleen machtiging kaartjes
-  const machtigingen = credentials.filter(cred => cred.type === 'mandate');
-
-  // Sorteer de machtigingen op datum (meest recente eerst)
-  machtigingen.sort((a, b) => {
-    let dateA = Date.parse(convertToStandardDate(a.actionTimestamp));
-    let dateB = Date.parse(convertToStandardDate(b.actionTimestamp));
-    return dateB - dateA;
-});
-
-  machtigingen.reverse().forEach((mandate, index) => {
-      const card = document.createElement('div');
-      card.className = 'card';
-
-      // Voeg inhoud toe aan het kaartje
-      card.innerHTML = `
-          <div class="card-text">
-              <h3>${mandate.requester}</h3>
-              <p>Reden: ${mandate.reason}</p>
-              <p>Datum: ${mandate.actionTimestamp}</p>
-          </div>
-      `;
-
-      // Voeg event listener toe voor details
-      card.addEventListener('click', () => showMachtigingDetails(mandate, index));
-
-      // Voeg kaart toe aan de grid
-      machtigingGrid.appendChild(card);
-  });
-}
 
 
 
@@ -2311,7 +2275,11 @@ document.getElementById('view-mandate-button').addEventListener('click', () => {
   document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
   machtigingNavbarItem.classList.add('active');
 
-  console.log("Machtiging-section getoond en navbar-item geactiveerd.");
+ // Roep de functie aan om de machtigingen weer te geven
+ displayMachtigingen();
+
+
+  console.log("Machtiging-section getoond");
 });
 
 
@@ -2446,34 +2414,45 @@ function showMandateDetails(mandate) {
   
 
 
-// Pas de displayMachtigingen functie aan om de details te tonen bij klikken
+// Gecombineerde displayMachtigingen functie
 function displayMachtigingen() {
+  console.log("displayMachtigingen functie aangeroepen");
+
   const machtigingGrid = document.getElementById('machtiging-grid');
   machtigingGrid.innerHTML = '';
 
- // Filter en toon alleen machtiging kaartjes
- const machtigingen = credentials.filter(cred => cred.type === 'mandate' && !cred.isActivity);
+  // Filter en toon alleen machtiging kaartjes die geen activiteit zijn
+  const machtigingen = credentials.filter(cred => cred.type === 'mandate' && !cred.isActivity);
+  console.log("Gefilterde machtigingen:", machtigingen);
 
+  // Sorteer de machtigingen op datum (meest recente eerst)
+  machtigingen.sort((a, b) => {
+      let dateA = Date.parse(convertToStandardDate(a.actionTimestamp));
+      let dateB = Date.parse(convertToStandardDate(b.actionTimestamp));
+      return dateB - dateA;
+  });
+  console.log("Gesorteerde machtigingen:", machtigingen);
 
- 
-  machtigingen.forEach((mandate, index) => {
+  // Doorloop de gesorteerde machtigingen en voeg ze toe aan de weergave
+  machtigingen.reverse().forEach((mandate, index) => {
     const card = document.createElement('div');
     card.className = 'card';
 
-    card.innerHTML = `
-      <div class="card-text">
-        <h3>${mandate.requester}</h3>
-        <p>Reden: ${mandate.reason}</p>
-        <p>Datum: ${mandate.actionTimestamp}</p>
-      </div>
-    `;
+      card.innerHTML = `
+          <div class="card-text">
+              <h3>${mandate.requester}</h3>
+              <p>Reden: ${mandate.reason}</p>
+              <p>Datum: ${mandate.actionTimestamp}</p>
+          </div>
+      `;
 
-    card.addEventListener('click', () => showMandateDetails(mandate));
+      // Gebruik showMandateDetails voor het weergeven van details
+      card.addEventListener('click', () => showMandateDetails(mandate));
 
-    machtigingGrid.appendChild(card);
+      // Voeg kaart toe aan de grid
+      machtigingGrid.appendChild(card);
   });
 }
-
 
 // Event listener voor het klikken op de overzicht-knop in de navbar
 overviewNavbarItem.addEventListener('click', () => {
@@ -2526,7 +2505,7 @@ contactsNavbarItem.addEventListener('click', () => {
   contactsNavbarItem.classList.add('active');
 });
 
-// Event listener voor het klikken op de machtigingen-knop in de navbar
+/* // Event listener voor het klikken op de machtigingen-knop in de navbar
 machtigingNavbarItem.addEventListener('click', () => {
   // Verberg andere secties
   walletScreen.style.display = 'none';
@@ -2543,7 +2522,7 @@ machtigingNavbarItem.addEventListener('click', () => {
 
   // Zet het machtigingen-item actief in de navbar
   machtigingNavbarItem.classList.add('active');
-});
+}); */
 
 
 
